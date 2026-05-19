@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Filosofía PAU 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-soft:#FAF6EE;
+  --paper-deep:#E8E0D0;
+  --paper-card:#FBF7EE;
+  --ink:#2D2A26;
+  --ink-soft:#5C574F;
+  --ink-mute:#8B8579;
+  --line:#D6CCB7;
+  --line-strong:#BFB39A;
+  --accent:#A6824E;
+  --accent-deep:#8B6A3A;
+  --accent-soft:#D9C7A2;
+  --sage:#7C9079;
+  --slate:#6B7F94;
+  --rose:#B07A82;
+  --c-aristoteles:#A06C49;
+  --c-kant:#5A7596;
+  --c-wollstonecraft:#AB6C86;
+  --c-marx:#9F5450;
+  --c-luxemburg:#803F44;
+  --c-beauvoir:#7B5F8C;
+  --c-sartre:#5B8290;
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --mono:'Inter',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--paper);}
+body{
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+h1{font-size:clamp(2.4rem,4.8vw,4rem);font-weight:600;}
+h2{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:600;}
+h3{font-size:clamp(1.2rem,2vw,1.55rem);font-weight:600;}
+h4{font-size:1.05rem;font-weight:600;color:var(--ink);}
+p{color:var(--ink-soft);}
+em{color:var(--accent-deep);font-style:italic;}
+strong{color:var(--ink);font-weight:600;}
+
+/* === STAGE === */
+.stage{
+  position:fixed;
+  inset:0;
+  background:var(--paper);
+  background-image:
+    radial-gradient(ellipse at top left, rgba(217,199,162,.18), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(124,144,121,.10), transparent 55%);
+}
+.slide{
+  position:absolute;
+  inset:0;
+  padding:72px 80px 100px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity .35s ease, transform .35s ease;
+  overflow-y:auto;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateY(0);}
+.slide::-webkit-scrollbar{width:8px;}
+.slide::-webkit-scrollbar-track{background:transparent;}
+.slide::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
+
+.slide-inner{
+  max-width:1280px;
+  width:100%;
+  margin:0 auto;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+.slide-eyebrow{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+}
+.slide-title{margin-bottom:8px;}
+.slide-lead{
+  font-family:var(--sans);
+  font-size:1.02rem;
+  color:var(--ink-soft);
+  max-width:780px;
+  margin-bottom:36px;
+  font-weight:400;
+  line-height:1.55;
+}
+
+/* === NAVIGATION === */
+.topbar{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:50;
+  padding:18px 36px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(to bottom,rgba(242,237,227,.92),rgba(242,237,227,0));
+  pointer-events:none;
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  pointer-events:auto;
+  font-family:var(--serif);
+  font-size:1.05rem;
+  color:var(--ink-soft);
+}
+.brand-mark{
+  width:30px;height:30px;
+  border-radius:50%;
+  background:var(--accent);
+  display:grid;place-items:center;
+  color:var(--paper-soft);
+  font-family:var(--mono);
+  font-size:.7rem;
+  font-weight:700;
+}
+.slide-counter{
+  pointer-events:auto;
+  font-family:var(--mono);
+  font-size:.85rem;
+  color:var(--ink-mute);
+  letter-spacing:.05em;
+}
+.slide-counter strong{color:var(--ink);font-weight:600;}
+
+.bottombar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:50;
+  padding:18px 36px 22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  background:linear-gradient(to top,rgba(242,237,227,.95),rgba(242,237,227,0));
+  pointer-events:none;
+}
+.nav-btn{
+  pointer-events:auto;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  color:var(--ink);
+  width:46px;height:46px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1.4rem;
+  display:grid;place-items:center;
+  transition:all .2s;
+  font-family:var(--serif);
+}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn:disabled:hover{background:var(--paper-soft);color:var(--ink);border-color:var(--line);}
+
+.dots{
+  pointer-events:auto;
+  display:flex;
+  gap:8px;
+  flex:1;
+  justify-content:center;
+  flex-wrap:wrap;
+  max-width:680px;
+}
+.dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--line);
+  border:none;
+  cursor:pointer;
+  transition:all .2s;
+  padding:0;
+}
+.dot:hover{background:var(--line-strong);transform:scale(1.2);}
+.dot.is-active{background:var(--accent);width:24px;border-radius:5px;}
+
+.nav-hint{
+  pointer-events:none;
+  position:fixed;
+  bottom:72px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  opacity:.6;
+  z-index:40;
+}
+
+/* === SLIDE 1 · PORTADA === */
+.slide-cover{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding-top:60px;
+}
+.cover-mark{
+  width:88px;height:88px;
+  border-radius:50%;
+  background:var(--paper-soft);
+  border:2px solid var(--accent);
+  display:grid;place-items:center;
+  margin:0 auto 32px;
+  font-family:var(--serif);
+  font-size:2.4rem;
+  color:var(--accent);
+  font-style:italic;
+}
+.cover-title{
+  font-size:clamp(2.8rem,6vw,5rem);
+  font-weight:600;
+  letter-spacing:-0.02em;
+  margin-bottom:20px;
+  line-height:1.1;
+}
+.cover-title .ornament{
+  display:inline-block;
+  color:var(--accent);
+  margin:0 .3em;
+  font-style:normal;
+}
+.cover-sub{
+  font-family:var(--sans);
+  font-size:clamp(1rem,1.4vw,1.15rem);
+  color:var(--ink-soft);
+  margin-bottom:60px;
+  max-width:680px;
+  line-height:1.55;
+}
+.cover-stats{
+  display:flex;
+  gap:60px;
+  margin-top:30px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.cover-stat{text-align:center;}
+.cover-stat .n{
+  font-family:var(--serif);
+  font-size:3rem;
+  font-weight:500;
+  color:var(--accent);
+  line-height:1;
+}
+.cover-stat .l{
+  font-family:var(--mono);
+  font-size:.75rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  margin-top:8px;
+}
+.cover-divider{
+  width:1px;
+  background:var(--line-strong);
+}
+.cover-hint{
+  margin-top:60px;
+  font-family:var(--mono);
+  font-size:.78rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+}
+
+/* === SLIDE 2 · EXAMEN === */
+.exam-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-bottom:30px;
+}
+.exam-card{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:32px 30px;
+  position:relative;
+  overflow:hidden;
+}
+.exam-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:var(--accent);
+}
+.exam-card .pts{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--accent);
+  letter-spacing:.12em;
+  display:block;
+  margin-bottom:8px;
+}
+.exam-card h3{margin-bottom:14px;color:var(--ink);}
+.exam-card .summary{
+  color:var(--ink-soft);
+  margin-bottom:18px;
+  font-size:.96rem;
+}
+.exam-card .summary strong{color:var(--ink);}
+.exam-card ul{list-style:none;border-top:1px solid var(--line);padding-top:16px;}
+.exam-card li{
+  padding:6px 0 6px 22px;
+  position:relative;
+  color:var(--ink-soft);
+  font-size:.92rem;
+}
+.exam-card li::before{
+  content:'';
+  position:absolute;
+  left:0;top:14px;
+  width:10px;height:1px;
+  background:var(--accent);
+}
+.exam-warn{
+  margin-top:20px;
+  background:rgba(176,122,130,.08);
+  border:1px solid rgba(176,122,130,.3);
+  border-radius:12px;
+  padding:20px 26px;
+}
+.exam-warn h4{color:var(--rose);margin-bottom:8px;}
+.exam-warn p{color:var(--ink-soft);font-size:.92rem;}
+
+/* === Distribución de puntos (slide 2) === */
+.points-chart{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px 30px 28px;
+  margin-bottom:22px;
+}
+.points-chart svg{width:100%;height:auto;display:block;}
+
+/* === Autores por tema (slide 7) === */
+.tema-authors{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:16px;
+  padding-bottom:14px;
+  border-bottom:1px dashed var(--line);
+}
+.tema-authors .label{
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  margin-right:6px;
+  align-self:center;
+}
+.auth-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 12px;
+  border-radius:100px;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  font-size:.82rem;
+  color:var(--ink);
+}
+.auth-chip::before{
+  content:'';
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--c, var(--accent));
+}
+
+/* === Flujo del comentario (slide 9) === */
+.flow-diagram{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px 24px;
+  margin-bottom:22px;
+}
+.flow-diagram svg{width:100%;height:auto;display:block;min-width:780px;}
+
+/* === Progreso de flashcards (slide 11) === */
+.flash-progress{
+  display:flex;
+  gap:4px;
+  margin:0 auto 20px;
+  max-width:480px;
+  width:100%;
+}
+.flash-progress .seg{
+  flex:1;
+  height:4px;
+  background:var(--paper-deep);
+  border-radius:2px;
+}
+.flash-progress .seg.done{background:var(--sage);}
+.flash-progress .seg.miss{background:var(--rose);}
+.flash-progress .seg.current{background:var(--accent);}
+
+/* === SLIDE 3 · TIMELINE === */
+.timeline-frame{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px;
+  overflow-x:auto;
+}
+.timeline-frame svg{width:100%;height:auto;min-width:880px;display:block;}
+
+/* === SLIDE 4 · AUTORES CAROUSEL === */
+.author-carousel{
+  position:relative;
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:520px;
+}
+.author-stack{
+  position:relative;
+  width:100%;
+  max-width:980px;
+  height:580px;
+}
+.author-card{
+  position:absolute;
+  inset:0;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  overflow:hidden;
+  opacity:0;
+  transform:translateX(60px) scale(.97);
+  pointer-events:none;
+  transition:opacity .45s ease, transform .45s ease;
+  box-shadow:0 12px 40px rgba(45,42,38,.08);
+}
+.author-card.is-active{
+  opacity:1;
+  transform:translateX(0) scale(1);
+  pointer-events:auto;
+}
+.author-side{
+  padding:42px 46px;
+  display:flex;
+  flex-direction:column;
+}
+.author-side.front{
+  background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
+  border-right:1px solid var(--line);
+  position:relative;
+}
+.author-side.front::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;bottom:0;
+  width:5px;
+  background:var(--author-color, var(--accent));
+}
+.author-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.18em;
+  color:var(--ink-mute);
+  margin-bottom:auto;
+}
+.author-meta .era{
+  background:var(--paper-deep);
+  padding:5px 12px;
+  border-radius:100px;
+  color:var(--ink-soft);
+}
+.author-name{
+  font-size:clamp(2.2rem,3.4vw,3rem);
+  margin:24px 0 6px;
+  color:var(--author-color, var(--ink));
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
+.author-dates{
+  font-family:var(--mono);
+  font-size:.88rem;
+  color:var(--ink-mute);
+  letter-spacing:.08em;
+  margin-bottom:26px;
+}
+.author-quote{
+  font-family:var(--serif);
+  font-size:1.1rem;
+  line-height:1.6;
+  font-weight:500;
+  color:var(--ink);
+  padding-left:20px;
+  border-left:3px solid var(--author-color, var(--accent));
+  margin-bottom:22px;
+}
+.author-work{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-mute);
+  letter-spacing:.06em;
+  margin-top:auto;
+}
+.author-side.back{
+  background:var(--paper-card);
+  padding:42px 46px;
+}
+.author-side-title{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--author-color, var(--accent));
+  margin-bottom:18px;
+}
+.author-concepts{
+  list-style:none;
+}
+.author-concepts li{
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
+  font-size:.97rem;
+  color:var(--ink-soft);
+  line-height:1.55;
+}
+.author-concepts li:last-child{border-bottom:none;}
+.author-concepts li strong{
+  color:var(--ink);
+  font-weight:600;
+}
+.author-compare{
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px dashed var(--line-strong);
+}
+.author-compare p{
+  font-size:.85rem;
+  color:var(--ink-soft);
+  line-height:1.55;
+  margin-bottom:6px;
+}
+.author-compare strong{color:var(--ink);}
+
+/* author carousel internal nav */
+.subnav{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  margin-top:28px;
+}
+.subnav-btn{
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--ink-soft);
+  width:38px;height:38px;
+  border-radius:50%;
+  cursor:pointer;
+  display:grid;place-items:center;
+  font-size:1.1rem;
+  font-family:var(--serif);
+  transition:all .2s;
+}
+.subnav-btn:hover{
+  background:var(--accent);
+  color:var(--paper-soft);
+  border-color:var(--accent);
+}
+.subnav-dots{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.subnav-label{
+  font-family:var(--mono);
+  font-size:.78rem;
+  letter-spacing:.12em;
+  color:var(--ink-mute);
+  margin:0 12px;
+  min-width:140px;
+  text-align:center;
+}
+.subnav-dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--line);
+  border:none;
+  cursor:pointer;
+  padding:0;
+  transition:all .2s;
+}
+.subnav-dot.is-active{transform:scale(1.4);}
+
+/* === SLIDE 5 · ESQUEMAS === */
+.schema-tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:6px;
+  align-self:flex-start;
+}
+.schema-tab{
+  padding:9px 16px;
+  background:transparent;
+  border:none;
+  color:var(--ink-soft);
+  border-radius:6px;
+  cursor:pointer;
+  font-family:var(--sans);
+  font-weight:500;
+  font-size:.9rem;
+  transition:all .2s;
+}
+.schema-tab:hover{color:var(--ink);background:var(--paper-deep);}
+.schema-tab.is-active{
+  background:var(--accent);
+  color:var(--paper-soft);
+}
+.schema-stage{
+  flex:1;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px;
+  overflow:auto;
+  min-height:540px;
+}
+.schema-panel{display:none;}
+.schema-panel.is-active{display:block;animation:fadeIn .35s ease;}
+.schema-panel svg{width:100%;height:auto;display:block;min-width:880px;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* === SLIDE 6 · MATRIZ === */
+.matrix-layout{
+  flex:1;
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:28px;
+  min-height:0;
+}
+.matrix-frame{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  overflow:auto;
+}
+table.matrix{
+  border-collapse:collapse;
+  width:100%;
+  min-width:560px;
+}
+.matrix th,.matrix td{
+  padding:10px 8px;
+  text-align:center;
+  border:1px solid var(--line);
+  font-size:.78rem;
+  vertical-align:middle;
+}
+.matrix thead th,.matrix tbody th{
+  background:var(--paper-deep);
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:.95rem;
+  color:var(--ink);
+}
+.matrix tbody th{text-align:left;padding-left:14px;}
+.matrix .cell{
+  cursor:pointer;
+  background:var(--paper-soft);
+  color:var(--ink-soft);
+  transition:all .15s;
+}
+.matrix .cell:hover{background:var(--accent-soft);color:var(--ink);}
+.matrix .cell.is-selected{background:var(--accent);color:var(--paper-soft);}
+.matrix .cell.diag{background:transparent;color:var(--ink-mute);cursor:default;}
+.matrix .cell.empty{color:var(--ink-mute);cursor:default;}
+.matrix .relation-tag{
+  display:inline-block;
+  padding:3px 8px;
+  border-radius:4px;
+  background:var(--paper-deep);
+  font-family:var(--mono);
+  font-size:.68rem;
+}
+.matrix .cell:hover .relation-tag,
+.matrix .cell.is-selected .relation-tag{background:transparent;color:inherit;}
+.matrix .relation-tag.high{background:rgba(166,130,78,.2);color:var(--accent-deep);font-weight:600;}
+.matrix .relation-tag.med{background:rgba(124,144,121,.18);color:var(--sage);}
+
+.matrix-detail{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:30px 32px;
+  overflow-y:auto;
+  min-height:0;
+}
+.matrix-detail .empty-state{
+  color:var(--ink-mute);
+  font-style:italic;
+  font-family:var(--serif);
+  font-size:1.05rem;
+  text-align:center;
+  margin-top:40%;
+}
+.matrix-detail h3{margin-bottom:14px;color:var(--ink);font-size:1.4rem;}
+.matrix-detail .tag{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:100px;
+  font-family:var(--mono);
+  font-size:.7rem;
+  background:var(--paper-deep);
+  color:var(--accent-deep);
+  margin-right:6px;
+  margin-bottom:12px;
+  letter-spacing:.06em;
+}
+.matrix-detail h4{
+  font-family:var(--serif);
+  color:var(--accent-deep);
+  margin:16px 0 6px;
+  font-size:1.05rem;
+}
+.matrix-detail p{
+  color:var(--ink-soft);
+  font-size:.94rem;
+  line-height:1.6;
+  margin-bottom:8px;
+}
+.matrix-detail blockquote{
+  font-family:var(--serif);
+  font-style:italic;
+  border-left:3px solid var(--accent);
+  padding:4px 0 4px 14px;
+  margin:12px 0;
+  color:var(--ink);
+  font-size:1rem;
+}
+
+/* === SLIDE 7 · TEMAS === */
+.tema-stage{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+.tema-card{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:34px 40px;
+  flex:1;
+  overflow-y:auto;
+  display:none;
+  animation:fadeIn .4s ease;
+  min-height:480px;
+}
+.tema-card.is-active{display:block;}
+.tema-header{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-bottom:22px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+.tema-num{
+  width:44px;height:44px;
+  border-radius:50%;
+  background:var(--accent);
+  color:var(--paper-soft);
+  display:grid;place-items:center;
+  font-family:var(--mono);
+  font-weight:700;
+  flex-shrink:0;
+}
+.tema-title{
+  font-family:var(--serif);
+  font-size:1.7rem;
+  color:var(--ink);
+  font-weight:500;
+}
+.tema-card h5{
+  font-family:var(--mono);
+  font-size:.75rem;
+  color:var(--accent);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin:22px 0 8px;
+}
+.tema-card p{
+  color:var(--ink-soft);
+  margin-bottom:8px;
+  font-size:.96rem;
+  line-height:1.6;
+}
+.tema-card ul{list-style:none;margin-bottom:10px;}
+.tema-card ul li{
+  padding:7px 0 7px 22px;
+  position:relative;
+  color:var(--ink-soft);
+  font-size:.94rem;
+}
+.tema-card ul li::before{
+  content:'';
+  position:absolute;
+  left:0;top:14px;
+  width:10px;height:1px;
+  background:var(--accent);
+}
+.tema-card .who{color:var(--ink);font-weight:600;}
+.tema-card blockquote{
+  font-family:var(--serif);
+  font-style:italic;
+  border-left:3px solid var(--accent);
+  padding:6px 0 6px 16px;
+  margin-top:10px;
+  color:var(--ink);
+  font-size:1.05rem;
+}
+
+/* === SLIDE 8 · CITAS === */
+.citas-filter{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:22px;
+}
+.filter-chip{
+  background:var(--paper-soft);
+  color:var(--ink-soft);
+  border:1px solid var(--line);
+  padding:8px 16px;
+  border-radius:100px;
+  cursor:pointer;
+  font-size:.85rem;
+  font-family:var(--sans);
+  transition:all .2s;
+}
+.filter-chip:hover{background:var(--paper-deep);color:var(--ink);}
+.filter-chip.is-active{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.citas-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:18px;
+  flex:1;
+  align-content:start;
+  overflow-y:auto;
+  padding:4px 4px 20px;
+}
+.cita{
+  background:var(--paper-card);
+  border-left:4px solid var(--accent);
+  border-radius:0 12px 12px 0;
+  padding:22px 24px;
+  transition:all .2s;
+}
+.cita:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(45,42,38,.08);
+}
+.cita blockquote{
+  font-family:var(--serif);
+  font-size:1.1rem;
+  font-style:italic;
+  color:var(--ink);
+  line-height:1.5;
+  margin-bottom:12px;
+}
+.cita cite{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-mute);
+  font-style:normal;
+  letter-spacing:.04em;
+}
+.cita.h-aristoteles{border-left-color:#A06C49;}
+.cita.h-kant{border-left-color:#5A7596;}
+.cita.h-wollstonecraft{border-left-color:#AB6C86;}
+.cita.h-marx{border-left-color:#9F5450;}
+.cita.h-luxemburg{border-left-color:#803F44;}
+.cita.h-beauvoir{border-left-color:#7B5F8C;}
+.cita.h-sartre{border-left-color:#5B8290;}
+
+/* === SLIDE 9 · GUÍA === */
+.guia-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:26px;
+}
+.step{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:24px 22px;
+  border-top:3px solid var(--accent);
+}
+.step-num{
+  font-family:var(--mono);
+  font-size:.72rem;
+  color:var(--accent);
+  letter-spacing:.16em;
+  margin-bottom:8px;
+}
+.step h4{
+  font-family:var(--serif);
+  font-size:1.2rem;
+  color:var(--ink);
+  margin-bottom:14px;
+  font-weight:600;
+}
+.step ul{list-style:none;}
+.step ul li{
+  padding:5px 0 5px 18px;
+  position:relative;
+  color:var(--ink-soft);
+  font-size:.9rem;
+}
+.step ul li::before{
+  content:'▸';
+  position:absolute;
+  left:0;color:var(--accent);
+}
+.disert{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px 32px;
+}
+.disert h3{margin-bottom:18px;font-family:var(--serif);color:var(--ink);}
+.disert > p{margin-bottom:18px;color:var(--ink-soft);}
+.disert-blocks{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.disert-block{
+  background:var(--paper-soft);
+  border-radius:10px;
+  padding:18px 20px;
+  border-top:2px solid var(--accent);
+}
+.disert-block h5{
+  font-family:var(--serif);
+  color:var(--accent-deep);
+  margin-bottom:8px;
+  font-size:1.05rem;
+  font-weight:600;
+}
+.disert-block p{color:var(--ink-soft);font-size:.92rem;}
+
+/* === SLIDE 10 · GLOSARIO === */
+.glosario-wrap{
+  flex:1;
+  overflow-y:auto;
+  padding:4px 4px 20px;
+  column-count:2;
+  column-gap:24px;
+}
+.term{
+  break-inside:avoid;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 18px;
+  margin-bottom:12px;
+}
+.term dt{
+  font-family:var(--serif);
+  color:var(--accent-deep);
+  font-size:1.1rem;
+  margin-bottom:4px;
+  font-weight:600;
+}
+.term .greek{
+  font-family:var(--serif);
+  font-style:italic;
+  color:var(--ink-mute);
+  font-size:.85rem;
+  margin-left:8px;
+}
+.term dd{
+  font-size:.88rem;
+  color:var(--ink-soft);
+  line-height:1.5;
+}
+
+/* === SLIDE 11 · FLASHCARDS === */
+.flash-stage{
+  flex:1;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:50px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  min-height:460px;
+}
+.flash-status{
+  position:absolute;
+  top:20px;left:28px;
+  font-family:var(--mono);
+  color:var(--ink-mute);
+  font-size:.8rem;
+}
+.flash-cat{
+  position:absolute;
+  top:20px;right:28px;
+  font-family:var(--mono);
+  color:var(--accent);
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+}
+.flash-q{
+  font-family:var(--serif);
+  font-size:clamp(1.5rem,2.8vw,2.2rem);
+  color:var(--ink);
+  margin-bottom:28px;
+  line-height:1.3;
+  max-width:780px;
+  font-weight:500;
+}
+.flash-a{
+  font-size:1.1rem;
+  color:var(--ink-soft);
+  line-height:1.6;
+  display:none;
+  padding:22px 28px;
+  background:var(--paper-soft);
+  border-radius:12px;
+  border:1px dashed var(--line-strong);
+  margin-bottom:24px;
+  max-width:760px;
+}
+.flash-stage.show-answer .flash-a{display:block;animation:fadeIn .3s ease;}
+.flash-controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:18px;
+}
+.flash-btn{
+  background:var(--paper-soft);
+  color:var(--ink);
+  border:1px solid var(--line);
+  padding:11px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  font-family:var(--sans);
+  font-size:.92rem;
+  font-weight:500;
+  transition:all .2s;
+}
+.flash-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.flash-btn.primary{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.flash-btn.primary:hover{background:var(--accent-deep);}
+.flash-score{
+  margin-top:24px;
+  font-family:var(--mono);
+  font-size:.85rem;
+  color:var(--ink-mute);
+}
+.flash-score .know{color:var(--sage);}
+.flash-score .no{color:var(--rose);}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand">
+    <span class="brand-mark">φ</span>
+    <span>Filosofía · PAU 2026</span>
+  </div>
+  <div class="slide-counter">
+    <strong id="counterNum">1</strong> / <span id="counterTotal">11</span>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 1 · PORTADA                            -->
+<!-- ============================================ -->
+<section class="slide slide-cover is-active" data-title="Portada">
+  <div class="slide-inner" style="justify-content:center;">
+    <div class="cover-mark">φ</div>
+    <h1 class="cover-title">Filosofía<span class="ornament">·</span>PAU 2026</h1>
+    <p class="cover-sub">Siete autores. Doce temas. Tres ejercicios. Diez puntos.</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><div class="n">7</div><div class="l">Autores</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat"><div class="n">12</div><div class="l">Temas</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat"><div class="n">3</div><div class="l">Ejercicios</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat"><div class="n">10</div><div class="l">Puntos</div></div>
+    </div>
+    <p class="cover-hint">Pulsa la flecha derecha o haz clic en › para avanzar</p>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 2 · ESTRUCTURA DEL EXAMEN              -->
+<!-- ============================================ -->
+<section class="slide" data-title="Estructura del examen">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">El examen</div>
+    <h2 class="slide-title">Tres ejercicios. Diez puntos. Noventa minutos.</h2>
+    <p class="slide-lead">El 70 % está armonizado entre comunidades autónomas (ejercicios 1 y 2). El 30 % restante es propio de cada CCAA.</p>
+
+    <div class="points-chart">
+      <svg viewBox="0 0 1100 160" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <!-- Brackets armonizado / no armonizado -->
+        <line x1="40" y1="22" x2="724" y2="22" stroke="#A6824E" stroke-width="1.5"/>
+        <line x1="40" y1="22" x2="40" y2="32" stroke="#A6824E" stroke-width="1.5"/>
+        <line x1="724" y1="22" x2="724" y2="32" stroke="#A6824E" stroke-width="1.5"/>
+        <text x="382" y="16" text-anchor="middle" font-size="11" fill="#A6824E" font-weight="600" letter-spacing="0.1em">70% ARMONIZADO ENTRE CCAA</text>
+
+        <line x1="740" y1="22" x2="1060" y2="22" stroke="#7C9079" stroke-width="1.5"/>
+        <line x1="740" y1="22" x2="740" y2="32" stroke="#7C9079" stroke-width="1.5"/>
+        <line x1="1060" y1="22" x2="1060" y2="32" stroke="#7C9079" stroke-width="1.5"/>
+        <text x="900" y="16" text-anchor="middle" font-size="11" fill="#7C9079" font-weight="600" letter-spacing="0.1em">30% PROPIO CCAA</text>
+
+        <!-- Bar segments -->
+        <rect x="40" y="38" width="392" height="56" fill="#A06C49" rx="6"/>
+        <rect x="436" y="38" width="288" height="56" fill="#5A7596" rx="6"/>
+        <rect x="740" y="38" width="320" height="56" fill="#7B5F8C" rx="6"/>
+
+        <!-- Point numbers inside bar -->
+        <text x="236" y="74" text-anchor="middle" font-family="Lora,serif" font-size="26" fill="#FAF6EE" font-weight="700">4 pts</text>
+        <text x="580" y="74" text-anchor="middle" font-family="Lora,serif" font-size="26" fill="#FAF6EE" font-weight="700">3 pts</text>
+        <text x="900" y="74" text-anchor="middle" font-family="Lora,serif" font-size="26" fill="#FAF6EE" font-weight="700">3 pts</text>
+
+        <!-- Exercise labels below bar -->
+        <text x="236" y="116" text-anchor="middle" font-size="13" fill="#2D2A26" font-weight="600">Ejercicio 1</text>
+        <text x="236" y="134" text-anchor="middle" font-size="11.5" fill="#5C574F">Comentario de texto</text>
+
+        <text x="580" y="116" text-anchor="middle" font-size="13" fill="#2D2A26" font-weight="600">Ejercicio 2</text>
+        <text x="580" y="134" text-anchor="middle" font-size="11.5" fill="#5C574F">Pregunta-tema</text>
+
+        <text x="900" y="116" text-anchor="middle" font-size="13" fill="#2D2A26" font-weight="600">Ejercicio 3</text>
+        <text x="900" y="134" text-anchor="middle" font-size="11.5" fill="#5C574F">Disertación filosófica</text>
+
+        <!-- Time suggestion -->
+        <text x="236" y="154" text-anchor="middle" font-size="10.5" fill="#8B8579">≈ 35 min</text>
+        <text x="580" y="154" text-anchor="middle" font-size="10.5" fill="#8B8579">≈ 25 min</text>
+        <text x="900" y="154" text-anchor="middle" font-size="10.5" fill="#8B8579">≈ 25 min</text>
+      </svg>
+    </div>
+
+    <div class="exam-grid">
+      <div class="exam-card">
+        <span class="pts">EJERCICIO 1 · 4 PUNTOS</span>
+        <h3>Comentario de texto</h3>
+        <p class="summary">Un fragmento de <strong>200–400 palabras</strong> de uno de los siete autores oficiales.</p>
+        <ul>
+          <li><strong>P1 (2 pts)</strong> · Ideas principales y estructura argumental del texto.</li>
+          <li><strong>P2 (2 pts)</strong> · Comparación crítica con una corriente <em>o</em> con otro fragmento breve.</li>
+          <li>No resumir. No recitar al autor. <em>Comprender</em>.</li>
+        </ul>
+      </div>
+      <div class="exam-card">
+        <span class="pts">EJERCICIO 2 · 3 PUNTOS</span>
+        <h3>Pregunta-tema</h3>
+        <p class="summary">Exposición argumentada sobre uno de los <strong>seis temas armonizados</strong>. Suele haber opción A o B.</p>
+        <ul>
+          <li>Defiende una tesis clara desde la introducción.</li>
+          <li>Estructura visible: introducción, desarrollo, cierre.</li>
+          <li>Cita 2-3 autores con precisión y aporta ejemplos propios.</li>
+        </ul>
+      </div>
+      <div class="exam-card">
+        <span class="pts">EJERCICIO 3 · 3 PUNTOS</span>
+        <h3>Disertación filosófica</h3>
+        <p class="summary">Tema de actualidad o cuestión filosófica abierta. La parte no armonizada de la prueba.</p>
+        <ul>
+          <li>Posicionamiento claro desde el principio.</li>
+          <li>Argumentos a favor y en contra antes del cierre.</li>
+          <li>Apoyo en al menos un autor del curso.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exam-warn">
+      <h4>Errores que penalizan automáticamente</h4>
+      <p><strong>Yuxtaposición de autores</strong> sin diálogo crítico (Ejercicio 2): tope en 1/3 de la nota. <strong>Resumir el texto</strong> en lugar de comprenderlo: suspende el Ejercicio 1. <strong>Opinión sin argumentos</strong> en el Ejercicio 3: no puntúa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 3 · LÍNEA TEMPORAL                     -->
+<!-- ============================================ -->
+<section class="slide" data-title="Línea temporal">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Línea histórica</div>
+    <h2 class="slide-title">Los siete autores en el tiempo.</h2>
+    <p class="slide-lead">Bloques A, B y C según el currículo del BOE.</p>
+
+    <div class="timeline-frame">
+      <svg viewBox="0 0 1200 340" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <defs>
+          <marker id="tl-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#BFB39A"/>
+          </marker>
+        </defs>
+        <text x="40" y="40" font-family="Inter,sans-serif" font-size="11" fill="#8B8579" letter-spacing="0.18em">BLOQUE A · ANTIGUA</text>
+        <text x="490" y="40" font-family="Inter,sans-serif" font-size="11" fill="#8B8579" letter-spacing="0.18em">BLOQUE B · MODERNA</text>
+        <text x="780" y="40" font-family="Inter,sans-serif" font-size="11" fill="#8B8579" letter-spacing="0.18em">BLOQUE C · CONTEMPORÁNEA</text>
+        <line x1="475" y1="58" x2="475" y2="280" stroke="#D6CCB7" stroke-width="1" stroke-dasharray="3 5"/>
+        <line x1="765" y1="58" x2="765" y2="280" stroke="#D6CCB7" stroke-width="1" stroke-dasharray="3 5"/>
+        <line x1="40" y1="200" x2="1160" y2="200" stroke="#BFB39A" stroke-width="1.5" marker-end="url(#tl-arrow)"/>
+
+        <!-- Aristóteles -->
+        <g>
+          <circle cx="160" cy="200" r="8" fill="#A06C49"/>
+          <line x1="160" y1="200" x2="160" y2="148" stroke="#A06C49" stroke-width="1.5"/>
+          <rect x="84" y="88" width="152" height="60" rx="8" fill="#FBF7EE" stroke="#A06C49" stroke-width="1.5"/>
+          <text x="160" y="111" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="18" font-weight="600" fill="#A06C49">Aristóteles</text>
+          <text x="160" y="129" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5C574F">384 – 322 a.C.</text>
+          <text x="160" y="143" text-anchor="middle" font-size="10" fill="#8B8579">Grecia clásica</text>
+          <text x="160" y="225" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B8579">s. IV a.C.</text>
+        </g>
+
+        <!-- Kant -->
+        <g>
+          <circle cx="555" cy="200" r="8" fill="#5A7596"/>
+          <line x1="555" y1="200" x2="555" y2="252" stroke="#5A7596" stroke-width="1.5"/>
+          <rect x="479" y="252" width="152" height="60" rx="8" fill="#FBF7EE" stroke="#5A7596" stroke-width="1.5"/>
+          <text x="555" y="275" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="18" font-weight="600" fill="#5A7596">Kant</text>
+          <text x="555" y="293" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5C574F">1724 – 1804</text>
+          <text x="555" y="307" text-anchor="middle" font-size="10" fill="#8B8579">Ilustración</text>
+          <text x="555" y="188" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B8579">s. XVIII</text>
+        </g>
+
+        <!-- Wollstonecraft -->
+        <g>
+          <circle cx="690" cy="200" r="8" fill="#AB6C86"/>
+          <line x1="690" y1="200" x2="690" y2="148" stroke="#AB6C86" stroke-width="1.5"/>
+          <rect x="608" y="88" width="164" height="60" rx="8" fill="#FBF7EE" stroke="#AB6C86" stroke-width="1.5"/>
+          <text x="690" y="111" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="17" font-weight="600" fill="#AB6C86">Wollstonecraft</text>
+          <text x="690" y="129" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5C574F">1759 – 1797</text>
+          <text x="690" y="143" text-anchor="middle" font-size="10" fill="#8B8579">1ª ola feminista</text>
+          <text x="690" y="225" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B8579">s. XVIII</text>
+        </g>
+
+        <!-- Marx -->
+        <g>
+          <circle cx="860" cy="200" r="8" fill="#9F5450"/>
+          <line x1="860" y1="200" x2="860" y2="252" stroke="#9F5450" stroke-width="1.5"/>
+          <rect x="784" y="252" width="152" height="60" rx="8" fill="#FBF7EE" stroke="#9F5450" stroke-width="1.5"/>
+          <text x="860" y="275" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="18" font-weight="600" fill="#9F5450">Marx</text>
+          <text x="860" y="293" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5C574F">1818 – 1883</text>
+          <text x="860" y="307" text-anchor="middle" font-size="10" fill="#8B8579">Crítica capitalismo</text>
+          <text x="860" y="188" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B8579">s. XIX</text>
+        </g>
+
+        <!-- Luxemburg -->
+        <g>
+          <circle cx="970" cy="200" r="8" fill="#803F44"/>
+          <line x1="970" y1="200" x2="970" y2="148" stroke="#803F44" stroke-width="1.5"/>
+          <rect x="894" y="88" width="152" height="60" rx="8" fill="#FBF7EE" stroke="#803F44" stroke-width="1.5"/>
+          <text x="970" y="111" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="17" font-weight="600" fill="#803F44">Luxemburg</text>
+          <text x="970" y="129" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5C574F">1871 – 1919</text>
+          <text x="970" y="143" text-anchor="middle" font-size="10" fill="#8B8579">Marxismo crítico</text>
+          <text x="970" y="225" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B8579">s. XIX–XX</text>
+        </g>
+
+        <!-- Beauvoir -->
+        <g>
+          <circle cx="1075" cy="200" r="8" fill="#7B5F8C"/>
+          <line x1="1075" y1="200" x2="1075" y2="252" stroke="#7B5F8C" stroke-width="1.5"/>
+          <rect x="999" y="252" width="152" height="60" rx="8" fill="#FBF7EE" stroke="#7B5F8C" stroke-width="1.5"/>
+          <text x="1075" y="275" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="18" font-weight="600" fill="#7B5F8C">Beauvoir</text>
+          <text x="1075" y="293" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5C574F">1908 – 1986</text>
+          <text x="1075" y="307" text-anchor="middle" font-size="10" fill="#8B8579">Existencialismo · feminismo</text>
+          <text x="1075" y="188" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B8579">s. XX</text>
+        </g>
+
+        <!-- Sartre -->
+        <g>
+          <circle cx="1130" cy="200" r="8" fill="#5B8290"/>
+          <line x1="1130" y1="200" x2="1130" y2="148" stroke="#5B8290" stroke-width="1.5"/>
+          <rect x="1056" y="88" width="120" height="60" rx="8" fill="#FBF7EE" stroke="#5B8290" stroke-width="1.5"/>
+          <text x="1116" y="111" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="18" font-weight="600" fill="#5B8290">Sartre</text>
+          <text x="1116" y="129" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5C574F">1905 – 1980</text>
+          <text x="1116" y="143" text-anchor="middle" font-size="10" fill="#8B8579">Existencialismo</text>
+          <text x="1130" y="225" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B8579">s. XX</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 4 · AUTORES (CARRUSEL)                 -->
+<!-- ============================================ -->
+<section class="slide" data-title="Autores">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Autores</div>
+    <h2 class="slide-title">Los siete autores oficiales.</h2>
+
+    <div class="author-carousel">
+      <div class="author-stack" id="authorStack">
+
+        <!-- ARISTÓTELES -->
+        <article class="author-card is-active" style="--author-color:#A06C49;">
+          <div class="author-side front">
+            <div class="author-meta"><span>01 / 07</span><span class="era">ANTIGUA</span></div>
+            <h3 class="author-name">Aristóteles</h3>
+            <div class="author-dates">384 – 322 a.C. · Estagira</div>
+            <blockquote class="author-quote">«El hombre es por naturaleza un animal social. El que no puede vivir en comunidad o no necesita nada por su propia suficiencia no es miembro de la ciudad, sino una bestia o un dios.»</blockquote>
+            <div class="author-work">POLÍTICA · LIBRO I</div>
+          </div>
+          <div class="author-side back">
+            <div class="author-side-title">Conceptos clave</div>
+            <ul class="author-concepts">
+              <li><strong>Sustancia</strong> — unión de materia y forma; lo que es en sí.</li>
+              <li><strong>Acto / potencia</strong> — explica el cambio: lo que algo es y lo que puede ser.</li>
+              <li><strong>Cuatro causas</strong> — material, formal, eficiente, final (<em>telos</em>).</li>
+              <li><strong>Eudemonismo</strong> — la felicidad (<em>eudaimonía</em>) como fin último.</li>
+              <li><strong>Virtud = término medio</strong> entre dos vicios (<em>mesótes</em>).</li>
+              <li><strong>Zoon politikón</strong> — el ser humano se realiza en la pólis.</li>
+            </ul>
+            <div class="author-compare">
+              <p><strong>↔ Kant</strong> — ética material teleológica vs ética formal del deber.</p>
+              <p><strong>↔ Beauvoir</strong> — determinismo biológico vs construcción social del género.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- KANT -->
+        <article class="author-card" style="--author-color:#5A7596;">
+          <div class="author-side front">
+            <div class="author-meta"><span>02 / 07</span><span class="era">MODERNA</span></div>
+            <h3 class="author-name">Kant</h3>
+            <div class="author-dates">1724 – 1804 · Königsberg</div>
+            <blockquote class="author-quote">«<em>Sapere aude!</em> ¡Ten valor para servirte de tu propio entendimiento! Tal es el lema de la Ilustración.»</blockquote>
+            <div class="author-work">¿QUÉ ES LA ILUSTRACIÓN?</div>
+          </div>
+          <div class="author-side back">
+            <div class="author-side-title">Conceptos clave</div>
+            <ul class="author-concepts">
+              <li><strong>Giro copernicano</strong> — el sujeto activo ordena la realidad.</li>
+              <li><strong>Fenómeno / noúmeno</strong> — conocemos las cosas como aparecen, no en sí.</li>
+              <li><strong>Imperativo categórico</strong> — universalidad, dignidad, autonomía.</li>
+              <li><strong>Ética formal del deber</strong> — actuar por deber, no por inclinación.</li>
+              <li><strong>Mayoría de edad</strong> — atreverse a pensar por uno mismo.</li>
+              <li><strong>Tres postulados</strong> — libertad, alma inmortal, Dios.</li>
+            </ul>
+            <div class="author-compare">
+              <p><strong>↔ Aristóteles</strong> — ética formal frente a material; deber frente a felicidad.</p>
+              <p><strong>↔ Beauvoir</strong> — libertad universal abstracta frente a libertad situada.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- WOLLSTONECRAFT -->
+        <article class="author-card" style="--author-color:#AB6C86;">
+          <div class="author-side front">
+            <div class="author-meta"><span>03 / 07</span><span class="era">MODERNA</span></div>
+            <h3 class="author-name">Wollstonecraft</h3>
+            <div class="author-dates">1759 – 1797 · Londres</div>
+            <blockquote class="author-quote">«La virtud no tiene sexo. Si las mujeres son seres racionales, deben recibir la misma educación y participar del mismo proyecto ilustrado.»</blockquote>
+            <div class="author-work">VINDICACIÓN DE LOS DERECHOS DE LA MUJER</div>
+          </div>
+          <div class="author-side back">
+            <div class="author-side-title">Conceptos clave</div>
+            <ul class="author-concepts">
+              <li><strong>Primera ola feminista</strong> — Ilustración aplicada también a las mujeres.</li>
+              <li><strong>Razón = humanidad</strong> — si la mujer es racional, también es libre.</li>
+              <li><strong>Educación racional</strong> — única vía a la virtud y a la ciudadanía.</li>
+              <li><strong>Crítica a Rousseau</strong> — el <em>Emilio</em> educa a Sofía para servir; ella lo refuta.</li>
+              <li><strong>«Esclavitud doméstica»</strong> — la dependencia femenina como degradación moral.</li>
+            </ul>
+            <div class="author-compare">
+              <p><strong>↔ Kant</strong> — extiende el <em>sapere aude</em> al «bello sexo» que él excluía.</p>
+              <p><strong>↔ Beauvoir</strong> — primera ola (Ilustración) frente a segunda ola (situación, género).</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- MARX -->
+        <article class="author-card" style="--author-color:#9F5450;">
+          <div class="author-side front">
+            <div class="author-meta"><span>04 / 07</span><span class="era">CONTEMPORÁNEA</span></div>
+            <h3 class="author-name">Marx</h3>
+            <div class="author-dates">1818 – 1883 · Tréveris</div>
+            <blockquote class="author-quote">«Los filósofos no han hecho más que interpretar el mundo de diversas maneras; pero de lo que se trata es de transformarlo.»</blockquote>
+            <div class="author-work">TESIS SOBRE FEUERBACH · XI</div>
+          </div>
+          <div class="author-side back">
+            <div class="author-side-title">Conceptos clave</div>
+            <ul class="author-concepts">
+              <li><strong>Materialismo histórico</strong> — las condiciones materiales explican las ideas.</li>
+              <li><strong>Infraestructura / superestructura</strong> — la economía determina la conciencia social.</li>
+              <li><strong>Modos de producción</strong> — asiático, antiguo, feudal, capitalista, comunista.</li>
+              <li><strong>Plusvalía</strong> — trabajo no pagado apropiado por el capitalista.</li>
+              <li><strong>Alienación</strong> — el obrero se enajena en producto, actividad y especie.</li>
+              <li><strong>Lucha de clases</strong> — motor de la historia.</li>
+            </ul>
+            <div class="author-compare">
+              <p><strong>↔ Luxemburg</strong> — continúa y corrige a Marx (acumulación e imperialismo).</p>
+              <p><strong>↔ Beauvoir</strong> — opresión económica y opresión patriarcal en diálogo.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- LUXEMBURG -->
+        <article class="author-card" style="--author-color:#803F44;">
+          <div class="author-side front">
+            <div class="author-meta"><span>05 / 07</span><span class="era">CONTEMPORÁNEA</span></div>
+            <h3 class="author-name">Luxemburg</h3>
+            <div class="author-dates">1871 – 1919 · Zamość</div>
+            <blockquote class="author-quote">«El capitalismo está atenido, aun en su plena madurez, a la existencia coetánea de capas y sociedades no capitalistas.»</blockquote>
+            <div class="author-work">LA ACUMULACIÓN DEL CAPITAL · CAP. XXVI</div>
+          </div>
+          <div class="author-side back">
+            <div class="author-side-title">Conceptos clave</div>
+            <ul class="author-concepts">
+              <li><strong>Acumulación del capital</strong> — necesita un afuera no capitalista para realizar la plusvalía.</li>
+              <li><strong>Imperialismo</strong> — fase tardía y necesaria del capitalismo.</li>
+              <li><strong>Crítica al esquema marxista</strong> — Marx asume capitalismo cerrado; ella lo abre.</li>
+              <li><strong>Violencia colonial</strong> — método estructural de expansión del capital.</li>
+              <li><strong>Espontaneidad de masas</strong> — la huelga general como momento creativo.</li>
+            </ul>
+            <div class="author-compare">
+              <p><strong>↔ Marx</strong> — continuadora crítica; añade la dimensión colonial al análisis.</p>
+              <p><strong>↔ Bernstein</strong> — frente al reformismo socialdemócrata, defiende la revolución.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- BEAUVOIR -->
+        <article class="author-card" style="--author-color:#7B5F8C;">
+          <div class="author-side front">
+            <div class="author-meta"><span>06 / 07</span><span class="era">CONTEMPORÁNEA</span></div>
+            <h3 class="author-name">Beauvoir</h3>
+            <div class="author-dates">1908 – 1986 · París</div>
+            <blockquote class="author-quote">«No se nace mujer: se llega a serlo. Ningún destino biológico, psíquico o económico define la figura que reviste en el seno de la sociedad la hembra humana.»</blockquote>
+            <div class="author-work">EL SEGUNDO SEXO · LIBRO II</div>
+          </div>
+          <div class="author-side back">
+            <div class="author-side-title">Conceptos clave</div>
+            <ul class="author-concepts">
+              <li><strong>Mujer como Otro</strong> — alteridad inesencial frente al varón-Sujeto.</li>
+              <li><strong>Sexo / género</strong> — la feminidad se «llega a ser», no se nace.</li>
+              <li><strong>Inmanencia / trascendencia</strong> — a la mujer se le impone la inmanencia.</li>
+              <li><strong>Libertad situada</strong> — corrige a Sartre: no toda situación admite igual libertad.</li>
+              <li><strong>Opresión vs mala fe</strong> — la inmanencia infligida no es culpa.</li>
+              <li><strong>Reciprocidad</strong> — la igualdad real exige reconocerse como sujetos.</li>
+            </ul>
+            <div class="author-compare">
+              <p><strong>↔ Aristóteles</strong> — denuncia el determinismo biológico clásico.</p>
+              <p><strong>↔ Sartre</strong> — libertad absoluta frente a libertad jerarquizada por la situación.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- SARTRE -->
+        <article class="author-card" style="--author-color:#5B8290;">
+          <div class="author-side front">
+            <div class="author-meta"><span>07 / 07</span><span class="era">CONTEMPORÁNEA</span></div>
+            <h3 class="author-name">Sartre</h3>
+            <div class="author-dates">1905 – 1980 · París</div>
+            <blockquote class="author-quote">«El hombre empieza por existir, se encuentra, surge en el mundo, y después se define. La existencia precede a la esencia.»</blockquote>
+            <div class="author-work">EL EXISTENCIALISMO ES UN HUMANISMO</div>
+          </div>
+          <div class="author-side back">
+            <div class="author-side-title">Conceptos clave</div>
+            <ul class="author-concepts">
+              <li><strong>Existencia precede a esencia</strong> — no hay naturaleza humana previa.</li>
+              <li><strong>Libertad radical</strong> — estamos «condenados a ser libres».</li>
+              <li><strong>Mala fe</strong> — refugiarse en pasiones o roles para evitar la libertad.</li>
+              <li><strong>Responsabilidad universal</strong> — al elegirme, elijo a toda la humanidad.</li>
+              <li><strong>Proyecto</strong> — el ser humano se proyecta hacia el porvenir.</li>
+              <li><strong>Intersubjetividad</strong> — el <em>cogito</em> descubre al Otro junto a sí.</li>
+            </ul>
+            <div class="author-compare">
+              <p><strong>↔ Beauvoir</strong> — ella corrige su universalismo con la noción de situación.</p>
+              <p><strong>↔ Kant</strong> — comparte la libertad como fundamento, rechaza el formalismo.</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="subnav">
+      <button class="subnav-btn" id="authorPrev" aria-label="Autor anterior">‹</button>
+      <div class="subnav-label" id="authorLabel">Aristóteles · 1 / 7</div>
+      <button class="subnav-btn" id="authorNext" aria-label="Siguiente autor">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 5 · ESQUEMAS                            -->
+<!-- ============================================ -->
+<section class="slide" data-title="Esquemas">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Mapas conceptuales</div>
+    <h2 class="slide-title">Mapas conceptuales por autor.</h2>
+
+    <div class="schema-tabs" role="tablist">
+      <button class="schema-tab is-active" data-target="sk-aristoteles">Aristóteles</button>
+      <button class="schema-tab" data-target="sk-kant">Kant</button>
+      <button class="schema-tab" data-target="sk-marx">Marx</button>
+      <button class="schema-tab" data-target="sk-beauvoir">Beauvoir</button>
+      <button class="schema-tab" data-target="sk-existencialismo">Existencialismo</button>
+    </div>
+
+    <div class="schema-stage">
+
+      <!-- ARISTÓTELES -->
+      <div class="schema-panel is-active" id="sk-aristoteles">
+        <svg viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+          <text x="600" y="30" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="22" font-weight="600" fill="#A06C49">Aristóteles · sustancia, ética y polis</text>
+
+          <!-- Centro: sustancia -->
+          <rect x="500" y="240" width="200" height="76" rx="12" fill="#FAF6EE" stroke="#A06C49" stroke-width="2.2"/>
+          <text x="600" y="270" text-anchor="middle" font-size="17" font-weight="700" fill="#A06C49" font-family="Lora,Georgia,serif">SUSTANCIA</text>
+          <text x="600" y="292" text-anchor="middle" font-size="11" fill="#5C574F" font-style="italic">ousía · «lo que es»</text>
+
+          <!-- 4 causas -->
+          <rect x="60" y="80" width="240" height="150" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="180" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">CUATRO CAUSAS</text>
+          <line x1="80" y1="118" x2="280" y2="118" stroke="#D6CCB7"/>
+          <text x="80" y="140" font-size="11.5" fill="#2D2A26">▸ <tspan font-weight="600">Material</tspan> — de qué.</text>
+          <text x="80" y="162" font-size="11.5" fill="#2D2A26">▸ <tspan font-weight="600">Formal</tspan> — esencia.</text>
+          <text x="80" y="184" font-size="11.5" fill="#2D2A26">▸ <tspan font-weight="600">Eficiente</tspan> — quién mueve.</text>
+          <text x="80" y="206" font-size="11.5" fill="#2D2A26">▸ <tspan font-weight="600">Final</tspan> — para qué (telos).</text>
+          <path d="M 300 170 Q 400 220 500 270" stroke="#BFB39A" stroke-width="1.4" fill="none"/>
+
+          <!-- Potencia-acto -->
+          <rect x="430" y="90" width="340" height="130" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="600" y="115" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">POTENCIA · ACTO</text>
+          <line x1="450" y1="128" x2="750" y2="128" stroke="#D6CCB7"/>
+          <text x="600" y="152" text-anchor="middle" font-size="12" fill="#2D2A26"><tspan font-weight="600">Potencia</tspan> = lo que algo <tspan font-style="italic">puede ser</tspan></text>
+          <text x="600" y="172" text-anchor="middle" font-size="12" fill="#2D2A26"><tspan font-weight="600">Acto</tspan> = lo que algo <tspan font-style="italic">es</tspan></text>
+          <text x="600" y="198" text-anchor="middle" font-size="11" fill="#5C574F" font-style="italic">El cambio = paso de potencia a acto.</text>
+          <path d="M 600 220 L 600 240" stroke="#A6824E" stroke-width="2" fill="none"/>
+
+          <!-- Categorías -->
+          <rect x="900" y="80" width="240" height="150" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="1020" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">CATEGORÍAS</text>
+          <line x1="920" y1="118" x2="1120" y2="118" stroke="#D6CCB7"/>
+          <text x="920" y="140" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">Sustancia 1ª:</tspan> individuo.</text>
+          <text x="920" y="162" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">Sustancia 2ª:</tspan> esencia.</text>
+          <text x="920" y="186" font-size="11.5" fill="#5C574F" font-style="italic">+ 9 accidentes:</text>
+          <text x="920" y="206" font-size="10.5" fill="#8B8579">cantidad, cualidad, relación, lugar, tiempo, posición, acción, pasión, estado.</text>
+          <path d="M 900 170 Q 800 220 700 270" stroke="#BFB39A" stroke-width="1.4" fill="none"/>
+
+          <!-- Eudemonismo (abajo central) -->
+          <rect x="370" y="350" width="460" height="180" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.8"/>
+          <text x="600" y="376" text-anchor="middle" font-size="14" font-weight="700" fill="#A6824E">ÉTICA EUDEMONISTA</text>
+          <line x1="400" y1="388" x2="800" y2="388" stroke="#D6CCB7"/>
+          <text x="600" y="414" text-anchor="middle" font-size="13" fill="#2D2A26">Fin último = <tspan font-style="italic" fill="#A6824E">eudaimonía</tspan> (felicidad)</text>
+          <text x="600" y="438" text-anchor="middle" font-size="12.5" fill="#5C574F">Virtud = término medio (<tspan font-style="italic">mesótes</tspan>) entre dos vicios.</text>
+          <text x="600" y="464" text-anchor="middle" font-size="11.5" fill="#5C574F" font-style="italic">Virtudes éticas (carácter) + dianoéticas (intelectuales).</text>
+          <text x="600" y="494" text-anchor="middle" font-size="11" fill="#8B8579">Kant la criticará por material, empírica y teleológica.</text>
+          <path d="M 600 316 L 600 350" stroke="#A6824E" stroke-width="2" fill="none"/>
+
+          <!-- Polis (izquierda abajo) -->
+          <rect x="60" y="360" width="280" height="160" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="200" y="385" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">POLÍTICA</text>
+          <line x1="80" y1="398" x2="320" y2="398" stroke="#D6CCB7"/>
+          <text x="200" y="425" text-anchor="middle" font-size="13" font-weight="600" fill="#2D2A26">Zoon politikón</text>
+          <text x="200" y="445" text-anchor="middle" font-size="11" fill="#5C574F" font-style="italic">«animal social/político»</text>
+          <text x="80" y="475" font-size="11.5" fill="#2D2A26">Familia → aldea → polis</text>
+          <text x="80" y="495" font-size="11" fill="#8B8579">La polis es anterior al individuo.</text>
+
+          <!-- Crítica a Platón (derecha abajo) -->
+          <rect x="860" y="360" width="280" height="160" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="1000" y="385" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">CRÍTICA A PLATÓN</text>
+          <line x1="880" y1="398" x2="1120" y2="398" stroke="#D6CCB7"/>
+          <text x="880" y="425" font-size="11.5" fill="#2D2A26" font-style="italic">«La esencia no puede</text>
+          <text x="880" y="442" font-size="11.5" fill="#2D2A26" font-style="italic">existir separada de las cosas.»</text>
+          <text x="880" y="470" font-size="11" fill="#5C574F">No hay dos mundos.</text>
+          <text x="880" y="488" font-size="11" fill="#5C574F">La forma está EN la materia.</text>
+          <text x="880" y="510" font-size="11" fill="#8B8579" font-style="italic">El alma es la forma del cuerpo.</text>
+        </svg>
+      </div>
+
+      <!-- KANT -->
+      <div class="schema-panel" id="sk-kant">
+        <svg viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+          <text x="600" y="30" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="22" font-weight="600" fill="#5A7596">Kant · criticismo, deber, autonomía</text>
+
+          <!-- contexto arriba -->
+          <rect x="60" y="60" width="1080" height="56" rx="10" fill="rgba(90,117,150,.07)" stroke="#5A7596" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="600" y="83" text-anchor="middle" font-size="12.5" fill="#5A7596" font-weight="700">PROYECTO: superar el racionalismo dogmático (Descartes) Y el escepticismo empirista (Hume)</text>
+          <text x="600" y="103" text-anchor="middle" font-size="11" fill="#5C574F" font-style="italic">Síntesis: ni solo razón ni solo experiencia → idealismo trascendental.</text>
+
+          <!-- Giro copernicano -->
+          <rect x="430" y="150" width="340" height="80" rx="12" fill="#FAF6EE" stroke="#5A7596" stroke-width="2.2"/>
+          <text x="600" y="180" text-anchor="middle" font-size="17" font-weight="700" fill="#5A7596" font-family="Lora,Georgia,serif">GIRO COPERNICANO</text>
+          <text x="600" y="202" text-anchor="middle" font-size="11.5" fill="#2D2A26">El sujeto activo ordena la realidad</text>
+          <text x="600" y="220" text-anchor="middle" font-size="10.5" fill="#5C574F" font-style="italic">con sus formas a priori (espacio, tiempo + 12 categorías).</text>
+
+          <!-- Razón teórica -->
+          <rect x="60" y="270" width="320" height="200" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="220" y="294" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">RAZÓN TEÓRICA</text>
+          <text x="220" y="311" text-anchor="middle" font-size="10.5" fill="#8B8579" font-style="italic">¿Qué puedo conocer?</text>
+          <line x1="80" y1="324" x2="360" y2="324" stroke="#D6CCB7"/>
+          <text x="80" y="348" font-size="12" fill="#2D2A26" font-weight="600">Fenómeno</text>
+          <text x="80" y="365" font-size="10.5" fill="#5C574F">— cosas tal como aparecen</text>
+          <text x="80" y="389" font-size="12" fill="#2D2A26" font-weight="600">Noúmeno</text>
+          <text x="80" y="406" font-size="10.5" fill="#5C574F">— la cosa en sí (incognoscible)</text>
+          <text x="80" y="430" font-size="12" fill="#2D2A26" font-weight="600">Juicios sintéticos a priori</text>
+          <text x="80" y="447" font-size="10.5" fill="#5C574F">— posibles en matemáticas y física</text>
+          <text x="80" y="465" font-size="10.5" fill="#A6824E" font-style="italic">Metafísica imposible como ciencia.</text>
+          <path d="M 380 350 Q 410 280 490 220" stroke="#BFB39A" stroke-width="1.4" fill="none"/>
+
+          <!-- Razón práctica -->
+          <rect x="820" y="270" width="320" height="200" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="980" y="294" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">RAZÓN PRÁCTICA</text>
+          <text x="980" y="311" text-anchor="middle" font-size="10.5" fill="#8B8579" font-style="italic">¿Qué debo hacer?</text>
+          <line x1="840" y1="324" x2="1120" y2="324" stroke="#D6CCB7"/>
+          <text x="840" y="348" font-size="12" fill="#2D2A26" font-weight="600">Ética formal del deber</text>
+          <text x="840" y="365" font-size="10.5" fill="#5C574F">— sin contenido empírico</text>
+          <text x="840" y="389" font-size="12" fill="#2D2A26" font-weight="600">Autonomía</text>
+          <text x="840" y="406" font-size="10.5" fill="#5C574F">— la voluntad se da su propia ley</text>
+          <text x="840" y="430" font-size="12" fill="#2D2A26" font-weight="600">Tres postulados</text>
+          <text x="840" y="447" font-size="10.5" fill="#5C574F">libertad · alma inmortal · Dios</text>
+          <text x="840" y="465" font-size="10.5" fill="#A6824E" font-style="italic">Aquí accedemos al noúmeno como sujeto libre.</text>
+          <path d="M 820 350 Q 790 280 710 220" stroke="#BFB39A" stroke-width="1.4" fill="none"/>
+
+          <!-- Imperativo categórico -->
+          <rect x="280" y="490" width="640" height="60" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.8"/>
+          <text x="600" y="510" text-anchor="middle" font-size="12.5" font-weight="700" fill="#A6824E">IMPERATIVO CATEGÓRICO · tres formulaciones</text>
+          <text x="600" y="528" text-anchor="middle" font-size="10.5" fill="#2D2A26">① Universalidad · ② Fin en sí (humanidad como fin) · ③ Autonomía (voluntad legisladora)</text>
+          <text x="600" y="544" text-anchor="middle" font-size="10" fill="#8B8579" font-style="italic">vs imperativos hipotéticos (éticas materiales, como la de Aristóteles).</text>
+        </svg>
+      </div>
+
+      <!-- MARX -->
+      <div class="schema-panel" id="sk-marx">
+        <svg viewBox="0 0 1200 640" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+          <text x="600" y="30" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="22" font-weight="600" fill="#9F5450">Marx · materialismo histórico</text>
+
+          <!-- Tesis XI -->
+          <rect x="120" y="60" width="960" height="50" rx="10" fill="rgba(159,84,80,.08)" stroke="#9F5450" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="600" y="82" text-anchor="middle" font-size="12.5" font-weight="700" fill="#9F5450">PRAXIS sobre TEORÍA</text>
+          <text x="600" y="100" text-anchor="middle" font-size="11" fill="#2D2A26" font-style="italic">«Los filósofos no han hecho más que interpretar el mundo; de lo que se trata es de transformarlo.» — Tesis XI</text>
+
+          <!-- Superestructura -->
+          <rect x="320" y="140" width="560" height="86" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="600" y="166" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">SUPERESTRUCTURA (S)</text>
+          <text x="600" y="184" text-anchor="middle" font-size="10.5" fill="#8B8579" font-style="italic">conciencia social · formas ideológicas</text>
+          <text x="600" y="206" text-anchor="middle" font-size="11.5" fill="#2D2A26">Derecho · Política · Religión · Filosofía · Arte</text>
+
+          <!-- flecha determina -->
+          <path d="M 600 226 L 600 264" stroke="#A6824E" stroke-width="2.2" fill="none"/>
+          <text x="640" y="250" font-size="11" fill="#A6824E" font-weight="600" font-style="italic">determina</text>
+          <path d="M 600 264 L 596 256 L 604 256 Z" fill="#A6824E"/>
+
+          <!-- Infraestructura -->
+          <rect x="320" y="266" width="560" height="86" rx="10" fill="#FAF6EE" stroke="#9F5450" stroke-width="2"/>
+          <text x="600" y="292" text-anchor="middle" font-size="13" font-weight="700" fill="#9F5450">INFRAESTRUCTURA (I)</text>
+          <text x="600" y="310" text-anchor="middle" font-size="10.5" fill="#8B8579" font-style="italic">base material económica</text>
+          <text x="600" y="332" text-anchor="middle" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">Fuerzas productivas</tspan> + <tspan font-weight="600">relaciones de producción</tspan></text>
+
+          <!-- Modos de producción (izquierda) -->
+          <rect x="60" y="140" width="232" height="212" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="176" y="164" text-anchor="middle" font-size="12.5" font-weight="700" fill="#A6824E">MODOS DE PRODUCCIÓN</text>
+          <line x1="80" y1="176" x2="272" y2="176" stroke="#D6CCB7"/>
+          <text x="80" y="198" font-size="11" fill="#2D2A26">① <tspan font-weight="600">Asiático</tspan></text>
+          <text x="80" y="222" font-size="11" fill="#2D2A26">② <tspan font-weight="600">Antiguo</tspan> (esclavista)</text>
+          <text x="80" y="246" font-size="11" fill="#2D2A26">③ <tspan font-weight="600">Feudal</tspan> (siervo)</text>
+          <text x="80" y="270" font-size="11" fill="#2D2A26">④ <tspan font-weight="600">Capitalista</tspan> · plusvalía</text>
+          <text x="80" y="294" font-size="11" fill="#9F5450">⑤ <tspan font-weight="600">Comunista</tspan></text>
+          <text x="80" y="312" font-size="10" fill="#8B8579" font-style="italic">abolición de propiedad privada</text>
+          <text x="80" y="334" font-size="10" fill="#A6824E" font-style="italic">→ fin de la prehistoria humana.</text>
+
+          <!-- Dialéctica histórica (derecha) -->
+          <rect x="908" y="140" width="232" height="212" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="1024" y="164" text-anchor="middle" font-size="12.5" font-weight="700" fill="#A6824E">DIALÉCTICA HISTÓRICA</text>
+          <line x1="928" y1="176" x2="1120" y2="176" stroke="#D6CCB7"/>
+          <text x="1024" y="200" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="600">Cada modo lleva en sí</text>
+          <text x="1024" y="216" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="600">contradicciones internas.</text>
+          <text x="1024" y="240" text-anchor="middle" font-size="10.5" fill="#5C574F">Fuerzas productivas</text>
+          <text x="1024" y="256" text-anchor="middle" font-size="10.5" fill="#5C574F">chocan con relaciones de producción.</text>
+          <text x="1024" y="284" text-anchor="middle" font-size="12" fill="#9F5450" font-weight="700">REVOLUCIÓN SOCIAL</text>
+          <text x="1024" y="306" text-anchor="middle" font-size="10.5" fill="#8B8579">Lucha de clases =</text>
+          <text x="1024" y="322" text-anchor="middle" font-size="10.5" fill="#8B8579">motor de la historia.</text>
+
+          <!-- Alienación (abajo izq) -->
+          <rect x="60" y="380" width="360" height="220" rx="10" fill="#FBF7EE" stroke="#9F5450" stroke-width="1.5"/>
+          <text x="240" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="#9F5450">ALIENACIÓN</text>
+          <text x="240" y="420" text-anchor="middle" font-size="10" fill="#8B8579" font-style="italic">Manuscritos de Economía y Filosofía</text>
+          <line x1="80" y1="432" x2="400" y2="432" stroke="#D6CCB7"/>
+          <text x="80" y="455" font-size="11" fill="#2D2A26"><tspan font-weight="600">① Del producto</tspan> — objeto ajeno y hostil.</text>
+          <text x="80" y="480" font-size="11" fill="#2D2A26"><tspan font-weight="600">② De la actividad</tspan> — trabajo forzado.</text>
+          <text x="80" y="505" font-size="11" fill="#2D2A26"><tspan font-weight="600">③ Del ser genérico</tspan> — pierde humanidad.</text>
+          <text x="80" y="530" font-size="11" fill="#2D2A26"><tspan font-weight="600">④ De los otros</tspan> — solo relación-mercancía.</text>
+          <text x="80" y="565" font-size="10.5" fill="#5C574F" font-style="italic">«El obrero es más pobre</text>
+          <text x="80" y="580" font-size="10.5" fill="#5C574F" font-style="italic">cuanta más riqueza produce.»</text>
+
+          <!-- Plusvalía (abajo centro) -->
+          <rect x="440" y="380" width="320" height="220" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.8"/>
+          <text x="600" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">PLUSVALÍA</text>
+          <text x="600" y="420" text-anchor="middle" font-size="10" fill="#8B8579" font-style="italic">El secreto del capitalismo</text>
+          <line x1="460" y1="432" x2="740" y2="432" stroke="#D6CCB7"/>
+          <text x="600" y="462" text-anchor="middle" font-size="12" fill="#2D2A26">El obrero produce más valor</text>
+          <text x="600" y="480" text-anchor="middle" font-size="12" fill="#2D2A26">del que recibe en salario.</text>
+          <text x="600" y="510" text-anchor="middle" font-size="13" font-weight="600" fill="#A6824E">Plusvalía = trabajo no pagado</text>
+          <text x="600" y="540" text-anchor="middle" font-size="11" fill="#5C574F">Apropiada por el capitalista,</text>
+          <text x="600" y="556" text-anchor="middle" font-size="11" fill="#5C574F">genera capital.</text>
+          <text x="600" y="582" text-anchor="middle" font-size="10.5" fill="#9F5450" font-style="italic">La fuerza de trabajo es la única propiedad del obrero.</text>
+
+          <!-- Lucha de clases (abajo der) -->
+          <rect x="780" y="380" width="360" height="220" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="960" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="#9F5450">LUCHA DE CLASES</text>
+          <text x="960" y="420" text-anchor="middle" font-size="10" fill="#8B8579" font-style="italic">El conflicto fundamental</text>
+          <line x1="800" y1="432" x2="1120" y2="432" stroke="#D6CCB7"/>
+          <text x="800" y="455" font-size="11" fill="#2D2A26">▸ Libre ↔ esclavo (antigüedad)</text>
+          <text x="800" y="478" font-size="11" fill="#2D2A26">▸ Patricio ↔ plebeyo</text>
+          <text x="800" y="501" font-size="11" fill="#2D2A26">▸ Señor ↔ siervo (feudal)</text>
+          <text x="800" y="524" font-size="11" fill="#2D2A26" font-weight="600">▸ Burgués ↔ proletario (hoy)</text>
+          <text x="800" y="555" font-size="10.5" fill="#5C574F" font-style="italic">El capitalismo simplifica: dos campos enemigos.</text>
+          <text x="800" y="585" font-size="10.5" fill="#A6824E">La burguesía crea sus propios enterradores.</text>
+        </svg>
+      </div>
+
+      <!-- BEAUVOIR -->
+      <div class="schema-panel" id="sk-beauvoir">
+        <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+          <text x="600" y="30" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="22" font-weight="600" fill="#7B5F8C">Beauvoir · alteridad, situación, libertad</text>
+
+          <!-- Tesis -->
+          <rect x="160" y="60" width="880" height="56" rx="10" fill="rgba(123,95,140,.08)" stroke="#7B5F8C" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="600" y="84" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7B5F8C">TESIS CENTRAL</text>
+          <text x="600" y="104" text-anchor="middle" font-size="12.5" fill="#2D2A26" font-style="italic" font-family="Lora,Georgia,serif">«No se nace mujer: se llega a serlo.» — El segundo sexo, II</text>
+
+          <!-- Alteridad centro -->
+          <rect x="460" y="150" width="280" height="80" rx="12" fill="#FAF6EE" stroke="#7B5F8C" stroke-width="2.2"/>
+          <text x="600" y="180" text-anchor="middle" font-size="17" font-weight="700" fill="#7B5F8C" font-family="Lora,Georgia,serif">ALTERIDAD</text>
+          <text x="600" y="200" text-anchor="middle" font-size="11.5" fill="#2D2A26">La mujer es <tspan font-style="italic" font-weight="600">lo Otro</tspan>:</text>
+          <text x="600" y="218" text-anchor="middle" font-size="11" fill="#5C574F" font-style="italic">inesencial frente al varón-Sujeto.</text>
+
+          <!-- Sexo/género -->
+          <rect x="60" y="270" width="280" height="150" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="200" y="294" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">SEXO ≠ GÉNERO</text>
+          <line x1="80" y1="306" x2="320" y2="306" stroke="#D6CCB7"/>
+          <text x="80" y="330" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">Sexo</tspan> = dato biológico.</text>
+          <text x="80" y="350" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">Género</tspan> = construcción social.</text>
+          <text x="80" y="376" font-size="10.5" fill="#5C574F" font-style="italic">«La humanidad no es una especie</text>
+          <text x="80" y="392" font-size="10.5" fill="#5C574F" font-style="italic">natural, sino un devenir histórico.»</text>
+          <text x="80" y="412" font-size="10.5" fill="#A6824E">Refuta a Aristóteles y a Freud.</text>
+          <path d="M 340 320 Q 400 250 460 200" stroke="#BFB39A" stroke-width="1.4" fill="none"/>
+
+          <!-- Inmanencia/trascendencia -->
+          <rect x="860" y="270" width="280" height="150" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="1000" y="294" text-anchor="middle" font-size="12.5" font-weight="700" fill="#A6824E">INMANENCIA ↔ TRASCENDENCIA</text>
+          <line x1="880" y1="306" x2="1120" y2="306" stroke="#D6CCB7"/>
+          <text x="880" y="328" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">Trascendencia</tspan> — proyectarse.</text>
+          <text x="880" y="348" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">Inmanencia</tspan> — vida repetitiva.</text>
+          <text x="880" y="372" font-size="10.5" fill="#5C574F" font-style="italic">A la mujer se le impone la inmanencia</text>
+          <text x="880" y="388" font-size="10.5" fill="#5C574F" font-style="italic">(opresión, no mala fe).</text>
+          <text x="880" y="410" font-size="10.5" fill="#A6824E">Corrige a Sartre.</text>
+          <path d="M 860 320 Q 800 250 740 200" stroke="#BFB39A" stroke-width="1.4" fill="none"/>
+
+          <!-- Libertad situada (abajo izq) -->
+          <rect x="60" y="450" width="280" height="130" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="200" y="474" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">LIBERTAD SITUADA</text>
+          <line x1="80" y1="486" x2="320" y2="486" stroke="#D6CCB7"/>
+          <text x="80" y="508" font-size="11" fill="#2D2A26">Sartre: libertad absoluta.</text>
+          <text x="80" y="528" font-size="11" fill="#7B5F8C" font-weight="600">Beauvoir: libertad jerárquica.</text>
+          <text x="80" y="552" font-size="10.5" fill="#5C574F" font-style="italic">«¿Qué libertad puede tener una</text>
+          <text x="80" y="568" font-size="10.5" fill="#5C574F" font-style="italic">mujer encerrada en un harén?»</text>
+
+          <!-- Opresión vs mala fe (abajo centro) -->
+          <rect x="370" y="450" width="460" height="130" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.8"/>
+          <text x="600" y="474" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">OPRESIÓN ≠ MALA FE</text>
+          <line x1="400" y1="486" x2="800" y2="486" stroke="#D6CCB7"/>
+          <text x="600" y="510" text-anchor="middle" font-size="12" fill="#2D2A26"><tspan font-weight="600" fill="#7B5F8C">Mala fe</tspan> = inmanencia <tspan font-style="italic">consentida</tspan></text>
+          <text x="600" y="532" text-anchor="middle" font-size="12" fill="#2D2A26"><tspan font-weight="600" fill="#7B5F8C">Opresión</tspan> = inmanencia <tspan font-style="italic">infligida</tspan></text>
+          <text x="600" y="560" text-anchor="middle" font-size="10.5" fill="#5C574F" font-style="italic">En la opresión el sujeto no es culpable. No existe en Sartre.</text>
+
+          <!-- Reciprocidad (abajo der) -->
+          <rect x="860" y="450" width="280" height="130" rx="10" fill="#FBF7EE" stroke="#D6CCB7"/>
+          <text x="1000" y="474" text-anchor="middle" font-size="13" font-weight="700" fill="#A6824E">UTOPÍA: RECIPROCIDAD</text>
+          <line x1="880" y1="486" x2="1120" y2="486" stroke="#D6CCB7"/>
+          <text x="880" y="508" font-size="11" fill="#2D2A26">Reconocerse mutuamente</text>
+          <text x="880" y="525" font-size="11" fill="#2D2A26">como <tspan font-weight="600">sujetos</tspan>.</text>
+          <text x="880" y="552" font-size="10.5" fill="#5C574F" font-style="italic">«Pueden existir diferencias</text>
+          <text x="880" y="568" font-size="10.5" fill="#5C574F" font-style="italic">dentro de la igualdad.»</text>
+        </svg>
+      </div>
+
+      <!-- EXISTENCIALISMO -->
+      <div class="schema-panel" id="sk-existencialismo">
+        <svg viewBox="0 0 1200 540" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+          <text x="600" y="30" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="22" font-weight="600" fill="#5B8290">El existencialismo · Sartre y Beauvoir</text>
+
+          <!-- Tesis central -->
+          <rect x="280" y="60" width="640" height="86" rx="12" fill="#FAF6EE" stroke="#5B8290" stroke-width="2.2"/>
+          <text x="600" y="90" text-anchor="middle" font-size="17" font-weight="700" fill="#5B8290" font-family="Lora,Georgia,serif">LA EXISTENCIA PRECEDE A LA ESENCIA</text>
+          <text x="600" y="112" text-anchor="middle" font-size="11.5" fill="#2D2A26" font-style="italic">«El hombre empieza por existir, surge en el mundo, y después se define.»</text>
+          <text x="600" y="132" text-anchor="middle" font-size="11.5" fill="#2D2A26">No hay naturaleza humana previa: <tspan font-weight="600">el ser humano se hace.</tspan></text>
+
+          <!-- Sartre -->
+          <rect x="60" y="180" width="540" height="320" rx="10" fill="#FBF7EE" stroke="#5B8290" stroke-width="1.5"/>
+          <text x="330" y="208" text-anchor="middle" font-size="16" font-weight="600" fill="#5B8290" font-family="Lora,Georgia,serif">SARTRE</text>
+          <text x="330" y="226" text-anchor="middle" font-size="10.5" fill="#8B8579" font-style="italic">Libertad absoluta · responsabilidad universal</text>
+          <line x1="80" y1="240" x2="580" y2="240" stroke="#D6CCB7"/>
+          <text x="80" y="264" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Libertad radical</tspan> — «condenados a ser libres».</text>
+          <text x="80" y="288" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Mala fe</tspan> — esconder la libertad tras determinismos.</text>
+          <text x="80" y="312" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Proyecto</tspan> — el ser humano se proyecta al porvenir.</text>
+          <text x="80" y="336" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Responsabilidad total</tspan> — al elegirme elijo a la humanidad.</text>
+          <text x="80" y="360" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Intersubjetividad</tspan> — el cogito descubre al Otro.</text>
+          <text x="80" y="396" font-size="10.5" fill="#5C574F" font-style="italic">Crítica a Kant:</text>
+          <text x="80" y="412" font-size="10.5" fill="#5C574F" font-style="italic">«Los principios demasiado abstractos fracasan a la hora de definir la acción.»</text>
+          <text x="80" y="446" font-size="10.5" fill="#5C574F" font-style="italic">Crítica al materialismo:</text>
+          <text x="80" y="462" font-size="10.5" fill="#5C574F" font-style="italic">trata al hombre como objeto; el existencialismo le devuelve dignidad.</text>
+
+          <!-- Beauvoir -->
+          <rect x="620" y="180" width="520" height="320" rx="10" fill="#FBF7EE" stroke="#7B5F8C" stroke-width="1.5"/>
+          <text x="880" y="208" text-anchor="middle" font-size="16" font-weight="600" fill="#7B5F8C" font-family="Lora,Georgia,serif">BEAUVOIR</text>
+          <text x="880" y="226" text-anchor="middle" font-size="10.5" fill="#8B8579" font-style="italic">Libertad situada · perspectiva feminista</text>
+          <line x1="640" y1="240" x2="1120" y2="240" stroke="#D6CCB7"/>
+          <text x="640" y="264" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Situación jerárquica</tspan> — no toda situación admite igual libertad.</text>
+          <text x="640" y="288" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Opresión vs mala fe</tspan> — inmanencia infligida no es culpa.</text>
+          <text x="640" y="312" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Alteridad</tspan> — la mujer es lo Otro inesencial.</text>
+          <text x="640" y="336" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Sexo/género</tspan> — la feminidad se llega a ser.</text>
+          <text x="640" y="360" font-size="11.5" fill="#2D2A26"><tspan font-weight="600">▸ Ambigüedad</tspan> — carne y conciencia, finitud y trascendencia.</text>
+          <text x="640" y="396" font-size="10.5" fill="#5C574F" font-style="italic">Ejemplo paradigmático:</text>
+          <text x="640" y="412" font-size="10.5" fill="#5C574F" font-style="italic">«¿Qué libertad puede tener una mujer encerrada en un harén?»</text>
+          <text x="640" y="446" font-size="10.5" fill="#5C574F" font-style="italic">Suma a Sartre el materialismo histórico:</text>
+          <text x="640" y="462" font-size="10.5" fill="#5C574F" font-style="italic">la situación económico-social condiciona el ejercicio de la libertad.</text>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 6 · MATRIZ COMPARATIVA                 -->
+<!-- ============================================ -->
+<section class="slide" data-title="Matriz comparativa">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Comparativas</div>
+    <h2 class="slide-title">Comparativas entre autores.</h2>
+    <p class="slide-lead">Cruces autor-autor que aparecen en la P2 del Ejercicio 1.</p>
+
+    <div class="matrix-layout">
+      <div class="matrix-frame">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Aristót.</th><th>Kant</th><th>Wollst.</th><th>Marx</th><th>Lux.</th><th>Beauv.</th><th>Sartre</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Aristót.</th>
+              <td class="cell diag">—</td>
+              <td class="cell" data-rel="ari-kant"><span class="relation-tag high">ÉTICA</span></td>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="ari-beauvoir"><span class="relation-tag high">SEXO</span></td>
+              <td class="cell empty">·</td>
+            </tr>
+            <tr>
+              <th>Kant</th>
+              <td class="cell" data-rel="ari-kant"><span class="relation-tag high">ÉTICA</span></td>
+              <td class="cell diag">—</td>
+              <td class="cell" data-rel="kant-woll"><span class="relation-tag med">ILUSTR.</span></td>
+              <td class="cell" data-rel="kant-marx"><span class="relation-tag med">IDEA↔MAT</span></td>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="kant-beauvoir"><span class="relation-tag high">LIBERTAD</span></td>
+              <td class="cell" data-rel="kant-sartre"><span class="relation-tag med">FORMAL</span></td>
+            </tr>
+            <tr>
+              <th>Wollst.</th>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="kant-woll"><span class="relation-tag med">ILUSTR.</span></td>
+              <td class="cell diag">—</td>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="woll-beauvoir"><span class="relation-tag med">1ª↔2ª</span></td>
+              <td class="cell empty">·</td>
+            </tr>
+            <tr>
+              <th>Marx</th>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="kant-marx"><span class="relation-tag med">IDEA↔MAT</span></td>
+              <td class="cell empty">·</td>
+              <td class="cell diag">—</td>
+              <td class="cell" data-rel="marx-lux"><span class="relation-tag high">CONTINUID.</span></td>
+              <td class="cell" data-rel="marx-beauvoir"><span class="relation-tag med">OPRESIÓN</span></td>
+              <td class="cell empty">·</td>
+            </tr>
+            <tr>
+              <th>Lux.</th>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="marx-lux"><span class="relation-tag high">CONTINUID.</span></td>
+              <td class="cell diag">—</td>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+            </tr>
+            <tr>
+              <th>Beauv.</th>
+              <td class="cell" data-rel="ari-beauvoir"><span class="relation-tag high">SEXO</span></td>
+              <td class="cell" data-rel="kant-beauvoir"><span class="relation-tag high">LIBERTAD</span></td>
+              <td class="cell" data-rel="woll-beauvoir"><span class="relation-tag med">1ª↔2ª</span></td>
+              <td class="cell" data-rel="marx-beauvoir"><span class="relation-tag med">OPRESIÓN</span></td>
+              <td class="cell empty">·</td>
+              <td class="cell diag">—</td>
+              <td class="cell" data-rel="sartre-beauvoir"><span class="relation-tag high">SITUACIÓN</span></td>
+            </tr>
+            <tr>
+              <th>Sartre</th>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="kant-sartre"><span class="relation-tag med">FORMAL</span></td>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+              <td class="cell empty">·</td>
+              <td class="cell" data-rel="sartre-beauvoir"><span class="relation-tag high">SITUACIÓN</span></td>
+              <td class="cell diag">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="matrix-detail" id="matrixDetail">
+        <p class="empty-state">Selecciona una celda con relación marcada<br/>para ver el guion de comparación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 7 · TEMAS                              -->
+<!-- ============================================ -->
+<section class="slide" data-title="Temas (Ejercicio 2)">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Ejercicio 2 · Temas</div>
+    <h2 class="slide-title">Los seis temas armonizados.</h2>
+
+    <div class="tema-stage">
+      <article class="tema-card is-active">
+        <div class="tema-header"><div class="tema-num">1</div><div class="tema-title">Ética y política en la antigua Grecia</div></div>
+        <div class="tema-authors">
+          <span class="label">Autores</span>
+          <span class="auth-chip" style="--c:#A06C49;">Aristóteles</span>
+          <span class="auth-chip" style="--c:#D4B95E;">Platón</span>
+          <span class="auth-chip" style="--c:#8B8579;">Sócrates</span>
+          <span class="auth-chip" style="--c:#8B8579;">Helenismo</span>
+        </div>
+        <h5>Tesis central</h5>
+        <p>La ética y la política son inseparables en Grecia: ser bueno y ser ciudadano son la misma cosa. La virtud (areté) se realiza en la polis.</p>
+        <h5>Hilo argumental</h5>
+        <ul>
+          <li><span class="who">Sócrates</span> — intelectualismo moral: nadie hace el mal sabiendo.</li>
+          <li><span class="who">Platón</span> — justicia como armonía del alma y de la ciudad; filósofo-rey.</li>
+          <li><span class="who">Aristóteles</span> — eudemonismo, virtud = término medio, <em>zoon politikón</em>.</li>
+          <li><span class="who">Helenismo</span> — al perder la polis, las éticas se interiorizan: estoicismo, epicureísmo.</li>
+        </ul>
+        <h5>Cita que abre</h5>
+        <blockquote>«El hombre es por naturaleza un animal social… y el que no puede vivir en comunidad o no necesita nada por su propia suficiencia, no es miembro de la ciudad, sino una bestia o un dios.» — Aristóteles, <em>Política</em>.</blockquote>
+      </article>
+
+      <article class="tema-card">
+        <div class="tema-header"><div class="tema-num">2</div><div class="tema-title">El proyecto ilustrado</div></div>
+        <div class="tema-authors">
+          <span class="label">Autores</span>
+          <span class="auth-chip" style="--c:#5A7596;">Kant</span>
+          <span class="auth-chip" style="--c:#AB6C86;">Wollstonecraft</span>
+          <span class="auth-chip" style="--c:#8B8579;">Rousseau</span>
+          <span class="auth-chip" style="--c:#8B8579;">Hobbes / Locke</span>
+          <span class="auth-chip" style="--c:#8B8579;">Frankfurt</span>
+        </div>
+        <h5>Tesis central</h5>
+        <p>La Ilustración es la emancipación del ser humano por el uso público y autónomo de la razón. Implica autonomía, igualdad legal y crítica de toda autoridad no fundamentada.</p>
+        <h5>Hilo argumental</h5>
+        <ul>
+          <li><span class="who">Kant</span> — <em>Sapere aude</em>; salida de la minoría de edad culpable.</li>
+          <li><span class="who">Rousseau / Locke / Hobbes</span> — contrato social como fundamento de legitimidad.</li>
+          <li><span class="who">Wollstonecraft / Olympe de Gouges</span> — la Ilustración solo se cumple si incluye a las mujeres.</li>
+          <li><span class="who">Frankfurt</span> — «dialéctica de la Ilustración»: la razón se vuelve instrumental.</li>
+        </ul>
+        <h5>Cita que abre</h5>
+        <blockquote>«<em>Sapere aude!</em> ¡Ten valor para servirte de tu propio entendimiento! Tal es el lema de la Ilustración.» — Kant.</blockquote>
+      </article>
+
+      <article class="tema-card">
+        <div class="tema-header"><div class="tema-num">3</div><div class="tema-title">Éticas de la felicidad y éticas del deber</div></div>
+        <div class="tema-authors">
+          <span class="label">Autores</span>
+          <span class="auth-chip" style="--c:#A06C49;">Aristóteles</span>
+          <span class="auth-chip" style="--c:#5A7596;">Kant</span>
+          <span class="auth-chip" style="--c:#8B8579;">Utilitaristas</span>
+          <span class="auth-chip" style="--c:#7B5F8C;">Beauvoir</span>
+          <span class="auth-chip" style="--c:#5B8290;">Sartre</span>
+        </div>
+        <h5>Tesis central</h5>
+        <p>Dos modelos opuestos: las éticas materiales/teleológicas buscan un fin (felicidad, placer); las éticas formales/deontológicas atienden a la forma del deber, no al fin.</p>
+        <h5>Hilo argumental</h5>
+        <ul>
+          <li><span class="who">Aristóteles</span> — eudemonismo: felicidad como fin; virtud como hábito.</li>
+          <li><span class="who">Utilitarismo (Bentham, Mill)</span> — mayor felicidad para el mayor número.</li>
+          <li><span class="who">Kant</span> — ética formal del deber: imperativo categórico, autonomía, dignidad.</li>
+          <li><span class="who">Beauvoir / Sartre</span> — moral de la ambigüedad: situada, ni teleológica ni puramente formal.</li>
+        </ul>
+        <h5>Argumento Kant contra Aristóteles</h5>
+        <p>Toda ética material es <em>empírica</em> y <em>teleológica</em>. Por tanto no puede ser universal ni necesaria; sus mandatos son hipotéticos. Solo una ética formal y categórica es propiamente moral.</p>
+      </article>
+
+      <article class="tema-card">
+        <div class="tema-header"><div class="tema-num">4</div><div class="tema-title">La crítica al capitalismo</div></div>
+        <div class="tema-authors">
+          <span class="label">Autores</span>
+          <span class="auth-chip" style="--c:#9F5450;">Marx</span>
+          <span class="auth-chip" style="--c:#803F44;">Luxemburg</span>
+          <span class="auth-chip" style="--c:#8B8579;">Frankfurt</span>
+        </div>
+        <h5>Tesis central</h5>
+        <p>El capitalismo es un modo de producción histórico —no natural— basado en la propiedad privada de los medios de producción y la apropiación de plusvalía. Genera alienación y lucha de clases.</p>
+        <h5>Hilo argumental</h5>
+        <ul>
+          <li><span class="who">Marx</span> — materialismo histórico, plusvalía, alienación, lucha de clases.</li>
+          <li><span class="who">Manifiesto</span> — la burguesía revoluciona la producción; crea a sus propios enterradores.</li>
+          <li><span class="who">Luxemburg</span> — el capitalismo necesita un «afuera» no capitalista: imperialismo como fase necesaria.</li>
+          <li><span class="who">Frankfurt</span> — extiende la crítica a la cultura (mercancía cultural, racionalidad instrumental).</li>
+        </ul>
+        <h5>Cita que abre</h5>
+        <blockquote>«La historia de toda sociedad hasta hoy es la historia de luchas de clases.» — Marx, <em>Manifiesto</em>.</blockquote>
+      </article>
+
+      <article class="tema-card">
+        <div class="tema-header"><div class="tema-num">5</div><div class="tema-title">El existencialismo</div></div>
+        <div class="tema-authors">
+          <span class="label">Autores</span>
+          <span class="auth-chip" style="--c:#5B8290;">Sartre</span>
+          <span class="auth-chip" style="--c:#7B5F8C;">Beauvoir</span>
+          <span class="auth-chip" style="--c:#8B8579;">Heidegger</span>
+          <span class="auth-chip" style="--c:#8B8579;">Ortega · Zambrano</span>
+        </div>
+        <h5>Tesis central</h5>
+        <p>No hay naturaleza humana previa: «la existencia precede a la esencia». El ser humano se hace eligiéndose, en libertad y angustia, y es responsable de sí y de los demás.</p>
+        <h5>Hilo argumental</h5>
+        <ul>
+          <li><span class="who">Heidegger</span> — el ser ahí (<em>Dasein</em>) como cuidado y proyecto.</li>
+          <li><span class="who">Sartre</span> — libertad radical, mala fe, responsabilidad universal, intersubjetividad.</li>
+          <li><span class="who">Beauvoir</span> — libertad situada; opresión vs mala fe; aplicación al feminismo.</li>
+          <li><span class="who">Ortega / Zambrano</span> — razón vital y razón poética como respuestas afines.</li>
+        </ul>
+        <h5>Cita que abre</h5>
+        <blockquote>«El hombre empieza por existir, se encuentra, surge en el mundo, y después se define.» — Sartre.</blockquote>
+      </article>
+
+      <article class="tema-card">
+        <div class="tema-header"><div class="tema-num">6</div><div class="tema-title">Filosofía y teoría feminista</div></div>
+        <div class="tema-authors">
+          <span class="label">Autores</span>
+          <span class="auth-chip" style="--c:#AB6C86;">Wollstonecraft</span>
+          <span class="auth-chip" style="--c:#7B5F8C;">Beauvoir</span>
+          <span class="auth-chip" style="--c:#8B8579;">Olympe de Gouges</span>
+          <span class="auth-chip" style="--c:#8B8579;">Butler · Wittig</span>
+        </div>
+        <h5>Tesis central</h5>
+        <p>La filosofía feminista no es una ética particular: es una crítica radical a la tradición occidental, que ha confundido «humano» con «varón» y ha excluido a la mujer a la categoría de lo Otro.</p>
+        <h5>Hilo argumental — las olas</h5>
+        <ul>
+          <li><span class="who">Aspasia, Hipatia, Hildegard de Bingen</span> — filósofas borradas del canon.</li>
+          <li><span class="who">1ª ola · Wollstonecraft, Olympe de Gouges</span> — igualdad de razón y derechos.</li>
+          <li><span class="who">2ª ola · Beauvoir</span> — alteridad, sexo/género, situación.</li>
+          <li><span class="who">3ª ola y postestructuralismo</span> — Butler, Wittig: el género como performance.</li>
+        </ul>
+        <h5>Cita que abre</h5>
+        <blockquote>«En la sociedad humana nada es natural, y la mujer es uno de tantos productos elaborados por la civilización.» — Beauvoir, <em>El segundo sexo</em>.</blockquote>
+      </article>
+    </div>
+
+    <div class="subnav">
+      <button class="subnav-btn" id="temaPrev" aria-label="Tema anterior">‹</button>
+      <div class="subnav-label" id="temaLabel">Tema 1 / 6</div>
+      <button class="subnav-btn" id="temaNext" aria-label="Siguiente tema">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 8 · BANCO DE CITAS                     -->
+<!-- ============================================ -->
+<section class="slide" data-title="Banco de citas">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Citas</div>
+    <h2 class="slide-title">Veintiuna citas, tres por autor.</h2>
+
+    <div class="citas-filter" id="citasFilter">
+      <button class="filter-chip is-active" data-filter="all">Todas</button>
+      <button class="filter-chip" data-filter="aristoteles">Aristóteles</button>
+      <button class="filter-chip" data-filter="kant">Kant</button>
+      <button class="filter-chip" data-filter="wollstonecraft">Wollstonecraft</button>
+      <button class="filter-chip" data-filter="marx">Marx</button>
+      <button class="filter-chip" data-filter="luxemburg">Luxemburg</button>
+      <button class="filter-chip" data-filter="beauvoir">Beauvoir</button>
+      <button class="filter-chip" data-filter="sartre">Sartre</button>
+    </div>
+
+    <div class="citas-grid" id="citasGrid">
+      <div class="cita h-aristoteles" data-author="aristoteles"><blockquote>«El hombre es por naturaleza un animal social.»</blockquote><cite>Política, I, 1253a</cite></div>
+      <div class="cita h-aristoteles" data-author="aristoteles"><blockquote>«Toda ciudad es una cierta comunidad y toda comunidad está constituida con miras a algún bien.»</blockquote><cite>Política, I, 1252a</cite></div>
+      <div class="cita h-aristoteles" data-author="aristoteles"><blockquote>«La virtud está en relación con dos cosas: la pasión y la acción; el medio entre dos vicios.»</blockquote><cite>Ética a Nicómaco, II</cite></div>
+
+      <div class="cita h-kant" data-author="kant"><blockquote>«<em>Sapere aude!</em> ¡Ten valor para servirte de tu propio entendimiento!»</blockquote><cite>¿Qué es la Ilustración? (1784)</cite></div>
+      <div class="cita h-kant" data-author="kant"><blockquote>«Obra de tal manera que trates a la humanidad siempre como un fin y nunca solo como un medio.»</blockquote><cite>Fundamentación · 2ª formulación</cite></div>
+      <div class="cita h-kant" data-author="kant"><blockquote>«Ilustración significa el abandono por parte del hombre de una minoría de edad cuyo responsable es él mismo.»</blockquote><cite>¿Qué es la Ilustración?</cite></div>
+
+      <div class="cita h-wollstonecraft" data-author="wollstonecraft"><blockquote>«La virtud no tiene sexo… la mente no admite distinción de sexo.»</blockquote><cite>Vindicación de los derechos de la mujer</cite></div>
+      <div class="cita h-wollstonecraft" data-author="wollstonecraft"><blockquote>«Si se educa a las mujeres para la dependencia, ¿de qué privilegio se les acusa cuando son frívolas?»</blockquote><cite>Vindicación, cap. IV</cite></div>
+      <div class="cita h-wollstonecraft" data-author="wollstonecraft"><blockquote>«La belleza personal se ha vendido tan caro que ha producido la decadencia de la virtud.»</blockquote><cite>Vindicación, cap. III</cite></div>
+
+      <div class="cita h-marx" data-author="marx"><blockquote>«No es la conciencia del hombre la que determina su ser; el ser social es lo que determina su conciencia.»</blockquote><cite>Contribución a la crítica · Prólogo</cite></div>
+      <div class="cita h-marx" data-author="marx"><blockquote>«La historia de todas las sociedades hasta el día de hoy es historia de luchas de clases.»</blockquote><cite>Manifiesto comunista, 1848</cite></div>
+      <div class="cita h-marx" data-author="marx"><blockquote>«El obrero es más pobre cuanta más riqueza produce.»</blockquote><cite>Manuscritos de economía y filosofía</cite></div>
+
+      <div class="cita h-luxemburg" data-author="luxemburg"><blockquote>«El capitalismo está atenido, aun en su plena madurez, a la existencia coetánea de capas y sociedades no capitalistas.»</blockquote><cite>La acumulación del capital, XXVI</cite></div>
+      <div class="cita h-luxemburg" data-author="luxemburg"><blockquote>«El capital recorre el mundo entero; saca medios de producción de todos los rincones de la Tierra.»</blockquote><cite>La acumulación del capital, XXVI</cite></div>
+      <div class="cita h-luxemburg" data-author="luxemburg"><blockquote>«La acumulación del capital es un proceso de cambio entre la forma capitalista y las precapitalistas.»</blockquote><cite>La acumulación del capital, XXIX</cite></div>
+
+      <div class="cita h-beauvoir" data-author="beauvoir"><blockquote>«No se nace mujer: se llega a serlo.»</blockquote><cite>El segundo sexo, II</cite></div>
+      <div class="cita h-beauvoir" data-author="beauvoir"><blockquote>«La humanidad es masculina y el hombre define a la mujer no en sí, sino en relación con él.»</blockquote><cite>El segundo sexo · Introducción</cite></div>
+      <div class="cita h-beauvoir" data-author="beauvoir"><blockquote>«En la sociedad humana nada es natural y la mujer es uno de tantos productos elaborados por la civilización.»</blockquote><cite>El segundo sexo · Conclusión</cite></div>
+
+      <div class="cita h-sartre" data-author="sartre"><blockquote>«La existencia precede a la esencia.»</blockquote><cite>El existencialismo es un humanismo</cite></div>
+      <div class="cita h-sartre" data-author="sartre"><blockquote>«El hombre no es otra cosa que lo que él se hace.»</blockquote><cite>El existencialismo es un humanismo</cite></div>
+      <div class="cita h-sartre" data-author="sartre"><blockquote>«Cuando decimos que el hombre se elige, queremos decir que al elegirse elige a todos los hombres.»</blockquote><cite>El existencialismo es un humanismo</cite></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 9 · GUÍA                               -->
+<!-- ============================================ -->
+<section class="slide" data-title="Guía">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Comentario y disertación</div>
+    <h2 class="slide-title">Estructura del comentario y de la disertación.</h2>
+
+    <h3 style="margin-bottom:18px;font-family:var(--serif);">Comentario de texto · Ejercicio 1</h3>
+
+    <div class="flow-diagram">
+      <svg viewBox="0 0 1100 130" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <!-- Step 1 -->
+        <rect x="20" y="30" width="220" height="70" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.5"/>
+        <text x="130" y="56" text-anchor="middle" font-size="11" fill="#A6824E" font-weight="700" letter-spacing="0.1em">PASO 01</text>
+        <text x="130" y="80" text-anchor="middle" font-family="Lora,serif" font-size="17" fill="#2D2A26" font-weight="600">Leer 2-3 veces</text>
+
+        <!-- arrow -->
+        <path d="M 245 65 L 270 65" stroke="#BFB39A" stroke-width="2" fill="none"/>
+        <path d="M 270 65 L 262 60 L 262 70 Z" fill="#BFB39A"/>
+
+        <!-- Step 2 -->
+        <rect x="280" y="30" width="220" height="70" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.5"/>
+        <text x="390" y="56" text-anchor="middle" font-size="11" fill="#A6824E" font-weight="700" letter-spacing="0.1em">PASO 02</text>
+        <text x="390" y="80" text-anchor="middle" font-family="Lora,serif" font-size="17" fill="#2D2A26" font-weight="600">Estructura</text>
+
+        <path d="M 505 65 L 530 65" stroke="#BFB39A" stroke-width="2" fill="none"/>
+        <path d="M 530 65 L 522 60 L 522 70 Z" fill="#BFB39A"/>
+
+        <!-- Step 3 -->
+        <rect x="540" y="30" width="220" height="70" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.5"/>
+        <text x="650" y="56" text-anchor="middle" font-size="11" fill="#A6824E" font-weight="700" letter-spacing="0.1em">PASO 03 · 2 PTS</text>
+        <text x="650" y="80" text-anchor="middle" font-family="Lora,serif" font-size="17" fill="#2D2A26" font-weight="600">Síntesis (P1)</text>
+
+        <path d="M 765 65 L 790 65" stroke="#BFB39A" stroke-width="2" fill="none"/>
+        <path d="M 790 65 L 782 60 L 782 70 Z" fill="#BFB39A"/>
+
+        <!-- Step 4 -->
+        <rect x="800" y="30" width="220" height="70" rx="10" fill="#FAF6EE" stroke="#A6824E" stroke-width="1.5"/>
+        <text x="910" y="56" text-anchor="middle" font-size="11" fill="#A6824E" font-weight="700" letter-spacing="0.1em">PASO 04 · 2 PTS</text>
+        <text x="910" y="80" text-anchor="middle" font-family="Lora,serif" font-size="17" fill="#2D2A26" font-weight="600">Comparación (P2)</text>
+
+        <!-- Label below -->
+        <text x="130" y="120" text-anchor="middle" font-size="10.5" fill="#8B8579">Comprensión</text>
+        <text x="390" y="120" text-anchor="middle" font-size="10.5" fill="#8B8579">Análisis argumental</text>
+        <text x="650" y="120" text-anchor="middle" font-size="10.5" fill="#8B8579">90-150 palabras</text>
+        <text x="910" y="120" text-anchor="middle" font-size="10.5" fill="#8B8579">Diálogo, no yuxtaposición</text>
+      </svg>
+    </div>
+
+    <div class="guia-grid">
+      <div class="step">
+        <div class="step-num">PASO 01</div>
+        <h4>Lee 2-3 veces</h4>
+        <ul>
+          <li>Subraya tesis, conceptos clave y conectores.</li>
+          <li>Identifica al autor por su vocabulario.</li>
+          <li>Marca dónde está la idea principal.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="step-num">PASO 02</div>
+        <h4>Estructura argumental</h4>
+        <ul>
+          <li>Tesis principal en una frase tuya.</li>
+          <li>Premisas que la sostienen.</li>
+          <li>Concesiones o críticas.</li>
+          <li>Conclusión.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="step-num">PASO 03</div>
+        <h4>P1 · Síntesis</h4>
+        <ul>
+          <li>90–150 palabras, sin opinión.</li>
+          <li>Abre con «El autor sostiene que…».</li>
+          <li>Encadena con conectores.</li>
+          <li>Cierra con la conclusión del autor.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="step-num">PASO 04</div>
+        <h4>P2 · Comparación</h4>
+        <ul>
+          <li>Nunca yuxtaponer: diálogo.</li>
+          <li>Identifica el problema común.</li>
+          <li>Marca acuerdos y diferencias.</li>
+          <li>Cierra con valoración crítica.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="disert">
+      <h3>Disertación filosófica · Ejercicio 3</h3>
+      <p>La rúbrica exige <strong>una posición clara desde el principio</strong>. No vale «por un lado… por otro…» y no decidirse.</p>
+      <div class="disert-blocks">
+        <div class="disert-block">
+          <h5>Introducción</h5>
+          <p>Plantea el problema en una frase. Define los conceptos en juego. Anuncia tu tesis: «Defenderé que…».</p>
+        </div>
+        <div class="disert-block">
+          <h5>Desarrollo</h5>
+          <p>2-3 argumentos a favor (apoyados en autores). 1-2 contraargumentos. Refutación o matización. Ejemplos actuales.</p>
+        </div>
+        <div class="disert-block">
+          <h5>Cierre</h5>
+          <p>Confirma tu tesis o presenta una solución intermedia matizada. Una pregunta abierta puntúa si está argumentada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 10 · GLOSARIO                          -->
+<!-- ============================================ -->
+<section class="slide" data-title="Glosario">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Vocabulario</div>
+    <h2 class="slide-title">Términos del temario.</h2>
+
+    <dl class="glosario-wrap">
+      <div class="term"><dt>Acto / potencia</dt><dd>Aristóteles. <em>Acto</em> = lo que algo es; <em>potencia</em> = lo que puede ser. El cambio es el paso de una a otro.</dd></div>
+      <div class="term"><dt>Alienación</dt><dd>Marx. El obrero se vuelve extraño al producto de su trabajo, a la actividad misma y a su ser genérico.</dd></div>
+      <div class="term"><dt>Alteridad <span class="greek">— l'Autre</span></dt><dd>Beauvoir. Condición de lo Otro inesencial. La mujer es definida desde el varón, no como sujeto autónomo.</dd></div>
+      <div class="term"><dt>Autonomía</dt><dd>Kant. La voluntad se da a sí misma la ley moral. Opuesto a heteronomía.</dd></div>
+      <div class="term"><dt>Categórico (imperativo)</dt><dd>Kant. Mandato universal e incondicional, propio de la ética formal. Tres formulaciones.</dd></div>
+      <div class="term"><dt>Eudaimonía <span class="greek">— εὐδαιμονία</span></dt><dd>Aristóteles. Felicidad como florecimiento del ser humano según su función propia: la razón.</dd></div>
+      <div class="term"><dt>Existencialismo</dt><dd>La existencia precede a la esencia. Libertad, angustia, responsabilidad.</dd></div>
+      <div class="term"><dt>Fenómeno / noúmeno</dt><dd>Kant. <em>Fenómeno</em> = lo que aparece a la experiencia; <em>noúmeno</em> = la cosa en sí, incognoscible.</dd></div>
+      <div class="term"><dt>Género</dt><dd>Construcción social y cultural sobre el sexo biológico. Beauvoir lo inaugura sin usar el término.</dd></div>
+      <div class="term"><dt>Giro copernicano</dt><dd>Kant. Como Copérnico cambió el centro, Kant invierte la teoría del conocimiento: el sujeto es activo.</dd></div>
+      <div class="term"><dt>Heteronomía</dt><dd>Kant. La voluntad recibe la ley desde fuera (placer, autoridad, religión).</dd></div>
+      <div class="term"><dt>Imperativo hipotético</dt><dd>Kant. Mandato condicional («si quieres X, haz Y»). Propio de las éticas materiales.</dd></div>
+      <div class="term"><dt>Infraestructura / superestructura</dt><dd>Marx. La base económica determina las formas ideológicas (derecho, política, religión, filosofía).</dd></div>
+      <div class="term"><dt>Inmanencia / trascendencia</dt><dd>Beauvoir. <em>Trascendencia</em> = proyectarse al futuro; <em>inmanencia</em> = vida repetitiva. A la mujer se le impone la segunda.</dd></div>
+      <div class="term"><dt>Mala fe</dt><dd>Sartre. Mentira a uno mismo para huir de la libertad. Inventar determinismos, refugiarse en roles.</dd></div>
+      <div class="term"><dt>Mayoría de edad</dt><dd>Kant. Capacidad de usar la propia razón sin tutela. La Ilustración es su conquista.</dd></div>
+      <div class="term"><dt>Modos de producción</dt><dd>Marx. Asiático, antiguo, feudal, capitalista, comunista. Etapas de la dialéctica histórica.</dd></div>
+      <div class="term"><dt>Plusvalía</dt><dd>Marx. Valor que el obrero produce por encima de su salario; apropiado por el capitalista.</dd></div>
+      <div class="term"><dt>Polis <span class="greek">— πόλις</span></dt><dd>Ciudad-estado griega. Aristóteles: comunidad perfecta donde el ser humano se realiza como animal político.</dd></div>
+      <div class="term"><dt>Postulados</dt><dd>Kant. Libertad, inmortalidad del alma, existencia de Dios. Indemostrables teóricamente pero necesarios moralmente.</dd></div>
+      <div class="term"><dt>Praxis <span class="greek">— πρᾶξις</span></dt><dd>Marx. Acción transformadora. «No interpretar el mundo, sino cambiarlo» (Tesis XI).</dd></div>
+      <div class="term"><dt>Sapere aude</dt><dd>Kant (Horacio). «Atrévete a saber.» Lema de la Ilustración.</dd></div>
+      <div class="term"><dt>Situación</dt><dd>Sartre / Beauvoir. Condiciones concretas que rodean la libertad. Para Beauvoir, jerarquizan la libertad real.</dd></div>
+      <div class="term"><dt>Sustancia <span class="greek">— οὐσία</span></dt><dd>Aristóteles. «Lo que es» en sentido pleno. Primera (individuo) y segunda (esencia).</dd></div>
+      <div class="term"><dt>Término medio <span class="greek">— μεσότης</span></dt><dd>Aristóteles. La virtud está en el medio entre dos vicios (exceso y defecto).</dd></div>
+      <div class="term"><dt>Zoon politikón <span class="greek">— ζῷον πολιτικόν</span></dt><dd>Aristóteles. «Animal político/social». Definición del ser humano por su pertenencia a la polis.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 11 · FLASHCARDS                        -->
+<!-- ============================================ -->
+<section class="slide" data-title="Repaso">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Repaso</div>
+    <h2 class="slide-title">Treinta tarjetas aleatorias.</h2>
+    <p class="slide-lead">Piensa la respuesta antes de revelar. Marca «Sé» o «Repaso».</p>
+
+    <div class="flash-stage" id="flashStage">
+      <div class="flash-status" id="flashStatus">0 / 30</div>
+      <div class="flash-cat" id="flashCat">CATEGORÍA</div>
+      <div class="flash-progress" id="flashProgress"></div>
+      <div class="flash-q" id="flashQ">Pulsa empezar →</div>
+      <div class="flash-a" id="flashA">—</div>
+      <div class="flash-controls">
+        <button class="flash-btn" id="btnReveal">Revelar respuesta</button>
+        <button class="flash-btn" id="btnKnow">Sé ✓</button>
+        <button class="flash-btn" id="btnNo">Repaso ✗</button>
+        <button class="flash-btn primary" id="btnNext">Siguiente →</button>
+      </div>
+      <div class="flash-score">
+        <span class="know" id="scoreKnow">Sé: 0</span> · <span class="no" id="scoreRev">Repaso: 0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- bottom bar (visible on all slides) -->
+<div class="bottombar">
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente">›</button>
+</div>
+
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let current = 0;
+const counterNum = document.getElementById('counterNum');
+const counterTotal = document.getElementById('counterTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsBox = document.getElementById('dots');
+
+counterTotal.textContent = slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='dot';
+  d.setAttribute('aria-label',s.dataset.title||('Slide '+(i+1)));
+  d.title=s.dataset.title||('Slide '+(i+1));
+  d.addEventListener('click',()=>go(i));
+  dotsBox.appendChild(d);
+});
+
+function go(i){
+  if(i<0||i>=slides.length||i===current)return;
+  slides[current].classList.remove('is-active');
+  current=i;
+  slides[current].classList.add('is-active');
+  slides[current].scrollTop=0;
+  counterNum.textContent=i+1;
+  dotsBox.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('is-active',j===i));
+  prevBtn.disabled=i===0;
+  nextBtn.disabled=i===slides.length-1;
+}
+
+prevBtn.addEventListener('click',()=>go(current-1));
+nextBtn.addEventListener('click',()=>go(current+1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')go(current+1);
+  if(e.key==='ArrowLeft')go(current-1);
+  if(e.key==='Home')go(0);
+  if(e.key==='End')go(slides.length-1);
+});
+
+go(0);
+
+// === Author carousel ===
+const authorCards = Array.from(document.querySelectorAll('#authorStack .author-card'));
+const authorNames = ['Aristóteles','Kant','Wollstonecraft','Marx','Luxemburg','Beauvoir','Sartre'];
+let authorIdx = 0;
+const authorLabel = document.getElementById('authorLabel');
+function goAuthor(i){
+  if(i<0)i=authorCards.length-1;
+  if(i>=authorCards.length)i=0;
+  authorCards.forEach((c,j)=>c.classList.toggle('is-active',j===i));
+  authorIdx=i;
+  authorLabel.textContent=`${authorNames[i]} · ${i+1} / 7`;
+}
+document.getElementById('authorPrev').addEventListener('click',()=>goAuthor(authorIdx-1));
+document.getElementById('authorNext').addEventListener('click',()=>goAuthor(authorIdx+1));
+
+// === Schema tabs ===
+document.querySelectorAll('.schema-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.schema-tab').forEach(t=>t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    document.querySelectorAll('.schema-panel').forEach(p=>p.classList.remove('is-active'));
+    document.getElementById(tab.dataset.target).classList.add('is-active');
+  });
+});
+
+// === Matrix relations ===
+const relations = {
+  'ari-kant':{
+    title:'Aristóteles ↔ Kant · Ética',
+    tags:['ALTA','Tema 3'],
+    body:`<h4>Punto de comparación</h4><p>Dos modelos opuestos de fundamentar la moral. Aristóteles parte del fin (la felicidad); Kant parte de la forma (el deber).</p><h4>Acuerdo</h4><p>Ambos buscan fundamentar una ética racional, no convencional, y reconocen que el ser humano se realiza por su razón.</p><h4>Diferencia central</h4><p>Para Aristóteles la virtud es un hábito orientado a un fin (la <em>eudaimonía</em>); para Kant la moralidad consiste en obrar por puro respeto a la ley moral, sin más fin que la propia ley.</p><h4>Frase de cierre</h4><p>«Donde Aristóteles ve en la felicidad la medida de la virtud, Kant ve la heteronomía: la verdadera autonomía moral solo se alcanza cuando la voluntad obedece a la ley que ella misma se da.»</p>`
+  },
+  'ari-beauvoir':{
+    title:'Aristóteles ↔ Beauvoir · Sexo y naturaleza',
+    tags:['ALTA','Tema 6','Modelo PAU 2026'],
+    body:`<h4>Punto de comparación</h4><p>La pareja más probable de la PAU 2026: el modelo del examen la plantea expresamente. Aristóteles define a la mujer como «macho estéril» por carencia natural; Beauvoir desarma esa idea.</p><blockquote>«El macho aporta forma; la hembra solo materia.» — Aristóteles, <em>Reproducción de los animales</em>.</blockquote><blockquote>«La humanidad es masculina y el hombre define a la mujer no en sí, sino en relación con él.» — Beauvoir.</blockquote><h4>Tesis enfrentadas</h4><p><strong>Aristóteles:</strong> esencialismo y determinismo biológico — la mujer es inferior por su naturaleza.</p><p><strong>Beauvoir:</strong> construcción social del género — «no se nace mujer, se llega a serlo». La biología es <em>situación</em>, no destino.</p><h4>Frase de cierre</h4><p>«Lo que Aristóteles toma como una incapacidad natural, Beauvoir lo lee como el resultado histórico de una sociedad que ha hecho del varón el Sujeto y de la mujer lo Otro.»</p>`
+  },
+  'kant-beauvoir':{
+    title:'Kant ↔ Beauvoir · Libertad',
+    tags:['ALTA','Tema 2','Modelo PAU 2026'],
+    body:`<h4>Punto de comparación</h4><p>Beauvoir reconoce el legado ilustrado (autonomía, dignidad, racionalidad) pero le hace una crítica feminista: la Ilustración hablaba para «todos los hombres» mientras dejaba a las mujeres como menores de edad permanentes.</p><blockquote>«Es tan cómodo ser menor de edad.» — Kant.</blockquote><blockquote>«La mujer siempre ha sido, si no la esclava del hombre, al menos su vasalla.» — Beauvoir.</blockquote><h4>Acuerdo</h4><p>La libertad es el fundamento moral; la autonomía es lo propiamente humano.</p><h4>Diferencia</h4><p>Kant ofrece una libertad abstracta y universal; Beauvoir muestra que la libertad real depende de la <em>situación</em>: una mujer encerrada en un harén o una proletaria no pueden ejercer la libertad kantiana sin más.</p><h4>Frase de cierre</h4><p>«La libertad ilustrada de Kant solo se cumple cuando llega también a quienes la Ilustración había olvidado: las mujeres.»</p>`
+  },
+  'kant-woll':{
+    title:'Kant ↔ Wollstonecraft · Ilustración inacabada',
+    tags:['MEDIA','Tema 2'],
+    body:`<h4>Punto de comparación</h4><p>Wollstonecraft toma en serio el lema kantiano <em>sapere aude</em> y lo aplica al «bello sexo». Si la razón es lo propiamente humano, no puede tener sexo.</p><h4>Acuerdo</h4><p>Ambos comparten que la educación y el uso público de la razón son la vía de la emancipación.</p><h4>Diferencia</h4><p>Kant excluye implícitamente a las mujeres del uso público de la razón; Wollstonecraft argumenta que esa exclusión es contradictoria con la propia Ilustración.</p><h4>Frase de cierre</h4><p>«Wollstonecraft no rechaza la Ilustración: la radicaliza al exigir que también las mujeres se atrevan a saber.»</p>`
+  },
+  'kant-marx':{
+    title:'Kant ↔ Marx · Idealismo y materialismo',
+    tags:['MEDIA'],
+    body:`<h4>Punto de comparación</h4><p>Marx invierte el orden kantiano: no es la conciencia la que determina el ser, sino el ser social el que determina la conciencia.</p><h4>Acuerdo</h4><p>Ambos critican el dogmatismo; ambos quieren liberar al ser humano.</p><h4>Diferencia</h4><p>Kant: la libertad como condición a priori de la moralidad. Marx: la libertad real exige cambiar las condiciones materiales de producción.</p>`
+  },
+  'kant-sartre':{
+    title:'Kant ↔ Sartre · Formalismo vs concreto',
+    tags:['MEDIA'],
+    body:`<h4>Punto de comparación</h4><p>Sartre acepta de Kant que la libertad se quiere a sí misma y quiere la libertad de los otros. Pero rechaza el formalismo: «los principios demasiado abstractos fracasan a la hora de definir la acción».</p><h4>Diferencia</h4><p>Para Kant, lo formal y universal basta para fundamentar la moral. Para Sartre, el contenido es siempre concreto e imprevisible: hay siempre invención.</p>`
+  },
+  'woll-beauvoir':{
+    title:'Wollstonecraft ↔ Beauvoir · 1ª y 2ª olas',
+    tags:['MEDIA','Tema 6'],
+    body:`<h4>Punto de comparación</h4><p>Dos olas sucesivas del mismo proyecto: Wollstonecraft pide igualdad de razón y educación; Beauvoir muestra que la igualdad formal no basta porque el género es una construcción social profunda.</p><h4>Continuidad</h4><p>Ambas niegan que haya una «naturaleza femenina» que justifique la subordinación.</p><h4>Avance</h4><p>Wollstonecraft argumenta dentro del marco ilustrado (mismo sujeto racional); Beauvoir desplaza el problema a la categoría de Otro y a la construcción social del género.</p>`
+  },
+  'marx-lux':{
+    title:'Marx ↔ Luxemburg · Continuidad crítica',
+    tags:['ALTA','Tema 4'],
+    body:`<h4>Punto de comparación</h4><p>Luxemburg es continuadora y crítica de Marx. Acepta el materialismo histórico y la lucha de clases, pero corrige el esquema de la reproducción ampliada.</p><h4>Crítica central</h4><p>Marx supone un sistema capitalista cerrado (solo capitalistas y proletarios). Luxemburg demuestra que el capitalismo necesita esferas <strong>no capitalistas</strong> para realizar la plusvalía: de ahí el imperialismo.</p><blockquote>«El capitalismo está atenido, aun en su plena madurez, a la existencia coetánea de capas y sociedades no capitalistas.» — Luxemburg.</blockquote><h4>Frase de cierre</h4><p>«Donde Marx ve el destino interno del capital, Luxemburg ve su necesaria expansión imperialista hacia el exterior.»</p>`
+  },
+  'marx-beauvoir':{
+    title:'Marx ↔ Beauvoir · Dos opresiones',
+    tags:['MEDIA','Tema 6'],
+    body:`<h4>Punto de comparación</h4><p>Beauvoir incorpora explícitamente a Marx: dedica el capítulo «Materialismo histórico» de <em>El segundo sexo</em> a la lectura económica de la opresión femenina y cierra la obra con una cita de Marx sobre la relación hombre-mujer como medida de toda relación humana.</p><h4>Acuerdo</h4><p>La opresión no es natural sino histórica; las relaciones humanas se construyen materialmente.</p><h4>Crítica de Beauvoir a Marx</h4><p>Reducir la opresión femenina a un subproducto de la opresión económica deja sin explicar la categoría de <em>alteridad</em>, que es anterior y atraviesa todas las clases.</p>`
+  },
+  'sartre-beauvoir':{
+    title:'Sartre ↔ Beauvoir · Libertad situada',
+    tags:['ALTA','Tema 5','Modelo PAU 2026'],
+    body:`<h4>Punto de comparación</h4><p>Beauvoir comparte el núcleo existencialista (existencia precede a esencia, libertad, proyecto, mala fe) pero corrige a Sartre en dos puntos centrales.</p><h4>1. Jerarquía de situaciones</h4><p>Sartre: toda situación admite la misma libertad. Beauvoir: hay situaciones opresivas (la mujer en el harén, el esclavo) donde la libertad está objetivamente coartada.</p><h4>2. Opresión vs mala fe</h4><p>Para Sartre, ceder a la inmanencia es siempre mala fe. Beauvoir distingue: la inmanencia <em>consentida</em> es mala fe; la <em>infligida</em> es opresión y la víctima no es culpable.</p><blockquote>«¿Qué libertad puede tener una mujer encerrada en un harén?»</blockquote><h4>Frase de cierre</h4><p>«El existencialismo de Beauvoir es el existencialismo aterrizado: la libertad no flota, está incrustada en cuerpos, géneros e historias.»</p>`
+  }
+};
+const matrixDetail=document.getElementById('matrixDetail');
+document.querySelectorAll('.matrix .cell').forEach(cell=>{
+  cell.addEventListener('click',()=>{
+    const k=cell.dataset.rel;
+    if(!k||!relations[k])return;
+    document.querySelectorAll('.matrix .cell').forEach(c=>c.classList.remove('is-selected'));
+    cell.classList.add('is-selected');
+    const r=relations[k];
+    matrixDetail.innerHTML=`<h3>${r.title}</h3>${r.tags.map(t=>`<span class="tag">${t}</span>`).join('')}${r.body}`;
+  });
+});
+
+// === Tema carousel ===
+const temaCards=Array.from(document.querySelectorAll('.tema-card'));
+const temaNames=['Ética y política antigua','Proyecto ilustrado','Éticas felicidad/deber','Crítica capitalismo','Existencialismo','Filosofía feminista'];
+let temaIdx=0;
+const temaLabel=document.getElementById('temaLabel');
+function goTema(i){
+  if(i<0)i=temaCards.length-1;
+  if(i>=temaCards.length)i=0;
+  temaCards.forEach((c,j)=>c.classList.toggle('is-active',j===i));
+  temaIdx=i;
+  temaLabel.textContent=`${i+1} / 6 · ${temaNames[i]}`;
+}
+document.getElementById('temaPrev').addEventListener('click',()=>goTema(temaIdx-1));
+document.getElementById('temaNext').addEventListener('click',()=>goTema(temaIdx+1));
+
+// === Citas filter ===
+const filterChips=document.querySelectorAll('#citasFilter .filter-chip');
+filterChips.forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    filterChips.forEach(c=>c.classList.remove('is-active'));
+    chip.classList.add('is-active');
+    const f=chip.dataset.filter;
+    document.querySelectorAll('#citasGrid .cita').forEach(c=>{
+      c.style.display=(f==='all'||c.dataset.author===f)?'block':'none';
+    });
+  });
+});
+
+// === Flashcards ===
+const flashCards=[
+  {cat:'Aristóteles',q:'¿Qué significa que el ser humano sea zoon politikón?',a:'Es por naturaleza un animal social/político: solo en la pólis se realiza plenamente. Quien vive fuera es «o una bestia o un dios».'},
+  {cat:'Aristóteles',q:'¿Cuáles son las cuatro causas?',a:'Material (de qué), formal (qué es), eficiente (quién mueve), final (para qué — telos).'},
+  {cat:'Aristóteles',q:'Define potencia y acto.',a:'Acto = lo que algo es; potencia = lo que puede ser. El cambio es el paso de potencia a acto.'},
+  {cat:'Aristóteles',q:'¿Cómo define la virtud?',a:'Como término medio (mesótes) entre dos vicios — exceso y defecto. Hábito de elegir el medio según la recta razón.'},
+  {cat:'Aristóteles',q:'¿Qué crítica hace a Platón?',a:'Que las Ideas no pueden existir separadas de las cosas. No hay dos mundos: la forma está EN la materia. El alma no es inmortal.'},
+  {cat:'Kant',q:'¿Qué es la Ilustración según Kant?',a:'«El abandono por parte del hombre de una minoría de edad cuyo responsable es él mismo.» Lema: sapere aude.'},
+  {cat:'Kant',q:'¿En qué consiste el giro copernicano?',a:'El sujeto no es pasivo: ordena la realidad con sus formas a priori (espacio, tiempo y 12 categorías).'},
+  {cat:'Kant',q:'Diferencia entre fenómeno y noúmeno.',a:'Fenómeno = la realidad tal como aparece a la experiencia. Noúmeno = la cosa en sí, incognoscible teóricamente.'},
+  {cat:'Kant',q:'Las tres formulaciones del imperativo categórico.',a:'① Universalidad: obra según una máxima que puedas querer ley universal. ② Fin en sí: trata a la humanidad siempre como fin. ③ Autonomía: voluntad legisladora universal.'},
+  {cat:'Kant',q:'¿Por qué rechaza la ética de Aristóteles?',a:'Porque es material (empírica) y teleológica (apunta a un fin: la felicidad). Por tanto no es universal ni necesaria: sus mandatos son hipotéticos.'},
+  {cat:'Wollstonecraft',q:'¿A quién dirige su crítica principal?',a:'A Rousseau, que en el Emilio educa a Sofía solo para servir y agradar al varón. Wollstonecraft refuta esa concepción.'},
+  {cat:'Wollstonecraft',q:'Tesis central.',a:'La virtud no tiene sexo. Si las mujeres son seres racionales, deben recibir la misma educación y participar del mismo proyecto ilustrado.'},
+  {cat:'Wollstonecraft',q:'¿Qué consecuencia tiene educar a las mujeres para la dependencia?',a:'Las convierte en «esclavas domésticas» y degrada la virtud de toda la sociedad.'},
+  {cat:'Marx',q:'Infraestructura / superestructura.',a:'La infraestructura es la base económica (fuerzas + relaciones de producción); la superestructura son las formas ideológicas. La primera determina la segunda.'},
+  {cat:'Marx',q:'¿Qué es la plusvalía?',a:'El valor que el obrero produce por encima de su salario, apropiado por el capitalista. Fuente del beneficio capitalista.'},
+  {cat:'Marx',q:'Los cuatro planos de la alienación.',a:'① Respecto al producto. ② Respecto a la actividad. ③ Respecto al ser genérico. ④ Respecto a los demás trabajadores.'},
+  {cat:'Marx',q:'¿Cuál es la Tesis XI sobre Feuerbach?',a:'«Los filósofos no han hecho más que interpretar el mundo; de lo que se trata es de transformarlo.» Praxis sobre teoría.'},
+  {cat:'Marx',q:'Enumera los modos de producción.',a:'Asiático, antiguo (esclavista), feudal, capitalista y comunista. El paso se produce por contradicción interna entre fuerzas y relaciones de producción.'},
+  {cat:'Luxemburg',q:'¿Qué crítica hace al esquema marxista?',a:'Marx asume un capitalismo cerrado. Luxemburg demuestra que el capital necesita un «afuera» no capitalista para realizar la plusvalía.'},
+  {cat:'Luxemburg',q:'¿Por qué el imperialismo es necesario?',a:'Porque la plusvalía no puede ser realizada solo entre capitalistas y trabajadores: se necesitan compradores no capitalistas (colonias, campesinado).'},
+  {cat:'Beauvoir',q:'Explica «no se nace mujer, se llega a serlo».',a:'La feminidad no es un dato biológico fijo, sino una construcción social y cultural. La mujer no se define por sus hormonas, sino por cómo la sociedad construye su cuerpo.'},
+  {cat:'Beauvoir',q:'¿Qué significa que la mujer sea «lo Otro»?',a:'Que es definida desde el varón y no como sujeto autónomo. El hombre es Sujeto, lo Absoluto; la mujer, lo inesencial, lo relativo.'},
+  {cat:'Beauvoir',q:'¿Cómo corrige a Sartre?',a:'Sartre afirma una libertad absoluta en toda situación. Beauvoir muestra que hay situaciones (opresión, esclavitud, harén) en las que la libertad está objetivamente jerarquizada.'},
+  {cat:'Beauvoir',q:'Diferencia entre mala fe y opresión.',a:'Mala fe = inmanencia consentida (falta moral). Opresión = inmanencia infligida desde fuera (sin culpa del sujeto). Distinción clave que no existe en Sartre.'},
+  {cat:'Beauvoir',q:'Distingue inmanencia y trascendencia.',a:'Trascendencia = proyectarse hacia el futuro. Inmanencia = repetición doméstica. A la mujer se le impone la inmanencia.'},
+  {cat:'Sartre',q:'¿Qué significa «la existencia precede a la esencia»?',a:'El ser humano empieza por existir, surge en el mundo, y solo después se define eligiendo lo que es. No hay naturaleza humana previa.'},
+  {cat:'Sartre',q:'Define «mala fe».',a:'Actitud de quien se refugia detrás de excusas (pasiones, determinismos, roles) para esconderse de su libertad total. Mentira a uno mismo.'},
+  {cat:'Sartre',q:'¿Por qué somos responsables de toda la humanidad?',a:'Porque al elegirme, elijo un tipo de humanidad. Mi proyecto vital es también una propuesta de lo que el hombre debe ser.'},
+  {cat:'Examen',q:'¿Cuál es el error que penaliza automáticamente en el Ejercicio 2?',a:'La yuxtaposición de autores sin diálogo: tope máximo 1/3 de la nota. Hay que establecer comparación crítica con diálogo.'},
+  {cat:'Examen',q:'¿Qué pide el Ejercicio 1 y cuánto vale?',a:'4 puntos. Comentario de texto de 200-400 palabras: P1 (2pts) síntesis e ideas; P2 (2pts) comparación crítica con corriente u otro texto.'}
+];
+let flashOrder=[],flashI=-1,sK=0,sN=0,flashResults=[];
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildFlashProgress(){
+  const wrap=document.getElementById('flashProgress');
+  wrap.innerHTML='';
+  for(let i=0;i<flashOrder.length;i++){
+    const s=document.createElement('div');
+    s.className='seg';
+    wrap.appendChild(s);
+  }
+}
+function updateFlashProgress(){
+  const segs=document.getElementById('flashProgress').children;
+  for(let i=0;i<segs.length;i++){
+    segs[i].className='seg';
+    if(flashResults[i]==='k')segs[i].classList.add('done');
+    else if(flashResults[i]==='n')segs[i].classList.add('miss');
+    else if(i===flashI)segs[i].classList.add('current');
+  }
+}
+function startF(){
+  flashOrder=shuf(flashCards.map((_,i)=>i));
+  flashI=-1;sK=0;sN=0;flashResults=[];
+  buildFlashProgress();
+  document.getElementById('scoreKnow').textContent='Sé: 0';
+  document.getElementById('scoreRev').textContent='Repaso: 0';
+  nextF();
+}
+function nextF(){
+  flashI++;
+  const st=document.getElementById('flashStage');
+  st.classList.remove('show-answer');
+  if(flashI>=flashOrder.length){
+    document.getElementById('flashCat').textContent='COMPLETADO';
+    document.getElementById('flashQ').textContent=`¡Hecho! Acertaste ${sK} de ${flashOrder.length}.`;
+    document.getElementById('flashA').textContent=`Aciertos: ${sK}. Repasa los marcados como repaso.`;
+    document.getElementById('flashStatus').textContent=`${flashOrder.length} / ${flashOrder.length}`;
+    st.classList.add('show-answer');
+    return;
+  }
+  const c=flashCards[flashOrder[flashI]];
+  document.getElementById('flashCat').textContent=c.cat.toUpperCase();
+  document.getElementById('flashQ').textContent=c.q;
+  document.getElementById('flashA').textContent=c.a;
+  document.getElementById('flashStatus').textContent=`${flashI+1} / ${flashOrder.length}`;
+  updateFlashProgress();
+}
+document.getElementById('btnReveal').addEventListener('click',()=>document.getElementById('flashStage').classList.add('show-answer'));
+document.getElementById('btnKnow').addEventListener('click',()=>{flashResults[flashI]='k';sK++;document.getElementById('scoreKnow').textContent=`Sé: ${sK}`;nextF();});
+document.getElementById('btnNo').addEventListener('click',()=>{flashResults[flashI]='n';sN++;document.getElementById('scoreRev').textContent=`Repaso: ${sN}`;nextF();});
+document.getElementById('btnNext').addEventListener('click',()=>{if(flashI<0)startF();else nextF();});
+startF();
+</script>
+
+</body>
+</html>

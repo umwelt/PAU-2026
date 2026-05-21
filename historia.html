@@ -339,14 +339,41 @@ strong{color:var(--ink);font-weight:600;}
   background:var(--paper-card);
   border:1px solid var(--line);
   border-radius:14px;
-  padding:28px;
+  padding:28px 20px;
   overflow-x:auto;
+  overflow-y:hidden;
+  position:relative;
 }
-.timeline-frame svg{width:100%;height:auto;min-width:2200px;display:block;}
+.timeline-frame::after{
+  /* Sombra a la derecha que sugiere «hay más» */
+  content:'';
+  position:sticky;
+  right:0;top:0;
+  width:40px;height:100%;
+  background:linear-gradient(to left, var(--paper-card), transparent);
+  pointer-events:none;
+  margin-left:-40px;
+  display:block;
+}
+.timeline-frame svg{
+  display:block;
+  width:2400px;
+  max-width:none;
+  height:480px;
+}
+.timeline-hint{
+  text-align:center;
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.16em;
+  color:var(--ink-mute);
+  margin-top:10px;
+  text-transform:uppercase;
+}
 
 /* === SLIDE 4 · BLOQUES CARRUSEL === */
 .bloque-carousel{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:520px;}
-.bloque-stack{position:relative;width:100%;max-width:1040px;height:600px;}
+.bloque-stack{position:relative;width:100%;max-width:1040px;height:clamp(540px, calc(100vh - 280px), 760px);}
 .bloque-card{
   position:absolute;inset:0;
   background:var(--paper-card);
@@ -362,7 +389,10 @@ strong{color:var(--ink);font-weight:600;}
   box-shadow:0 12px 40px rgba(45,42,38,.08);
 }
 .bloque-card.is-active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
-.bloque-side{padding:36px 40px;display:flex;flex-direction:column;}
+.bloque-side{padding:36px 40px;display:flex;flex-direction:column;overflow-y:auto;}
+.bloque-side::-webkit-scrollbar{width:6px;}
+.bloque-side::-webkit-scrollbar-track{background:transparent;}
+.bloque-side::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px;}
 .bloque-side.left{
   background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
   border-right:1px solid var(--line);
@@ -416,7 +446,7 @@ strong{color:var(--ink);font-weight:600;}
   font-size:1rem;
   color:var(--ink);
 }
-.bloque-side.right{background:var(--paper-card);overflow-y:auto;}
+.bloque-side.right{background:var(--paper-card);}
 .bloque-side-title{
   font-family:var(--mono);
   font-size:.72rem;
@@ -525,7 +555,7 @@ strong{color:var(--ink);font-weight:600;}
 
 /* === SLIDE 6 · PERSONAJES === */
 .persona-carousel{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:500px;}
-.persona-stack{position:relative;width:100%;max-width:960px;height:560px;}
+.persona-stack{position:relative;width:100%;max-width:960px;height:clamp(520px, calc(100vh - 280px), 720px);}
 .persona-card{
   position:absolute;inset:0;
   background:var(--paper-card);
@@ -541,7 +571,10 @@ strong{color:var(--ink);font-weight:600;}
   box-shadow:0 12px 40px rgba(45,42,38,.08);
 }
 .persona-card.is-active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
-.persona-side{padding:40px 44px;display:flex;flex-direction:column;}
+.persona-side{padding:40px 44px;display:flex;flex-direction:column;overflow-y:auto;}
+.persona-side::-webkit-scrollbar{width:6px;}
+.persona-side::-webkit-scrollbar-track{background:transparent;}
+.persona-side::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px;}
 .persona-side.front{
   background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
   border-right:1px solid var(--line);
@@ -601,7 +634,7 @@ strong{color:var(--ink);font-weight:600;}
   border-radius:100px;
   margin-top:auto;
 }
-.persona-side.back{background:var(--paper-card);overflow-y:auto;}
+.persona-side.back{background:var(--paper-card);}
 .persona-side-title{
   font-family:var(--mono);
   font-size:.72rem;
@@ -1312,6 +1345,7 @@ strong{color:var(--ink);font-weight:600;}
         </g>
       </svg>
     </div>
+    <p class="timeline-hint">← Desliza horizontalmente para recorrer los 178 años →</p>
   </div>
 </section>
 

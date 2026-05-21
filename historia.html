@@ -339,27 +339,24 @@ strong{color:var(--ink);font-weight:600;}
   background:var(--paper-card);
   border:1px solid var(--line);
   border-radius:14px;
-  padding:28px 20px;
+  padding:28px 24px;
   overflow-x:auto;
   overflow-y:hidden;
-  position:relative;
+  /* CRITICAL: permite que el contenedor se encoja por debajo del SVG y active el scroll */
+  min-width:0;
+  width:100%;
+  max-width:100%;
 }
-.timeline-frame::after{
-  /* Sombra a la derecha que sugiere «hay más» */
-  content:'';
-  position:sticky;
-  right:0;top:0;
-  width:40px;height:100%;
-  background:linear-gradient(to left, var(--paper-card), transparent);
-  pointer-events:none;
-  margin-left:-40px;
-  display:block;
-}
+.timeline-frame::-webkit-scrollbar{height:10px;}
+.timeline-frame::-webkit-scrollbar-track{background:var(--paper-deep);border-radius:5px;}
+.timeline-frame::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:5px;}
+.timeline-frame::-webkit-scrollbar-thumb:hover{background:var(--accent);}
 .timeline-frame svg{
   display:block;
   width:2400px;
+  height:auto;
   max-width:none;
-  height:480px;
+  flex-shrink:0;
 }
 .timeline-hint{
   text-align:center;

@@ -1,0 +1,2522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Historia de España · PAU 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-soft:#FAF6EE;
+  --paper-deep:#E8E0D0;
+  --paper-card:#FBF7EE;
+  --ink:#2D2A26;
+  --ink-soft:#5C574F;
+  --ink-mute:#8B8579;
+  --line:#D6CCB7;
+  --line-strong:#BFB39A;
+  --accent:#A6824E;
+  --accent-deep:#8B6A3A;
+  --accent-soft:#D9C7A2;
+  --sage:#7C9079;
+  --slate:#6B7F94;
+  --rose:#B07A82;
+  /* Colores por bloque histórico */
+  --b1:#4F6890;  /* Construcción Estado liberal — azul prusia */
+  --b2:#7B8F6E;  /* Restauración — verde oliva */
+  --b3:#B58C4D;  /* Quiebra y Primo de Rivera — ocre cálido */
+  --b4:#A95448;  /* II República y Guerra — rojo terracota */
+  --b5:#6C6660;  /* Franquismo — pardo oscuro */
+  --b6:#5896A3;  /* Transición — azul cielo apagado */
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --mono:'Inter',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--paper);}
+body{
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+h1{font-size:clamp(2.4rem,4.8vw,4rem);font-weight:600;}
+h2{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:600;}
+h3{font-size:clamp(1.2rem,2vw,1.55rem);font-weight:600;}
+h4{font-size:1.05rem;font-weight:600;color:var(--ink);}
+p{color:var(--ink-soft);}
+em{color:var(--accent-deep);font-style:italic;}
+strong{color:var(--ink);font-weight:600;}
+
+/* === STAGE === */
+.stage{
+  position:fixed;
+  inset:0;
+  background:var(--paper);
+  background-image:
+    radial-gradient(ellipse at top left, rgba(217,199,162,.18), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(79,104,144,.10), transparent 55%);
+}
+.slide{
+  position:absolute;
+  inset:0;
+  padding:72px 80px 100px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity .35s ease, transform .35s ease;
+  overflow-y:auto;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateY(0);}
+.slide::-webkit-scrollbar{width:8px;}
+.slide::-webkit-scrollbar-track{background:transparent;}
+.slide::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
+
+.slide-inner{
+  max-width:1280px;
+  width:100%;
+  margin:0 auto;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+.slide-eyebrow{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+}
+.slide-title{margin-bottom:8px;}
+.slide-lead{
+  font-family:var(--sans);
+  font-size:1.02rem;
+  color:var(--ink-soft);
+  max-width:780px;
+  margin-bottom:36px;
+  font-weight:400;
+  line-height:1.55;
+}
+
+/* === NAVEGACIÓN === */
+.topbar{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:50;
+  padding:18px 36px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(to bottom,rgba(242,237,227,.92),rgba(242,237,227,0));
+  pointer-events:none;
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  pointer-events:auto;
+  font-family:var(--serif);
+  font-size:1.05rem;
+  color:var(--ink-soft);
+  text-decoration:none;
+}
+.brand:hover{color:var(--ink);}
+.brand-mark{
+  width:30px;height:30px;
+  border-radius:50%;
+  background:var(--b4);
+  display:grid;place-items:center;
+  color:var(--paper-soft);
+  font-family:var(--mono);
+  font-size:.78rem;
+  font-weight:700;
+}
+.home-link{
+  pointer-events:auto;
+  font-family:var(--mono);
+  font-size:.78rem;
+  letter-spacing:.12em;
+  color:var(--ink-mute);
+  text-decoration:none;
+  padding:6px 14px;
+  border:1px solid var(--line);
+  border-radius:100px;
+  background:var(--paper-soft);
+  transition:all .2s;
+}
+.home-link:hover{color:var(--ink);border-color:var(--line-strong);}
+.slide-counter{
+  pointer-events:auto;
+  font-family:var(--mono);
+  font-size:.85rem;
+  color:var(--ink-mute);
+  letter-spacing:.05em;
+}
+.slide-counter strong{color:var(--ink);font-weight:600;}
+.topbar-right{display:flex;gap:16px;align-items:center;pointer-events:auto;}
+
+.bottombar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:50;
+  padding:18px 36px 22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  background:linear-gradient(to top,rgba(242,237,227,.95),rgba(242,237,227,0));
+  pointer-events:none;
+}
+.nav-btn{
+  pointer-events:auto;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  color:var(--ink);
+  width:46px;height:46px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1.4rem;
+  display:grid;place-items:center;
+  transition:all .2s;
+  font-family:var(--serif);
+}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn:disabled:hover{background:var(--paper-soft);color:var(--ink);border-color:var(--line);}
+
+.dots{
+  pointer-events:auto;
+  display:flex;
+  gap:8px;
+  flex:1;
+  justify-content:center;
+  flex-wrap:wrap;
+  max-width:680px;
+}
+.dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--line);
+  border:none;
+  cursor:pointer;
+  transition:all .2s;
+  padding:0;
+}
+.dot:hover{background:var(--line-strong);transform:scale(1.2);}
+.dot.is-active{background:var(--accent);width:24px;border-radius:5px;}
+
+/* === SLIDE 1 · PORTADA === */
+.slide-cover{align-items:center;justify-content:center;text-align:center;padding-top:60px;}
+.cover-mark{
+  width:88px;height:88px;
+  border-radius:50%;
+  background:var(--paper-soft);
+  border:2px solid var(--accent);
+  display:grid;place-items:center;
+  margin:0 auto 32px;
+  font-family:var(--serif);
+  font-size:2rem;
+  color:var(--accent);
+  font-weight:600;
+}
+.cover-title{
+  font-size:clamp(2.8rem,6vw,5rem);
+  font-weight:600;
+  letter-spacing:-0.02em;
+  margin-bottom:20px;
+  line-height:1.1;
+}
+.cover-title .ornament{display:inline-block;color:var(--accent);margin:0 .3em;}
+.cover-sub{
+  font-family:var(--sans);
+  font-size:clamp(1rem,1.4vw,1.15rem);
+  color:var(--ink-soft);
+  margin-bottom:60px;
+  max-width:680px;
+  line-height:1.55;
+}
+.cover-stats{display:flex;gap:60px;margin-top:30px;flex-wrap:wrap;justify-content:center;}
+.cover-stat{text-align:center;}
+.cover-stat .n{
+  font-family:var(--serif);
+  font-size:3rem;font-weight:500;
+  color:var(--accent);
+  line-height:1;
+}
+.cover-stat .l{
+  font-family:var(--mono);
+  font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-mute);margin-top:8px;
+}
+.cover-divider{width:1px;background:var(--line-strong);}
+.cover-hint{
+  margin-top:60px;
+  font-family:var(--mono);
+  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-mute);
+}
+
+/* === SLIDE 2 · EXAMEN === */
+.exam-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-bottom:30px;
+}
+.exam-card{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:32px 30px;
+  position:relative;
+  overflow:hidden;
+}
+.exam-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:var(--accent);
+}
+.exam-card .pts{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--accent);
+  letter-spacing:.12em;
+  display:block;
+  margin-bottom:8px;
+}
+.exam-card h3{margin-bottom:14px;color:var(--ink);}
+.exam-card .summary{
+  color:var(--ink-soft);
+  margin-bottom:18px;
+  font-size:.96rem;
+}
+.exam-card .summary strong{color:var(--ink);}
+.exam-card ul{list-style:none;border-top:1px solid var(--line);padding-top:16px;}
+.exam-card li{
+  padding:6px 0 6px 22px;
+  position:relative;
+  color:var(--ink-soft);
+  font-size:.92rem;
+}
+.exam-card li::before{
+  content:'';
+  position:absolute;
+  left:0;top:14px;
+  width:10px;height:1px;
+  background:var(--accent);
+}
+.exam-warn{
+  margin-top:20px;
+  background:rgba(176,122,130,.08);
+  border:1px solid rgba(176,122,130,.3);
+  border-radius:12px;
+  padding:20px 26px;
+}
+.exam-warn h4{color:var(--rose);margin-bottom:8px;}
+.exam-warn p{color:var(--ink-soft);font-size:.92rem;}
+
+.points-chart{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px 30px 28px;
+  margin-bottom:22px;
+}
+.points-chart svg{width:100%;height:auto;display:block;}
+
+/* === SLIDE 3 · TIMELINE === */
+.timeline-frame{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px;
+  overflow-x:auto;
+}
+.timeline-frame svg{width:100%;height:auto;min-width:2200px;display:block;}
+
+/* === SLIDE 4 · BLOQUES CARRUSEL === */
+.bloque-carousel{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:520px;}
+.bloque-stack{position:relative;width:100%;max-width:1040px;height:600px;}
+.bloque-card{
+  position:absolute;inset:0;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  display:grid;
+  grid-template-columns:0.95fr 1.05fr;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(20px) scale(.98);
+  pointer-events:none;
+  transition:opacity .4s ease, transform .4s ease;
+  box-shadow:0 12px 40px rgba(45,42,38,.08);
+}
+.bloque-card.is-active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+.bloque-side{padding:36px 40px;display:flex;flex-direction:column;}
+.bloque-side.left{
+  background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
+  border-right:1px solid var(--line);
+  position:relative;
+}
+.bloque-side.left::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;bottom:0;
+  width:6px;
+  background:var(--bloque-color, var(--accent));
+}
+.bloque-num{
+  font-family:var(--serif);
+  font-size:6.5rem;
+  font-weight:600;
+  color:var(--bloque-color, var(--accent));
+  line-height:1;
+  letter-spacing:-0.04em;
+  margin-bottom:8px;
+}
+.bloque-period{
+  font-family:var(--mono);
+  font-size:.9rem;
+  letter-spacing:.1em;
+  color:var(--ink-soft);
+  margin-bottom:20px;
+}
+.bloque-name{
+  font-family:var(--serif);
+  font-size:1.55rem;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.25;
+  margin-bottom:22px;
+}
+.bloque-regime{
+  font-size:.92rem;
+  color:var(--ink-soft);
+  padding-top:18px;
+  border-top:1px dashed var(--line-strong);
+  margin-bottom:auto;
+}
+.bloque-regime strong{color:var(--ink);display:block;font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bloque-color, var(--accent));margin-bottom:6px;}
+.bloque-keyevent{
+  margin-top:auto;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1rem;
+  color:var(--ink);
+}
+.bloque-side.right{background:var(--paper-card);overflow-y:auto;}
+.bloque-side-title{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--bloque-color, var(--accent));
+  margin-bottom:12px;
+  font-weight:600;
+}
+.bloque-section{margin-bottom:24px;}
+.bloque-section ul{list-style:none;}
+.bloque-section ul li{
+  padding:7px 0;
+  border-bottom:1px solid var(--line);
+  font-size:.92rem;
+  color:var(--ink-soft);
+  line-height:1.5;
+}
+.bloque-section ul li:last-child{border-bottom:none;}
+.bloque-section ul li strong{color:var(--ink);font-weight:600;}
+.bloque-people{display:flex;flex-wrap:wrap;gap:6px;}
+.bloque-people span{
+  font-size:.78rem;
+  padding:4px 10px;
+  border-radius:100px;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  color:var(--ink-soft);
+}
+
+/* SUBNAV (carrusel interno) */
+.subnav{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:24px;}
+.subnav-btn{
+  background:transparent;border:1px solid var(--line);color:var(--ink-soft);
+  width:38px;height:38px;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;font-size:1.1rem;font-family:var(--serif);
+  transition:all .2s;
+}
+.subnav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.subnav-label{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;
+  color:var(--ink-mute);margin:0 12px;min-width:180px;text-align:center;
+}
+
+/* === SLIDE 5 · CONSTITUCIONES === */
+.const-grid{
+  flex:1;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px;
+  overflow:auto;
+}
+.const-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1100px;
+}
+.const-table th, .const-table td{
+  padding:12px 14px;
+  border:1px solid var(--line);
+  font-size:.85rem;
+  vertical-align:top;
+  text-align:left;
+}
+.const-table thead th{
+  background:var(--paper-soft);
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:.95rem;
+  color:var(--ink);
+  text-align:center;
+}
+.const-table thead th .year{
+  display:block;
+  font-family:var(--mono);
+  font-size:1.4rem;
+  font-weight:700;
+  margin-bottom:2px;
+}
+.const-table thead th .tag{
+  display:block;
+  font-size:.75rem;
+  font-weight:400;
+  color:var(--ink-mute);
+  letter-spacing:.05em;
+}
+.const-table tbody th{
+  background:var(--paper-deep);
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  font-weight:600;
+  width:140px;
+}
+.const-table tbody td{
+  color:var(--ink-soft);
+  font-size:.84rem;
+  line-height:1.5;
+}
+.const-table .tag-prog{background:rgba(124,144,121,.18);color:#5a8060;padding:2px 6px;border-radius:4px;font-size:.7rem;font-weight:600;}
+.const-table .tag-mod{background:rgba(176,122,130,.18);color:#a05060;padding:2px 6px;border-radius:4px;font-size:.7rem;font-weight:600;}
+.const-table .tag-dem{background:rgba(79,104,144,.18);color:#3d5478;padding:2px 6px;border-radius:4px;font-size:.7rem;font-weight:600;}
+
+/* === SLIDE 6 · PERSONAJES === */
+.persona-carousel{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:500px;}
+.persona-stack{position:relative;width:100%;max-width:960px;height:560px;}
+.persona-card{
+  position:absolute;inset:0;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  display:grid;
+  grid-template-columns:0.85fr 1.15fr;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(20px) scale(.98);
+  pointer-events:none;
+  transition:opacity .4s ease, transform .4s ease;
+  box-shadow:0 12px 40px rgba(45,42,38,.08);
+}
+.persona-card.is-active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+.persona-side{padding:40px 44px;display:flex;flex-direction:column;}
+.persona-side.front{
+  background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
+  border-right:1px solid var(--line);
+  position:relative;
+  align-items:center;
+  text-align:center;
+  justify-content:center;
+}
+.persona-side.front::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;bottom:0;
+  width:5px;
+  background:var(--p-color, var(--accent));
+}
+.persona-avatar{
+  width:130px;height:130px;
+  border-radius:50%;
+  background:var(--p-color);
+  display:grid;place-items:center;
+  color:var(--paper-soft);
+  font-family:var(--serif);
+  font-size:3rem;
+  font-weight:600;
+  margin-bottom:24px;
+}
+.persona-name{
+  font-family:var(--serif);
+  font-size:1.9rem;
+  color:var(--ink);
+  font-weight:600;
+  line-height:1.2;
+  margin-bottom:6px;
+}
+.persona-role{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--p-color);
+  font-weight:600;
+  margin-bottom:8px;
+}
+.persona-dates{
+  font-family:var(--mono);
+  font-size:.85rem;
+  color:var(--ink-mute);
+  margin-bottom:20px;
+}
+.persona-bloque{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.12em;
+  color:var(--ink-soft);
+  background:var(--paper-deep);
+  padding:4px 12px;
+  border-radius:100px;
+  margin-top:auto;
+}
+.persona-side.back{background:var(--paper-card);overflow-y:auto;}
+.persona-side-title{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--p-color);
+  font-weight:600;
+  margin-bottom:12px;
+}
+.persona-section{margin-bottom:22px;}
+.persona-section p{
+  font-size:.95rem;
+  color:var(--ink-soft);
+  line-height:1.6;
+}
+.persona-section ul{list-style:none;}
+.persona-section ul li{
+  padding:6px 0;
+  border-bottom:1px solid var(--line);
+  font-size:.9rem;
+  color:var(--ink-soft);
+}
+.persona-section ul li:last-child{border-bottom:none;}
+.persona-section ul li strong{color:var(--ink);}
+.persona-quote{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.02rem;
+  color:var(--ink);
+  padding:12px 18px;
+  border-left:3px solid var(--p-color);
+  background:var(--paper-soft);
+  border-radius:0 8px 8px 0;
+  margin-top:auto;
+}
+
+/* === SLIDE 7 · GUERRA CIVIL === */
+.guerra-layout{flex:1;display:grid;grid-template-columns:1fr 0.9fr;gap:24px;min-height:0;}
+.guerra-map{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+}
+.guerra-map svg{flex:1;width:100%;height:auto;display:block;max-height:520px;}
+.guerra-phases{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+  justify-content:center;
+}
+.phase-btn{
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  color:var(--ink-soft);
+  padding:8px 16px;
+  border-radius:100px;
+  cursor:pointer;
+  font-family:var(--sans);
+  font-weight:500;
+  font-size:.85rem;
+  transition:all .2s;
+}
+.phase-btn:hover{color:var(--ink);background:var(--paper-deep);}
+.phase-btn.is-active{background:var(--b4);color:var(--paper-soft);border-color:var(--b4);}
+
+.guerra-detail{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px 30px;
+  overflow-y:auto;
+}
+.guerra-detail h3{
+  font-family:var(--serif);
+  font-size:1.4rem;
+  color:var(--b4);
+  margin-bottom:14px;
+}
+.guerra-detail .dates{
+  font-family:var(--mono);
+  font-size:.8rem;
+  letter-spacing:.1em;
+  color:var(--ink-mute);
+  margin-bottom:14px;
+}
+.guerra-detail h4{
+  font-family:var(--mono);
+  font-size:.72rem;
+  color:var(--accent);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin:18px 0 6px;
+}
+.guerra-detail p{color:var(--ink-soft);font-size:.92rem;line-height:1.6;margin-bottom:8px;}
+.guerra-detail ul{list-style:none;margin-bottom:8px;}
+.guerra-detail ul li{
+  padding:6px 0 6px 22px;
+  position:relative;
+  font-size:.9rem;
+  color:var(--ink-soft);
+}
+.guerra-detail ul li::before{
+  content:'';
+  position:absolute;
+  left:0;top:14px;
+  width:10px;height:1px;
+  background:var(--b4);
+}
+.guerra-detail ul li strong{color:var(--ink);}
+
+/* Bando colors */
+.bandos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.bando{
+  padding:14px 16px;
+  border-radius:10px;
+  border:1px solid var(--line);
+}
+.bando.rep{background:rgba(169,84,72,.07);border-left:3px solid #A95448;}
+.bando.sub{background:rgba(108,102,96,.07);border-left:3px solid #6C6660;}
+.bando h5{font-family:var(--serif);color:var(--ink);margin-bottom:6px;font-size:1rem;}
+.bando p{font-size:.82rem;color:var(--ink-soft);margin:0;}
+
+/* === SLIDE 8 · CONCEPTOS === */
+.concepto-filter{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:22px;
+}
+.filter-chip{
+  background:var(--paper-soft);
+  color:var(--ink-soft);
+  border:1px solid var(--line);
+  padding:8px 16px;
+  border-radius:100px;
+  cursor:pointer;
+  font-size:.85rem;
+  font-family:var(--sans);
+  transition:all .2s;
+}
+.filter-chip:hover{background:var(--paper-deep);color:var(--ink);}
+.filter-chip.is-active{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.concepto-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:16px;
+  flex:1;
+  align-content:start;
+  overflow-y:auto;
+  padding:4px 4px 20px;
+}
+.concepto{
+  background:var(--paper-card);
+  border-left:4px solid var(--accent);
+  border-radius:0 12px 12px 0;
+  padding:18px 22px;
+  transition:all .2s;
+}
+.concepto:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(45,42,38,.08);}
+.concepto .term{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:1.05rem;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.concepto .def{
+  font-size:.9rem;
+  color:var(--ink-soft);
+  line-height:1.55;
+  margin-bottom:8px;
+}
+.concepto cite{
+  font-family:var(--mono);
+  font-size:.72rem;
+  color:var(--ink-mute);
+  letter-spacing:.06em;
+  font-style:normal;
+  text-transform:uppercase;
+}
+.concepto.b-1{border-left-color:#4F6890;}
+.concepto.b-2{border-left-color:#7B8F6E;}
+.concepto.b-3{border-left-color:#B58C4D;}
+.concepto.b-4{border-left-color:#A95448;}
+.concepto.b-5{border-left-color:#6C6660;}
+.concepto.b-6{border-left-color:#5896A3;}
+
+/* === SLIDE 9 · GUÍA === */
+.guia-blocks{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.guia-block{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:26px 28px;
+  border-top:3px solid var(--accent);
+}
+.guia-block .ej{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.16em;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+.guia-block h4{font-family:var(--serif);font-size:1.2rem;margin-bottom:14px;color:var(--ink);}
+.guia-block p{font-size:.92rem;color:var(--ink-soft);margin-bottom:12px;line-height:1.55;}
+.guia-block ul{list-style:none;}
+.guia-block ul li{
+  padding:6px 0 6px 22px;
+  position:relative;
+  font-size:.88rem;
+  color:var(--ink-soft);
+  line-height:1.5;
+}
+.guia-block ul li::before{
+  content:'▸';
+  position:absolute;left:0;color:var(--accent);
+}
+.guia-block ul li strong{color:var(--ink);}
+.guia-block.ej1{border-top-color:#4F6890;}
+.guia-block.ej1 .ej{color:#4F6890;}
+.guia-block.ej1 ul li::before{color:#4F6890;}
+.guia-block.ej2{border-top-color:#A95448;}
+.guia-block.ej2 .ej{color:#A95448;}
+.guia-block.ej2 ul li::before{color:#A95448;}
+.guia-block.ej3{border-top-color:#6C6660;}
+.guia-block.ej3 .ej{color:#6C6660;}
+.guia-block.ej3 ul li::before{color:#6C6660;}
+
+/* === SLIDE 10 · FLASHCARDS === */
+.flash-stage{
+  flex:1;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:50px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  min-height:460px;
+}
+.flash-status{
+  position:absolute;
+  top:20px;left:28px;
+  font-family:var(--mono);color:var(--ink-mute);font-size:.8rem;
+}
+.flash-cat{
+  position:absolute;
+  top:20px;right:28px;
+  font-family:var(--mono);color:var(--accent);font-size:.78rem;
+  text-transform:uppercase;letter-spacing:.16em;
+}
+.flash-progress{
+  display:flex;gap:4px;margin:0 auto 20px;max-width:480px;width:100%;
+}
+.flash-progress .seg{
+  flex:1;height:4px;background:var(--paper-deep);border-radius:2px;
+}
+.flash-progress .seg.done{background:var(--sage);}
+.flash-progress .seg.miss{background:var(--rose);}
+.flash-progress .seg.current{background:var(--accent);}
+.flash-q{
+  font-family:var(--serif);
+  font-size:clamp(1.5rem,2.8vw,2rem);
+  color:var(--ink);
+  margin-bottom:28px;
+  line-height:1.3;
+  max-width:780px;
+  font-weight:500;
+}
+.flash-a{
+  font-size:1.05rem;
+  color:var(--ink-soft);
+  line-height:1.6;
+  display:none;
+  padding:22px 28px;
+  background:var(--paper-soft);
+  border-radius:12px;
+  border:1px dashed var(--line-strong);
+  margin-bottom:24px;
+  max-width:760px;
+}
+.flash-stage.show-answer .flash-a{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.flash-controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;}
+.flash-btn{
+  background:var(--paper-soft);color:var(--ink);
+  border:1px solid var(--line);
+  padding:11px 22px;border-radius:8px;cursor:pointer;
+  font-family:var(--sans);font-size:.92rem;font-weight:500;
+  transition:all .2s;
+}
+.flash-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.flash-btn.primary{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.flash-btn.primary:hover{background:var(--accent-deep);}
+.flash-score{
+  margin-top:24px;
+  font-family:var(--mono);
+  font-size:.85rem;
+  color:var(--ink-mute);
+}
+.flash-score .know{color:var(--sage);}
+.flash-score .no{color:var(--rose);}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+<div class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark">H</span>
+    <span>Historia de España · PAU 2026</span>
+  </a>
+  <div class="topbar-right">
+    <a class="home-link" href="index.html">← INICIO</a>
+    <div class="slide-counter"><strong id="counterNum">1</strong> / <span id="counterTotal">10</span></div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 1 · PORTADA                            -->
+<!-- ============================================ -->
+<section class="slide slide-cover is-active" data-title="Portada">
+  <div class="slide-inner" style="justify-content:center;">
+    <div class="cover-mark">H</div>
+    <h1 class="cover-title">Historia de España<span class="ornament">·</span>PAU 2026</h1>
+    <p class="cover-sub">Seis bloques · Veinte temas · Tres ejercicios · De 1808 a 1986.</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><div class="n">6</div><div class="l">Bloques</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat"><div class="n">20</div><div class="l">Temas</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat"><div class="n">178</div><div class="l">Años</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat"><div class="n">10</div><div class="l">Puntos</div></div>
+    </div>
+    <p class="cover-hint">Pulsa la flecha derecha o haz clic en › para avanzar</p>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 2 · ESTRUCTURA DEL EXAMEN              -->
+<!-- ============================================ -->
+<section class="slide" data-title="Estructura del examen">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">El examen</div>
+    <h2 class="slide-title">Tres ejercicios. Diez puntos.</h2>
+    <p class="slide-lead">Distrito Universitario de Canarias. Hay penalización ortográfica de hasta 0,5 puntos en cada uno de los ejercicios II y III.</p>
+
+    <div class="points-chart">
+      <svg viewBox="0 0 1100 160" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <!-- Bar -->
+        <rect x="40" y="38" width="296" height="56" fill="#4F6890" rx="6"/>
+        <rect x="340" y="38" width="424" height="56" fill="#A95448" rx="6"/>
+        <rect x="768" y="38" width="292" height="56" fill="#6C6660" rx="6"/>
+
+        <text x="188" y="74" text-anchor="middle" font-family="Lora,serif" font-size="26" fill="#FAF6EE" font-weight="700">3 pts</text>
+        <text x="552" y="74" text-anchor="middle" font-family="Lora,serif" font-size="26" fill="#FAF6EE" font-weight="700">4 pts</text>
+        <text x="914" y="74" text-anchor="middle" font-family="Lora,serif" font-size="26" fill="#FAF6EE" font-weight="700">3 pts</text>
+
+        <text x="188" y="116" text-anchor="middle" font-size="13" fill="#2D2A26" font-weight="600">Ejercicio I</text>
+        <text x="188" y="134" text-anchor="middle" font-size="11.5" fill="#5C574F">Conceptos (6 de 9)</text>
+        <text x="188" y="154" text-anchor="middle" font-size="10.5" fill="#8B8579">2 de 3 bloques · 0,5 pts cada uno</text>
+
+        <text x="552" y="116" text-anchor="middle" font-size="13" fill="#2D2A26" font-weight="600">Ejercicio II</text>
+        <text x="552" y="134" text-anchor="middle" font-size="11.5" fill="#5C574F">Pregunta práctica · comentario texto</text>
+        <text x="552" y="154" text-anchor="middle" font-size="10.5" fill="#8B8579">Eliges Grupo I (s.XIX-1931) o Grupo II (1931-1986)</text>
+
+        <text x="914" y="116" text-anchor="middle" font-size="13" fill="#2D2A26" font-weight="600">Ejercicio III</text>
+        <text x="914" y="134" text-anchor="middle" font-size="11.5" fill="#5C574F">Pregunta teórica obligatoria</text>
+        <text x="914" y="154" text-anchor="middle" font-size="10.5" fill="#8B8579">Composición · sin opción</text>
+      </svg>
+    </div>
+
+    <div class="exam-grid">
+      <div class="exam-card" style="--accent:#4F6890;">
+        <span class="pts">EJERCICIO I · 3 PUNTOS</span>
+        <h3>Conceptos</h3>
+        <p class="summary">Definiciones tipo test multi-opción. <strong>Eliges 2 de los 3 bloques</strong> propuestos y respondes a sus 3 conceptos cada uno.</p>
+        <ul>
+          <li>Cada concepto vale <strong>0,5 puntos</strong>.</li>
+          <li>3 definiciones por concepto: solo una es correcta.</li>
+          <li>Si contestas los 3 bloques, solo cuentan los 2 primeros de tu hoja.</li>
+          <li>Copia el concepto y la definición correcta en tu hoja.</li>
+        </ul>
+      </div>
+      <div class="exam-card" style="--accent:#A95448;">
+        <span class="pts">EJERCICIO II · 4 PUNTOS</span>
+        <h3>Comentario de texto</h3>
+        <p class="summary">Análisis de un texto histórico + desarrollo de un tema relacionado. <strong>Eliges entre dos textos.</strong></p>
+        <ul>
+          <li><strong>Grupo I</strong>: siglo XIX hasta 1931.</li>
+          <li><strong>Grupo II</strong>: 1931 hasta 1986.</li>
+          <li>Pregunta 1 (1 pt): análisis del texto.</li>
+          <li>Pregunta 2 (3 pts): desarrollo razonado del tema.</li>
+        </ul>
+      </div>
+      <div class="exam-card" style="--accent:#6C6660;">
+        <span class="pts">EJERCICIO III · 3 PUNTOS</span>
+        <h3>Composición teórica</h3>
+        <p class="summary"><strong>Pregunta obligatoria.</strong> Composición desarrollada sobre un tema concreto, sin opción.</p>
+        <ul>
+          <li>Tema fijo: no eliges.</li>
+          <li>Exige estructura clara: introducción, desarrollo, conclusión.</li>
+          <li>Cuida los nexos cronológicos y la causalidad.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exam-warn">
+      <h4>⚠ Ortografía y orden</h4>
+      <p>Penalización de hasta <strong>0,5 puntos en el Ejercicio II</strong> y <strong>0,5 puntos en el Ejercicio III</strong> por errores ortográficos. Total perdible solo por ortografía: <strong>1 punto</strong>. Responde siempre en los folios del examen, nunca en los del enunciado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 3 · LÍNEA TEMPORAL 1808-1986           -->
+<!-- ============================================ -->
+<section class="slide" data-title="Línea temporal 1808-1986">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Línea histórica</div>
+    <h2 class="slide-title">De Cádiz a la entrada en la CEE.</h2>
+    <p class="slide-lead">178 años en seis bloques. Cada color es un bloque del examen. Las marcas verticales son los eventos clave.</p>
+
+    <div class="timeline-frame">
+      <svg viewBox="0 0 2400 460" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+        <defs>
+          <marker id="tl-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#BFB39A"/>
+          </marker>
+        </defs>
+
+        <!-- Era bands (colored backgrounds) -->
+        <!-- Bloque I: 1808-1874 (66 años) -->
+        <rect x="40" y="190" width="700" height="40" fill="#4F6890" opacity="0.15"/>
+        <text x="390" y="172" text-anchor="middle" font-size="11" fill="#4F6890" font-weight="700" letter-spacing="0.12em">BLOQUE I · ESTADO LIBERAL · 1808-1874</text>
+
+        <!-- Bloque II: 1875-1902 (27 años) -->
+        <rect x="740" y="190" width="280" height="40" fill="#7B8F6E" opacity="0.18"/>
+        <text x="880" y="172" text-anchor="middle" font-size="11" fill="#7B8F6E" font-weight="700" letter-spacing="0.12em">II · RESTAURACIÓN · 1875-1902</text>
+
+        <!-- Bloque III: 1902-1931 (29 años) -->
+        <rect x="1020" y="190" width="300" height="40" fill="#B58C4D" opacity="0.18"/>
+        <text x="1170" y="172" text-anchor="middle" font-size="11" fill="#B58C4D" font-weight="700" letter-spacing="0.12em">III · QUIEBRA · 1902-1931</text>
+
+        <!-- Bloque IV: 1931-1939 (8 años) -->
+        <rect x="1320" y="190" width="90" height="40" fill="#A95448" opacity="0.22"/>
+        <text x="1365" y="172" text-anchor="middle" font-size="11" fill="#A95448" font-weight="700" letter-spacing="0.10em">IV · 31-39</text>
+
+        <!-- Bloque V: 1939-1975 (36 años) -->
+        <rect x="1410" y="190" width="380" height="40" fill="#6C6660" opacity="0.20"/>
+        <text x="1600" y="172" text-anchor="middle" font-size="11" fill="#6C6660" font-weight="700" letter-spacing="0.12em">V · FRANQUISMO · 1939-1975</text>
+
+        <!-- Bloque VI: 1975-1986 (11 años) -->
+        <rect x="1790" y="190" width="120" height="40" fill="#5896A3" opacity="0.20"/>
+        <text x="1850" y="172" text-anchor="middle" font-size="11" fill="#5896A3" font-weight="700" letter-spacing="0.10em">VI · TRANSICIÓN</text>
+
+        <!-- Main timeline line -->
+        <line x1="40" y1="210" x2="2360" y2="210" stroke="#BFB39A" stroke-width="1.5" marker-end="url(#tl-arrow)"/>
+
+        <!-- Year labels every 20 years -->
+        <g font-size="10" fill="#8B8579" font-family="Inter,sans-serif">
+          <text x="40" y="252" text-anchor="middle">1808</text>
+          <text x="252" y="252" text-anchor="middle">1830</text>
+          <text x="464" y="252" text-anchor="middle">1850</text>
+          <text x="676" y="252" text-anchor="middle">1870</text>
+          <text x="888" y="252" text-anchor="middle">1890</text>
+          <text x="1100" y="252" text-anchor="middle">1910</text>
+          <text x="1312" y="252" text-anchor="middle">1930</text>
+          <text x="1524" y="252" text-anchor="middle">1950</text>
+          <text x="1736" y="252" text-anchor="middle">1970</text>
+          <text x="1880" y="252" text-anchor="middle">1986</text>
+        </g>
+
+        <!-- EVENTOS · alternados arriba/abajo -->
+        <!-- BLOQUE I events -->
+        <g>
+          <line x1="50" y1="210" x2="50" y2="120" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="50" cy="210" r="4" fill="#4F6890"/>
+          <text x="50" y="112" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1808</text>
+          <text x="50" y="98" text-anchor="middle" font-size="9.5" fill="#5C574F">Guerra Indep.</text>
+          <text x="50" y="84" text-anchor="middle" font-size="9.5" fill="#8B8579">Junta Suprema Canarias</text>
+        </g>
+        <g>
+          <line x1="90" y1="210" x2="90" y2="298" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="90" cy="210" r="4" fill="#4F6890"/>
+          <text x="90" y="312" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1812</text>
+          <text x="90" y="326" text-anchor="middle" font-size="9.5" fill="#5C574F">Const. Cádiz</text>
+          <text x="90" y="340" text-anchor="middle" font-size="9.5" fill="#8B8579">«La Pepa»</text>
+        </g>
+        <g>
+          <line x1="170" y1="210" x2="170" y2="130" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="170" cy="210" r="4" fill="#4F6890"/>
+          <text x="170" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1820-23</text>
+          <text x="170" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Trienio Liberal</text>
+          <text x="170" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">Pron. Riego</text>
+        </g>
+        <g>
+          <line x1="220" y1="210" x2="220" y2="298" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="220" cy="210" r="4" fill="#4F6890"/>
+          <text x="220" y="312" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1823-33</text>
+          <text x="220" y="326" text-anchor="middle" font-size="9.5" fill="#5C574F">Década Ominosa</text>
+        </g>
+        <g>
+          <line x1="270" y1="210" x2="270" y2="130" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="270" cy="210" r="4" fill="#4F6890"/>
+          <text x="270" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1833-40</text>
+          <text x="270" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">1ª Guerra Carlista</text>
+          <text x="270" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">Regencia M. Cristina</text>
+        </g>
+        <g>
+          <line x1="340" y1="210" x2="340" y2="312" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="340" cy="210" r="4" fill="#4F6890"/>
+          <text x="340" y="326" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1837 · 1845</text>
+          <text x="340" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">Const. prog./mod.</text>
+        </g>
+        <g>
+          <line x1="440" y1="210" x2="440" y2="130" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="440" cy="210" r="4" fill="#4F6890"/>
+          <text x="440" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1843-68</text>
+          <text x="440" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Reinado Isabel II</text>
+          <text x="440" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">Moderantismo</text>
+        </g>
+        <g>
+          <line x1="580" y1="210" x2="580" y2="298" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="580" cy="210" r="4" fill="#4F6890"/>
+          <text x="580" y="312" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1854-56</text>
+          <text x="580" y="326" text-anchor="middle" font-size="9.5" fill="#5C574F">Bienio Progresista</text>
+        </g>
+        <g>
+          <line x1="660" y1="210" x2="660" y2="130" stroke="#4F6890" stroke-width="1.5"/>
+          <circle cx="660" cy="210" r="5" fill="#4F6890"/>
+          <text x="660" y="122" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">1868</text>
+          <text x="660" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">La Gloriosa</text>
+          <text x="660" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">Exilio Isabel II</text>
+        </g>
+        <g>
+          <line x1="700" y1="210" x2="700" y2="312" stroke="#4F6890" stroke-width="1"/>
+          <circle cx="700" cy="210" r="4" fill="#4F6890"/>
+          <text x="700" y="326" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1873-74</text>
+          <text x="700" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">I República</text>
+        </g>
+
+        <!-- BLOQUE II events -->
+        <g>
+          <line x1="755" y1="210" x2="755" y2="130" stroke="#7B8F6E" stroke-width="1.5"/>
+          <circle cx="755" cy="210" r="5" fill="#7B8F6E"/>
+          <text x="755" y="122" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">1874-75</text>
+          <text x="755" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Restauración</text>
+          <text x="755" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">Alfonso XII · Cánovas</text>
+        </g>
+        <g>
+          <line x1="800" y1="210" x2="800" y2="298" stroke="#7B8F6E" stroke-width="1"/>
+          <circle cx="800" cy="210" r="4" fill="#7B8F6E"/>
+          <text x="800" y="312" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1876</text>
+          <text x="800" y="326" text-anchor="middle" font-size="9.5" fill="#5C574F">Const. Restauración</text>
+        </g>
+        <g>
+          <line x1="870" y1="210" x2="870" y2="130" stroke="#7B8F6E" stroke-width="1"/>
+          <circle cx="870" cy="210" r="4" fill="#7B8F6E"/>
+          <text x="870" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1879 · 1888</text>
+          <text x="870" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">PSOE · UGT</text>
+        </g>
+        <g>
+          <line x1="990" y1="210" x2="990" y2="312" stroke="#7B8F6E" stroke-width="1.5"/>
+          <circle cx="990" cy="210" r="5" fill="#7B8F6E"/>
+          <text x="990" y="326" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">1898</text>
+          <text x="990" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">Desastre del 98</text>
+          <text x="990" y="354" text-anchor="middle" font-size="9.5" fill="#8B8579">Pérdida Cuba · Puerto Rico · Filipinas</text>
+        </g>
+
+        <!-- BLOQUE III events -->
+        <g>
+          <line x1="1040" y1="210" x2="1040" y2="130" stroke="#B58C4D" stroke-width="1"/>
+          <circle cx="1040" cy="210" r="4" fill="#B58C4D"/>
+          <text x="1040" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1902</text>
+          <text x="1040" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Alfonso XIII</text>
+        </g>
+        <g>
+          <line x1="1100" y1="210" x2="1100" y2="298" stroke="#B58C4D" stroke-width="1"/>
+          <circle cx="1100" cy="210" r="4" fill="#B58C4D"/>
+          <text x="1100" y="312" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1909</text>
+          <text x="1100" y="326" text-anchor="middle" font-size="9.5" fill="#5C574F">Semana Trágica</text>
+        </g>
+        <g>
+          <line x1="1180" y1="210" x2="1180" y2="130" stroke="#B58C4D" stroke-width="1"/>
+          <circle cx="1180" cy="210" r="4" fill="#B58C4D"/>
+          <text x="1180" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1917</text>
+          <text x="1180" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Crisis triple</text>
+        </g>
+        <g>
+          <line x1="1230" y1="210" x2="1230" y2="312" stroke="#B58C4D" stroke-width="1"/>
+          <circle cx="1230" cy="210" r="4" fill="#B58C4D"/>
+          <text x="1230" y="326" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1921</text>
+          <text x="1230" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">Desastre de Annual</text>
+        </g>
+        <g>
+          <line x1="1280" y1="210" x2="1280" y2="130" stroke="#B58C4D" stroke-width="1.5"/>
+          <circle cx="1280" cy="210" r="5" fill="#B58C4D"/>
+          <text x="1280" y="122" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">1923-30</text>
+          <text x="1280" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Dict. Primo de Rivera</text>
+        </g>
+
+        <!-- BLOQUE IV events -->
+        <g>
+          <line x1="1325" y1="210" x2="1325" y2="130" stroke="#A95448" stroke-width="1.5"/>
+          <circle cx="1325" cy="210" r="5" fill="#A95448"/>
+          <text x="1325" y="122" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">14 abr 1931</text>
+          <text x="1325" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">II República</text>
+          <text x="1325" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">Const. 1931</text>
+        </g>
+        <g>
+          <line x1="1360" y1="210" x2="1360" y2="312" stroke="#A95448" stroke-width="1"/>
+          <circle cx="1360" cy="210" r="4" fill="#A95448"/>
+          <text x="1360" y="326" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">36</text>
+          <text x="1360" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">Frente Popular</text>
+        </g>
+        <g>
+          <line x1="1390" y1="210" x2="1390" y2="130" stroke="#A95448" stroke-width="1.5"/>
+          <circle cx="1390" cy="210" r="5" fill="#A95448"/>
+          <text x="1390" y="122" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">18 jul 1936</text>
+          <text x="1390" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Golpe de Estado</text>
+          <text x="1390" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">→ Guerra Civil</text>
+        </g>
+
+        <!-- BLOQUE V events -->
+        <g>
+          <line x1="1420" y1="210" x2="1420" y2="312" stroke="#6C6660" stroke-width="1.5"/>
+          <circle cx="1420" cy="210" r="5" fill="#6C6660"/>
+          <text x="1420" y="326" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">1 abr 1939</text>
+          <text x="1420" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">Fin Guerra Civil</text>
+          <text x="1420" y="354" text-anchor="middle" font-size="9.5" fill="#8B8579">Dictadura Franco</text>
+        </g>
+        <g>
+          <line x1="1480" y1="210" x2="1480" y2="130" stroke="#6C6660" stroke-width="1"/>
+          <circle cx="1480" cy="210" r="4" fill="#6C6660"/>
+          <text x="1480" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1939-45</text>
+          <text x="1480" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Autarquía · aislamiento</text>
+        </g>
+        <g>
+          <line x1="1540" y1="210" x2="1540" y2="298" stroke="#6C6660" stroke-width="1"/>
+          <circle cx="1540" cy="210" r="4" fill="#6C6660"/>
+          <text x="1540" y="312" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1953</text>
+          <text x="1540" y="326" text-anchor="middle" font-size="9.5" fill="#5C574F">Acuerdos con EE.UU.</text>
+        </g>
+        <g>
+          <line x1="1590" y1="210" x2="1590" y2="130" stroke="#6C6660" stroke-width="1"/>
+          <circle cx="1590" cy="210" r="4" fill="#6C6660"/>
+          <text x="1590" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1959</text>
+          <text x="1590" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Plan Estabilización</text>
+        </g>
+        <g>
+          <line x1="1660" y1="210" x2="1660" y2="312" stroke="#6C6660" stroke-width="1"/>
+          <circle cx="1660" cy="210" r="4" fill="#6C6660"/>
+          <text x="1660" y="326" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">años 60</text>
+          <text x="1660" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">Desarrollismo</text>
+        </g>
+        <g>
+          <line x1="1780" y1="210" x2="1780" y2="130" stroke="#6C6660" stroke-width="1.5"/>
+          <circle cx="1780" cy="210" r="5" fill="#6C6660"/>
+          <text x="1780" y="122" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">20 nov 1975</text>
+          <text x="1780" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Muere Franco</text>
+        </g>
+
+        <!-- BLOQUE VI events -->
+        <g>
+          <line x1="1810" y1="210" x2="1810" y2="298" stroke="#5896A3" stroke-width="1.5"/>
+          <circle cx="1810" cy="210" r="5" fill="#5896A3"/>
+          <text x="1810" y="312" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">1977</text>
+          <text x="1810" y="326" text-anchor="middle" font-size="9.5" fill="#5C574F">Elecciones libres</text>
+          <text x="1810" y="340" text-anchor="middle" font-size="9.5" fill="#8B8579">UCD · Suárez</text>
+        </g>
+        <g>
+          <line x1="1840" y1="210" x2="1840" y2="130" stroke="#5896A3" stroke-width="1.5"/>
+          <circle cx="1840" cy="210" r="5" fill="#5896A3"/>
+          <text x="1840" y="122" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">6 dic 1978</text>
+          <text x="1840" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">Constitución</text>
+          <text x="1840" y="94" text-anchor="middle" font-size="9.5" fill="#8B8579">«Padres de la Const.»</text>
+        </g>
+        <g>
+          <line x1="1865" y1="210" x2="1865" y2="312" stroke="#5896A3" stroke-width="1"/>
+          <circle cx="1865" cy="210" r="4" fill="#5896A3"/>
+          <text x="1865" y="326" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">23 feb 1981</text>
+          <text x="1865" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">23-F · golpe Tejero</text>
+        </g>
+        <g>
+          <line x1="1885" y1="210" x2="1885" y2="130" stroke="#5896A3" stroke-width="1"/>
+          <circle cx="1885" cy="210" r="4" fill="#5896A3"/>
+          <text x="1885" y="122" text-anchor="middle" font-size="10.5" fill="#2D2A26" font-weight="600">1982</text>
+          <text x="1885" y="108" text-anchor="middle" font-size="9.5" fill="#5C574F">PSOE · F. González</text>
+        </g>
+        <g>
+          <line x1="1905" y1="210" x2="1905" y2="312" stroke="#5896A3" stroke-width="1.5"/>
+          <circle cx="1905" cy="210" r="5" fill="#5896A3"/>
+          <text x="1905" y="326" text-anchor="middle" font-size="11" fill="#2D2A26" font-weight="700">1 ene 1986</text>
+          <text x="1905" y="340" text-anchor="middle" font-size="9.5" fill="#5C574F">Entrada CEE</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 4 · LOS 6 BLOQUES                      -->
+<!-- ============================================ -->
+<section class="slide" data-title="Los 6 bloques">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Los 6 bloques</div>
+    <h2 class="slide-title">Cada bloque, un régimen.</h2>
+    <p class="slide-lead">Régimen político, periodo, temas que cubre y personajes clave. Navega con ‹ / › o las flechas del teclado.</p>
+
+    <div class="bloque-carousel">
+      <div class="bloque-stack" id="bloqueStack">
+
+        <!-- BLOQUE I -->
+        <article class="bloque-card is-active" style="--bloque-color:#4F6890;">
+          <div class="bloque-side left">
+            <div class="bloque-num">I</div>
+            <div class="bloque-period">1808 — 1874 · 66 años</div>
+            <h3 class="bloque-name">La construcción del Estado liberal en España</h3>
+            <div class="bloque-regime">
+              <strong>Régimen</strong>
+              Antiguo Régimen en crisis → monarquía constitucional. Tres modelos en conflicto: absolutismo, liberalismo moderado y progresismo.
+            </div>
+            <div class="bloque-keyevent">«La nación española es libre e independiente.» — Constitución de Cádiz, 1812.</div>
+          </div>
+          <div class="bloque-side right">
+            <div class="bloque-section">
+              <div class="bloque-side-title">Temas del bloque</div>
+              <ul>
+                <li><strong>1.</strong> La difícil construcción del Estado Liberal (1808-1833): revolución y reacción.</li>
+                <li><strong>2.</strong> El triunfo del moderantismo liberal en la era isabelina.</li>
+                <li><strong>3.</strong> El Sexenio Democrático (1868-1874): paréntesis revolucionario.</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Hitos cronológicos</div>
+              <ul>
+                <li><strong>1808-1814</strong> · Guerra de la Independencia · Junta Suprema de Canarias</li>
+                <li><strong>1812</strong> · Constitución de Cádiz («La Pepa»)</li>
+                <li><strong>1820-1823</strong> · Trienio Liberal (pronunciamiento de Riego)</li>
+                <li><strong>1833-1840</strong> · Primera Guerra Carlista · regencia M. Cristina</li>
+                <li><strong>1843-1868</strong> · Reinado efectivo de Isabel II · moderantismo</li>
+                <li><strong>1868-1874</strong> · La Gloriosa, Amadeo I, I República</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Personajes clave</div>
+              <div class="bloque-people">
+                <span>Fernando VII</span><span>Isabel II</span><span>Espartero</span><span>Narváez</span><span>O'Donnell</span><span>Prim</span><span>Amadeo I</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- BLOQUE II -->
+        <article class="bloque-card" style="--bloque-color:#7B8F6E;">
+          <div class="bloque-side left">
+            <div class="bloque-num">II</div>
+            <div class="bloque-period">1875 — 1902 · 27 años</div>
+            <h3 class="bloque-name">La Restauración Borbónica</h3>
+            <div class="bloque-regime">
+              <strong>Régimen</strong>
+              Monarquía constitucional pactada con turnismo bipartidista (Cánovas-Sagasta). Estabilidad institucional sobre caciquismo y exclusión política.
+            </div>
+            <div class="bloque-keyevent">«La Constitución de 1876 es la más larga de nuestra historia: vigente 47 años.»</div>
+          </div>
+          <div class="bloque-side right">
+            <div class="bloque-section">
+              <div class="bloque-side-title">Temas del bloque</div>
+              <ul>
+                <li><strong>4.</strong> La estabilidad política de la Restauración.</li>
+                <li><strong>5.</strong> Las respuestas al centralismo (nacionalismos vasco, catalán, gallego).</li>
+                <li><strong>6.</strong> Los inicios del movimiento obrero y campesino.</li>
+                <li><strong>7.</strong> La crisis de 1898 (Desastre del 98).</li>
+                <li><strong>8.</strong> La lenta industrialización española.</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Hitos cronológicos</div>
+              <ul>
+                <li><strong>1874-75</strong> · Pron. Sagunto (Martínez Campos) · Alfonso XII</li>
+                <li><strong>1876</strong> · Constitución de la Restauración</li>
+                <li><strong>1879 · 1888</strong> · Fundación del PSOE (Pablo Iglesias) y UGT</li>
+                <li><strong>1885-1902</strong> · Regencia de María Cristina (muerte Alfonso XII)</li>
+                <li><strong>1898</strong> · Guerra hispano-EE.UU. · pérdida Cuba, P. Rico, Filipinas</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Personajes clave</div>
+              <div class="bloque-people">
+                <span>Alfonso XII</span><span>Cánovas del Castillo</span><span>Sagasta</span><span>Pablo Iglesias</span><span>María Cristina (regente)</span><span>Sabino Arana</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- BLOQUE III -->
+        <article class="bloque-card" style="--bloque-color:#B58C4D;">
+          <div class="bloque-side left">
+            <div class="bloque-num">III</div>
+            <div class="bloque-period">1902 — 1931 · 29 años</div>
+            <h3 class="bloque-name">La quiebra de la Restauración y la dictadura de Primo de Rivera</h3>
+            <div class="bloque-regime">
+              <strong>Régimen</strong>
+              Sistema constitucional en crisis crecientes → Dictadura militar (1923-1930). Intento de regeneracionismo fallido. Caída de la monarquía.
+            </div>
+            <div class="bloque-keyevent">«No tenemos que justificar nuestro acto, que el pueblo sano demanda e impone.» — Manifiesto de Primo de Rivera, 13-IX-1923.</div>
+          </div>
+          <div class="bloque-side right">
+            <div class="bloque-section">
+              <div class="bloque-side-title">Temas del bloque</div>
+              <ul>
+                <li><strong>9.</strong> El revisionismo político (regeneracionismo, Maura, Canalejas).</li>
+                <li><strong>10.</strong> Fundamentos y evolución de la dictadura de Primo de Rivera hasta su crisis final y proclamación de la II República.</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Hitos cronológicos</div>
+              <ul>
+                <li><strong>1902</strong> · Inicio reinado efectivo de Alfonso XIII</li>
+                <li><strong>1909</strong> · Semana Trágica de Barcelona</li>
+                <li><strong>1917</strong> · Triple crisis (militar, política, social)</li>
+                <li><strong>1921</strong> · Desastre de Annual (guerra de Marruecos)</li>
+                <li><strong>13 sep 1923</strong> · Golpe de Primo de Rivera</li>
+                <li><strong>1923-25</strong> · Directorio Militar · <strong>1925-30</strong> · Directorio Civil</li>
+                <li><strong>1930</strong> · Caída de Primo · Pacto de San Sebastián</li>
+                <li><strong>12 abr 1931</strong> · Elecciones municipales · 14 abr · II República</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Personajes clave</div>
+              <div class="bloque-people">
+                <span>Alfonso XIII</span><span>Antonio Maura</span><span>José Canalejas</span><span>Eduardo Dato</span><span>Miguel Primo de Rivera</span><span>Berenguer</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- BLOQUE IV -->
+        <article class="bloque-card" style="--bloque-color:#A95448;">
+          <div class="bloque-side left">
+            <div class="bloque-num">IV</div>
+            <div class="bloque-period">1931 — 1939 · 8 años</div>
+            <h3 class="bloque-name">II República y Guerra Civil</h3>
+            <div class="bloque-regime">
+              <strong>Régimen</strong>
+              República democrática y reformista (Const. 1931) → polarización política → Guerra Civil tras el golpe del 18 julio 1936.
+            </div>
+            <div class="bloque-keyevent">«Salváis a la República atrayéndoos esa fuerza que espera ansiosa el momento de su redención.» — Clara Campoamor, Cortes Constituyentes, 1931.</div>
+          </div>
+          <div class="bloque-side right">
+            <div class="bloque-section">
+              <div class="bloque-side-title">Temas del bloque</div>
+              <ul>
+                <li><strong>11.</strong> II República: Constitución de 1931, democracia y derechos civiles.</li>
+                <li><strong>12.</strong> La obra reformadora del I Bienio (1931-1933).</li>
+                <li><strong>13.</strong> De la formación del Frente Popular al golpe del 36.</li>
+                <li><strong>14.</strong> La Guerra de España en el contexto europeo (1936-1939).</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Hitos cronológicos</div>
+              <ul>
+                <li><strong>14 abr 1931</strong> · Proclamación II República · gobierno provisional</li>
+                <li><strong>9 dic 1931</strong> · Constitución republicana</li>
+                <li><strong>1931-33</strong> · I Bienio Reformista (Azaña)</li>
+                <li><strong>1933-36</strong> · II Bienio Radical-CEDA · Octubre 34 (Asturias)</li>
+                <li><strong>feb 1936</strong> · Triunfo del Frente Popular</li>
+                <li><strong>18 jul 1936</strong> · Golpe militar · Guerra Civil</li>
+                <li><strong>1 abr 1939</strong> · Fin de la guerra · victoria sublevados</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Personajes clave</div>
+              <div class="bloque-people">
+                <span>Alcalá-Zamora</span><span>Manuel Azaña</span><span>Largo Caballero</span><span>Indalecio Prieto</span><span>Clara Campoamor</span><span>Victoria Kent</span><span>Lerroux</span><span>Gil-Robles</span><span>Sanjurjo</span><span>Mola</span><span>Franco</span><span>Negrín</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- BLOQUE V -->
+        <article class="bloque-card" style="--bloque-color:#6C6660;">
+          <div class="bloque-side left">
+            <div class="bloque-num">V</div>
+            <div class="bloque-period">1939 — 1975 · 36 años</div>
+            <h3 class="bloque-name">La Dictadura Franquista</h3>
+            <div class="bloque-regime">
+              <strong>Régimen</strong>
+              Dictadura personal de Franco. Inicialmente totalitario-fascistizante (Falange), luego nacionalcatólico, finalmente tecnócrata-desarrollista. Sin elecciones libres ni partidos.
+            </div>
+            <div class="bloque-keyevent">«Todo está atado y bien atado.» — Francisco Franco, sobre la sucesión.</div>
+          </div>
+          <div class="bloque-side right">
+            <div class="bloque-section">
+              <div class="bloque-side-title">Temas del bloque</div>
+              <ul>
+                <li><strong>15.</strong> Bases del Franquismo (ideología, instituciones, apoyos).</li>
+                <li><strong>16.</strong> La oposición democrática: exilio y represión.</li>
+                <li><strong>17.</strong> Apertura y transformaciones sociales y económicas de los años sesenta.</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Hitos cronológicos</div>
+              <ul>
+                <li><strong>1939-50</strong> · Autarquía · aislamiento internacional · represión</li>
+                <li><strong>1953</strong> · Concordato con la Santa Sede · acuerdos con EE.UU.</li>
+                <li><strong>1955</strong> · Ingreso en la ONU · fin del aislamiento</li>
+                <li><strong>1959</strong> · Plan de Estabilización · entrada tecnócratas (Opus)</li>
+                <li><strong>años 60</strong> · Desarrollismo · emigración · turismo</li>
+                <li><strong>1969</strong> · Juan Carlos sucesor a título de Rey</li>
+                <li><strong>20 dic 1973</strong> · ETA mata a Carrero Blanco</li>
+                <li><strong>20 nov 1975</strong> · Muere Franco</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Personajes clave</div>
+              <div class="bloque-people">
+                <span>Francisco Franco</span><span>Carrero Blanco</span><span>López Rodó</span><span>Arias Navarro</span><span>Don Juan</span><span>Dolores Ibárruri</span><span>Santiago Carrillo</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- BLOQUE VI -->
+        <article class="bloque-card" style="--bloque-color:#5896A3;">
+          <div class="bloque-side left">
+            <div class="bloque-num">VI</div>
+            <div class="bloque-period">1975 — 1986 · 11 años</div>
+            <h3 class="bloque-name">La Transición a la democracia</h3>
+            <div class="bloque-regime">
+              <strong>Régimen</strong>
+              De la dictadura a la democracia parlamentaria. Construcción del Estado de las Autonomías. Constitución de 1978. Alternancia política. Integración europea.
+            </div>
+            <div class="bloque-keyevent">«La Constitución se fundamenta en la indisoluble unidad de la Nación española.» — Const. 1978, art. 2.</div>
+          </div>
+          <div class="bloque-side right">
+            <div class="bloque-section">
+              <div class="bloque-side-title">Temas del bloque</div>
+              <ul>
+                <li><strong>18.</strong> Las primeras reformas políticas de la Transición.</li>
+                <li><strong>19.</strong> La Constitución de 1978.</li>
+                <li><strong>20.</strong> Los comienzos de la Democracia y sus desafíos (1978-1986).</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Hitos cronológicos</div>
+              <ul>
+                <li><strong>22 nov 1975</strong> · Juan Carlos I jura ante las Cortes franquistas</li>
+                <li><strong>jul 1976</strong> · Suárez presidente del gobierno</li>
+                <li><strong>nov 1976</strong> · Ley para la Reforma Política · referéndum</li>
+                <li><strong>15 jun 1977</strong> · Primeras elecciones libres · UCD gana</li>
+                <li><strong>oct 1977</strong> · Pactos de la Moncloa</li>
+                <li><strong>6 dic 1978</strong> · Referéndum de la Constitución (87,9 % sí)</li>
+                <li><strong>23 feb 1981</strong> · Intento de golpe de Tejero (23-F)</li>
+                <li><strong>oct 1982</strong> · PSOE gana las elecciones · Felipe González</li>
+                <li><strong>1 ene 1986</strong> · España entra en la CEE · referéndum OTAN (mar)</li>
+              </ul>
+            </div>
+            <div class="bloque-section">
+              <div class="bloque-side-title">Personajes clave</div>
+              <div class="bloque-people">
+                <span>Juan Carlos I</span><span>Adolfo Suárez</span><span>Felipe González</span><span>Santiago Carrillo</span><span>Manuel Fraga</span><span>Antonio Tejero</span><span>Torcuato Fernández-Miranda</span><span>Leopoldo Calvo-Sotelo</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="subnav">
+      <button class="subnav-btn" id="bloquePrev" aria-label="Bloque anterior">‹</button>
+      <div class="subnav-label" id="bloqueLabel">Bloque I · 1 / 6</div>
+      <button class="subnav-btn" id="bloqueNext" aria-label="Siguiente bloque">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 5 · CONSTITUCIONES                     -->
+<!-- ============================================ -->
+<section class="slide" data-title="Constituciones">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Constitucionalismo español</div>
+    <h2 class="slide-title">Siete constituciones, dos siglos.</h2>
+    <p class="slide-lead">Comparativa de las siete constituciones españolas desde 1812. Lee las columnas: progresistas (verde) impulsan derechos, moderadas (rojo) restringen sufragio, democráticas (azul) marcan rupturas.</p>
+
+    <div class="const-grid">
+      <table class="const-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th><span class="year">1812</span><span class="tag">La Pepa</span><span class="tag-prog">progresista</span></th>
+            <th><span class="year">1837</span><span class="tag">Progresista</span><span class="tag-prog">progresista</span></th>
+            <th><span class="year">1845</span><span class="tag">Moderada</span><span class="tag-mod">moderada</span></th>
+            <th><span class="year">1869</span><span class="tag">Sexenio</span><span class="tag-dem">democrática</span></th>
+            <th><span class="year">1876</span><span class="tag">Restauración</span><span class="tag-mod">moderada</span></th>
+            <th><span class="year">1931</span><span class="tag">II República</span><span class="tag-dem">democrática</span></th>
+            <th><span class="year">1978</span><span class="tag">Vigente</span><span class="tag-dem">democrática</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Soberanía</th>
+            <td>Nacional</td>
+            <td>Compartida (rey + Cortes)</td>
+            <td>Compartida</td>
+            <td>Nacional</td>
+            <td>Compartida</td>
+            <td>Popular</td>
+            <td>Popular (art. 1.2)</td>
+          </tr>
+          <tr>
+            <th>Sufragio</th>
+            <td>Universal masc. indirecto</td>
+            <td>Censitario</td>
+            <td>Censitario restringido</td>
+            <td>Universal masculino</td>
+            <td>Censitario → universal masc. (1890)</td>
+            <td>Universal · <strong>también femenino</strong></td>
+            <td>Universal · todas las personas mayores 18</td>
+          </tr>
+          <tr>
+            <th>División poderes</th>
+            <td>Estricta (Cortes unicamerales)</td>
+            <td>Bicameral · Congreso y Senado</td>
+            <td>Bicameral · Senado vitalicio</td>
+            <td>Bicameral · ambas electivas</td>
+            <td>Bicameral · Senado mixto</td>
+            <td>Unicameral · Tribunal Const.</td>
+            <td>Bicameral · separación rigurosa</td>
+          </tr>
+          <tr>
+            <th>Religión</th>
+            <td>Católica oficial (sin libertad)</td>
+            <td>Católica con cierta tolerancia</td>
+            <td>Católica oficial</td>
+            <td>Libertad de cultos</td>
+            <td>Católica oficial (otros, privado)</td>
+            <td>Estado <strong>laico</strong></td>
+            <td>Estado <strong>aconfesional</strong></td>
+          </tr>
+          <tr>
+            <th>Derechos</th>
+            <td>Igualdad, libertad imprenta, propiedad</td>
+            <td>Amplios derechos individuales</td>
+            <td>Restringidos por leyes</td>
+            <td>Amplios · reunión, asociación, culto</td>
+            <td>Limitados · papel del rey</td>
+            <td>Avanzados · voto femenino, divorcio, autonomías</td>
+            <td>Estado del bienestar · derechos sociales · autonomías</td>
+          </tr>
+          <tr>
+            <th>Monarquía</th>
+            <td>Fernando VII</td>
+            <td>Isabel II (regencia)</td>
+            <td>Isabel II</td>
+            <td>Amadeo I (1871)</td>
+            <td>Alfonso XII</td>
+            <td><strong>República</strong></td>
+            <td>Monarquía parlamentaria</td>
+          </tr>
+          <tr>
+            <th>Vigencia</th>
+            <td>1812-14, 1820-23, 1836-37</td>
+            <td>1837-45</td>
+            <td>1845-69</td>
+            <td>1869-74</td>
+            <td><strong>1876-1923</strong> (47 años, la más larga)</td>
+            <td>1931-1939</td>
+            <td><strong>1978-actualidad</strong></td>
+          </tr>
+          <tr>
+            <th>Contexto político</th>
+            <td>Guerra Indep. · Cortes de Cádiz</td>
+            <td>Tras 1ª Guerra Carlista</td>
+            <td>Década moderada (Narváez)</td>
+            <td>Sexenio Democrático</td>
+            <td>Restauración · Cánovas · turnismo</td>
+            <td>Bienio reformista de la República</td>
+            <td>Transición · Suárez · consenso</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 6 · PERSONAJES                         -->
+<!-- ============================================ -->
+<section class="slide" data-title="Personajes">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Personajes clave</div>
+    <h2 class="slide-title">Diez nombres que cambian la historia.</h2>
+    <p class="slide-lead">Una figura paradigmática por etapa. Cada tarjeta resume su rol, contexto y una cita o evento decisivo.</p>
+
+    <div class="persona-carousel">
+      <div class="persona-stack" id="personaStack">
+
+        <article class="persona-card is-active" style="--p-color:#4F6890;">
+          <div class="persona-side front">
+            <div class="persona-avatar">F</div>
+            <h3 class="persona-name">Fernando VII</h3>
+            <div class="persona-role">REY ABSOLUTISTA</div>
+            <div class="persona-dates">1784 — 1833 · reinado 1814-1833</div>
+            <div class="persona-bloque">BLOQUE I · 01/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>«El Deseado». Restaura el absolutismo en 1814 derogando la Constitución de Cádiz. Persigue a los liberales. Vuelve forzado al liberalismo durante el Trienio (1820-23), pero la intervención francesa (Cien Mil Hijos de San Luis) le restaura el poder absoluto. Su «Década Ominosa» (1823-33) es la represión liberal más dura del siglo.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>1814</strong> · Manifiesto de los Persas → restauración absolutista</li>
+                <li><strong>1820</strong> · Pronunciamiento de Riego, jura la Constitución</li>
+                <li><strong>1823</strong> · Vuelve a derogarla</li>
+                <li><strong>1830</strong> · Pragmática Sanción → causa carlista</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Marchemos francamente, y yo el primero, por la senda constitucional.» — 1820, jura forzada de la Constitución.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#4F6890;">
+          <div class="persona-side front">
+            <div class="persona-avatar">I</div>
+            <h3 class="persona-name">Isabel II</h3>
+            <div class="persona-role">REINA DEL LIBERALISMO MODERADO</div>
+            <div class="persona-dates">1830 — 1904 · reinado 1843-1868</div>
+            <div class="persona-bloque">BLOQUE I · 02/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Reina niña tras la muerte de Fernando VII. Su reinado consagra el liberalismo moderado (Constitución de 1845) y se caracteriza por gobiernos militares (Espartero, Narváez, O'Donnell) y pronunciamientos. Pierde el trono en la Gloriosa (sep 1868) y muere en el exilio parisino.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>1833-40</strong> · Regencia de su madre María Cristina · 1ª Guerra Carlista</li>
+                <li><strong>1843</strong> · Mayoría de edad anticipada (13 años)</li>
+                <li><strong>1845</strong> · Constitución moderada</li>
+                <li><strong>1854-56</strong> · Bienio Progresista (forzado)</li>
+                <li><strong>sep 1868</strong> · La Gloriosa, exilio</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Yo creí que estaba dando a España una reina; pero he descubierto que solo le he dado una mujer.» — Atribuido a su madre María Cristina.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#7B8F6E;">
+          <div class="persona-side front">
+            <div class="persona-avatar">C</div>
+            <h3 class="persona-name">Cánovas del Castillo</h3>
+            <div class="persona-role">ARQUITECTO DE LA RESTAURACIÓN</div>
+            <div class="persona-dates">1828 — 1897 · jefe del PCL hasta su asesinato</div>
+            <div class="persona-bloque">BLOQUE II · 03/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Diseña el sistema de la Restauración borbónica: turnismo pactado con Sagasta (PCL/PLF), monarquía constitucional con Alfonso XII, Constitución de 1876, caciquismo electoral. Su sistema garantiza estabilidad durante medio siglo pero excluye a obreros, republicanos y nacionalistas. Asesinado por el anarquista Michele Angiolillo.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>1874</strong> · Restauración pactada de Alfonso XII</li>
+                <li><strong>1876</strong> · Constitución más larga de España (47 años)</li>
+                <li><strong>1885</strong> · Pacto del Pardo (estabilidad tras muerte rey)</li>
+                <li><strong>1897</strong> · Asesinado en Mondragón</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Españoles son los que no pueden ser otra cosa.» — Definición pragmática del nacionalismo español.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#B58C4D;">
+          <div class="persona-side front">
+            <div class="persona-avatar">A</div>
+            <h3 class="persona-name">Alfonso XIII</h3>
+            <div class="persona-role">ÚLTIMO REY ANTES DE LA REPÚBLICA</div>
+            <div class="persona-dates">1886 — 1941 · reinado 1902-1931</div>
+            <div class="persona-bloque">BLOQUE III · 04/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Hereda un sistema en crisis (post-98). Reinado marcado por la Semana Trágica (1909), Annual (1921), la deriva intervencionista y el respaldo al golpe de Primo de Rivera (1923). Su responsabilidad en la dictadura le desprestigia. Las elecciones municipales del 12 abril 1931 le obligan al exilio dos días después.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>1902</strong> · Asume la jefatura a los 16 años</li>
+                <li><strong>1909</strong> · Semana Trágica de Barcelona</li>
+                <li><strong>1921</strong> · Annual: Expediente Picasso lo señala</li>
+                <li><strong>1923</strong> · Acepta el golpe de Primo de Rivera</li>
+                <li><strong>14 abr 1931</strong> · Exilio a Roma · muere en 1941</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Si España rechaza a su rey, su rey no se irá hasta que España se lo diga libremente.» — Discurso de abdicación, 1931.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#B58C4D;">
+          <div class="persona-side front">
+            <div class="persona-avatar">P</div>
+            <h3 class="persona-name">Primo de Rivera</h3>
+            <div class="persona-role">DICTADOR MILITAR · 1923-1930</div>
+            <div class="persona-dates">1870 — 1930 · golpe el 13 sep 1923</div>
+            <div class="persona-bloque">BLOQUE III · 05/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>General catalán que da un golpe de Estado en 1923 con el respaldo de Alfonso XIII. Establece un Directorio Militar (1923-25) y luego un Directorio Civil (1925-30). Resuelve la guerra de Marruecos (Desembarco de Alhucemas, 1925) y desarrolla obra pública, pero su régimen autoritario se desgasta. Dimite en enero 1930 y muere a los pocos meses en París.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>13 sep 1923</strong> · Golpe de Estado · Manifiesto</li>
+                <li><strong>1923-25</strong> · Directorio Militar</li>
+                <li><strong>1925</strong> · Alhucemas: fin guerra de Marruecos</li>
+                <li><strong>1925-30</strong> · Directorio Civil · Asamblea Nacional</li>
+                <li><strong>ene 1930</strong> · Dimisión</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Ha llegado para nosotros el momento más temido que esperado.» — Manifiesto del 13 de septiembre de 1923.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#A95448;">
+          <div class="persona-side front">
+            <div class="persona-avatar">A</div>
+            <h3 class="persona-name">Manuel Azaña</h3>
+            <div class="persona-role">PRESIDENTE REPUBLICANO · REFORMISTA</div>
+            <div class="persona-dates">1880 — 1940 · presidente del gobierno y de la República</div>
+            <div class="persona-bloque">BLOQUE IV · 06/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Intelectual y dirigente de Acción Republicana. Presidente del gobierno durante el I Bienio (1931-33) — promueve las grandes reformas (agraria, militar, religiosa, autonómica, educativa). Presidente de la República desde mayo 1936. Defiende la legalidad republicana durante la guerra; intenta mediar para acabarla. Exilio en Francia, muere en 1940.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>1931-33</strong> · Presidente · obra reformadora</li>
+                <li><strong>oct 1934</strong> · Detenido por sucesos de Asturias</li>
+                <li><strong>feb 1936</strong> · Triunfa el Frente Popular que él articula</li>
+                <li><strong>mayo 1936</strong> · Presidente de la República</li>
+                <li><strong>1940</strong> · Muere en Montauban (Francia)</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Paz, piedad, perdón.» — Discurso en el Ayuntamiento de Barcelona, 18 julio 1938.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#A95448;">
+          <div class="persona-side front">
+            <div class="persona-avatar">C</div>
+            <h3 class="persona-name">Clara Campoamor</h3>
+            <div class="persona-role">VOTO FEMENINO · DIPUTADA</div>
+            <div class="persona-dates">1888 — 1972 · diputada constituyente 1931</div>
+            <div class="persona-bloque">BLOQUE IV · 07/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Abogada, diputada del Partido Radical en las Cortes Constituyentes. Defiende con éxito el sufragio universal femenino en el debate del 1 de octubre de 1931 frente a Victoria Kent (PSOE), que pedía aplazarlo. Su discurso es uno de los grandes momentos del parlamentarismo español. Marginada después, muere exiliada en Suiza.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>1931</strong> · Diputada constituyente</li>
+                <li><strong>1 oct 1931</strong> · Debate del sufragio femenino · vence (161 a favor)</li>
+                <li><strong>1933</strong> · Las mujeres votan por primera vez</li>
+                <li><strong>1972</strong> · Muere en Lausana</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«No cometáis ese error político de gravísimas consecuencias. Salváis a la República atrayéndoos esa fuerza que espera ansiosa el momento de su redención.» — Cortes, 1 oct 1931.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#6C6660;">
+          <div class="persona-side front">
+            <div class="persona-avatar">F</div>
+            <h3 class="persona-name">Francisco Franco</h3>
+            <div class="persona-role">DICTADOR · 1939-1975</div>
+            <div class="persona-dates">1892 — 1975 · 36 años en el poder</div>
+            <div class="persona-bloque">BLOQUE V · 08/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Militar africanista. Tras el golpe de 1936 se convierte en Generalísimo (oct 1936) y Jefe del Estado. Gana la Guerra Civil con apoyo de Italia y Alemania. Su dictadura pasa por fases: totalitario-falangista (40-45), nacionalcatólico (45-59), tecnocrático-desarrollista (59-69) y tardofranquismo (69-75). Designa a Juan Carlos sucesor en 1969. Muere el 20 noviembre 1975.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>oct 1936</strong> · Jefe del Estado y Generalísimo</li>
+                <li><strong>1939</strong> · Victoria en la Guerra Civil</li>
+                <li><strong>1953</strong> · Concordato · acuerdos EE.UU.</li>
+                <li><strong>1959</strong> · Plan de Estabilización (tecnócratas)</li>
+                <li><strong>1969</strong> · Designa a Juan Carlos sucesor</li>
+                <li><strong>20 nov 1975</strong> · Muere</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Todo está atado y bien atado.» — Sobre el futuro del régimen tras su muerte.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#5896A3;">
+          <div class="persona-side front">
+            <div class="persona-avatar">J</div>
+            <h3 class="persona-name">Juan Carlos I</h3>
+            <div class="persona-role">REY DE LA TRANSICIÓN</div>
+            <div class="persona-dates">1938 — · rey 1975-2014</div>
+            <div class="persona-bloque">BLOQUE VI · 09/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Designado sucesor por Franco en 1969. Coronado el 22 noviembre 1975. Sorprende impulsando la democratización: nombra a Adolfo Suárez (jul 1976), apoya la Reforma Política. Su papel decisivo en el 23-F (1981) — desautoriza el golpe en TV de madrugada — lo consagra como garante de la democracia. Abdica en su hijo Felipe en 2014.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>22 nov 1975</strong> · Proclamado Rey ante las Cortes franquistas</li>
+                <li><strong>jul 1976</strong> · Nombra a Suárez presidente</li>
+                <li><strong>1978</strong> · Sanciona la Constitución</li>
+                <li><strong>23 feb 1981</strong> · Desautoriza el golpe en TV</li>
+                <li><strong>2014</strong> · Abdica en Felipe VI</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«La Corona no puede tolerar en forma alguna acciones o actitudes de personas que pretendan interrumpir el proceso democrático.» — Mensaje del 23-F, 1981.</div>
+          </div>
+        </article>
+
+        <article class="persona-card" style="--p-color:#5896A3;">
+          <div class="persona-side front">
+            <div class="persona-avatar">S</div>
+            <h3 class="persona-name">Adolfo Suárez</h3>
+            <div class="persona-role">1º PRESIDENTE DEMOCRÁTICO</div>
+            <div class="persona-dates">1932 — 2014 · presidente 1976-1981</div>
+            <div class="persona-bloque">BLOQUE VI · 10/10</div>
+          </div>
+          <div class="persona-side back">
+            <div class="persona-section">
+              <div class="persona-side-title">Rol histórico</div>
+              <p>Procedente del Movimiento, Juan Carlos lo nombra presidente en julio 1976. Pilota la Ley para la Reforma Política (nov 1976), legaliza partidos (incluido PCE en abril 1977), convoca las primeras elecciones libres (junio 1977) y firma los Pactos de la Moncloa. Lidera UCD. Dimite el 29 enero 1981, días antes del 23-F. Muere en 2014.</p>
+            </div>
+            <div class="persona-section">
+              <div class="persona-side-title">Marca su época</div>
+              <ul>
+                <li><strong>jul 1976</strong> · Presidente del gobierno</li>
+                <li><strong>nov 1976</strong> · Ley para la Reforma Política</li>
+                <li><strong>abr 1977</strong> · Legaliza el PCE</li>
+                <li><strong>jun 1977</strong> · Primeras elecciones libres · UCD gana</li>
+                <li><strong>oct 1977</strong> · Pactos de la Moncloa</li>
+                <li><strong>ene 1981</strong> · Dimisión</li>
+              </ul>
+            </div>
+            <div class="persona-quote">«Puedo prometer, y prometo…» — Frase recurrente que sintetiza su estilo político en la Transición.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="subnav">
+      <button class="subnav-btn" id="personaPrev" aria-label="Anterior">‹</button>
+      <div class="subnav-label" id="personaLabel">Fernando VII · 1 / 10</div>
+      <button class="subnav-btn" id="personaNext" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 7 · GUERRA CIVIL                       -->
+<!-- ============================================ -->
+<section class="slide" data-title="Guerra Civil">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Guerra Civil · 1936-1939</div>
+    <h2 class="slide-title">Tres fases. Mil días.</h2>
+    <p class="slide-lead">Pulsa cada fase para ver cómo evolucionó el frente. Cada mapa muestra las zonas controladas por el bando republicano (rojo) y por el bando sublevado (gris).</p>
+
+    <div class="guerra-layout">
+      <div class="guerra-map">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" id="guerraMap">
+          <!-- Fondo / mar -->
+          <rect x="0" y="0" width="480" height="360" fill="#FBF7EE"/>
+
+          <!-- Outline simplificado de España peninsular -->
+          <!-- regiones como polígonos diferenciados -->
+
+          <!-- FASE 1 (jul 1936) -->
+          <g class="phase phase-1 is-active">
+            <!-- Zona sublevada -->
+            <!-- Galicia + León + Castilla y León + Navarra -->
+            <path d="M 40 80 L 80 60 L 160 60 L 240 70 L 260 130 L 220 160 L 140 170 L 70 150 Z" fill="#6C6660" opacity="0.55"/>
+            <!-- Sur sublevado: Andalucía occidental, parte de Andalucía -->
+            <path d="M 130 270 L 220 260 L 280 280 L 260 320 L 160 320 L 110 300 Z" fill="#6C6660" opacity="0.55"/>
+            <!-- Pasillo Mola → Tajo (sin entrar Madrid) -->
+            <path d="M 220 160 L 260 180 L 250 220 L 220 230 Z" fill="#6C6660" opacity="0.40"/>
+            <!-- Mallorca -->
+            <circle cx="420" cy="210" r="14" fill="#6C6660" opacity="0.55"/>
+            <!-- Canarias dejadas fuera del mapa, indicadas con texto -->
+
+            <!-- Zona republicana -->
+            <!-- Centro, este, Cataluña, Levante -->
+            <path d="M 240 170 L 280 150 L 360 150 L 440 130 L 460 200 L 440 260 L 360 280 L 290 280 L 270 220 Z" fill="#A95448" opacity="0.55"/>
+            <!-- Andalucía oriental, Murcia -->
+            <path d="M 270 280 L 360 280 L 380 310 L 290 330 L 240 320 Z" fill="#A95448" opacity="0.55"/>
+            <!-- Norte: País Vasco, Cantabria, Asturias -->
+            <path d="M 80 60 L 240 70 L 240 90 L 90 80 Z" fill="#A95448" opacity="0.55"/>
+            <!-- Menorca -->
+            <circle cx="455" cy="195" r="6" fill="#A95448" opacity="0.55"/>
+          </g>
+
+          <!-- FASE 2 (oct 1937 — caída del Norte) -->
+          <g class="phase phase-2" style="display:none;">
+            <!-- Zona sublevada amplía: norte entero -->
+            <path d="M 40 60 L 240 60 L 260 130 L 220 170 L 130 180 L 60 150 Z" fill="#6C6660" opacity="0.55"/>
+            <!-- Sur expandido + Extremadura -->
+            <path d="M 100 230 L 280 240 L 290 320 L 130 320 L 80 280 Z" fill="#6C6660" opacity="0.55"/>
+            <!-- Mallorca -->
+            <circle cx="420" cy="210" r="14" fill="#6C6660" opacity="0.55"/>
+            <!-- Pasillo Aragón -->
+            <path d="M 250 180 L 320 180 L 340 230 L 280 230 Z" fill="#6C6660" opacity="0.40"/>
+
+            <!-- Zona republicana: solo centro, Cataluña, Levante -->
+            <path d="M 280 180 L 360 160 L 460 150 L 470 250 L 380 280 L 290 280 L 280 230 Z" fill="#A95448" opacity="0.55"/>
+            <path d="M 290 280 L 380 280 L 370 320 L 300 330 Z" fill="#A95448" opacity="0.55"/>
+            <circle cx="455" cy="195" r="6" fill="#A95448" opacity="0.55"/>
+          </g>
+
+          <!-- FASE 3 (ene 1939 — caída Cataluña) -->
+          <g class="phase phase-3" style="display:none;">
+            <!-- Zona sublevada domina casi todo -->
+            <path d="M 40 60 L 460 60 L 470 250 L 420 320 L 130 320 L 60 200 Z" fill="#6C6660" opacity="0.55"/>
+            <circle cx="420" cy="210" r="14" fill="#6C6660" opacity="0.55"/>
+            <!-- Zona republicana: bolsa centro-Levante -->
+            <path d="M 220 200 L 320 200 L 380 240 L 360 290 L 240 290 L 200 250 Z" fill="#A95448" opacity="0.55"/>
+            <circle cx="455" cy="195" r="6" fill="#A95448" opacity="0.55"/>
+          </g>
+
+          <!-- Outline general (siempre visible encima) -->
+          <path d="M 40 60 L 80 50 L 160 55 L 240 60 L 290 80 L 360 100 L 440 120 L 470 180 L 460 250 L 420 320 L 350 330 L 240 335 L 130 320 L 70 270 L 40 180 Z" fill="none" stroke="#8B8579" stroke-width="1.2"/>
+
+          <!-- Etiquetas de ciudades -->
+          <g font-family="Inter,sans-serif" font-size="9" fill="#2D2A26">
+            <circle cx="280" cy="190" r="2.5" fill="#2D2A26"/>
+            <text x="285" y="187">Madrid</text>
+            <circle cx="430" cy="170" r="2.5" fill="#2D2A26"/>
+            <text x="425" y="158" text-anchor="end">Barcelona</text>
+            <circle cx="160" cy="290" r="2.5" fill="#2D2A26"/>
+            <text x="165" y="288">Sevilla</text>
+            <circle cx="380" cy="270" r="2.5" fill="#2D2A26"/>
+            <text x="385" y="268">Valencia</text>
+            <circle cx="130" cy="90" r="2.5" fill="#2D2A26"/>
+            <text x="125" y="85" text-anchor="end">Oviedo</text>
+            <circle cx="180" cy="90" r="2.5" fill="#2D2A26"/>
+            <text x="185" y="85">Burgos</text>
+            <circle cx="245" cy="80" r="2.5" fill="#2D2A26"/>
+            <text x="250" y="75">Bilbao</text>
+          </g>
+
+          <!-- Canarias -->
+          <g>
+            <circle cx="45" cy="335" r="3" fill="#A95448" opacity="0.55" class="canarias-fase1"/>
+            <text x="55" y="338" font-family="Inter,sans-serif" font-size="8" fill="#8B8579">Canarias (sublevadas desde el 17-VII)</text>
+          </g>
+        </svg>
+
+        <div class="guerra-phases">
+          <button class="phase-btn is-active" data-phase="1">Fase 1 · jul 1936</button>
+          <button class="phase-btn" data-phase="2">Fase 2 · oct 1937</button>
+          <button class="phase-btn" data-phase="3">Fase 3 · ene 1939</button>
+        </div>
+      </div>
+
+      <div class="guerra-detail" id="guerraDetail">
+        <h3>Fase 1 · El golpe falla parcialmente</h3>
+        <div class="dates">17 julio 1936 — primavera 1937</div>
+        <p>El golpe del 17-18 de julio triunfa en aproximadamente un tercio del país (norte rural, Andalucía occidental, Marruecos, Baleares — excepto Menorca — y Canarias). Falla en Madrid, Cataluña, País Vasco, Levante y la mayor parte de Andalucía oriental.</p>
+        <h4>Eventos clave</h4>
+        <ul>
+          <li><strong>17-18 jul 1936</strong> · Sublevación en Marruecos, Canarias y península</li>
+          <li><strong>jul-ago</strong> · Avance Mola desde el norte y Franco desde el sur (Sevilla)</li>
+          <li><strong>sep 1936</strong> · Toma de Toledo (Alcázar)</li>
+          <li><strong>nov 1936</strong> · Batalla de Madrid · «¡No pasarán!»</li>
+          <li><strong>feb-mar 1937</strong> · Jarama y Guadalajara · fracaso italiano</li>
+        </ul>
+        <h4>Bandos</h4>
+        <div class="bandos">
+          <div class="bando rep">
+            <h5>Republicanos</h5>
+            <p>Gobierno legítimo · PSOE, PCE, sindicatos UGT/CNT, republicanos de izquierda, nacionalistas vasco-cat. Apoyo de la URSS y las Brigadas Internacionales.</p>
+          </div>
+          <div class="bando sub">
+            <h5>Sublevados</h5>
+            <p>Ejército africanista, Falange, carlistas, derecha católica, monárquicos. Apoyo de Italia fascista y Alemania nazi. Marruecos como base.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 8 · BANCO DE CONCEPTOS                 -->
+<!-- ============================================ -->
+<section class="slide" data-title="Conceptos">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Banco de conceptos</div>
+    <h2 class="slide-title">Treinta definiciones, seis bloques.</h2>
+    <p class="slide-lead">Definiciones tipo examen, filtrables por bloque. Cinco por bloque.</p>
+
+    <div class="concepto-filter" id="conceptoFilter">
+      <button class="filter-chip is-active" data-filter="all">Todos</button>
+      <button class="filter-chip" data-filter="1">Bloque I</button>
+      <button class="filter-chip" data-filter="2">Bloque II</button>
+      <button class="filter-chip" data-filter="3">Bloque III</button>
+      <button class="filter-chip" data-filter="4">Bloque IV</button>
+      <button class="filter-chip" data-filter="5">Bloque V</button>
+      <button class="filter-chip" data-filter="6">Bloque VI</button>
+    </div>
+
+    <div class="concepto-grid" id="conceptoGrid">
+      <!-- Bloque I -->
+      <div class="concepto b-1" data-bloque="1"><div class="term">Junta Suprema de Canarias</div><div class="def">Junta que asume el poder en Canarias tras la invasión napoleónica de España (1808). Estaba situada en La Laguna.</div><cite>Bloque I · 1808</cite></div>
+      <div class="concepto b-1" data-bloque="1"><div class="term">«La Pepa»</div><div class="def">Sobrenombre de la Constitución de 1812, promulgada el 19 de marzo (día de San José). Primera Constitución española: soberanía nacional, división de poderes, derechos individuales, sufragio universal masculino indirecto.</div><cite>Bloque I · 1812</cite></div>
+      <div class="concepto b-1" data-bloque="1"><div class="term">Pronunciamiento</div><div class="def">Alzamiento militar contra el gobierno, frecuente en el siglo XIX y encabezado normalmente por un jefe militar que apela a la nación.</div><cite>Bloque I · s. XIX</cite></div>
+      <div class="concepto b-1" data-bloque="1"><div class="term">Desamortización</div><div class="def">Proceso de expropiación y venta en subasta pública de tierras en manos de la Iglesia (Mendizábal, 1836) y de los ayuntamientos (Madoz, 1855). Permitió financiar la guerra carlista y consolidar la burguesía agraria.</div><cite>Bloque I · 1836 · 1855</cite></div>
+      <div class="concepto b-1" data-bloque="1"><div class="term">Gloriosa</div><div class="def">Revolución producida en 1868 que supuso la salida al exilio de Isabel II y el comienzo del Sexenio Democrático.</div><cite>Bloque I · 1868</cite></div>
+
+      <!-- Bloque II -->
+      <div class="concepto b-2" data-bloque="2"><div class="term">Turnismo</div><div class="def">Sistema político ideado por Cánovas durante la Restauración por el cual los dos grandes partidos dinásticos (Conservador y Liberal) se alternaban pacíficamente en el gobierno mediante elecciones manipuladas.</div><cite>Bloque II · 1875-1923</cite></div>
+      <div class="concepto b-2" data-bloque="2"><div class="term">Caciquismo</div><div class="def">Práctica electoral propia de la Restauración por la cual personajes locales con influencia económica y social (caciques) manipulaban el voto rural a favor del candidato designado.</div><cite>Bloque II · s. XIX-XX</cite></div>
+      <div class="concepto b-2" data-bloque="2"><div class="term">Pacto del Pardo</div><div class="def">Acuerdo de 1885 entre Cánovas y Sagasta para garantizar la continuidad del turnismo y la estabilidad del régimen tras la muerte de Alfonso XII y durante la regencia de María Cristina.</div><cite>Bloque II · 1885</cite></div>
+      <div class="concepto b-2" data-bloque="2"><div class="term">Desastre del 98</div><div class="def">Pérdida en 1898 de las últimas colonias españolas (Cuba, Puerto Rico, Filipinas y Guam) tras la guerra con Estados Unidos. Provocó una profunda crisis moral y el surgimiento del regeneracionismo.</div><cite>Bloque II · 1898</cite></div>
+      <div class="concepto b-2" data-bloque="2"><div class="term">Regeneracionismo</div><div class="def">Movimiento ideológico de fin de siglo (Joaquín Costa: «despensa y escuela») que diagnosticaba la decadencia española y proponía la modernización del país desde arriba.</div><cite>Bloque II · 1898-1923</cite></div>
+
+      <!-- Bloque III -->
+      <div class="concepto b-3" data-bloque="3"><div class="term">Semana Trágica</div><div class="def">Insurrección obrera y anticlerical de Barcelona en julio de 1909 provocada por el reclutamiento de reservistas para la guerra de Marruecos. Reprimida con dureza, incluyó el fusilamiento de Francisco Ferrer.</div><cite>Bloque III · 1909</cite></div>
+      <div class="concepto b-3" data-bloque="3"><div class="term">Crisis de 1917</div><div class="def">Triple crisis simultánea: militar (Juntas de Defensa), política (Asamblea de parlamentarios catalana) y social (huelga general de agosto). Marca el principio del fin del sistema de la Restauración.</div><cite>Bloque III · 1917</cite></div>
+      <div class="concepto b-3" data-bloque="3"><div class="term">Desastre de Annual</div><div class="def">Derrota catastrófica del ejército español en Marruecos en julio de 1921 que costó más de 10.000 muertos. El Expediente Picasso señaló responsabilidades hasta el rey.</div><cite>Bloque III · 1921</cite></div>
+      <div class="concepto b-3" data-bloque="3"><div class="term">Directorio Militar</div><div class="def">Primera fase (1923-1925) de la dictadura de Primo de Rivera, formada exclusivamente por militares. Suspendió la Constitución y disolvió los partidos.</div><cite>Bloque III · 1923-1925</cite></div>
+      <div class="concepto b-3" data-bloque="3"><div class="term">Pacto de San Sebastián</div><div class="def">Acuerdo de agosto de 1930 entre republicanos, socialistas y nacionalistas catalanes para derribar la monarquía. Configuró el gobierno provisional de la II República.</div><cite>Bloque III · 1930</cite></div>
+
+      <!-- Bloque IV -->
+      <div class="concepto b-4" data-bloque="4"><div class="term">Constitución de 1931</div><div class="def">Texto constitucional democrático y avanzado de la II República. Reconoció el sufragio universal (incluido el femenino), la aconfesionalidad del Estado, el divorcio, el derecho a la autonomía y derechos sociales amplios.</div><cite>Bloque IV · 9-XII-1931</cite></div>
+      <div class="concepto b-4" data-bloque="4"><div class="term">Frente Popular</div><div class="def">Coalición electoral de los partidos de izquierda (Izquierda Republicana, Unión Republicana, PSOE, PCE, POUM) que ganó las elecciones de febrero de 1936 frente a la derecha de la CEDA.</div><cite>Bloque IV · 1936</cite></div>
+      <div class="concepto b-4" data-bloque="4"><div class="term">Sanjurjada</div><div class="def">Intento de golpe de Estado de agosto de 1932 dirigido por el general Sanjurjo contra el gobierno reformista de Azaña. Fracasó pero anticipó el de 1936.</div><cite>Bloque IV · 1932</cite></div>
+      <div class="concepto b-4" data-bloque="4"><div class="term">Brigadas Internacionales</div><div class="def">Durante la Guerra de España (1936-1939), más de 35.000 hombres y mujeres de 53 países acudieron a España en auxilio de la II República.</div><cite>Bloque IV · 1936-1938</cite></div>
+      <div class="concepto b-4" data-bloque="4"><div class="term">No Intervención</div><div class="def">Política de las democracias europeas (Francia, Reino Unido) frente a la Guerra Civil. El Comité de No Intervención (Londres, 1936) intentó impedir el envío de armas a los bandos, pero fue burlado por Alemania, Italia y la URSS.</div><cite>Bloque IV · 1936-1939</cite></div>
+
+      <!-- Bloque V -->
+      <div class="concepto b-5" data-bloque="5"><div class="term">Autarquía</div><div class="def">Política económica de autosuficiencia practicada por el franquismo entre 1939 y 1959. Aislacionismo, intervencionismo estatal, cartillas de racionamiento y mercado negro («estraperlo»).</div><cite>Bloque V · 1939-1959</cite></div>
+      <div class="concepto b-5" data-bloque="5"><div class="term">Nacionalcatolicismo</div><div class="def">Ideología y práctica del franquismo (años 40-50) que identifica esencialmente lo español con lo católico. La Iglesia controla la educación, el matrimonio y la moralidad pública.</div><cite>Bloque V · 1939-1960s</cite></div>
+      <div class="concepto b-5" data-bloque="5"><div class="term">Tecnócratas</div><div class="def">Ministros vinculados al Opus Dei (López Rodó, Ullastres) que entran en el gobierno en 1957. Impulsan el Plan de Estabilización y el Desarrollismo de los años 60.</div><cite>Bloque V · 1957-1969</cite></div>
+      <div class="concepto b-5" data-bloque="5"><div class="term">Plan de Estabilización</div><div class="def">Conjunto de medidas económicas de 1959 que pusieron fin a la autarquía: devaluación de la peseta, apertura al capital extranjero, liberalización. Permitió el «milagro económico» de los 60.</div><cite>Bloque V · 1959</cite></div>
+      <div class="concepto b-5" data-bloque="5"><div class="term">Garrote vil</div><div class="def">Método de ejecución utilizado en España para aplicar la pena de muerte hasta 1978. Se convirtió en símbolo del franquismo al utilizarse contra presos políticos.</div><cite>Bloque V · hasta 1978</cite></div>
+
+      <!-- Bloque VI -->
+      <div class="concepto b-6" data-bloque="6"><div class="term">Ley para la Reforma Política</div><div class="def">Aprobada por las Cortes franquistas (nov 1976) y refrendada por el pueblo (dic 1976). «Hara-kiri» del régimen: legalizó la soberanía popular, las elecciones libres y el sufragio universal. Suárez la pilotó.</div><cite>Bloque VI · 1976</cite></div>
+      <div class="concepto b-6" data-bloque="6"><div class="term">Pactos de la Moncloa</div><div class="def">Acuerdos políticos y sociales firmados en octubre de 1977 por gobierno, partidos parlamentarios y sindicatos para hacer frente a la crisis económica y consolidar la transición democrática.</div><cite>Bloque VI · 1977</cite></div>
+      <div class="concepto b-6" data-bloque="6"><div class="term">«Amnistía y Libertad»</div><div class="def">Consigna política defendida por los grupos antifranquistas en la Transición. Solicitaban libertad para los presos políticos del franquismo.</div><cite>Bloque VI · 1975-1977</cite></div>
+      <div class="concepto b-6" data-bloque="6"><div class="term">23-F</div><div class="def">Intento de golpe de Estado del 23 de febrero de 1981, encabezado por el teniente coronel Tejero (asalto al Congreso) y el general Milans del Bosch (Valencia). Fracasó tras el mensaje televisivo de Juan Carlos I.</div><cite>Bloque VI · 1981</cite></div>
+      <div class="concepto b-6" data-bloque="6"><div class="term">Insularismo</div><div class="def">Movimiento político propio de la Democracia y la Autonomía por el cual aparecen múltiples iniciativas partidistas cuya prioridad es la defensa de su isla.</div><cite>Bloque VI · Canarias</cite></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 9 · GUÍA                                -->
+<!-- ============================================ -->
+<section class="slide" data-title="Guía del examen">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Cómo abordar el examen</div>
+    <h2 class="slide-title">Tres ejercicios, tres estrategias.</h2>
+    <p class="slide-lead">Estructura concreta para cada parte. Aplícala desde el primer ejercicio para no malgastar tiempo.</p>
+
+    <div class="guia-blocks">
+      <div class="guia-block ej1">
+        <div class="ej">EJERCICIO I · 3 PTS</div>
+        <h4>Conceptos · test multi-opción</h4>
+        <p>Lee los <strong>tres bloques</strong> antes de elegir cuáles dos respondes. Solo cuentan los dos primeros que escribas en tu hoja.</p>
+        <ul>
+          <li><strong>Marca primero</strong> los conceptos cuya definición correcta veas claramente: ahorra tiempo.</li>
+          <li><strong>Descarta</strong> las definiciones con errores cronológicos o de protagonistas obvios.</li>
+          <li>Copia <strong>el concepto y la definición</strong> correcta entera en tu hoja, no marques solo letras.</li>
+          <li>Si dudas, busca la definición más <strong>específica y verificable</strong>: la genérica suele ser distractor.</li>
+          <li>Tiempo objetivo: <strong>15-20 minutos</strong> en total.</li>
+        </ul>
+      </div>
+
+      <div class="guia-block ej2">
+        <div class="ej">EJERCICIO II · 4 PTS</div>
+        <h4>Comentario de texto</h4>
+        <p>Elige el texto cuyo tema asociado domines mejor (Grupo I s.XIX-1931 o Grupo II 1931-1986).</p>
+        <ul>
+          <li><strong>P1 · análisis (1 pt)</strong>: tipo y naturaleza del texto, autor, fecha y contexto, ideas principales, destinatario.</li>
+          <li><strong>P2 · desarrollo (3 pts)</strong>: contesta exactamente lo que se pregunta. Estructura: introducción · desarrollo cronológico · valoración / consecuencias.</li>
+          <li>Usa términos del banco de conceptos (turnismo, autarquía, etc.) con precisión.</li>
+          <li>Cita personajes y fechas concretas: dan rigor.</li>
+          <li>Cuida la ortografía: hasta <strong>0,5 puntos</strong> de penalización.</li>
+          <li>Tiempo objetivo: <strong>35-40 minutos</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="guia-block ej3">
+        <div class="ej">EJERCICIO III · 3 PTS</div>
+        <h4>Composición teórica · obligatoria</h4>
+        <p>Tema fijo, sin opción. Suele tocar Bloques IV, V o VI (cuestiones contemporáneas más densas).</p>
+        <ul>
+          <li><strong>Esquema previo</strong> en 2 minutos antes de redactar.</li>
+          <li><strong>Estructura</strong>: introducción (contexto + tesis) · desarrollo (3-4 apartados cronológicos o temáticos) · conclusión (consecuencias o balance).</li>
+          <li>Conecta causas y consecuencias: el corrector valora la <em>causalidad histórica</em>, no la enumeración.</li>
+          <li>Vocabulario técnico: regímenes, instituciones, partidos, batallas, leyes con su nombre exacto.</li>
+          <li>Cuida la ortografía: hasta <strong>0,5 puntos</strong> de penalización.</li>
+          <li>Tiempo objetivo: <strong>30-35 minutos</strong>. Deja 5 para revisar.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 10 · FLASHCARDS                        -->
+<!-- ============================================ -->
+<section class="slide" data-title="Repaso">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Repaso activo</div>
+    <h2 class="slide-title">Treinta tarjetas aleatorias.</h2>
+    <p class="slide-lead">Mezcla fechas, definiciones y personajes. Piensa la respuesta antes de revelar y marca «Sé» o «Repaso».</p>
+
+    <div class="flash-stage" id="flashStage">
+      <div class="flash-status" id="flashStatus">0 / 30</div>
+      <div class="flash-cat" id="flashCat">CATEGORÍA</div>
+      <div class="flash-progress" id="flashProgress"></div>
+      <div class="flash-q" id="flashQ">Pulsa empezar →</div>
+      <div class="flash-a" id="flashA">—</div>
+      <div class="flash-controls">
+        <button class="flash-btn" id="btnReveal">Revelar respuesta</button>
+        <button class="flash-btn" id="btnKnow">Sé ✓</button>
+        <button class="flash-btn" id="btnNo">Repaso ✗</button>
+        <button class="flash-btn primary" id="btnNext">Siguiente →</button>
+      </div>
+      <div class="flash-score">
+        <span class="know" id="scoreKnow">Sé: 0</span> · <span class="no" id="scoreRev">Repaso: 0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- bottom bar -->
+<div class="bottombar">
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente">›</button>
+</div>
+
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let current = 0;
+const counterNum = document.getElementById('counterNum');
+const counterTotal = document.getElementById('counterTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsBox = document.getElementById('dots');
+
+counterTotal.textContent = slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='dot';
+  d.setAttribute('aria-label',s.dataset.title||('Slide '+(i+1)));
+  d.title=s.dataset.title||('Slide '+(i+1));
+  d.addEventListener('click',()=>go(i));
+  dotsBox.appendChild(d);
+});
+
+function go(i){
+  if(i<0||i>=slides.length||i===current)return;
+  slides[current].classList.remove('is-active');
+  current=i;
+  slides[current].classList.add('is-active');
+  slides[current].scrollTop=0;
+  counterNum.textContent=i+1;
+  dotsBox.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('is-active',j===i));
+  prevBtn.disabled=i===0;
+  nextBtn.disabled=i===slides.length-1;
+}
+
+prevBtn.addEventListener('click',()=>go(current-1));
+nextBtn.addEventListener('click',()=>go(current+1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')go(current+1);
+  if(e.key==='ArrowLeft')go(current-1);
+  if(e.key==='Home')go(0);
+  if(e.key==='End')go(slides.length-1);
+});
+
+go(0);
+
+// === Bloque carousel ===
+const bloqueCards = Array.from(document.querySelectorAll('#bloqueStack .bloque-card'));
+const bloqueNames = ['I · Estado liberal','II · Restauración','III · Quiebra y Primo de Rivera','IV · II República y Guerra','V · Franquismo','VI · Transición'];
+let bloqueIdx = 0;
+const bloqueLabel = document.getElementById('bloqueLabel');
+function goBloque(i){
+  if(i<0)i=bloqueCards.length-1;
+  if(i>=bloqueCards.length)i=0;
+  bloqueCards.forEach((c,j)=>c.classList.toggle('is-active',j===i));
+  bloqueIdx=i;
+  bloqueLabel.textContent=`Bloque ${bloqueNames[i]} · ${i+1} / 6`;
+}
+document.getElementById('bloquePrev').addEventListener('click',()=>goBloque(bloqueIdx-1));
+document.getElementById('bloqueNext').addEventListener('click',()=>goBloque(bloqueIdx+1));
+
+// === Persona carousel ===
+const personaCards = Array.from(document.querySelectorAll('#personaStack .persona-card'));
+const personaNames = ['Fernando VII','Isabel II','Cánovas del Castillo','Alfonso XIII','Primo de Rivera','Manuel Azaña','Clara Campoamor','Francisco Franco','Juan Carlos I','Adolfo Suárez'];
+let personaIdx = 0;
+const personaLabel = document.getElementById('personaLabel');
+function goPersona(i){
+  if(i<0)i=personaCards.length-1;
+  if(i>=personaCards.length)i=0;
+  personaCards.forEach((c,j)=>c.classList.toggle('is-active',j===i));
+  personaIdx=i;
+  personaLabel.textContent=`${personaNames[i]} · ${i+1} / 10`;
+}
+document.getElementById('personaPrev').addEventListener('click',()=>goPersona(personaIdx-1));
+document.getElementById('personaNext').addEventListener('click',()=>goPersona(personaIdx+1));
+
+// === Guerra Civil fases ===
+const phaseData = {
+  '1': {
+    title: 'Fase 1 · El golpe falla parcialmente',
+    dates: '17 julio 1936 — primavera 1937',
+    desc: 'El golpe del 17-18 de julio triunfa en aproximadamente un tercio del país (norte rural, Andalucía occidental, Marruecos, Baleares — excepto Menorca — y Canarias). Falla en Madrid, Cataluña, País Vasco, Levante y la mayor parte de Andalucía oriental.',
+    events: [
+      '<strong>17-18 jul 1936</strong> · Sublevación en Marruecos, Canarias y península',
+      '<strong>jul-ago</strong> · Avance Mola desde el norte y Franco desde el sur (Sevilla)',
+      '<strong>sep 1936</strong> · Toma de Toledo (Alcázar)',
+      '<strong>nov 1936</strong> · Batalla de Madrid · «¡No pasarán!»',
+      '<strong>feb-mar 1937</strong> · Jarama y Guadalajara · fracaso italiano'
+    ]
+  },
+  '2': {
+    title: 'Fase 2 · La caída del Norte',
+    dates: 'primavera 1937 — finales 1937',
+    desc: 'Los sublevados, ya unificados bajo el mando único de Franco (oct 1936) y con apoyo aéreo alemán e italiano consolidado, lanzan la campaña del Norte. Caen sucesivamente Bilbao, Santander y Asturias. Los sublevados controlan toda la cornisa cantábrica y ganan en industria pesada.',
+    events: [
+      '<strong>abr 1937</strong> · Bombardeo de Guernica (Legión Cóndor)',
+      '<strong>19 jun 1937</strong> · Caída de Bilbao',
+      '<strong>26 ago 1937</strong> · Caída de Santander',
+      '<strong>oct 1937</strong> · Final de Asturias',
+      '<strong>dic 1937 — feb 1938</strong> · Batalla de Teruel'
+    ]
+  },
+  '3': {
+    title: 'Fase 3 · El derrumbe republicano',
+    dates: 'marzo 1938 — 1 abril 1939',
+    desc: 'La ofensiva de Aragón parte la zona republicana en dos. La batalla del Ebro (jul-nov 1938) — la más larga y sangrienta — es el último gran esfuerzo republicano y termina en derrota. Cae Cataluña en enero 1939 y Madrid el 28 de marzo. El parte oficial del 1 de abril proclama el fin de la guerra.',
+    events: [
+      '<strong>mar-abr 1938</strong> · Ofensiva de Aragón · llegada al mar (Vinaroz)',
+      '<strong>jul-nov 1938</strong> · Batalla del Ebro · derrota republicana',
+      '<strong>ene 1939</strong> · Caída de Barcelona · éxodo a Francia',
+      '<strong>28 mar 1939</strong> · Madrid se rinde',
+      '<strong>1 abr 1939</strong> · «La guerra ha terminado.»'
+    ]
+  }
+};
+function setPhase(p){
+  document.querySelectorAll('.phase-btn').forEach(b=>b.classList.toggle('is-active',b.dataset.phase===p));
+  document.querySelectorAll('#guerraMap .phase').forEach(g=>{
+    g.style.display = g.classList.contains('phase-'+p) ? 'block' : 'none';
+  });
+  const d = phaseData[p];
+  document.getElementById('guerraDetail').innerHTML = `
+    <h3>${d.title}</h3>
+    <div class="dates">${d.dates}</div>
+    <p>${d.desc}</p>
+    <h4>Eventos clave</h4>
+    <ul>${d.events.map(e=>'<li>'+e+'</li>').join('')}</ul>
+    <h4>Bandos</h4>
+    <div class="bandos">
+      <div class="bando rep"><h5>Republicanos</h5><p>Gobierno legítimo · PSOE, PCE, UGT/CNT, republicanos de izquierda, nacionalistas vasco-cat. Apoyo URSS y Brigadas Internacionales.</p></div>
+      <div class="bando sub"><h5>Sublevados</h5><p>Ejército africanista, Falange, carlistas, derecha católica, monárquicos. Apoyo de Italia fascista y Alemania nazi.</p></div>
+    </div>`;
+}
+document.querySelectorAll('.phase-btn').forEach(b=>{
+  b.addEventListener('click',()=>setPhase(b.dataset.phase));
+});
+
+// === Concepto filter ===
+const filterChips = document.querySelectorAll('#conceptoFilter .filter-chip');
+filterChips.forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    filterChips.forEach(c=>c.classList.remove('is-active'));
+    chip.classList.add('is-active');
+    const f = chip.dataset.filter;
+    document.querySelectorAll('#conceptoGrid .concepto').forEach(c=>{
+      c.style.display = (f==='all' || c.dataset.bloque===f) ? 'block' : 'none';
+    });
+  });
+});
+
+// === Flashcards ===
+const flashCards = [
+  {cat:'Fecha · Bloque I', q:'¿En qué año se promulga la Constitución de Cádiz?', a:'1812 (19 de marzo, día de San José, de ahí «La Pepa»). Es la primera Constitución española.'},
+  {cat:'Fecha · Bloque I', q:'¿Qué ocurre en septiembre de 1868?', a:'La Gloriosa: revolución que destrona a Isabel II y abre el Sexenio Democrático.'},
+  {cat:'Concepto · Bloque I', q:'¿Qué es un pronunciamiento?', a:'Alzamiento militar contra el gobierno, frecuente en el siglo XIX, encabezado normalmente por un jefe militar que apela a la nación.'},
+  {cat:'Concepto · Bloque I', q:'Define la desamortización de Mendizábal.', a:'Expropiación y venta en subasta pública de las tierras de la Iglesia (1836) para financiar la guerra carlista y consolidar la burguesía agraria liberal.'},
+  {cat:'Personaje · Bloque I', q:'¿Quién es el general que lidera la Gloriosa de 1868?', a:'El general Prim, junto con Serrano y Topete. Su asesinato en diciembre de 1870 deja huérfana a la monarquía de Amadeo I.'},
+  {cat:'Fecha · Bloque II', q:'¿En qué año se firma la Restauración borbónica?', a:'1874-1875. Pronunciamiento de Sagunto (29-XII-1874) por Martínez Campos; Alfonso XII entra en Madrid en enero 1875.'},
+  {cat:'Concepto · Bloque II', q:'¿Qué es el turnismo?', a:'Sistema político de la Restauración por el cual los dos grandes partidos dinásticos (Conservador y Liberal) se alternaban pacíficamente en el gobierno mediante elecciones manipuladas.'},
+  {cat:'Personaje · Bloque II', q:'¿Quién es Pablo Iglesias y qué fundó?', a:'Tipógrafo madrileño, fundador del PSOE (1879) y de la UGT (1888). Primer diputado socialista en 1910.'},
+  {cat:'Fecha · Bloque II', q:'¿Qué territorios pierde España en 1898?', a:'Cuba, Puerto Rico, Filipinas y Guam, tras la guerra con Estados Unidos. Es el Desastre del 98.'},
+  {cat:'Concepto · Bloque II', q:'¿Qué es el regeneracionismo?', a:'Movimiento ideológico de fin de siglo (Joaquín Costa: «despensa y escuela») que diagnostica la decadencia española y propone la modernización del país desde arriba.'},
+  {cat:'Fecha · Bloque III', q:'¿Cuándo ocurre la Semana Trágica?', a:'Julio de 1909, en Barcelona. Provocada por el reclutamiento para Marruecos. Termina con el fusilamiento de Francisco Ferrer.'},
+  {cat:'Fecha · Bloque III', q:'¿Qué pasa en 1921 en Annual?', a:'Catastrófica derrota del ejército español en Marruecos (más de 10.000 muertos). El Expediente Picasso señaló responsabilidades hasta el rey.'},
+  {cat:'Fecha · Bloque III', q:'¿Cuándo dio el golpe Primo de Rivera?', a:'13 de septiembre de 1923. Su Manifiesto promete acabar con los «profesionales de la política».'},
+  {cat:'Concepto · Bloque III', q:'¿Qué es el Pacto de San Sebastián?', a:'Acuerdo de agosto de 1930 entre republicanos, socialistas y nacionalistas catalanes para derribar la monarquía. Configura el gobierno provisional de la II República.'},
+  {cat:'Fecha · Bloque IV', q:'¿Cuándo se proclama la II República?', a:'14 de abril de 1931, tras las elecciones municipales del 12 de abril que dan triunfo a republicanos en las ciudades.'},
+  {cat:'Concepto · Bloque IV', q:'¿Qué reforma destaca del I Bienio republicano?', a:'Reforma agraria (1932), militar (Azaña), educativa (escuelas, misiones pedagógicas), religiosa (separación Iglesia-Estado, divorcio) y autonómica (Estatuto de Cataluña 1932).'},
+  {cat:'Personaje · Bloque IV', q:'¿Qué consigue Clara Campoamor en 1931?', a:'Defiende con éxito el sufragio universal femenino en las Cortes Constituyentes (votación del 1 de octubre de 1931). Las mujeres votan por primera vez en 1933.'},
+  {cat:'Fecha · Bloque IV', q:'¿Cuándo empieza y termina la Guerra Civil?', a:'18 de julio de 1936 (golpe militar) — 1 de abril de 1939 (parte de Franco anunciando el fin).'},
+  {cat:'Concepto · Bloque IV', q:'¿Qué son las Brigadas Internacionales?', a:'Más de 35.000 voluntarios de 53 países que vinieron a España en auxilio de la II República durante la Guerra Civil (1936-1938).'},
+  {cat:'Concepto · Bloque V', q:'Define autarquía.', a:'Política económica de autosuficiencia practicada por el franquismo entre 1939 y 1959. Aislacionismo, intervencionismo estatal, racionamiento y mercado negro («estraperlo»).'},
+  {cat:'Fecha · Bloque V', q:'¿Qué supone 1953 para el franquismo?', a:'Fin del aislamiento internacional: Concordato con la Santa Sede y acuerdos militares con EE.UU. (bases). En 1955 ingresa en la ONU.'},
+  {cat:'Concepto · Bloque V', q:'¿Qué es el Plan de Estabilización?', a:'Conjunto de medidas económicas de 1959 que pusieron fin a la autarquía: devaluación, apertura al capital extranjero, liberalización. Inicio del Desarrollismo.'},
+  {cat:'Personaje · Bloque V', q:'¿Quién es Carrero Blanco y qué le ocurre?', a:'Almirante, hombre de confianza de Franco y presidente del gobierno desde junio 1973. ETA lo asesina en Madrid el 20 de diciembre de 1973 (Operación Ogro).'},
+  {cat:'Concepto · Bloque V', q:'¿Qué es el nacionalcatolicismo?', a:'Ideología y práctica del franquismo (años 40-50) que identifica esencialmente lo español con lo católico. La Iglesia controla educación, matrimonio y moral pública.'},
+  {cat:'Fecha · Bloque VI', q:'¿Cuándo muere Franco?', a:'20 de noviembre de 1975. Dos días después, Juan Carlos I es proclamado rey ante las Cortes franquistas.'},
+  {cat:'Personaje · Bloque VI', q:'¿Quién es Adolfo Suárez?', a:'Procedente del Movimiento, presidente del gobierno desde julio 1976. Pilota la Ley para la Reforma Política, legaliza partidos (incluido PCE) y convoca las primeras elecciones libres de junio 1977. Líder de UCD.'},
+  {cat:'Concepto · Bloque VI', q:'¿Qué son los Pactos de la Moncloa?', a:'Acuerdos políticos, económicos y sociales firmados en octubre de 1977 por gobierno, partidos parlamentarios y sindicatos para hacer frente a la crisis y consolidar la democracia.'},
+  {cat:'Fecha · Bloque VI', q:'¿Cuándo se aprueba la Constitución vigente?', a:'6 de diciembre de 1978 (referéndum, 87,9 % a favor). Sancionada por el rey el 27 de diciembre.'},
+  {cat:'Fecha · Bloque VI', q:'¿Qué pasa el 23 de febrero de 1981?', a:'Intento de golpe de Estado del 23-F. Tejero asalta el Congreso, Milans del Bosch saca tanques en Valencia. Fracasa tras el mensaje televisado de Juan Carlos I de madrugada.'},
+  {cat:'Fecha · Bloque VI', q:'¿Cuándo entra España en la CEE?', a:'1 de enero de 1986. El mismo año (12 de marzo) referéndum sobre la permanencia en la OTAN, con el «sí» ganador.'}
+];
+
+let flashOrder=[], flashI=-1, sK=0, sN=0, flashResults=[];
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildFlashProgress(){
+  const wrap=document.getElementById('flashProgress');
+  wrap.innerHTML='';
+  for(let i=0;i<flashOrder.length;i++){
+    const s=document.createElement('div');
+    s.className='seg';
+    wrap.appendChild(s);
+  }
+}
+function updateFlashProgress(){
+  const segs=document.getElementById('flashProgress').children;
+  for(let i=0;i<segs.length;i++){
+    segs[i].className='seg';
+    if(flashResults[i]==='k')segs[i].classList.add('done');
+    else if(flashResults[i]==='n')segs[i].classList.add('miss');
+    else if(i===flashI)segs[i].classList.add('current');
+  }
+}
+function startF(){
+  flashOrder=shuf(flashCards.map((_,i)=>i));
+  flashI=-1; sK=0; sN=0; flashResults=[];
+  buildFlashProgress();
+  document.getElementById('scoreKnow').textContent='Sé: 0';
+  document.getElementById('scoreRev').textContent='Repaso: 0';
+  nextF();
+}
+function nextF(){
+  flashI++;
+  const st=document.getElementById('flashStage');
+  st.classList.remove('show-answer');
+  if(flashI>=flashOrder.length){
+    document.getElementById('flashCat').textContent='COMPLETADO';
+    document.getElementById('flashQ').textContent=`¡Hecho! Acertaste ${sK} de ${flashOrder.length}.`;
+    document.getElementById('flashA').textContent=`Aciertos: ${sK}. Repasa las marcadas como repaso.`;
+    document.getElementById('flashStatus').textContent=`${flashOrder.length} / ${flashOrder.length}`;
+    st.classList.add('show-answer');
+    return;
+  }
+  const c=flashCards[flashOrder[flashI]];
+  document.getElementById('flashCat').textContent=c.cat.toUpperCase();
+  document.getElementById('flashQ').textContent=c.q;
+  document.getElementById('flashA').textContent=c.a;
+  document.getElementById('flashStatus').textContent=`${flashI+1} / ${flashOrder.length}`;
+  updateFlashProgress();
+}
+document.getElementById('btnReveal').addEventListener('click',()=>document.getElementById('flashStage').classList.add('show-answer'));
+document.getElementById('btnKnow').addEventListener('click',()=>{flashResults[flashI]='k';sK++;document.getElementById('scoreKnow').textContent=`Sé: ${sK}`;nextF();});
+document.getElementById('btnNo').addEventListener('click',()=>{flashResults[flashI]='n';sN++;document.getElementById('scoreRev').textContent=`Repaso: ${sN}`;nextF();});
+document.getElementById('btnNext').addEventListener('click',()=>{if(flashI<0)startF();else nextF();});
+startF();
+</script>
+
+</body>
+</html>

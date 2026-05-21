@@ -1,0 +1,2985 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Física · PAU 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-soft:#FAF6EE;
+  --paper-deep:#E8E0D0;
+  --paper-card:#FBF7EE;
+  --ink:#2D2A26;
+  --ink-soft:#5C574F;
+  --ink-mute:#8B8579;
+  --line:#D6CCB7;
+  --line-strong:#BFB39A;
+  --accent:#A6824E;
+  --accent-deep:#8B6A3A;
+  /* 4 bloques de Física */
+  --b1:#4F6890;  /* Gravitatoria — azul espacio */
+  --b2:#B8895A;  /* Electromagnética — dorado */
+  --b3:#5B8C8B;  /* Ondas — teal */
+  --b4:#7B5F8C;  /* Cuántica/Relativista — violeta */
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --math:'Lora',Georgia,serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--paper);}
+body{
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+strong{color:var(--ink);font-weight:600;}
+em{color:var(--accent-deep);font-style:italic;}
+
+/* === STAGE === */
+.stage{
+  position:fixed;
+  inset:0;
+  background:var(--paper);
+  background-image:
+    radial-gradient(ellipse at top left, rgba(217,199,162,.18), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(79,104,144,.10), transparent 55%);
+}
+.slide{
+  position:absolute;
+  inset:0;
+  padding:72px 60px 100px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity .35s ease, transform .35s ease;
+  overflow-y:auto;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateY(0);}
+.slide::-webkit-scrollbar{width:8px;}
+.slide::-webkit-scrollbar-track{background:transparent;}
+.slide::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
+
+.slide-inner{
+  max-width:1180px;
+  width:100%;
+  margin:0 auto;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+.slide-eyebrow{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+}
+.slide-title{margin-bottom:8px;}
+.slide-lead{
+  font-family:var(--sans);
+  font-size:1.02rem;
+  color:var(--ink-soft);
+  max-width:780px;
+  margin-bottom:36px;
+}
+
+/* === NAV === */
+.topbar{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:50;
+  padding:16px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(to bottom,rgba(242,237,227,.92),rgba(242,237,227,0));
+  pointer-events:none;
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  pointer-events:auto;
+  font-family:var(--serif);
+  font-size:1.05rem;
+  color:var(--ink-soft);
+  text-decoration:none;
+}
+.brand:hover{color:var(--ink);}
+.brand-mark{
+  width:30px;height:30px;
+  border-radius:50%;
+  background:var(--b2);
+  display:grid;place-items:center;
+  color:var(--paper-soft);
+  font-family:var(--mono);
+  font-size:.78rem;
+  font-weight:700;
+}
+.home-link{
+  pointer-events:auto;
+  font-family:var(--mono);
+  font-size:.78rem;
+  letter-spacing:.12em;
+  color:var(--ink-mute);
+  text-decoration:none;
+  padding:6px 14px;
+  border:1px solid var(--line);
+  border-radius:100px;
+  background:var(--paper-soft);
+  transition:all .2s;
+}
+.home-link:hover{color:var(--ink);border-color:var(--line-strong);}
+.slide-counter{
+  pointer-events:auto;
+  font-family:var(--mono);
+  font-size:.8rem;
+  color:var(--ink-mute);
+  letter-spacing:.05em;
+}
+.slide-counter strong{color:var(--ink);font-weight:600;}
+.topbar-right{display:flex;gap:14px;align-items:center;pointer-events:auto;}
+
+.bottombar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:50;
+  padding:14px 32px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  background:linear-gradient(to top,rgba(242,237,227,.95),rgba(242,237,227,0));
+  pointer-events:none;
+}
+.nav-btn{
+  pointer-events:auto;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  color:var(--ink);
+  width:44px;height:44px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1.3rem;
+  display:grid;place-items:center;
+  transition:all .2s;
+  font-family:var(--serif);
+  flex-shrink:0;
+}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn:disabled:hover{background:var(--paper-soft);color:var(--ink);border-color:var(--line);}
+
+/* Dots: agrupados por bloque, colores diferentes */
+.dots{
+  pointer-events:auto;
+  display:flex;
+  gap:14px;
+  flex:1;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.dots-group{
+  display:flex;
+  gap:3px;
+  align-items:center;
+  padding:4px 8px;
+  border-radius:100px;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+}
+.dots-group .group-label{
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.14em;
+  color:var(--ink-mute);
+  margin-right:4px;
+  font-weight:600;
+}
+.dot{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--line);
+  border:none;
+  cursor:pointer;
+  transition:all .2s;
+  padding:0;
+}
+.dot:hover{background:var(--line-strong);transform:scale(1.4);}
+.dot.is-active{transform:scale(1.6);}
+.dot.b-intro{background:var(--ink-mute);}
+.dot.b-1.is-active,.dot.b-1:hover{background:var(--b1);}
+.dot.b-2.is-active,.dot.b-2:hover{background:var(--b2);}
+.dot.b-3.is-active,.dot.b-3:hover{background:var(--b3);}
+.dot.b-4.is-active,.dot.b-4:hover{background:var(--b4);}
+.dot.b-intro.is-active{background:var(--ink);}
+
+/* === PORTADA === */
+.slide-cover{align-items:center;justify-content:center;text-align:center;padding-top:60px;}
+.cover-mark{
+  width:88px;height:88px;
+  border-radius:50%;
+  background:var(--paper-soft);
+  border:2px solid var(--b2);
+  display:grid;place-items:center;
+  margin:0 auto 32px;
+  font-family:var(--serif);
+  font-size:2rem;
+  color:var(--b2);
+  font-weight:600;
+}
+.cover-title{
+  font-size:clamp(2.8rem,6vw,5rem);
+  font-weight:600;
+  letter-spacing:-0.02em;
+  margin-bottom:20px;
+  line-height:1.1;
+}
+.cover-title .ornament{display:inline-block;color:var(--b2);margin:0 .3em;}
+.cover-sub{
+  font-family:var(--sans);
+  font-size:clamp(1rem,1.4vw,1.15rem);
+  color:var(--ink-soft);
+  margin-bottom:60px;
+  max-width:680px;
+  line-height:1.55;
+}
+.cover-stats{display:flex;gap:54px;margin-top:30px;flex-wrap:wrap;justify-content:center;}
+.cover-stat{text-align:center;}
+.cover-stat .n{
+  font-family:var(--serif);
+  font-size:3rem;font-weight:500;
+  line-height:1;
+}
+.cover-stat .l{
+  font-family:var(--mono);
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-mute);margin-top:8px;
+}
+.cover-stat.b1 .n{color:var(--b1);}
+.cover-stat.b2 .n{color:var(--b2);}
+.cover-stat.b3 .n{color:var(--b3);}
+.cover-stat.b4 .n{color:var(--b4);}
+.cover-divider{width:1px;background:var(--line-strong);}
+.cover-hint{
+  margin-top:60px;
+  font-family:var(--mono);
+  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-mute);
+}
+
+/* === ESTRUCTURA DEL EXAMEN === */
+.bloques-chart{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:30px;
+  margin-bottom:24px;
+}
+.bloques-bar{
+  display:flex;
+  height:56px;
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:24px;
+}
+.bloques-bar .seg{
+  display:grid;place-items:center;
+  color:var(--paper-soft);
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:1.3rem;
+  position:relative;
+}
+.bloques-bar .seg::after{
+  content:attr(data-pts);
+  position:absolute;
+  bottom:6px;
+  font-family:var(--mono);
+  font-size:.65rem;
+  letter-spacing:.1em;
+  opacity:.85;
+  font-weight:500;
+}
+.bloques-cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.bloque-mini{
+  padding:18px 20px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--paper-soft);
+  border-top:3px solid var(--bm);
+}
+.bloque-mini .head{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.14em;
+  color:var(--bm);
+  font-weight:600;
+  margin-bottom:6px;
+}
+.bloque-mini .name{
+  font-family:var(--serif);
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:8px;
+  line-height:1.2;
+}
+.bloque-mini .desc{
+  font-size:.82rem;
+  color:var(--ink-soft);
+  line-height:1.45;
+}
+
+/* === CONSTANTES === */
+.constants-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:14px;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px;
+}
+.const-item{
+  padding:14px 18px;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+.const-item .symbol{
+  font-family:var(--math);
+  font-style:italic;
+  font-size:1.4rem;
+  color:var(--b2);
+  font-weight:600;
+}
+.const-item .name{
+  font-size:.82rem;
+  color:var(--ink-mute);
+  margin-top:2px;
+}
+.const-item .value{
+  font-family:var(--mono);
+  font-size:.95rem;
+  color:var(--ink);
+  margin-top:6px;
+  font-weight:500;
+}
+
+/* === CONCEPT CARDS · una por slide === */
+.concept-page{
+  /* CRITICAL: flex-start permite que el scroll vertical del slide funcione si el card es alto */
+  align-items:center;
+  justify-content:flex-start;
+  padding-top:90px;
+  padding-bottom:100px;
+}
+.concept-card{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  width:100%;
+  max-width:1100px;
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  /* Altura fija basada en viewport — las columnas se hacen scroll si contenido excede */
+  height:clamp(540px, calc(100vh - 220px), 760px);
+  box-shadow:0 12px 40px rgba(45,42,38,.08);
+  position:relative;
+  overflow:hidden;
+  /* margin-top auto para empujar el card hacia el centro vertical cuando hay espacio */
+  margin:auto 0;
+}
+.concept-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;bottom:0;
+  width:6px;
+  background:var(--cc);
+  z-index:2;
+}
+.concept-left{
+  padding:34px 40px;
+  display:flex;
+  flex-direction:column;
+  border-right:1px solid var(--line);
+  background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
+  /* CRITICAL para grid items: min-height:0 permite que overflow funcione */
+  min-height:0;
+  overflow-y:auto;
+}
+.concept-right{
+  padding:34px 38px;
+  display:flex;
+  flex-direction:column;
+  background:var(--paper-card);
+  min-height:0;
+  overflow-y:auto;
+}
+.concept-left::-webkit-scrollbar,.concept-right::-webkit-scrollbar{width:6px;}
+.concept-left::-webkit-scrollbar-thumb,.concept-right::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px;}
+
+.concept-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:20px;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.concept-num{
+  font-family:var(--mono);
+  font-size:.78rem;
+  letter-spacing:.16em;
+  color:var(--ink-mute);
+  font-weight:600;
+}
+.concept-bloque{
+  font-family:var(--mono);
+  font-size:.66rem;
+  letter-spacing:.16em;
+  color:var(--cc);
+  padding:5px 12px;
+  border:1px solid var(--cc);
+  border-radius:100px;
+  font-weight:600;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.concept-title{
+  font-family:var(--serif);
+  font-size:clamp(1.7rem,2.6vw,2.3rem);
+  color:var(--ink);
+  margin-bottom:24px;
+  font-weight:600;
+  line-height:1.1;
+}
+
+/* Fórmula grande, protagonista */
+.formula-box{
+  background:var(--paper-soft);
+  border:1px dashed var(--line-strong);
+  border-radius:12px;
+  padding:28px 24px;
+  margin-bottom:18px;
+  text-align:center;
+}
+.formula-display{
+  font-family:var(--math);
+  font-style:italic;
+  font-size:clamp(1.8rem,3.2vw,2.8rem);
+  color:var(--cc);
+  font-weight:600;
+  line-height:1.3;
+}
+.formula-secondary{
+  font-family:var(--math);
+  font-style:italic;
+  font-size:1.3rem;
+  color:var(--ink-soft);
+  margin-top:14px;
+  line-height:1.4;
+}
+.formula-label{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.14em;
+  color:var(--ink-mute);
+  margin-top:14px;
+  text-transform:uppercase;
+}
+
+/* Fracciones inline */
+.frac{
+  display:inline-flex;
+  flex-direction:column;
+  vertical-align:middle;
+  margin:0 .15em;
+  font-style:italic;
+}
+.frac .num{
+  padding:0 .3em;
+  border-bottom:1.5px solid currentColor;
+  text-align:center;
+  font-size:.85em;
+}
+.frac .den{
+  padding:.05em .3em 0;
+  text-align:center;
+  font-size:.85em;
+}
+.sqrt{
+  display:inline-block;
+  border-top:1.5px solid currentColor;
+  padding:0 .15em 0 0;
+  margin-left:.05em;
+}
+.sqrt::before{
+  content:'√';
+  margin-right:-.05em;
+  font-style:normal;
+}
+.vec{
+  position:relative;
+  display:inline-block;
+}
+.vec::after{
+  content:'→';
+  position:absolute;
+  top:-.6em;left:50%;
+  transform:translateX(-50%);
+  font-size:.55em;
+  font-style:normal;
+}
+
+/* Diagrama dentro de la card */
+.concept-diagram{
+  background:var(--paper-soft);
+  border:1px dashed var(--line-strong);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:14px;
+}
+.concept-diagram svg{display:block;width:100%;height:auto;max-height:240px;}
+.concept-diagram-label{
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.12em;
+  color:var(--ink-mute);
+  text-transform:uppercase;
+  text-align:center;
+  margin-top:8px;
+}
+
+/* Variables / sección right */
+.concept-section{margin-bottom:20px;}
+.concept-section:last-child{margin-bottom:0;}
+.concept-section h4{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--cc);
+  margin-bottom:10px;
+  font-weight:700;
+}
+.concept-section ul{list-style:none;}
+.concept-section ul li{
+  padding:5px 0;
+  font-size:.9rem;
+  color:var(--ink-soft);
+  line-height:1.5;
+  display:flex;
+  gap:8px;
+}
+.concept-section ul li .var{
+  font-family:var(--math);
+  font-style:italic;
+  color:var(--cc);
+  font-weight:600;
+  min-width:36px;
+  flex-shrink:0;
+}
+.concept-section ul li .desc{flex:1;}
+.concept-section ul li .unit{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-mute);
+  white-space:nowrap;
+}
+.concept-section p{
+  font-size:.9rem;
+  color:var(--ink-soft);
+  line-height:1.55;
+  margin-bottom:8px;
+}
+.concept-section p strong{color:var(--ink);}
+.concept-section .note{
+  background:var(--paper-soft);
+  border-left:3px solid var(--cc);
+  border-radius:0 8px 8px 0;
+  padding:10px 14px;
+  font-size:.85rem;
+  color:var(--ink-soft);
+  line-height:1.5;
+  margin-top:8px;
+}
+.concept-section .note strong{color:var(--cc);}
+
+/* Color dispatcher para cards (usa --cc set en style) */
+.concept-card.b1{--cc:var(--b1);}
+.concept-card.b2{--cc:var(--b2);}
+.concept-card.b3{--cc:var(--b3);}
+.concept-card.b4{--cc:var(--b4);}
+
+/* Responsive básico */
+@media (max-width:880px){
+  .concept-card{grid-template-columns:1fr;min-height:auto;}
+  .concept-left{border-right:none;border-bottom:1px solid var(--line);}
+  .bloques-cards{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+<div class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark">F</span>
+    <span>Física · PAU 2026</span>
+  </a>
+  <div class="topbar-right">
+    <a class="home-link" href="index.html">← INICIO</a>
+    <div class="slide-counter"><strong id="counterNum">1</strong> / <span id="counterTotal">43</span></div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 1 · PORTADA                            -->
+<!-- ============================================ -->
+<section class="slide slide-cover is-active" data-title="Portada" data-bloque="intro">
+  <div class="slide-inner" style="justify-content:center;">
+    <div class="cover-mark">F</div>
+    <h1 class="cover-title">Física<span class="ornament">·</span>PAU 2026</h1>
+    <p class="cover-sub">Una tarjeta por concepto. Cuarenta conceptos a memorizar repartidos en cuatro bloques.</p>
+    <div class="cover-stats">
+      <div class="cover-stat b1"><div class="n">2,5</div><div class="l">Gravitatoria</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat b2"><div class="n">3</div><div class="l">Electromagnética</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat b3"><div class="n">3</div><div class="l">Ondas</div></div>
+      <div class="cover-divider"></div>
+      <div class="cover-stat b4"><div class="n">1,5</div><div class="l">Cuántica · Nuclear</div></div>
+    </div>
+    <p class="cover-hint">Pulsa la flecha derecha o haz clic en › para avanzar</p>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 2 · ESTRUCTURA DEL EXAMEN              -->
+<!-- ============================================ -->
+<section class="slide" data-title="Estructura del examen" data-bloque="intro">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">El examen</div>
+    <h2 class="slide-title">Cuatro bloques. Diez puntos.</h2>
+    <p class="slide-lead">Entre el 70 y 85 % es optativo. Las preguntas obligatorias pueden estar en cualquier bloque. Las respuestas numéricas necesitan planteamiento, sustitución y cálculo.</p>
+
+    <div class="bloques-chart">
+      <div class="bloques-bar">
+        <div class="seg" style="background:#4F6890;flex:2.5;" data-pts="2,5 PTS">I</div>
+        <div class="seg" style="background:#B8895A;flex:3;" data-pts="3 PTS">II</div>
+        <div class="seg" style="background:#5B8C8B;flex:3;" data-pts="3 PTS">III</div>
+        <div class="seg" style="background:#7B5F8C;flex:1.5;" data-pts="1,5 PTS">IV</div>
+      </div>
+      <div class="bloques-cards">
+        <div class="bloque-mini" style="--bm:#4F6890;">
+          <div class="head">BLOQUE I · 2,5 PTS</div>
+          <div class="name">Interacción gravitatoria</div>
+          <div class="desc">Campo, satélites, Kepler, energía orbital, velocidad de escape.</div>
+        </div>
+        <div class="bloque-mini" style="--bm:#B8895A;">
+          <div class="head">BLOQUE II · 3 PTS</div>
+          <div class="name">Interacción electromagnética</div>
+          <div class="desc">Coulomb, campo E y B, Lorentz, flujo, ley de Faraday-Lenz.</div>
+        </div>
+        <div class="bloque-mini" style="--bm:#5B8C8B;">
+          <div class="head">BLOQUE III · 3 PTS</div>
+          <div class="name">Vibraciones y ondas</div>
+          <div class="desc">MAS, ondas, sonido, óptica geométrica, Snell, lentes.</div>
+        </div>
+        <div class="bloque-mini" style="--bm:#7B5F8C;">
+          <div class="head">BLOQUE IV · 1,5 PTS</div>
+          <div class="name">Relativista, cuántica, nuclear</div>
+          <div class="desc">Relatividad especial, efecto fotoeléctrico, De Broglie, núcleo.</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="color:var(--ink-soft);font-size:.92rem;line-height:1.55;background:var(--paper-soft);border-left:3px solid var(--accent);padding:14px 18px;border-radius:0 8px 8px 0;">
+      <strong style="color:var(--accent-deep);">Penalizaciones:</strong> −0,1 por falta/mal uso de unidades, errores vectoriales/escalares, prefijos, múltiplos de 10, transcripción de datos, cifras significativas, ortografía. Errores graves: hasta toda la puntuación de la pregunta.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SLIDE 3 · CONSTANTES OFICIALES               -->
+<!-- ============================================ -->
+<section class="slide" data-title="Constantes" data-bloque="intro">
+  <div class="slide-inner">
+    <div class="slide-eyebrow">Datos del examen</div>
+    <h2 class="slide-title">Constantes que verás siempre en el examen.</h2>
+    <p class="slide-lead">Aparecen en la cabecera de la prueba. No hace falta memorizarlas exactas, pero sí saber cuáles vienen y cuáles no.</p>
+
+    <div class="constants-grid">
+      <div class="const-item"><div class="symbol">G</div><div class="name">Constante de gravitación universal</div><div class="value">6,67·10⁻¹¹ N·m²/kg²</div></div>
+      <div class="const-item"><div class="symbol">K</div><div class="name">Constante de Coulomb</div><div class="value">9·10⁹ N·m²/C²</div></div>
+      <div class="const-item"><div class="symbol">h</div><div class="name">Constante de Planck</div><div class="value">6,63·10⁻³⁴ J·s</div></div>
+      <div class="const-item"><div class="symbol">c</div><div class="name">Velocidad de la luz en el vacío</div><div class="value">3·10⁸ m/s</div></div>
+      <div class="const-item"><div class="symbol">mₑ</div><div class="name">Masa del electrón</div><div class="value">9,11·10⁻³¹ kg</div></div>
+      <div class="const-item"><div class="symbol">m<sub>U-235</sub></div><div class="name">Masa del uranio-235</div><div class="value">235,0439 u</div></div>
+      <div class="const-item"><div class="symbol">Nₐ</div><div class="name">Número de Avogadro</div><div class="value">6,022·10²³ mol⁻¹</div></div>
+      <div class="const-item"><div class="symbol">1 u</div><div class="name">Unidad de masa atómica</div><div class="value">1,6606·10⁻²⁷ kg</div></div>
+      <div class="const-item"><div class="symbol">1 eV</div><div class="name">Electronvoltio</div><div class="value">1,60·10⁻¹⁹ J</div></div>
+    </div>
+
+    <p style="color:var(--ink-soft);font-size:.9rem;margin-top:18px;font-style:italic;text-align:center;">
+      No te dan: π, valor de g en la Tierra (9,8 m/s²), permeabilidad μ₀, ni masas de la Tierra/Sol/Luna. Si las necesitas, las tienes que recordar.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- BLOQUE I · INTERACCIÓN GRAVITATORIA          -->
+<!-- ============================================ -->
+
+<!-- 01 · Ley de Gravitación Universal -->
+<section class="slide concept-page" data-title="01 · Ley de Gravitación" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">01 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Ley de Gravitación Universal</h2>
+      <div class="formula-box">
+        <div class="formula-display">F = G · <span class="frac"><span class="num">m₁ · m₂</span><span class="den">r²</span></span></div>
+        <div class="formula-secondary"><span class="vec">F</span> = −G · <span class="frac"><span class="num">m₁ · m₂</span><span class="den">r²</span></span> · <span class="vec">u</span><sub>r</sub></div>
+        <div class="formula-label">FORMA ESCALAR Y VECTORIAL · NEWTON, 1687</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="90" cy="70" r="22" fill="#4F6890" opacity=".7"/>
+          <text x="90" y="75" text-anchor="middle" fill="#FAF6EE" font-family="Lora,serif" font-size="14" font-weight="700">m₁</text>
+          <circle cx="290" cy="70" r="22" fill="#4F6890" opacity=".7"/>
+          <text x="290" y="75" text-anchor="middle" fill="#FAF6EE" font-family="Lora,serif" font-size="14" font-weight="700">m₂</text>
+          <line x1="112" y1="70" x2="268" y2="70" stroke="#8B8579" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="190" y="62" text-anchor="middle" fill="#5C574F" font-family="Lora,serif" font-style="italic" font-size="14">r</text>
+          <line x1="115" y1="70" x2="155" y2="70" stroke="#4F6890" stroke-width="2" marker-end="url(#arr1)"/>
+          <line x1="265" y1="70" x2="225" y2="70" stroke="#4F6890" stroke-width="2" marker-end="url(#arr1)"/>
+          <defs><marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4F6890"/></marker></defs>
+          <text x="135" y="92" text-anchor="middle" fill="#4F6890" font-family="Lora,serif" font-style="italic" font-size="13" font-weight="700">F₁₂</text>
+          <text x="245" y="92" text-anchor="middle" fill="#4F6890" font-family="Lora,serif" font-style="italic" font-size="13" font-weight="700">F₂₁</text>
+        </svg>
+        <div class="concept-diagram-label">Atracción mutua entre dos masas</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">F</span><span class="desc">Fuerza gravitatoria</span><span class="unit">N</span></li>
+          <li><span class="var">G</span><span class="desc">Constante de gravitación universal</span><span class="unit">N·m²/kg²</span></li>
+          <li><span class="var">m₁, m₂</span><span class="desc">Masas que interaccionan</span><span class="unit">kg</span></li>
+          <li><span class="var">r</span><span class="desc">Distancia entre los centros de masa</span><span class="unit">m</span></li>
+          <li><span class="var">u<sub>r</sub></span><span class="desc">Vector unitario radial (de m₁ a m₂)</span><span class="unit">—</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves para el examen</h4>
+        <p>Fuerza siempre <strong>atractiva</strong>. El signo «−» en la forma vectorial indica que la fuerza apunta hacia la otra masa, en sentido opuesto a <em>u<sub>r</sub></em>.</p>
+        <p>Cumple la <strong>3ª ley de Newton</strong>: la fuerza que m₁ ejerce sobre m₂ es opuesta a la que m₂ ejerce sobre m₁.</p>
+        <div class="note"><strong>Principio de superposición:</strong> si hay varias masas, la fuerza resultante es la suma vectorial de las fuerzas individuales.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 02 · Campo gravitatorio -->
+<section class="slide concept-page" data-title="02 · Campo gravitatorio" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">02 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Campo gravitatorio (intensidad)</h2>
+      <div class="formula-box">
+        <div class="formula-display">g = G · <span class="frac"><span class="num">M</span><span class="den">r²</span></span></div>
+        <div class="formula-secondary"><span class="vec">g</span> = <span class="frac"><span class="num"><span class="vec">F</span></span><span class="den">m</span></span> &nbsp; = &nbsp; −G · <span class="frac"><span class="num">M</span><span class="den">r²</span></span> · <span class="vec">u</span><sub>r</sub></div>
+        <div class="formula-label">FUERZA POR UNIDAD DE MASA</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Masa central -->
+          <circle cx="190" cy="80" r="22" fill="#4F6890"/>
+          <text x="190" y="85" text-anchor="middle" fill="#FAF6EE" font-family="Lora,serif" font-size="14" font-weight="700">M</text>
+          <!-- Líneas radiales del campo -->
+          <g stroke="#4F6890" stroke-width="1.4" fill="none" opacity=".7">
+            <line x1="190" y1="80" x2="50" y2="80" marker-start="url(#arr2)"/>
+            <line x1="190" y1="80" x2="330" y2="80" marker-end="url(#arr2)"/>
+            <line x1="190" y1="80" x2="190" y2="15" marker-end="url(#arr2)"/>
+            <line x1="190" y1="80" x2="190" y2="145" marker-end="url(#arr2)"/>
+            <line x1="190" y1="80" x2="100" y2="20" marker-end="url(#arr2)"/>
+            <line x1="190" y1="80" x2="280" y2="20" marker-end="url(#arr2)"/>
+            <line x1="190" y1="80" x2="100" y2="140" marker-end="url(#arr2)"/>
+            <line x1="190" y1="80" x2="280" y2="140" marker-end="url(#arr2)"/>
+          </g>
+          <!-- líneas APUNTAN HACIA la masa, así que invierto markers -->
+          <g stroke="#4F6890" stroke-width="1.4" fill="none">
+            <line x1="50" y1="80" x2="170" y2="80" marker-end="url(#arr2)"/>
+            <line x1="330" y1="80" x2="210" y2="80" marker-end="url(#arr2)"/>
+            <line x1="190" y1="15" x2="190" y2="60" marker-end="url(#arr2)"/>
+            <line x1="190" y1="145" x2="190" y2="100" marker-end="url(#arr2)"/>
+          </g>
+          <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4F6890"/></marker></defs>
+        </svg>
+        <div class="concept-diagram-label">Líneas de campo apuntan hacia la masa</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">g</span><span class="desc">Intensidad del campo (aceleración)</span><span class="unit">N/kg = m/s²</span></li>
+          <li><span class="var">M</span><span class="desc">Masa creadora del campo</span><span class="unit">kg</span></li>
+          <li><span class="var">r</span><span class="desc">Distancia al centro de M</span><span class="unit">m</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p>El campo es <strong>independiente</strong> de la masa que se introduce en él. Es una propiedad del espacio creada por M.</p>
+        <p><strong>Fuerza vs campo:</strong> <span style="font-family:var(--math);font-style:italic;">F = m·g</span>. Mismo valor numérico que la aceleración de la gravedad sobre m.</p>
+        <div class="note"><strong>En la superficie terrestre:</strong> g ≈ 9,8 m/s². Disminuye con el cuadrado de la altura.</div>
+      </div>
+      <div class="concept-section">
+        <h4>Líneas y superficies</h4>
+        <p><strong>Líneas de campo:</strong> radiales, hacia la masa. <strong>Superficies equipotenciales:</strong> esferas concéntricas, perpendiculares a las líneas.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 03 · Energía potencial gravitatoria -->
+<section class="slide concept-page" data-title="03 · Energía potencial" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">03 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Energía potencial gravitatoria</h2>
+      <div class="formula-box">
+        <div class="formula-display">E<sub>p</sub> = −G · <span class="frac"><span class="num">M · m</span><span class="den">r</span></span></div>
+        <div class="formula-secondary">V = <span class="frac"><span class="num">E<sub>p</sub></span><span class="den">m</span></span> = −G · <span class="frac"><span class="num">M</span><span class="den">r</span></span></div>
+        <div class="formula-label">ENERGÍA POTENCIAL Y POTENCIAL GRAVITATORIO</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.7rem;">W<sub>A→B</sub> = −ΔE<sub>p</sub> = E<sub>p,A</sub> − E<sub>p,B</sub></div>
+        <div class="formula-label">TRABAJO DE LA FUERZA CONSERVATIVA</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">E<sub>p</sub></span><span class="desc">Energía potencial del sistema M-m</span><span class="unit">J</span></li>
+          <li><span class="var">V</span><span class="desc">Potencial gravitatorio</span><span class="unit">J/kg</span></li>
+          <li><span class="var">W</span><span class="desc">Trabajo del campo entre A y B</span><span class="unit">J</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p><strong>Origen de energía en el infinito:</strong> E<sub>p</sub>(∞) = 0. Por eso E<sub>p</sub> es <em>negativa</em> a distancia finita: hay que dar energía positiva para alejar la masa al infinito.</p>
+        <p>Fuerza y energía potencial: <span style="font-family:var(--math);font-style:italic;">F = −dE<sub>p</sub>/dr</span>. La fuerza apunta hacia donde E<sub>p</sub> disminuye.</p>
+        <div class="note"><strong>Campo conservativo:</strong> el trabajo entre A y B no depende del camino, solo de las posiciones inicial y final. W en trayectoria cerrada = 0.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 04 · Leyes de Kepler -->
+<section class="slide concept-page" data-title="04 · Leyes de Kepler" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">04 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Las tres leyes de Kepler</h2>
+      <div class="formula-box">
+        <div class="formula-display" style="font-size:1.7rem;">T² = <span class="frac"><span class="num">4π²</span><span class="den">G · M</span></span> · r³</div>
+        <div class="formula-secondary">T² ∝ r³ &nbsp; (3ª ley)</div>
+        <div class="formula-label">PERIODO DE UN PLANETA · M = SOL</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sol -->
+          <circle cx="240" cy="90" r="14" fill="#B8895A"/>
+          <text x="240" y="120" text-anchor="middle" fill="#5C574F" font-size="11" font-style="italic">Sol</text>
+          <!-- Elipse órbita -->
+          <ellipse cx="200" cy="90" rx="150" ry="70" fill="none" stroke="#4F6890" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <!-- Planeta -->
+          <circle cx="50" cy="90" r="7" fill="#4F6890"/>
+          <circle cx="350" cy="90" r="7" fill="#4F6890" opacity=".4"/>
+          <!-- áreas barridas -->
+          <path d="M 200 90 L 50 90 A 150 70 0 0 1 80 22 Z" fill="#5B8C8B" opacity=".25"/>
+          <path d="M 200 90 L 320 142 A 150 70 0 0 1 350 90 Z" fill="#5B8C8B" opacity=".25"/>
+          <text x="200" y="170" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">Áreas iguales en tiempos iguales (2ª ley)</text>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>1ª · Ley de las órbitas</h4>
+        <p>Los planetas describen <strong>órbitas elípticas</strong> con el Sol en uno de los focos.</p>
+      </div>
+      <div class="concept-section">
+        <h4>2ª · Ley de las áreas</h4>
+        <p>El radio vector que une el Sol con el planeta <strong>barre áreas iguales en tiempos iguales</strong>. Consecuencia: el planeta se mueve más rápido cerca del Sol (perihelio).</p>
+        <div class="note">Implica <strong>conservación del momento angular</strong> (L = m·v·r = cte).</div>
+      </div>
+      <div class="concept-section">
+        <h4>3ª · Ley de los periodos</h4>
+        <p>El cuadrado del periodo es proporcional al cubo del semieje mayor de la órbita.</p>
+        <ul>
+          <li><span class="var">T</span><span class="desc">Periodo orbital</span><span class="unit">s</span></li>
+          <li><span class="var">r</span><span class="desc">Radio orbital (semieje mayor)</span><span class="unit">m</span></li>
+          <li><span class="var">M</span><span class="desc">Masa del astro central (Sol)</span><span class="unit">kg</span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 05 · Velocidad orbital -->
+<section class="slide concept-page" data-title="05 · Velocidad orbital" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">05 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Velocidad y periodo orbital</h2>
+      <div class="formula-box">
+        <div class="formula-display">v<sub>orb</sub> = <span class="sqrt">G · M / r</span></div>
+        <div class="formula-secondary">T = 2π · <span class="sqrt">r³ / (G · M)</span></div>
+        <div class="formula-label">ÓRBITA CIRCULAR ESTABLE</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Planeta central -->
+          <circle cx="190" cy="80" r="28" fill="#4F6890" opacity=".8"/>
+          <text x="190" y="85" text-anchor="middle" fill="#FAF6EE" font-family="Lora,serif" font-size="13" font-weight="700">M</text>
+          <!-- Órbita -->
+          <circle cx="190" cy="80" r="60" fill="none" stroke="#4F6890" stroke-width="1.2" stroke-dasharray="3 3" opacity=".6"/>
+          <!-- Satélite -->
+          <circle cx="250" cy="80" r="6" fill="#B8895A"/>
+          <!-- Vector velocidad tangente -->
+          <line x1="250" y1="80" x2="250" y2="40" stroke="#B8895A" stroke-width="2.5" marker-end="url(#arr3)"/>
+          <text x="262" y="55" fill="#B8895A" font-family="Lora,serif" font-style="italic" font-size="14" font-weight="700">v</text>
+          <!-- Vector fuerza centrípeta -->
+          <line x1="250" y1="80" x2="216" y2="80" stroke="#4F6890" stroke-width="2.5" marker-end="url(#arr3)"/>
+          <text x="232" y="98" fill="#4F6890" font-family="Lora,serif" font-style="italic" font-size="12" font-weight="700">F<tspan font-size="10">g</tspan></text>
+          <text x="190" y="155" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">v ⊥ r &nbsp; · &nbsp; F<tspan font-size="9">g</tspan> aporta la aceleración centrípeta</text>
+          <defs><marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>De dónde sale</h4>
+        <p>La fuerza gravitatoria proporciona la aceleración centrípeta:</p>
+        <p style="font-family:var(--math);font-style:italic;text-align:center;background:var(--paper-soft);padding:10px;border-radius:6px;">G · M · m / r²  =  m · v² / r</p>
+        <p>Despejando <em>v</em> sale la fórmula. <em>m</em> se cancela: la velocidad orbital <strong>no depende</strong> de la masa del satélite.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">v<sub>orb</sub></span><span class="desc">Velocidad orbital</span><span class="unit">m/s</span></li>
+          <li><span class="var">T</span><span class="desc">Periodo de la órbita</span><span class="unit">s</span></li>
+          <li><span class="var">r</span><span class="desc">Radio orbital (centro M → satélite)</span><span class="unit">m</span></li>
+          <li><span class="var">M</span><span class="desc">Masa del astro central</span><span class="unit">kg</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Ojo</h4>
+        <div class="note"><strong>Altura ≠ radio:</strong> si te dan altura sobre la superficie <em>h</em>, entonces <em>r = R<sub>planeta</sub> + h</em>.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 06 · Energía total satélite -->
+<section class="slide concept-page" data-title="06 · Energía orbital" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">06 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Energía mecánica de un satélite en órbita</h2>
+      <div class="formula-box">
+        <div class="formula-display">E<sub>m</sub> = −<span class="frac"><span class="num">G · M · m</span><span class="den">2r</span></span></div>
+        <div class="formula-secondary">E<sub>c</sub> = +<span class="frac"><span class="num">G · M · m</span><span class="den">2r</span></span> &nbsp;·&nbsp; E<sub>p</sub> = −<span class="frac"><span class="num">G · M · m</span><span class="den">r</span></span></div>
+        <div class="formula-label">RELACIÓN E<sub>c</sub> = −E<sub>m</sub> = −½ E<sub>p</sub></div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+          <!-- Eje energía -->
+          <line x1="40" y1="70" x2="340" y2="70" stroke="#8B8579" stroke-width="1"/>
+          <line x1="40" y1="20" x2="40" y2="120" stroke="#8B8579" stroke-width="1"/>
+          <text x="20" y="74" font-size="10" fill="#5C574F">0</text>
+          <!-- Energía cinética (+) -->
+          <rect x="80" y="40" width="60" height="30" fill="#7C9079" opacity=".5"/>
+          <text x="110" y="60" text-anchor="middle" font-size="10" fill="#2D2A26">+E<tspan font-size="8">c</tspan></text>
+          <!-- Energía potencial (-) -->
+          <rect x="170" y="70" width="60" height="60" fill="#A95448" opacity=".5"/>
+          <text x="200" y="106" text-anchor="middle" font-size="10" fill="#2D2A26">−E<tspan font-size="8">p</tspan></text>
+          <!-- Energía mecánica (-) -->
+          <rect x="260" y="70" width="60" height="30" fill="#4F6890" opacity=".7"/>
+          <text x="290" y="91" text-anchor="middle" font-size="10" fill="#FAF6EE">−E<tspan font-size="8">m</tspan></text>
+          <text x="190" y="20" text-anchor="middle" font-size="10" fill="#5C574F" font-style="italic">|E<tspan font-size="8">c</tspan>| = ½|E<tspan font-size="8">p</tspan>| = |E<tspan font-size="8">m</tspan>|</text>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">E<sub>m</sub></span><span class="desc">Energía mecánica total</span><span class="unit">J</span></li>
+          <li><span class="var">E<sub>c</sub></span><span class="desc">Energía cinética</span><span class="unit">J</span></li>
+          <li><span class="var">E<sub>p</sub></span><span class="desc">Energía potencial gravitatoria</span><span class="unit">J</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p><strong>Energía total negativa</strong> indica que el satélite está «ligado» — no puede escapar al infinito.</p>
+        <p>Si E<sub>m</sub> ≥ 0 → trayectoria abierta (parábola si =0, hipérbola si &gt;0). El cuerpo escapa.</p>
+        <div class="note"><strong>Saltar a otra órbita:</strong> ΔE<sub>m</sub> = E<sub>m,final</sub> − E<sub>m,inicial</sub>. Trabajo a aportar (cohetes) = ΔE<sub>m</sub>.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 07 · Velocidad de escape -->
+<section class="slide concept-page" data-title="07 · Velocidad de escape" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">07 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Velocidad de escape</h2>
+      <div class="formula-box">
+        <div class="formula-display">v<sub>e</sub> = <span class="sqrt">2 · G · M / R</span></div>
+        <div class="formula-secondary">v<sub>e</sub> = <span class="sqrt">2 · g · R</span> &nbsp; (desde la superficie)</div>
+        <div class="formula-label">VELOCIDAD MÍNIMA PARA ESCAPAR DEL CAMPO</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+          <!-- Planeta -->
+          <circle cx="80" cy="80" r="35" fill="#4F6890" opacity=".8"/>
+          <text x="80" y="85" text-anchor="middle" fill="#FAF6EE" font-size="12" font-weight="700">M, R</text>
+          <!-- Trayectoria escape -->
+          <path d="M 115 80 Q 220 30 360 50" fill="none" stroke="#A95448" stroke-width="2"/>
+          <circle cx="115" cy="80" r="5" fill="#A95448"/>
+          <text x="135" y="76" fill="#A95448" font-size="11" font-style="italic">v ≥ v<tspan font-size="9">e</tspan></text>
+          <text x="320" y="40" fill="#A95448" font-size="10" font-style="italic">→ ∞</text>
+          <!-- Trayectoria ligada -->
+          <path d="M 115 80 Q 180 110 115 80" fill="none" stroke="#7C9079" stroke-width="2" stroke-dasharray="3 3"/>
+          <text x="180" y="125" fill="#7C9079" font-size="10" font-style="italic">v &lt; v<tspan font-size="9">e</tspan> · regresa</text>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Deducción</h4>
+        <p>«Escapar» = llegar al infinito con velocidad nula. Por conservación de la energía mecánica:</p>
+        <p style="font-family:var(--math);font-style:italic;text-align:center;background:var(--paper-soft);padding:10px;border-radius:6px;">½·m·v<sub>e</sub>² − G·M·m/R  =  0</p>
+        <p>Despejando v<sub>e</sub> sale la fórmula.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">v<sub>e</sub></span><span class="desc">Velocidad de escape</span><span class="unit">m/s</span></li>
+          <li><span class="var">R</span><span class="desc">Radio del planeta (o distancia inicial)</span><span class="unit">m</span></li>
+          <li><span class="var">M</span><span class="desc">Masa del planeta</span><span class="unit">kg</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p>Independiente de la <strong>masa</strong> y <strong>dirección</strong> del proyectil. Solo depende del planeta.</p>
+        <div class="note"><strong>Tierra:</strong> v<sub>e</sub> ≈ 11,2 km/s. <strong>Luna:</strong> ≈ 2,4 km/s. Relación con v<sub>orb</sub>: v<sub>e</sub> = √2 · v<sub>orb</sub>.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 08 · Superficies equipotenciales -->
+<section class="slide concept-page" data-title="08 · Líneas y equipotenciales" data-bloque="1">
+  <article class="concept-card b1">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">08 / 40</span>
+        <span class="concept-bloque">Bloque I · Gravitatoria</span>
+      </div>
+      <h2 class="concept-title">Líneas de campo y superficies equipotenciales</h2>
+      <div class="concept-diagram" style="margin-top:0;">
+        <svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Masa central -->
+          <circle cx="190" cy="140" r="14" fill="#4F6890"/>
+          <text x="190" y="144" text-anchor="middle" fill="#FAF6EE" font-size="11" font-weight="700">M</text>
+          <!-- Superficies equipotenciales (esferas concéntricas) -->
+          <g fill="none" stroke="#5B8C8B" stroke-width="1.2" stroke-dasharray="3 3" opacity=".7">
+            <circle cx="190" cy="140" r="40"/>
+            <circle cx="190" cy="140" r="70"/>
+            <circle cx="190" cy="140" r="100"/>
+            <circle cx="190" cy="140" r="130"/>
+          </g>
+          <text x="320" y="140" fill="#5B8C8B" font-size="10" font-style="italic">V cte</text>
+          <!-- Líneas de campo radiales (entrando) -->
+          <g stroke="#4F6890" stroke-width="1.5" fill="none">
+            <line x1="60" y1="140" x2="170" y2="140" marker-end="url(#arr4)"/>
+            <line x1="320" y1="140" x2="210" y2="140" marker-end="url(#arr4)"/>
+            <line x1="190" y1="10" x2="190" y2="120" marker-end="url(#arr4)"/>
+            <line x1="190" y1="270" x2="190" y2="160" marker-end="url(#arr4)"/>
+            <line x1="100" y1="50" x2="178" y2="128" marker-end="url(#arr4)"/>
+            <line x1="280" y1="50" x2="202" y2="128" marker-end="url(#arr4)"/>
+            <line x1="100" y1="230" x2="178" y2="152" marker-end="url(#arr4)"/>
+            <line x1="280" y1="230" x2="202" y2="152" marker-end="url(#arr4)"/>
+          </g>
+          <defs><marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4F6890"/></marker></defs>
+          <text x="40" y="20" fill="#4F6890" font-size="10" font-weight="600">Líneas de g</text>
+          <text x="40" y="270" fill="#5B8C8B" font-size="10" font-weight="600">Superficies equipotenciales</text>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Líneas de campo</h4>
+        <p><strong>Tangentes</strong> al vector campo <em>g</em> en cada punto. Apuntan en el <strong>sentido del campo</strong> (hacia la masa, porque g es atractivo).</p>
+        <p>No se cruzan. Su densidad indica la intensidad del campo (más juntas → campo más intenso).</p>
+      </div>
+      <div class="concept-section">
+        <h4>Superficies equipotenciales</h4>
+        <p>Lugares geométricos con el mismo potencial <em>V</em>. Para una masa puntual: <strong>esferas concéntricas</strong>.</p>
+        <p>Siempre <strong>perpendiculares</strong> a las líneas de campo en cada punto.</p>
+        <div class="note">El trabajo realizado por el campo al desplazar una masa <strong>sobre una equipotencial es cero</strong> (ΔV = 0 → W = 0).</div>
+      </div>
+      <div class="concept-section">
+        <h4>Comparación</h4>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">→ g</span><span class="desc">Vector tangente a líneas de campo</span><span class="unit"></span></li>
+          <li><span class="var">V</span><span class="desc">Escalar constante en cada superficie</span><span class="unit"></span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================ -->
+<!-- BLOQUE II · INTERACCIÓN ELECTROMAGNÉTICA     -->
+<!-- ============================================ -->
+
+<!-- 09 · Ley de Coulomb -->
+<section class="slide concept-page" data-title="09 · Ley de Coulomb" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">09 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Ley de Coulomb</h2>
+      <div class="formula-box">
+        <div class="formula-display">F = K · <span class="frac"><span class="num">q₁ · q₂</span><span class="den">r²</span></span></div>
+        <div class="formula-secondary"><span class="vec">F</span> = K · <span class="frac"><span class="num">q₁ · q₂</span><span class="den">r²</span></span> · <span class="vec">u</span><sub>r</sub></div>
+        <div class="formula-label">FUERZA ENTRE DOS CARGAS PUNTUALES</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cargas + + (repulsión) -->
+          <circle cx="80" cy="50" r="14" fill="#B8895A"/>
+          <text x="80" y="55" text-anchor="middle" fill="#FAF6EE" font-size="14" font-weight="700">+</text>
+          <circle cx="180" cy="50" r="14" fill="#B8895A"/>
+          <text x="180" y="55" text-anchor="middle" fill="#FAF6EE" font-size="14" font-weight="700">+</text>
+          <line x1="94" y1="50" x2="55" y2="50" stroke="#B8895A" stroke-width="2" marker-end="url(#arr5)"/>
+          <line x1="166" y1="50" x2="205" y2="50" stroke="#B8895A" stroke-width="2" marker-end="url(#arr5)"/>
+          <text x="130" y="35" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">Repulsión: mismo signo</text>
+
+          <!-- Cargas + - (atracción) -->
+          <circle cx="240" cy="110" r="14" fill="#B8895A"/>
+          <text x="240" y="115" text-anchor="middle" fill="#FAF6EE" font-size="14" font-weight="700">+</text>
+          <circle cx="340" cy="110" r="14" fill="#4F6890"/>
+          <text x="340" y="115" text-anchor="middle" fill="#FAF6EE" font-size="14" font-weight="700">−</text>
+          <line x1="254" y1="110" x2="293" y2="110" stroke="#B8895A" stroke-width="2" marker-end="url(#arr5)"/>
+          <line x1="326" y1="110" x2="287" y2="110" stroke="#4F6890" stroke-width="2" marker-end="url(#arr5)"/>
+          <text x="290" y="130" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">Atracción: distinto signo</text>
+          <defs><marker id="arr5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">F</span><span class="desc">Fuerza eléctrica</span><span class="unit">N</span></li>
+          <li><span class="var">K</span><span class="desc">Constante de Coulomb (1/4πε₀)</span><span class="unit">N·m²/C²</span></li>
+          <li><span class="var">q₁, q₂</span><span class="desc">Cargas con signo</span><span class="unit">C</span></li>
+          <li><span class="var">r</span><span class="desc">Distancia entre cargas</span><span class="unit">m</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p>Repulsiva (+/+ o −/−) o atractiva (+/−). El signo del producto q₁·q₂ define el sentido.</p>
+        <div class="note"><strong>Principio de superposición:</strong> con varias cargas, la fuerza neta es la suma vectorial de cada pareja. Súmalas por componentes (Fx, Fy).</div>
+        <p><strong>Comparada con la gravitatoria:</strong> análoga en forma, pero electricidad es ≈ 10³⁶ veces más intensa y puede ser atractiva o repulsiva.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 10 · Campo eléctrico -->
+<section class="slide concept-page" data-title="10 · Campo eléctrico" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">10 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Campo eléctrico</h2>
+      <div class="formula-box">
+        <div class="formula-display">E = K · <span class="frac"><span class="num">q</span><span class="den">r²</span></span></div>
+        <div class="formula-secondary"><span class="vec">E</span> = <span class="frac"><span class="num"><span class="vec">F</span></span><span class="den">q'</span></span> &nbsp;·&nbsp; <span class="vec">F</span> = q' · <span class="vec">E</span></div>
+        <div class="formula-label">FUERZA POR UNIDAD DE CARGA DE PRUEBA</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Carga + central con líneas salientes -->
+          <circle cx="100" cy="80" r="18" fill="#B8895A"/>
+          <text x="100" y="86" text-anchor="middle" fill="#FAF6EE" font-size="16" font-weight="700">+</text>
+          <g stroke="#B8895A" stroke-width="1.4" fill="none">
+            <line x1="118" y1="80" x2="170" y2="80" marker-end="url(#arr6)"/>
+            <line x1="100" y1="62" x2="100" y2="20" marker-end="url(#arr6)"/>
+            <line x1="100" y1="98" x2="100" y2="140" marker-end="url(#arr6)"/>
+            <line x1="115" y1="65" x2="150" y2="35" marker-end="url(#arr6)"/>
+            <line x1="115" y1="95" x2="150" y2="125" marker-end="url(#arr6)"/>
+            <line x1="85" y1="65" x2="50" y2="35" marker-end="url(#arr6)"/>
+            <line x1="85" y1="95" x2="50" y2="125" marker-end="url(#arr6)"/>
+            <line x1="82" y1="80" x2="30" y2="80" marker-end="url(#arr6)"/>
+          </g>
+          <!-- Carga - central con líneas entrantes -->
+          <circle cx="290" cy="80" r="18" fill="#4F6890"/>
+          <text x="290" y="86" text-anchor="middle" fill="#FAF6EE" font-size="16" font-weight="700">−</text>
+          <g stroke="#4F6890" stroke-width="1.4" fill="none">
+            <line x1="360" y1="80" x2="310" y2="80" marker-end="url(#arr7)"/>
+            <line x1="290" y1="10" x2="290" y2="60" marker-end="url(#arr7)"/>
+            <line x1="290" y1="150" x2="290" y2="100" marker-end="url(#arr7)"/>
+            <line x1="220" y1="80" x2="272" y2="80" marker-end="url(#arr7)"/>
+            <line x1="240" y1="30" x2="278" y2="68" marker-end="url(#arr7)"/>
+            <line x1="340" y1="30" x2="302" y2="68" marker-end="url(#arr7)"/>
+            <line x1="240" y1="130" x2="278" y2="92" marker-end="url(#arr7)"/>
+            <line x1="340" y1="130" x2="302" y2="92" marker-end="url(#arr7)"/>
+          </g>
+          <defs>
+            <marker id="arr6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#B8895A"/></marker>
+            <marker id="arr7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4F6890"/></marker>
+          </defs>
+        </svg>
+        <div class="concept-diagram-label">+ : líneas salen · − : líneas entran</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">E</span><span class="desc">Intensidad del campo eléctrico</span><span class="unit">N/C = V/m</span></li>
+          <li><span class="var">q</span><span class="desc">Carga creadora del campo</span><span class="unit">C</span></li>
+          <li><span class="var">q'</span><span class="desc">Carga de prueba</span><span class="unit">C</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p><strong>El campo es vector.</strong> Para varias cargas, sumar vectorialmente las contribuciones (principio de superposición).</p>
+        <p>Dirección: de + a −. Sentido sobre una carga de prueba positiva = sentido del campo.</p>
+        <div class="note">El campo eléctrico <strong>existe</strong> aunque no haya carga de prueba; es una propiedad del espacio asociada a las cargas creadoras.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 11 · Analogía gravitatoria/eléctrica -->
+<section class="slide concept-page" data-title="11 · Analogía g/E" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">11 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Analogías y diferencias: gravitatorio ↔ eléctrico</h2>
+      <div style="background:var(--paper-soft);border-radius:12px;padding:18px;border:1px solid var(--line);">
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line-strong);">
+              <th style="text-align:left;padding:8px 6px;color:var(--ink-mute);font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;">CONCEPTO</th>
+              <th style="text-align:left;padding:8px 6px;color:#4F6890;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;">GRAVITATORIO</th>
+              <th style="text-align:left;padding:8px 6px;color:#B8895A;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;">ELÉCTRICO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:var(--ink-soft);">Fuente</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">masa m (+)</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">carga q (± )</td></tr>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:var(--ink-soft);">Constante</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">G = 6,67·10⁻¹¹</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">K = 9·10⁹</td></tr>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:var(--ink-soft);">Fuerza</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">F = G m₁m₂/r²</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">F = K q₁q₂/r²</td></tr>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:var(--ink-soft);">Campo</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">g = GM/r²</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">E = Kq/r²</td></tr>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:var(--ink-soft);">Potencial</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">V = −GM/r</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">V = Kq/r</td></tr>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:var(--ink-soft);">E. potencial</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">Eₚ = −GMm/r</td><td style="padding:8px 6px;font-family:var(--math);font-style:italic;">Eₚ = Kq₁q₂/r</td></tr>
+            <tr><td style="padding:8px 6px;color:var(--ink-soft);">Sentido</td><td style="padding:8px 6px;">solo atractiva</td><td style="padding:8px 6px;">atract. o repul.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Lo que comparten</h4>
+        <p>Ambas son fuerzas <strong>centrales</strong> (apuntan en la línea que une las dos partículas) y <strong>conservativas</strong> (existe energía potencial).</p>
+        <p>Ambas dependen del <strong>inverso del cuadrado</strong> de la distancia.</p>
+        <p>Las líneas de campo son <strong>radiales</strong>; las superficies equipotenciales son <strong>esféricas</strong>.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Lo que las diferencia</h4>
+        <p><strong>Signo:</strong> la masa es siempre positiva → gravedad solo atractiva. La carga puede ser ±→ eléctrica atractiva o repulsiva.</p>
+        <p><strong>Intensidad:</strong> la eléctrica es ≈ <strong>10³⁶ veces más intensa</strong>.</p>
+        <div class="note">El signo «−» del potencial gravitatorio refleja que la gravedad es siempre atractiva; el potencial eléctrico hereda el signo de la carga creadora.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 12 · Potencial eléctrico y trabajo -->
+<section class="slide concept-page" data-title="12 · Potencial y trabajo" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">12 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Potencial · energía potencial · trabajo</h2>
+      <div class="formula-box">
+        <div class="formula-display">V = K · <span class="frac"><span class="num">q</span><span class="den">r</span></span></div>
+        <div class="formula-secondary">E<sub>p</sub> = K · <span class="frac"><span class="num">q₁ · q₂</span><span class="den">r</span></span> &nbsp; = &nbsp; q' · V</div>
+        <div class="formula-label">POTENCIAL CREADO POR q · ENERGÍA POTENCIAL DEL SISTEMA</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.7rem;">W<sub>A→B</sub> = q' · (V<sub>A</sub> − V<sub>B</sub>)</div>
+        <div class="formula-label">TRABAJO DEL CAMPO ELÉCTRICO SOBRE q'</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">V</span><span class="desc">Potencial eléctrico</span><span class="unit">V = J/C</span></li>
+          <li><span class="var">E<sub>p</sub></span><span class="desc">Energía potencial del sistema</span><span class="unit">J</span></li>
+          <li><span class="var">W</span><span class="desc">Trabajo del campo entre A y B</span><span class="unit">J</span></li>
+          <li><span class="var">q'</span><span class="desc">Carga que se mueve</span><span class="unit">C</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves de signos</h4>
+        <p>El potencial creado por una carga <strong>tiene su signo</strong>. La energía potencial entre dos cargas <strong>también</strong>:</p>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">+/+</span><span class="desc">E<sub>p</sub> &gt; 0 — costó energía juntarlas</span></li>
+          <li><span class="var">+/−</span><span class="desc">E<sub>p</sub> &lt; 0 — sistema ligado</span></li>
+        </ul>
+        <div class="note"><strong>W &gt; 0</strong> ⇒ lo hace el campo (espontáneo). <strong>W &lt; 0</strong> ⇒ lo hace una fuerza externa.</div>
+      </div>
+      <div class="concept-section">
+        <h4>Superficies equipotenciales</h4>
+        <p>Si A y B están en la misma equipotencial (V<sub>A</sub> = V<sub>B</sub>) ⇒ <strong>W = 0</strong>.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 13 · Fuerza de Lorentz -->
+<section class="slide concept-page" data-title="13 · Fuerza de Lorentz" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">13 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Fuerza de Lorentz</h2>
+      <div class="formula-box">
+        <div class="formula-display"><span class="vec">F</span> = q (<span class="vec">E</span> + <span class="vec">v</span> × <span class="vec">B</span>)</div>
+        <div class="formula-secondary"><span class="vec">F</span><sub>e</sub> = q·<span class="vec">E</span> &nbsp; · &nbsp; <span class="vec">F</span><sub>m</sub> = q (<span class="vec">v</span> × <span class="vec">B</span>)</div>
+        <div class="formula-label">FUERZA TOTAL SOBRE UNA CARGA EN MOVIMIENTO</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Regla mano derecha (v×B) -->
+          <text x="190" y="22" text-anchor="middle" fill="#5C574F" font-size="11" font-style="italic">F<tspan font-size="9">m</tspan> = q · v × B &nbsp;· &nbsp; ⊥ a v y a B</text>
+          <!-- v vector -->
+          <line x1="60" y1="100" x2="160" y2="100" stroke="#B8895A" stroke-width="3" marker-end="url(#arr8)"/>
+          <text x="105" y="92" fill="#B8895A" font-size="13" font-style="italic" font-weight="700">v</text>
+          <!-- B vector (perpendicular hacia arriba) -->
+          <line x1="200" y1="100" x2="200" y2="50" stroke="#4F6890" stroke-width="3" marker-end="url(#arr8)"/>
+          <text x="215" y="70" fill="#4F6890" font-size="13" font-style="italic" font-weight="700">B</text>
+          <!-- F (resultado: hacia adentro, indicado con cruz, o hacia afuera con punto) -->
+          <circle cx="290" cy="100" r="22" fill="none" stroke="#7C9079" stroke-width="2.5"/>
+          <text x="290" y="106" text-anchor="middle" fill="#7C9079" font-size="22" font-weight="700">·</text>
+          <text x="290" y="140" text-anchor="middle" fill="#7C9079" font-size="13" font-style="italic" font-weight="700">F (sale)</text>
+          <defs><marker id="arr8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+        <div class="concept-diagram-label">Si q &gt; 0 · invertir si q &lt; 0</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Componentes</h4>
+        <ul>
+          <li><span class="var">F<sub>e</sub></span><span class="desc">Fuerza eléctrica (paralela a E)</span><span class="unit">N</span></li>
+          <li><span class="var">F<sub>m</sub></span><span class="desc">Fuerza magnética (⊥ a v y B)</span><span class="unit">N</span></li>
+          <li><span class="var">|F<sub>m</sub>|</span><span class="desc">= |q|·v·B·sen θ</span><span class="unit">N</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves del producto vectorial</h4>
+        <p><strong>Si v ∥ B:</strong> sen 0 = 0 → no hay fuerza magnética.</p>
+        <p><strong>Si v ⊥ B:</strong> fuerza máxima → trayectoria circular.</p>
+        <p><strong>Regla de la mano derecha:</strong> dedos en sentido de v, los curvas hacia B, el pulgar marca F (para q &gt; 0).</p>
+        <div class="note"><strong>F<sub>m</sub> nunca realiza trabajo</strong> sobre la carga: F ⊥ v, así que W = 0 y la energía cinética se conserva.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 14 · Movimiento carga en campo magnético -->
+<section class="slide concept-page" data-title="14 · Carga en B" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">14 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Movimiento de una carga en campo magnético</h2>
+      <div class="formula-box">
+        <div class="formula-display">r = <span class="frac"><span class="num">m · v</span><span class="den">|q| · B</span></span></div>
+        <div class="formula-secondary">T = <span class="frac"><span class="num">2π · m</span><span class="den">|q| · B</span></span></div>
+        <div class="formula-label">RADIO Y PERIODO DE LA ÓRBITA CIRCULAR</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Campo B saliendo (puntos) -->
+          <g fill="#4F6890" opacity=".4">
+            <circle cx="50" cy="30" r="2"/>
+            <circle cx="100" cy="30" r="2"/>
+            <circle cx="150" cy="30" r="2"/>
+            <circle cx="50" cy="80" r="2"/>
+            <circle cx="50" cy="130" r="2"/>
+            <circle cx="100" cy="130" r="2"/>
+            <circle cx="150" cy="130" r="2"/>
+            <circle cx="100" cy="80" r="2"/>
+            <circle cx="150" cy="80" r="2"/>
+          </g>
+          <text x="170" y="20" fill="#4F6890" font-size="10" font-style="italic">B (saliente)</text>
+          <!-- Órbita -->
+          <circle cx="240" cy="80" r="50" fill="none" stroke="#B8895A" stroke-width="2" stroke-dasharray="4 4"/>
+          <!-- Carga -->
+          <circle cx="290" cy="80" r="7" fill="#B8895A"/>
+          <text x="290" y="84" text-anchor="middle" fill="#FAF6EE" font-size="9" font-weight="700">+</text>
+          <!-- v tangente -->
+          <line x1="290" y1="80" x2="290" y2="40" stroke="#B8895A" stroke-width="2" marker-end="url(#arr9)"/>
+          <text x="296" y="48" fill="#B8895A" font-size="12" font-style="italic" font-weight="700">v</text>
+          <!-- F centrípeta -->
+          <line x1="290" y1="80" x2="255" y2="80" stroke="#7C9079" stroke-width="2" marker-end="url(#arr9)"/>
+          <text x="265" y="98" fill="#7C9079" font-size="11" font-style="italic" font-weight="700">F</text>
+          <defs><marker id="arr9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>De dónde sale</h4>
+        <p>La fuerza magnética actúa como centrípeta:</p>
+        <p style="font-family:var(--math);font-style:italic;text-align:center;background:var(--paper-soft);padding:10px;border-radius:6px;">|q|·v·B  =  m·v²/r</p>
+        <p>De ahí: <em>r = m·v / (|q|·B)</em>.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Casos</h4>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">v ⊥ B</span><span class="desc">trayectoria circular</span></li>
+          <li><span class="var">v ∥ B</span><span class="desc">trayectoria recta (no F)</span></li>
+          <li><span class="var">v inclinada</span><span class="desc">hélice (espiral)</span></li>
+        </ul>
+        <div class="note">El periodo T <strong>no depende de la velocidad</strong>. Lo usan los <strong>espectrómetros de masas</strong>: a v dada, partículas de distinta m describen radios distintos.</div>
+      </div>
+      <div class="concept-section">
+        <h4>Selector de velocidades</h4>
+        <p>Si <em>F<sub>e</sub> = F<sub>m</sub></em>, la carga va recta. Despejando: <strong>v = E/B</strong>. Solo las partículas con esa v pasan sin desviarse.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 15 · Campo magnético creado por corrientes -->
+<section class="slide concept-page" data-title="15 · B de corrientes" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">15 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Campo magnético creado por corrientes</h2>
+      <div class="formula-box">
+        <div class="formula-display" style="font-size:1.6rem;">Hilo recto: B = <span class="frac"><span class="num">μ₀ · I</span><span class="den">2π · d</span></span></div>
+        <div class="formula-secondary">Centro de espira: B = <span class="frac"><span class="num">μ₀ · I</span><span class="den">2R</span></span></div>
+        <div class="formula-secondary">Solenoide ideal: B = μ₀ · n · I &nbsp; <span style="opacity:.7;">(n = espiras/m)</span></div>
+        <div class="formula-label">μ₀ = 4π·10⁻⁷ T·m/A</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Hilo vertical con flecha de corriente -->
+          <line x1="80" y1="20" x2="80" y2="140" stroke="#B8895A" stroke-width="3"/>
+          <polygon points="80,15 75,28 85,28" fill="#B8895A"/>
+          <text x="60" y="30" fill="#B8895A" font-size="11" font-style="italic" font-weight="700">I</text>
+          <!-- Círculos del campo (regla mano derecha) -->
+          <g fill="none" stroke="#4F6890" stroke-width="1.4" stroke-dasharray="3 2">
+            <ellipse cx="80" cy="80" rx="40" ry="14"/>
+            <ellipse cx="80" cy="80" rx="70" ry="22"/>
+          </g>
+          <!-- Vectores B tangentes -->
+          <line x1="120" y1="80" x2="120" y2="64" stroke="#4F6890" stroke-width="2" marker-end="url(#arr10)"/>
+          <line x1="40" y1="80" x2="40" y2="96" stroke="#4F6890" stroke-width="2" marker-end="url(#arr10)"/>
+          <text x="135" y="78" fill="#4F6890" font-size="11" font-style="italic" font-weight="700">B</text>
+          <!-- Solenoide a la derecha -->
+          <g fill="none" stroke="#B8895A" stroke-width="2">
+            <ellipse cx="250" cy="55" rx="14" ry="5"/>
+            <ellipse cx="280" cy="55" rx="14" ry="5"/>
+            <ellipse cx="310" cy="55" rx="14" ry="5"/>
+            <ellipse cx="340" cy="55" rx="14" ry="5"/>
+          </g>
+          <line x1="240" y1="55" x2="350" y2="55" stroke="#4F6890" stroke-width="2" marker-end="url(#arr10)" stroke-dasharray="3 3"/>
+          <text x="295" y="40" text-anchor="middle" fill="#4F6890" font-size="10" font-style="italic">B uniforme dentro</text>
+          <!-- Espira circular -->
+          <ellipse cx="295" cy="115" rx="30" ry="8" fill="none" stroke="#B8895A" stroke-width="2"/>
+          <text x="295" y="140" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">Espira: B en el centro</text>
+          <defs><marker id="arr10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4F6890"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">B</span><span class="desc">Inducción magnética</span><span class="unit">T (Tesla)</span></li>
+          <li><span class="var">μ₀</span><span class="desc">Permeabilidad del vacío</span><span class="unit">T·m/A</span></li>
+          <li><span class="var">I</span><span class="desc">Corriente</span><span class="unit">A</span></li>
+          <li><span class="var">d, R</span><span class="desc">Distancia / radio</span><span class="unit">m</span></li>
+          <li><span class="var">n</span><span class="desc">Densidad de espiras</span><span class="unit">m⁻¹</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Regla mano derecha</h4>
+        <p>Pulgar en sentido de la corriente, los dedos curvados marcan el sentido del campo B (rodeando el hilo).</p>
+        <div class="note"><strong>Fuerza entre conductores paralelos:</strong> mismas corrientes → atracción; opuestas → repulsión. Módulo: F/L = μ₀·I₁·I₂/(2π·d).</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 16 · Flujo magnético -->
+<section class="slide concept-page" data-title="16 · Flujo magnético" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">16 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Flujo magnético</h2>
+      <div class="formula-box">
+        <div class="formula-display">Φ = <span class="vec">B</span> · <span class="vec">S</span> = B · S · cos θ</div>
+        <div class="formula-secondary">Φ<sub>N espiras</sub> = N · B · S · cos θ</div>
+        <div class="formula-label">UNIDAD: WEBER (Wb) = T · m²</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Espira como rombo en perspectiva -->
+          <polygon points="80,40 240,40 200,120 40,120" fill="none" stroke="#B8895A" stroke-width="2"/>
+          <text x="50" y="135" fill="#B8895A" font-size="10" font-style="italic">Espira (S)</text>
+          <!-- Normal a la espira -->
+          <line x1="145" y1="80" x2="200" y2="20" stroke="#7C9079" stroke-width="2" marker-end="url(#arr11)"/>
+          <text x="195" y="14" fill="#7C9079" font-size="11" font-style="italic" font-weight="700">n</text>
+          <!-- B inclinado -->
+          <line x1="145" y1="80" x2="260" y2="50" stroke="#4F6890" stroke-width="2.5" marker-end="url(#arr11)"/>
+          <text x="265" y="48" fill="#4F6890" font-size="12" font-style="italic" font-weight="700">B</text>
+          <!-- ángulo θ -->
+          <path d="M 190 50 A 30 30 0 0 1 200 35" fill="none" stroke="#A95448" stroke-width="1.5"/>
+          <text x="225" y="40" fill="#A95448" font-size="11" font-style="italic">θ</text>
+          <defs><marker id="arr11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+        <div class="concept-diagram-label">θ = ángulo entre B y la normal a la superficie</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">Φ</span><span class="desc">Flujo magnético</span><span class="unit">Wb = T·m²</span></li>
+          <li><span class="var">B</span><span class="desc">Inducción magnética</span><span class="unit">T</span></li>
+          <li><span class="var">S</span><span class="desc">Área de la superficie</span><span class="unit">m²</span></li>
+          <li><span class="var">θ</span><span class="desc">Ángulo entre B y normal</span><span class="unit">rad o °</span></li>
+          <li><span class="var">N</span><span class="desc">Número de espiras</span><span class="unit">—</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Casos</h4>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">θ = 0°</span><span class="desc">B ∥ n · flujo máximo (cos = 1)</span></li>
+          <li><span class="var">θ = 90°</span><span class="desc">B ⊥ n · flujo nulo</span></li>
+          <li><span class="var">θ = 180°</span><span class="desc">flujo máximo negativo</span></li>
+        </ul>
+        <div class="note">El flujo cambia si cambia <strong>B, S</strong> (girando o deformando la espira) <strong>o θ</strong> (rotación de la espira en el campo).</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 17 · Ley de Faraday-Lenz -->
+<section class="slide concept-page" data-title="17 · Faraday-Lenz" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">17 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Ley de Faraday-Lenz · FEM inducida</h2>
+      <div class="formula-box">
+        <div class="formula-display">ε = − <span class="frac"><span class="num">dΦ</span><span class="den">dt</span></span></div>
+        <div class="formula-secondary">N espiras: &nbsp; ε = − N · <span class="frac"><span class="num">dΦ</span><span class="den">dt</span></span></div>
+        <div class="formula-label">UNIDAD: VOLTIO (V)</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">I<sub>ind</sub> = ε / R</div>
+        <div class="formula-label">CORRIENTE INDUCIDA (LEY DE OHM)</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Las dos leyes</h4>
+        <p><strong>Faraday:</strong> toda variación del flujo magnético produce una fem inducida proporcional a dΦ/dt.</p>
+        <p><strong>Lenz</strong> (signo «−»): la corriente inducida tiene un sentido tal que se <em>opone</em> a la variación del flujo que la produce.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Cómo cambia el flujo</h4>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">B(t)</span><span class="desc">Campo magnético variable en el tiempo</span></li>
+          <li><span class="var">S(t)</span><span class="desc">Superficie cambiante (espira que se deforma)</span></li>
+          <li><span class="var">θ(t)</span><span class="desc">Rotación de la espira → genera CA</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Aplicaciones</h4>
+        <p><strong>Alternador:</strong> espira rotando en B → ε(t) = ε₀·sen(ωt). Es la base de la corriente alterna.</p>
+        <div class="note"><strong>Transformador:</strong> dos bobinas comparten flujo. V<sub>2</sub>/V<sub>1</sub> = N<sub>2</sub>/N<sub>1</sub>. Solo funciona con corriente alterna.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 18 · Distribución de cargas (superposición eléctrica) -->
+<section class="slide concept-page" data-title="18 · Superposición eléctrica" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">18 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Principio de superposición · cargas múltiples</h2>
+      <div class="formula-box">
+        <div class="formula-display"><span class="vec">E</span><sub>total</sub> = Σ <span class="vec">E</span><sub>i</sub></div>
+        <div class="formula-secondary">V<sub>total</sub> = Σ V<sub>i</sub> &nbsp; (escalar, ojo al signo de q<sub>i</sub>)</div>
+        <div class="formula-label">SUMA VECTORIAL DE CAMPOS · SUMA ESCALAR DE POTENCIALES</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- 3 cargas en triángulo + punto P -->
+          <circle cx="80" cy="50" r="10" fill="#B8895A"/>
+          <text x="80" y="55" text-anchor="middle" fill="#FAF6EE" font-size="11" font-weight="700">+</text>
+          <circle cx="80" cy="150" r="10" fill="#4F6890"/>
+          <text x="80" y="155" text-anchor="middle" fill="#FAF6EE" font-size="11" font-weight="700">−</text>
+          <circle cx="280" cy="100" r="10" fill="#B8895A"/>
+          <text x="280" y="105" text-anchor="middle" fill="#FAF6EE" font-size="11" font-weight="700">+</text>
+          <!-- punto P -->
+          <circle cx="180" cy="100" r="5" fill="#A95448"/>
+          <text x="180" y="124" text-anchor="middle" fill="#A95448" font-size="11" font-weight="700">P</text>
+          <!-- vectores E de cada carga -->
+          <line x1="180" y1="100" x2="245" y2="80" stroke="#B8895A" stroke-width="1.8" marker-end="url(#arr12)"/>
+          <line x1="180" y1="100" x2="120" y2="135" stroke="#4F6890" stroke-width="1.8" marker-end="url(#arr12)"/>
+          <line x1="180" y1="100" x2="245" y2="135" stroke="#B8895A" stroke-width="1.8" marker-end="url(#arr12)" opacity=".6"/>
+          <text x="320" y="135" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">Σ vectorial = E<tspan font-size="9">total</tspan></text>
+          <defs><marker id="arr12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Método</h4>
+        <p><strong>1.</strong> Dibuja todas las cargas y el punto P donde calcular E.</p>
+        <p><strong>2.</strong> Calcula el módulo |E<sub>i</sub>| = K·|q<sub>i</sub>|/r<sub>i</sub>² de cada carga.</p>
+        <p><strong>3.</strong> Dibuja cada vector E<sub>i</sub>: <em>saliendo</em> de + y <em>entrando</em> a −.</p>
+        <p><strong>4.</strong> Descompón en componentes X e Y. Suma componentes y reconstruye el vector resultante.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Para el potencial</h4>
+        <p>El potencial es <strong>escalar</strong>: suma directamente con su signo.</p>
+        <p style="font-family:var(--math);font-style:italic;text-align:center;background:var(--paper-soft);padding:8px;border-radius:6px;">V<sub>P</sub> = K·q₁/r₁ + K·q₂/r₂ + K·q₃/r₃</p>
+        <div class="note">Cuidado con los signos: una carga negativa <em>resta</em> potencial.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 19 · Conservación del campo eléctrico -->
+<section class="slide concept-page" data-title="19 · Líneas y equipotenciales E" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">19 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Líneas de campo y equipotenciales eléctricas</h2>
+      <div class="concept-diagram" style="margin-top:0;">
+        <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg">
+          <!-- Dipolo: carga +, carga -, líneas curvas -->
+          <circle cx="100" cy="130" r="14" fill="#B8895A"/>
+          <text x="100" y="135" text-anchor="middle" fill="#FAF6EE" font-size="13" font-weight="700">+</text>
+          <circle cx="280" cy="130" r="14" fill="#4F6890"/>
+          <text x="280" y="135" text-anchor="middle" fill="#FAF6EE" font-size="13" font-weight="700">−</text>
+          <!-- Líneas de campo (curvas que van de + a -) -->
+          <g fill="none" stroke="#B8895A" stroke-width="1.5">
+            <path d="M 114 130 Q 190 60 266 130" marker-end="url(#arr13)"/>
+            <path d="M 114 130 Q 190 200 266 130" marker-end="url(#arr13)"/>
+            <path d="M 114 130 Q 190 20 266 130" marker-end="url(#arr13)"/>
+            <path d="M 114 130 Q 190 240 266 130" marker-end="url(#arr13)"/>
+            <line x1="114" y1="130" x2="266" y2="130" marker-end="url(#arr13)"/>
+          </g>
+          <!-- Equipotenciales (líneas punteadas perpendiculares) -->
+          <g fill="none" stroke="#5B8C8B" stroke-width="1" stroke-dasharray="3 3" opacity=".7">
+            <path d="M 190 30 Q 210 130 190 230"/>
+            <path d="M 150 50 Q 160 130 150 210"/>
+            <path d="M 230 50 Q 220 130 230 210"/>
+          </g>
+          <defs><marker id="arr13" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#B8895A"/></marker></defs>
+          <text x="50" y="20" fill="#B8895A" font-size="11" font-weight="600">Líneas de E</text>
+          <text x="50" y="250" fill="#5B8C8B" font-size="11" font-weight="600">Equipotenciales (V cte)</text>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Líneas de campo eléctrico</h4>
+        <p>Salen de las <strong>cargas positivas</strong> y entran en las <strong>negativas</strong>. No se cruzan.</p>
+        <p>Su densidad indica la <strong>intensidad</strong>. Más juntas → campo más fuerte.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Equipotenciales</h4>
+        <p>Superficies de igual potencial V. Para una carga puntual: <strong>esferas concéntricas</strong>. Para dipolo: <strong>familia de elipsoides</strong>.</p>
+        <p>Siempre <strong>perpendiculares</strong> a las líneas de campo.</p>
+        <div class="note"><strong>W = 0</strong> al mover una carga sobre una equipotencial. El campo no realiza trabajo si no hay ΔV.</div>
+      </div>
+      <div class="concept-section">
+        <h4>Configuraciones típicas</h4>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">+ q</span><span class="desc">radiales salientes, equip. esféricas</span></li>
+          <li><span class="var">− q</span><span class="desc">radiales entrantes</span></li>
+          <li><span class="var">dipolo</span><span class="desc">curvas de + a −</span></li>
+          <li><span class="var">placas</span><span class="desc">campo uniforme paralelo</span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 20 · Producción de corriente alterna -->
+<section class="slide concept-page" data-title="20 · Corriente alterna" data-bloque="2">
+  <article class="concept-card b2">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">20 / 40</span>
+        <span class="concept-bloque">Bloque II · Electromagnética</span>
+      </div>
+      <h2 class="concept-title">Producción de corriente alterna</h2>
+      <div class="formula-box">
+        <div class="formula-display">ε(t) = ε₀ · sen(ω · t)</div>
+        <div class="formula-secondary">ε₀ = N · B · S · ω &nbsp; (FEM máxima)</div>
+        <div class="formula-label">ALTERNADOR · ESPIRA ROTANDO EN B UNIFORME</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Eje horizontal -->
+          <line x1="20" y1="80" x2="360" y2="80" stroke="#8B8579" stroke-width="1"/>
+          <line x1="40" y1="20" x2="40" y2="140" stroke="#8B8579" stroke-width="1"/>
+          <text x="20" y="20" fill="#5C574F" font-size="10" font-style="italic">ε</text>
+          <text x="350" y="100" fill="#5C574F" font-size="10" font-style="italic">t</text>
+          <!-- Sinusoide -->
+          <path d="M 40 80 Q 80 20 120 80 T 200 80 T 280 80 T 360 80" fill="none" stroke="#B8895A" stroke-width="2.5"/>
+          <text x="190" y="155" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">ε₀ = amplitud · ω = pulsación angular</text>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>De dónde sale</h4>
+        <p>Una espira de área S rota con velocidad angular ω en un campo B uniforme. El ángulo θ = ω·t.</p>
+        <p style="font-family:var(--math);font-style:italic;text-align:center;background:var(--paper-soft);padding:8px;border-radius:6px;">Φ(t) = N·B·S·cos(ωt)</p>
+        <p>Aplicando Faraday: ε = −dΦ/dt = N·B·S·ω·sen(ωt).</p>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">ε₀</span><span class="desc">FEM máxima</span><span class="unit">V</span></li>
+          <li><span class="var">ω</span><span class="desc">Pulsación angular</span><span class="unit">rad/s</span></li>
+          <li><span class="var">f</span><span class="desc">Frecuencia = ω/(2π)</span><span class="unit">Hz</span></li>
+          <li><span class="var">N</span><span class="desc">Espiras</span><span class="unit">—</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Sentido físico</h4>
+        <div class="note">Cuando Φ es <strong>máximo</strong> (θ = 0), ε = 0 (su derivada es 0). Cuando Φ pasa por <strong>cero</strong>, ε es <strong>máximo</strong>. La sinusoide de ε está desfasada 90° respecto a Φ.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================ -->
+<!-- BLOQUE III · VIBRACIONES Y ONDAS             -->
+<!-- ============================================ -->
+
+<!-- 21 · MAS cinemática -->
+<section class="slide concept-page" data-title="21 · MAS cinemática" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">21 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Movimiento Armónico Simple · MAS</h2>
+      <div class="formula-box">
+        <div class="formula-display">x(t) = A · sen(ω · t + φ₀)</div>
+        <div class="formula-secondary">v(t) = A · ω · cos(ω · t + φ₀)</div>
+        <div class="formula-secondary">a(t) = − A · ω² · sen(ω · t + φ₀) = − ω² · x</div>
+        <div class="formula-label">ELONGACIÓN, VELOCIDAD Y ACELERACIÓN</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="70" x2="360" y2="70" stroke="#8B8579" stroke-width="1"/>
+          <line x1="40" y1="20" x2="40" y2="120" stroke="#8B8579" stroke-width="1"/>
+          <text x="20" y="30" fill="#5C574F" font-size="10" font-style="italic">x</text>
+          <text x="350" y="88" fill="#5C574F" font-size="10" font-style="italic">t</text>
+          <!-- Curva seno (x) -->
+          <path d="M 40 70 Q 70 25 100 70 T 160 70 T 220 70 T 280 70 T 340 70" fill="none" stroke="#5B8C8B" stroke-width="2.5"/>
+          <text x="65" y="20" fill="#5B8C8B" font-size="10" font-weight="600">+A</text>
+          <text x="65" y="125" fill="#5B8C8B" font-size="10" font-weight="600">−A</text>
+          <line x1="40" y1="25" x2="50" y2="25" stroke="#5B8C8B" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="40" y1="115" x2="50" y2="115" stroke="#5B8C8B" stroke-width="1" stroke-dasharray="2 2"/>
+        </svg>
+        <div class="concept-diagram-label">Oscilación entre +A y −A · periodo T</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">x</span><span class="desc">Elongación (posición)</span><span class="unit">m</span></li>
+          <li><span class="var">A</span><span class="desc">Amplitud (elongación máxima)</span><span class="unit">m</span></li>
+          <li><span class="var">ω</span><span class="desc">Pulsación angular = 2π/T</span><span class="unit">rad/s</span></li>
+          <li><span class="var">φ₀</span><span class="desc">Fase inicial (cuando t=0)</span><span class="unit">rad</span></li>
+          <li><span class="var">T</span><span class="desc">Periodo</span><span class="unit">s</span></li>
+          <li><span class="var">f</span><span class="desc">Frecuencia = 1/T</span><span class="unit">Hz</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p><strong>Velocidad máxima</strong> en el centro (x=0): v<sub>máx</sub> = A·ω.</p>
+        <p><strong>Aceleración máxima</strong> en los extremos: a<sub>máx</sub> = A·ω².</p>
+        <div class="note"><strong>Desfase v − x:</strong> π/2 (velocidad va 90° adelantada). <strong>Desfase a − x:</strong> π (opuesta).</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 22 · MAS dinámica -->
+<section class="slide concept-page" data-title="22 · MAS dinámica" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">22 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">MAS · dinámica: muelle y péndulo</h2>
+      <div class="formula-box">
+        <div class="formula-display">F = − k · x</div>
+        <div class="formula-secondary">ω = <span class="sqrt">k / m</span> &nbsp;·&nbsp; T = 2π · <span class="sqrt">m / k</span></div>
+        <div class="formula-label">SISTEMA MASA-MUELLE</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">T = 2π · <span class="sqrt">L / g</span></div>
+        <div class="formula-label">PÉNDULO SIMPLE (oscilaciones pequeñas)</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Fuerza recuperadora</h4>
+        <p>El MAS surge cuando hay una <strong>fuerza recuperadora proporcional a la posición</strong> y dirigida al equilibrio: F = −k·x.</p>
+        <p>Aplicando 2ª de Newton: m·a = −k·x → a = −(k/m)·x → comparando con a = −ω²·x: <strong>ω² = k/m</strong>.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">k</span><span class="desc">Constante recuperadora (muelle)</span><span class="unit">N/m</span></li>
+          <li><span class="var">L</span><span class="desc">Longitud del péndulo</span><span class="unit">m</span></li>
+          <li><span class="var">g</span><span class="desc">Gravedad local</span><span class="unit">m/s²</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p>El periodo del <strong>muelle</strong> depende de m y k (no de A).</p>
+        <p>El periodo del <strong>péndulo</strong> depende de L y g (no de m ni de A, para pequeñas oscilaciones).</p>
+        <div class="note">Por eso un péndulo en la Luna oscila más despacio (g menor → T mayor).</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 23 · Energía MAS -->
+<section class="slide concept-page" data-title="23 · Energía MAS" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">23 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Energía en el MAS</h2>
+      <div class="formula-box">
+        <div class="formula-display">E<sub>m</sub> = ½ · k · A² = ½ · m · ω² · A²</div>
+        <div class="formula-label">ENERGÍA MECÁNICA TOTAL · CONSTANTE</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">E<sub>c</sub> = ½ · m · v² = ½ · k · (A² − x²)</div>
+        <div class="formula-secondary">E<sub>p</sub> = ½ · k · x²</div>
+        <div class="formula-label">CINÉTICA Y POTENCIAL EN CUALQUIER INSTANTE</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Intercambio de energías</h4>
+        <p>La energía mecánica total se <strong>conserva</strong>. Se intercambia continuamente entre cinética y potencial elástica.</p>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">x = 0</span><span class="desc">E<sub>c</sub> = E<sub>m</sub>, E<sub>p</sub> = 0 (centro)</span></li>
+          <li><span class="var">x = ±A</span><span class="desc">E<sub>p</sub> = E<sub>m</sub>, E<sub>c</sub> = 0 (extremos)</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">E<sub>m</sub></span><span class="desc">Energía mecánica total</span><span class="unit">J</span></li>
+          <li><span class="var">A</span><span class="desc">Amplitud</span><span class="unit">m</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Clave</h4>
+        <div class="note">La energía total es <strong>proporcional al cuadrado de la amplitud</strong>: duplicar A cuadruplica la energía.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 24 · Onda armónica -->
+<section class="slide concept-page" data-title="24 · Onda armónica" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">24 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Onda armónica transversal</h2>
+      <div class="formula-box">
+        <div class="formula-display">y(x, t) = A · sen(ω · t − k · x + φ₀)</div>
+        <div class="formula-secondary">ω = 2π / T &nbsp; · &nbsp; k = 2π / λ</div>
+        <div class="formula-label">SENTIDO + X SI «− k·x» · SENTIDO −X SI «+ k·x»</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="70" x2="360" y2="70" stroke="#8B8579" stroke-width="1"/>
+          <line x1="40" y1="20" x2="40" y2="120" stroke="#8B8579" stroke-width="1"/>
+          <path d="M 40 70 Q 70 25 100 70 T 160 70 T 220 70 T 280 70 T 340 70" fill="none" stroke="#5B8C8B" stroke-width="2.5"/>
+          <text x="20" y="30" fill="#5C574F" font-size="10" font-style="italic">y</text>
+          <text x="350" y="88" fill="#5C574F" font-size="10" font-style="italic">x</text>
+          <!-- Marcar λ -->
+          <line x1="40" y1="105" x2="160" y2="105" stroke="#B8895A" stroke-width="1.5" marker-start="url(#arrL)" marker-end="url(#arrL)"/>
+          <text x="100" y="125" text-anchor="middle" fill="#B8895A" font-size="11" font-style="italic" font-weight="700">λ</text>
+          <defs><marker id="arrL" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#B8895A"/></marker></defs>
+        </svg>
+        <div class="concept-diagram-label">Foto del medio en un instante · λ = longitud de onda</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">A</span><span class="desc">Amplitud (elongación máx)</span><span class="unit">m</span></li>
+          <li><span class="var">ω</span><span class="desc">Pulsación angular</span><span class="unit">rad/s</span></li>
+          <li><span class="var">k</span><span class="desc">Nº de onda</span><span class="unit">rad/m</span></li>
+          <li><span class="var">λ</span><span class="desc">Longitud de onda</span><span class="unit">m</span></li>
+          <li><span class="var">T</span><span class="desc">Periodo</span><span class="unit">s</span></li>
+          <li><span class="var">f</span><span class="desc">Frecuencia</span><span class="unit">Hz</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Doble periodicidad</h4>
+        <p>Periodicidad <strong>temporal</strong>: a x fijo, se repite cada T segundos.</p>
+        <p>Periodicidad <strong>espacial</strong>: a t fijo, se repite cada λ metros.</p>
+        <div class="note">Conversión entre formas: con «ωt − kx» (sentido +x) saca <em>T</em> de la gráfica y(t) a x fijo; <em>λ</em> de la gráfica y(x) a t fijo.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 25 · Velocidad propagación vs oscilación -->
+<section class="slide concept-page" data-title="25 · v propag vs v osc" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">25 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Dos velocidades distintas: propagación y oscilación</h2>
+      <div class="formula-box">
+        <div class="formula-display">v<sub>prop</sub> = λ · f = λ / T = ω / k</div>
+        <div class="formula-label">VELOCIDAD A LA QUE AVANZA LA ONDA</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">v<sub>osc</sub>(x,t) = ∂y/∂t = A · ω · cos(ωt − kx + φ₀)</div>
+        <div class="formula-label">VELOCIDAD A LA QUE OSCILA UN PUNTO DEL MEDIO</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Diferencia clave</h4>
+        <p><strong>v<sub>propagación</sub></strong>: constante. Es la rapidez a la que viaja la perturbación.</p>
+        <p><strong>v<sub>oscilación</sub></strong>: variable. Es la rapidez con la que un trocito del medio vibra hacia arriba/abajo.</p>
+        <p>En una ola en el mar: una boya oscila arriba-abajo (v<sub>osc</sub>) mientras la ola se desplaza horizontalmente (v<sub>prop</sub>).</p>
+      </div>
+      <div class="concept-section">
+        <h4>v<sub>osc</sub> máxima</h4>
+        <p>Cuando cos(…) = ±1, la velocidad de oscilación de un punto alcanza su máximo:</p>
+        <p style="font-family:var(--math);font-style:italic;text-align:center;background:var(--paper-soft);padding:8px;border-radius:6px;">v<sub>osc,máx</sub> = A · ω</p>
+        <div class="note">El medio <strong>no se desplaza</strong> con la onda. Lo que viaja es energía, no materia.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 26 · Tipos de ondas -->
+<section class="slide concept-page" data-title="26 · Tipos de ondas" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">26 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Tipos de ondas · clasificación</h2>
+      <div class="concept-diagram" style="margin-top:0;">
+        <svg viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Transversal -->
+          <text x="40" y="20" fill="#5B8C8B" font-size="11" font-weight="600">Transversal</text>
+          <line x1="40" y1="50" x2="340" y2="50" stroke="#8B8579" stroke-width="1"/>
+          <path d="M 40 50 Q 70 25 100 50 T 160 50 T 220 50 T 280 50 T 340 50" fill="none" stroke="#5B8C8B" stroke-width="2"/>
+          <line x1="190" y1="50" x2="190" y2="30" stroke="#A95448" stroke-width="2" marker-end="url(#arrTL)"/>
+          <line x1="220" y1="50" x2="240" y2="50" stroke="#7C9079" stroke-width="2" marker-end="url(#arrTL)"/>
+          <text x="195" y="25" fill="#A95448" font-size="9" font-style="italic">oscilación</text>
+          <text x="250" y="44" fill="#7C9079" font-size="9" font-style="italic">propag.</text>
+
+          <!-- Longitudinal -->
+          <text x="40" y="120" fill="#5B8C8B" font-size="11" font-weight="600">Longitudinal (sonido)</text>
+          <g fill="#5B8C8B" opacity=".6">
+            <rect x="40" y="140" width="6" height="30"/>
+            <rect x="55" y="140" width="6" height="30"/>
+            <rect x="70" y="140" width="6" height="30"/>
+            <rect x="92" y="140" width="6" height="30"/>
+            <rect x="120" y="140" width="6" height="30"/>
+            <rect x="155" y="140" width="6" height="30"/>
+            <rect x="170" y="140" width="6" height="30"/>
+            <rect x="185" y="140" width="6" height="30"/>
+            <rect x="207" y="140" width="6" height="30"/>
+            <rect x="235" y="140" width="6" height="30"/>
+            <rect x="270" y="140" width="6" height="30"/>
+            <rect x="285" y="140" width="6" height="30"/>
+            <rect x="300" y="140" width="6" height="30"/>
+            <rect x="322" y="140" width="6" height="30"/>
+          </g>
+          <line x1="180" y1="190" x2="220" y2="190" stroke="#7C9079" stroke-width="2" marker-end="url(#arrTL)"/>
+          <text x="230" y="194" fill="#7C9079" font-size="9" font-style="italic">propag.</text>
+          <text x="80" y="200" fill="#5C574F" font-size="9" font-style="italic">compresiones · rarefacciones</text>
+          <defs><marker id="arrTL" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Por naturaleza</h4>
+        <ul style="font-size:.88rem;">
+          <li><span class="var">Mec.</span><span class="desc">Necesitan medio (sonido, cuerda, agua)</span></li>
+          <li><span class="var">EM</span><span class="desc">No necesitan medio (luz, radio); viajan a c en vacío</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Por dirección oscilación</h4>
+        <ul style="font-size:.88rem;">
+          <li><span class="var">Trans.</span><span class="desc">Oscilación ⊥ a la propagación (cuerda, EM)</span></li>
+          <li><span class="var">Long.</span><span class="desc">Oscilación ∥ a la propagación (sonido en aire)</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Por frente de onda</h4>
+        <ul style="font-size:.88rem;">
+          <li><span class="var">Planas</span><span class="desc">I = cte (no decae con r)</span></li>
+          <li><span class="var">Esféricas</span><span class="desc">I ∝ 1/r² (decae con la distancia)</span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 27 · Intensidad sonora -->
+<section class="slide concept-page" data-title="27 · Intensidad sonora" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">27 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Intensidad y nivel sonoro</h2>
+      <div class="formula-box">
+        <div class="formula-display">I = <span class="frac"><span class="num">P</span><span class="den">S</span></span> = <span class="frac"><span class="num">P</span><span class="den">4π · r²</span></span></div>
+        <div class="formula-label">INTENSIDAD · ONDA ESFÉRICA (W/m²)</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">L = 10 · log<sub>10</sub>(I / I₀)</div>
+        <div class="formula-secondary">I₀ = 10⁻¹² W/m² &nbsp; (umbral de audición)</div>
+        <div class="formula-label">NIVEL DE INTENSIDAD SONORA · DECIBELIOS (dB)</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">I</span><span class="desc">Intensidad</span><span class="unit">W/m²</span></li>
+          <li><span class="var">P</span><span class="desc">Potencia de la fuente</span><span class="unit">W</span></li>
+          <li><span class="var">r</span><span class="desc">Distancia al foco</span><span class="unit">m</span></li>
+          <li><span class="var">L</span><span class="desc">Nivel sonoro</span><span class="unit">dB</span></li>
+          <li><span class="var">A</span><span class="desc">Amplitud</span><span class="unit">m</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Claves</h4>
+        <p>La intensidad de una onda es <strong>proporcional al cuadrado de la amplitud</strong>: I ∝ A².</p>
+        <p>Para ondas esféricas: <strong>I ∝ 1/r²</strong>. Al doblar la distancia, la intensidad se reduce a un cuarto.</p>
+        <div class="note">Al doblar la intensidad sonora, el nivel sube solo <strong>3 dB</strong> (log de 2 ≈ 0,3). Por eso la escala es logarítmica.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 28 · Efecto Doppler -->
+<section class="slide concept-page" data-title="28 · Efecto Doppler" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">28 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Efecto Doppler</h2>
+      <div class="formula-box">
+        <div class="formula-display">f' = f · <span class="frac"><span class="num">v ± v<sub>obs</sub></span><span class="den">v ∓ v<sub>foco</sub></span></span></div>
+        <div class="formula-label">FRECUENCIA APARENTE · v = VELOCIDAD DEL SONIDO</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Foco moviéndose hacia la derecha -->
+          <circle cx="180" cy="80" r="8" fill="#A95448"/>
+          <line x1="188" y1="80" x2="230" y2="80" stroke="#A95448" stroke-width="2" marker-end="url(#arrD)"/>
+          <text x="190" y="60" fill="#A95448" font-size="10" font-style="italic">foco</text>
+          <!-- Frentes de onda comprimidos delante, expandidos detrás -->
+          <g fill="none" stroke="#5B8C8B" stroke-width="1.4">
+            <circle cx="195" cy="80" r="40"/>
+            <circle cx="175" cy="80" r="55"/>
+            <circle cx="155" cy="80" r="70"/>
+            <circle cx="135" cy="80" r="85"/>
+          </g>
+          <text x="300" y="80" fill="#5B8C8B" font-size="10" font-style="italic">f' &gt; f</text>
+          <text x="40" y="80" fill="#5B8C8B" font-size="10" font-style="italic">f' &lt; f</text>
+          <defs><marker id="arrD" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#A95448"/></marker></defs>
+        </svg>
+        <div class="concept-diagram-label">Foco moviéndose: longitud de onda menor delante, mayor detrás</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Reglas de signos</h4>
+        <p><strong>Acercamiento</strong> (foco y observador convergen) → f' &gt; f (más agudo).</p>
+        <p><strong>Alejamiento</strong> → f' &lt; f (más grave).</p>
+        <p>Truco: ten en mente «se acercan → frecuencia sube» y elige los signos del numerador/denominador para que cuadre.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Aplicaciones</h4>
+        <ul style="font-size:.88rem;">
+          <li>Sirena de ambulancia (cambio de tono)</li>
+          <li>Radar de velocidad (eco de ondas)</li>
+          <li>Astronomía: <em>redshift</em>/<em>blueshift</em> galaxias</li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">f</span><span class="desc">Frecuencia emitida</span><span class="unit">Hz</span></li>
+          <li><span class="var">f'</span><span class="desc">Frecuencia percibida</span><span class="unit">Hz</span></li>
+          <li><span class="var">v</span><span class="desc">Velocidad de la onda</span><span class="unit">m/s</span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 29 · Huygens · interferencia · difracción -->
+<section class="slide concept-page" data-title="29 · Huygens · interferencia" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">29 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Principio de Huygens · interferencia y difracción</h2>
+      <div class="concept-diagram" style="margin-top:0;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Doble rendija de Young -->
+          <line x1="60" y1="20" x2="60" y2="90" stroke="#2D2A26" stroke-width="3"/>
+          <line x1="60" y1="110" x2="60" y2="180" stroke="#2D2A26" stroke-width="3"/>
+          <text x="20" y="105" fill="#2D2A26" font-size="10" font-weight="700">→</text>
+          <text x="10" y="60" fill="#5C574F" font-size="9">ondas</text>
+          <text x="10" y="72" fill="#5C574F" font-size="9">planas</text>
+          <!-- Dos rendijas como puntos emisores -->
+          <circle cx="60" cy="100" r="4" fill="#A95448"/>
+          <!-- Ondas emergentes de cada rendija -->
+          <g fill="none" stroke="#5B8C8B" stroke-width="1.2" opacity=".7">
+            <path d="M 60 95 A 40 40 0 0 1 100 100"/>
+            <path d="M 60 95 A 70 70 0 0 1 130 100"/>
+            <path d="M 60 95 A 100 100 0 0 1 160 100"/>
+            <path d="M 60 95 A 130 130 0 0 1 190 100"/>
+            <path d="M 60 105 A 40 40 0 0 0 100 100"/>
+            <path d="M 60 105 A 70 70 0 0 0 130 100"/>
+            <path d="M 60 105 A 100 100 0 0 0 160 100"/>
+            <path d="M 60 105 A 130 130 0 0 0 190 100"/>
+          </g>
+          <!-- Pantalla -->
+          <line x1="320" y1="20" x2="320" y2="180" stroke="#2D2A26" stroke-width="2"/>
+          <!-- Patrón -->
+          <g fill="#A95448" opacity=".6">
+            <rect x="324" y="30" width="20" height="3"/>
+            <rect x="324" y="60" width="20" height="6"/>
+            <rect x="324" y="95" width="20" height="10"/>
+            <rect x="324" y="125" width="20" height="6"/>
+            <rect x="324" y="155" width="20" height="3"/>
+          </g>
+          <text x="350" y="100" fill="#A95448" font-size="9" font-style="italic">patrón</text>
+        </svg>
+        <div class="concept-diagram-label">Experimento de Young · doble rendija</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Principio de Huygens</h4>
+        <p>Cada punto de un frente de onda actúa como una <strong>fuente emisora</strong> de ondas secundarias. El nuevo frente es la envolvente de esas ondas.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Interferencia</h4>
+        <p><strong>Constructiva:</strong> ondas en fase se suman (máximo en pantalla).</p>
+        <p><strong>Destructiva:</strong> ondas en oposición de fase se cancelan (mínimo).</p>
+        <p>Condición de máximo: diferencia de camino = n·λ. Mínimo: (n + ½)·λ.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Difracción</h4>
+        <p>Una onda se «curva» al atravesar un obstáculo o rendija de tamaño comparable a su λ.</p>
+        <div class="note">El experimento de Young (1801) probó la naturaleza ondulatoria de la luz: ningún corpúsculo daría franjas de interferencia.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 30 · Espectro electromagnético -->
+<section class="slide concept-page" data-title="30 · Espectro EM" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">30 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Espectro electromagnético</h2>
+      <div class="formula-box">
+        <div class="formula-display">c = λ · f &nbsp; · &nbsp; E = h · f</div>
+        <div class="formula-secondary">c = 3·10⁸ m/s &nbsp; · &nbsp; h = 6,63·10⁻³⁴ J·s</div>
+        <div class="formula-label">VELOCIDAD DE LA LUZ Y ENERGÍA DE FOTÓN</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Barra del espectro horizontal con gradiente de colores -->
+          <defs>
+            <linearGradient id="spec" x1="0%" x2="100%">
+              <stop offset="0%" stop-color="#7B5F8C"/>
+              <stop offset="14%" stop-color="#4F6890"/>
+              <stop offset="30%" stop-color="#5B8C8B"/>
+              <stop offset="45%" stop-color="#7C9079"/>
+              <stop offset="60%" stop-color="#C9A04E"/>
+              <stop offset="75%" stop-color="#B8895A"/>
+              <stop offset="90%" stop-color="#A95448"/>
+              <stop offset="100%" stop-color="#803F44"/>
+            </linearGradient>
+          </defs>
+          <rect x="20" y="80" width="340" height="30" fill="url(#spec)"/>
+
+          <!-- Etiquetas arriba -->
+          <text x="50" y="70" text-anchor="middle" fill="#5C574F" font-size="9">Radio</text>
+          <text x="120" y="70" text-anchor="middle" fill="#5C574F" font-size="9">μondas</text>
+          <text x="190" y="70" text-anchor="middle" fill="#5C574F" font-size="9">Infrarrojo</text>
+          <text x="240" y="70" text-anchor="middle" fill="#5C574F" font-size="9" font-weight="600">Visible</text>
+          <text x="290" y="70" text-anchor="middle" fill="#5C574F" font-size="9">UV</text>
+          <text x="335" y="70" text-anchor="middle" fill="#5C574F" font-size="9">X · γ</text>
+
+          <!-- Longitud de onda abajo -->
+          <text x="50" y="130" text-anchor="middle" fill="#8B8579" font-size="8">km – m</text>
+          <text x="190" y="130" text-anchor="middle" fill="#8B8579" font-size="8">μm</text>
+          <text x="240" y="130" text-anchor="middle" fill="#8B8579" font-size="8">400-700 nm</text>
+          <text x="335" y="130" text-anchor="middle" fill="#8B8579" font-size="8">&lt; nm</text>
+
+          <!-- Flechas indicando dirección -->
+          <line x1="20" y1="160" x2="120" y2="160" stroke="#7C9079" stroke-width="1.5" marker-end="url(#arrSp)"/>
+          <text x="70" y="172" text-anchor="middle" fill="#7C9079" font-size="9" font-style="italic">+ λ &nbsp;·&nbsp; − energía</text>
+          <line x1="360" y1="160" x2="260" y2="160" stroke="#A95448" stroke-width="1.5" marker-end="url(#arrSp)"/>
+          <text x="310" y="172" text-anchor="middle" fill="#A95448" font-size="9" font-style="italic">+ f &nbsp;·&nbsp; + energía</text>
+          <defs><marker id="arrSp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Visible</h4>
+        <p>Solo una pequeña ventana del espectro: <strong>400 nm (violeta) – 700 nm (rojo)</strong>.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Relación E ↔ f ↔ λ</h4>
+        <p>A mayor frecuencia, más energía por fotón. A mayor longitud de onda, menor energía.</p>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">Radio</span><span class="desc">f baja, no ionizante</span></li>
+          <li><span class="var">UV</span><span class="desc">f alta, daña piel/ADN</span></li>
+          <li><span class="var">γ</span><span class="desc">muy alta, terapia oncológica</span></li>
+        </ul>
+        <div class="note">Toda onda EM viaja a <strong>c</strong> en el vacío. En otros medios va más lenta (de ahí el índice de refracción).</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 31 · Snell y reflexión total -->
+<section class="slide concept-page" data-title="31 · Snell · reflexión total" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">31 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Reflexión, refracción y reflexión total</h2>
+      <div class="formula-box">
+        <div class="formula-display">n₁ · sen θ₁ = n₂ · sen θ₂</div>
+        <div class="formula-secondary">n = c / v &nbsp; (índice de refracción)</div>
+        <div class="formula-label">LEY DE SNELL · θ MEDIDOS DESDE LA NORMAL</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">sen θ<sub>c</sub> = n₂ / n₁ &nbsp; (con n₁ &gt; n₂)</div>
+        <div class="formula-label">ÁNGULO CRÍTICO · REFLEXIÓN TOTAL INTERNA</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Interfase horizontal -->
+          <line x1="20" y1="80" x2="360" y2="80" stroke="#2D2A26" stroke-width="2"/>
+          <text x="40" y="40" fill="#5C574F" font-size="10" font-style="italic">n₁ (aire)</text>
+          <text x="40" y="125" fill="#5C574F" font-size="10" font-style="italic">n₂ (agua)</text>
+          <!-- Normal -->
+          <line x1="190" y1="20" x2="190" y2="140" stroke="#8B8579" stroke-width="1" stroke-dasharray="3 3"/>
+          <!-- Incidente -->
+          <line x1="120" y1="20" x2="190" y2="80" stroke="#B8895A" stroke-width="2.5" marker-end="url(#arrR)"/>
+          <text x="130" y="55" fill="#B8895A" font-size="10" font-style="italic">θ₁</text>
+          <!-- Refractado -->
+          <line x1="190" y1="80" x2="240" y2="140" stroke="#5B8C8B" stroke-width="2.5" marker-end="url(#arrR)"/>
+          <text x="210" y="110" fill="#5B8C8B" font-size="10" font-style="italic">θ₂</text>
+          <!-- Reflejado -->
+          <line x1="190" y1="80" x2="260" y2="20" stroke="#B8895A" stroke-width="2.5" stroke-dasharray="2 3" marker-end="url(#arrR)"/>
+          <defs><marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Reflexión</h4>
+        <p>θ<sub>incidencia</sub> = θ<sub>reflexión</sub>. Misma rapidez, mismo medio.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Refracción</h4>
+        <p>La luz cambia de dirección al cambiar de medio (cambia su velocidad). Si pasa a un medio más denso (n₂ &gt; n₁) se acerca a la normal.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Reflexión total interna</h4>
+        <p>Solo ocurre <strong>del medio denso al menos denso</strong> (n₁ &gt; n₂). Si θ₁ &gt; θ<sub>crítico</sub>, no hay refracción: toda la luz se refleja.</p>
+        <div class="note"><strong>Fibra óptica:</strong> aprovecha la reflexión total para guiar la luz a lo largo del núcleo. Es la base de internet y la telemedicina.</div>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">n</span><span class="desc">Índice de refracción (sin unidades)</span></li>
+          <li><span class="var">v</span><span class="desc">Velocidad de la luz en el medio</span><span class="unit">m/s</span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 32 · Lentes delgadas -->
+<section class="slide concept-page" data-title="32 · Lentes delgadas" data-bloque="3">
+  <article class="concept-card b3">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">32 / 40</span>
+        <span class="concept-bloque">Bloque III · Ondas</span>
+      </div>
+      <h2 class="concept-title">Lentes delgadas · ecuación de Gauss</h2>
+      <div class="formula-box">
+        <div class="formula-display"><span class="frac"><span class="num">1</span><span class="den">s'</span></span> − <span class="frac"><span class="num">1</span><span class="den">s</span></span> = <span class="frac"><span class="num">1</span><span class="den">f'</span></span></div>
+        <div class="formula-secondary">Aumento lateral: A = y' / y = s' / s</div>
+        <div class="formula-label">CONVENIO DE SIGNOS · LUZ INCIDE DESDE LA IZQUIERDA</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Eje óptico -->
+          <line x1="20" y1="90" x2="360" y2="90" stroke="#8B8579" stroke-width="1"/>
+          <!-- Lente convergente -->
+          <ellipse cx="200" cy="90" rx="14" ry="60" fill="none" stroke="#5B8C8B" stroke-width="2"/>
+          <!-- Objeto (flecha) -->
+          <line x1="80" y1="90" x2="80" y2="50" stroke="#B8895A" stroke-width="2.5" marker-end="url(#arrLn)"/>
+          <text x="68" y="44" fill="#B8895A" font-size="10" font-style="italic">y</text>
+          <!-- Focos -->
+          <circle cx="140" cy="90" r="3" fill="#A95448"/>
+          <text x="138" y="106" fill="#A95448" font-size="10" font-style="italic">F</text>
+          <circle cx="260" cy="90" r="3" fill="#A95448"/>
+          <text x="258" y="106" fill="#A95448" font-size="10" font-style="italic">F'</text>
+          <!-- Rayo paralelo, sale por F' -->
+          <line x1="80" y1="50" x2="200" y2="50" stroke="#B8895A" stroke-width="1.5"/>
+          <line x1="200" y1="50" x2="320" y2="130" stroke="#B8895A" stroke-width="1.5"/>
+          <!-- Rayo por centro óptico -->
+          <line x1="80" y1="50" x2="320" y2="130" stroke="#B8895A" stroke-width="1.5" stroke-dasharray="2 2"/>
+          <!-- Imagen -->
+          <line x1="320" y1="90" x2="320" y2="130" stroke="#5B8C8B" stroke-width="2.5" marker-end="url(#arrLn)"/>
+          <text x="328" y="125" fill="#5B8C8B" font-size="10" font-style="italic">y'</text>
+          <defs><marker id="arrLn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        </svg>
+        <div class="concept-diagram-label">Trazado de rayos · lente convergente · objeto &gt; 2f</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">s</span><span class="desc">Distancia objeto (negativa)</span><span class="unit">m</span></li>
+          <li><span class="var">s'</span><span class="desc">Distancia imagen</span><span class="unit">m</span></li>
+          <li><span class="var">f'</span><span class="desc">Focal imagen</span><span class="unit">m</span></li>
+          <li><span class="var">A</span><span class="desc">Aumento lateral</span><span class="unit">—</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Signos</h4>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">f' &gt; 0</span><span class="desc">Lente convergente</span></li>
+          <li><span class="var">f' &lt; 0</span><span class="desc">Lente divergente</span></li>
+          <li><span class="var">s' &gt; 0</span><span class="desc">Imagen real (al otro lado)</span></li>
+          <li><span class="var">s' &lt; 0</span><span class="desc">Imagen virtual (mismo lado)</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Trazado clásico</h4>
+        <p><strong>Rayo paralelo</strong> al eje → tras la lente pasa por F'.</p>
+        <p><strong>Rayo por F</strong> → sale paralelo al eje.</p>
+        <p><strong>Rayo por el centro</strong> óptico → no se desvía.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================ -->
+<!-- BLOQUE IV · RELATIVISTA · CUÁNTICA · NUCLEAR -->
+<!-- ============================================ -->
+
+<!-- 33 · Postulados Relatividad -->
+<section class="slide concept-page" data-title="33 · Relatividad especial" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">33 / 40</span>
+        <span class="concept-bloque">Bloque IV · Relativista</span>
+      </div>
+      <h2 class="concept-title">Postulados de la Relatividad Especial</h2>
+      <div class="formula-box">
+        <div class="formula-display" style="font-size:1.6rem; text-align:left;">
+          <span style="color:var(--b4); font-weight:700;">①</span> Las leyes de la física son <em>idénticas</em> en todos los sistemas inerciales.
+        </div>
+        <div class="formula-display" style="font-size:1.6rem; text-align:left; margin-top:14px;">
+          <span style="color:var(--b4); font-weight:700;">②</span> La velocidad de la luz en el vacío es la <em>misma</em> para todos los observadores, independiente de su movimiento.
+        </div>
+        <div class="formula-label">EINSTEIN, 1905 · DOS POSTULADOS</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">γ = <span class="frac"><span class="num">1</span><span class="den"><span class="sqrt">1 − v²/c²</span></span></span></div>
+        <div class="formula-label">FACTOR DE LORENTZ · γ ≥ 1, INFINITO SI v → c</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Consecuencias</h4>
+        <ul style="font-size:.92rem;">
+          <li>El tiempo <strong>no es absoluto</strong>: los relojes en movimiento marchan más despacio.</li>
+          <li>La longitud <strong>se contrae</strong> en la dirección del movimiento.</li>
+          <li>La masa <strong>aumenta</strong> con la velocidad.</li>
+          <li>Energía y masa son equivalentes: E = m·c².</li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">v</span><span class="desc">Velocidad relativa</span><span class="unit">m/s</span></li>
+          <li><span class="var">c</span><span class="desc">Velocidad de la luz en vacío</span><span class="unit">3·10⁸ m/s</span></li>
+          <li><span class="var">γ</span><span class="desc">Factor de Lorentz</span><span class="unit">—</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <div class="note">A velocidades cotidianas (v ≪ c) γ ≈ 1 y la física clásica funciona. Los efectos relativistas solo son notables para velocidades comparables a c.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 34 · Dilatación tiempo y contracción longitud -->
+<section class="slide concept-page" data-title="34 · Dilatación · contracción" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">34 / 40</span>
+        <span class="concept-bloque">Bloque IV · Relativista</span>
+      </div>
+      <h2 class="concept-title">Dilatación del tiempo · contracción de la longitud</h2>
+      <div class="formula-box">
+        <div class="formula-display">Δt = γ · Δt₀ = <span class="frac"><span class="num">Δt₀</span><span class="den"><span class="sqrt">1 − v²/c²</span></span></span></div>
+        <div class="formula-label">DILATACIÓN DEL TIEMPO · Δt &gt; Δt₀</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display">L = <span class="frac"><span class="num">L₀</span><span class="den">γ</span></span> = L₀ · <span class="sqrt">1 − v²/c²</span></div>
+        <div class="formula-label">CONTRACCIÓN DE LA LONGITUD · L &lt; L₀</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Tiempo propio Δt₀</h4>
+        <p>El intervalo entre dos sucesos medido en el sistema en el que <strong>ocurren en el mismo punto</strong>. Es el mínimo.</p>
+        <p>Para cualquier observador en movimiento relativo, el intervalo es <strong>mayor</strong>: el reloj en movimiento «marcha más despacio».</p>
+      </div>
+      <div class="concept-section">
+        <h4>Longitud propia L₀</h4>
+        <p>La longitud medida en el sistema en el que <strong>el objeto está en reposo</strong>. Es la máxima.</p>
+        <p>Para un observador respecto al cual el objeto se mueve, la longitud <strong>se contrae</strong> en la dirección del movimiento.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Ejemplo clásico · muones</h4>
+        <div class="note">Los muones cósmicos nacen en la alta atmósfera y «no deberían» llegar al suelo según la física clásica (vida muy corta). Pero llegan, porque su tiempo se dilata vista desde la Tierra (o equivalentemente, la atmósfera se contrae visto desde el muón).</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 35 · Masa y energía relativistas -->
+<section class="slide concept-page" data-title="35 · Masa y energía relativistas" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">35 / 40</span>
+        <span class="concept-bloque">Bloque IV · Relativista</span>
+      </div>
+      <h2 class="concept-title">Masa, energía y E = mc²</h2>
+      <div class="formula-box">
+        <div class="formula-display">m = γ · m₀ = <span class="frac"><span class="num">m₀</span><span class="den"><span class="sqrt">1 − v²/c²</span></span></span></div>
+        <div class="formula-label">MASA RELATIVISTA</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display">E = m · c² &nbsp; · &nbsp; E₀ = m₀ · c²</div>
+        <div class="formula-secondary">E<sub>c</sub> = (γ − 1) · m₀ · c²</div>
+        <div class="formula-label">ENERGÍA TOTAL · EN REPOSO · CINÉTICA RELATIVISTA</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Equivalencia masa-energía</h4>
+        <p><strong>E = mc²</strong> dice que toda masa lleva asociada una energía enorme. Aun en reposo, una masa m₀ tiene E₀ = m₀·c² (energía de la materia).</p>
+      </div>
+      <div class="concept-section">
+        <h4>Energía cinética relativista</h4>
+        <p>No es ½mv². A bajas v, E<sub>c</sub> = (γ−1)·m₀·c² se reduce a ½m₀v². A v cercanas a c, crece sin límite.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">m₀</span><span class="desc">Masa en reposo</span><span class="unit">kg</span></li>
+          <li><span class="var">m</span><span class="desc">Masa relativista</span><span class="unit">kg</span></li>
+          <li><span class="var">E</span><span class="desc">Energía total</span><span class="unit">J</span></li>
+          <li><span class="var">E<sub>c</sub></span><span class="desc">Energía cinética</span><span class="unit">J</span></li>
+        </ul>
+        <div class="note">No se puede acelerar una masa hasta v = c: necesitaría energía infinita.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 36 · Efecto fotoeléctrico -->
+<section class="slide concept-page" data-title="36 · Efecto fotoeléctrico" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">36 / 40</span>
+        <span class="concept-bloque">Bloque IV · Cuántica</span>
+      </div>
+      <h2 class="concept-title">Efecto fotoeléctrico</h2>
+      <div class="formula-box">
+        <div class="formula-display">E<sub>fotón</sub> = h · f</div>
+        <div class="formula-secondary">E<sub>c,máx</sub> = h · f − W₀ = h(f − f₀)</div>
+        <div class="formula-label">EXTRACCIÓN DE ELECTRONES POR LA LUZ · EINSTEIN, 1905</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Metal placa -->
+          <rect x="60" y="90" width="80" height="50" fill="#6C6660"/>
+          <text x="100" y="155" text-anchor="middle" fill="#5C574F" font-size="10" font-style="italic">metal</text>
+          <!-- Fotones incidentes (líneas onduladas) -->
+          <g stroke="#B8895A" stroke-width="1.8" fill="none">
+            <path d="M 30 30 Q 40 25 50 30 T 70 30 T 90 30"/>
+            <path d="M 30 50 Q 40 45 50 50 T 70 50 T 90 50"/>
+            <path d="M 30 70 Q 40 65 50 70 T 70 70 T 90 70"/>
+          </g>
+          <text x="20" y="20" fill="#B8895A" font-size="10" font-style="italic">fotones</text>
+          <!-- Electrones emitidos -->
+          <g fill="#4F6890">
+            <circle cx="180" cy="60" r="4"/>
+            <circle cx="220" cy="40" r="4"/>
+            <circle cx="240" cy="80" r="4"/>
+            <circle cx="280" cy="50" r="4"/>
+          </g>
+          <line x1="150" y1="100" x2="200" y2="60" stroke="#4F6890" stroke-width="1.5" marker-end="url(#arrE)"/>
+          <line x1="150" y1="110" x2="240" y2="80" stroke="#4F6890" stroke-width="1.5" marker-end="url(#arrE)"/>
+          <text x="240" y="125" fill="#4F6890" font-size="10" font-style="italic">e⁻ con E<tspan font-size="9">c</tspan></text>
+          <defs><marker id="arrE" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4F6890"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Lo que no explicaba la física clásica</h4>
+        <ul style="font-size:.88rem;">
+          <li>Existe una <strong>frecuencia umbral f₀</strong>: por debajo no hay emisión, sea cual sea la intensidad.</li>
+          <li>La E<sub>c</sub> de los electrones depende de la <strong>frecuencia</strong>, no de la intensidad.</li>
+          <li>La emisión es <strong>instantánea</strong>.</li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Explicación de Einstein</h4>
+        <p>La luz está cuantizada en <strong>fotones</strong> de energía h·f. Cada fotón cede toda su energía a un único electrón.</p>
+        <p>Si h·f &lt; W₀ no hay emisión (umbral). Si h·f &gt; W₀, sobra E<sub>c</sub> = h·f − W₀.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">h</span><span class="desc">Constante de Planck</span><span class="unit">J·s</span></li>
+          <li><span class="var">f</span><span class="desc">Frecuencia luz incidente</span><span class="unit">Hz</span></li>
+          <li><span class="var">W₀</span><span class="desc">Trabajo de extracción</span><span class="unit">J o eV</span></li>
+          <li><span class="var">f₀</span><span class="desc">Frecuencia umbral</span><span class="unit">Hz</span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 37 · De Broglie · dualidad -->
+<section class="slide concept-page" data-title="37 · De Broglie" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">37 / 40</span>
+        <span class="concept-bloque">Bloque IV · Cuántica</span>
+      </div>
+      <h2 class="concept-title">Hipótesis de De Broglie · dualidad onda-partícula</h2>
+      <div class="formula-box">
+        <div class="formula-display">λ = <span class="frac"><span class="num">h</span><span class="den">p</span></span> = <span class="frac"><span class="num">h</span><span class="den">m · v</span></span></div>
+        <div class="formula-label">LONGITUD DE ONDA ASOCIADA A UNA PARTÍCULA</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>La idea</h4>
+        <p>Si la luz, que es una onda, se comporta como partícula (fotón), ¿por qué no las partículas se comportarían como ondas?</p>
+        <p>De Broglie (1924) propuso que toda partícula con momento p tiene asociada una longitud de onda λ = h/p.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Por qué no vemos ondas en lo macro</h4>
+        <p>Como <strong>h</strong> es minúscula (10⁻³⁴), λ es despreciable para objetos cotidianos.</p>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">Pelota</span><span class="desc">λ ≈ 10⁻³⁴ m (imperceptible)</span></li>
+          <li><span class="var">Electrón a 10⁶ m/s</span><span class="desc">λ ≈ 0,7 nm (medible)</span></li>
+        </ul>
+        <div class="note">La <strong>difracción de electrones</strong> (Davisson-Germer, 1927) confirmó experimentalmente la naturaleza ondulatoria de la materia.</div>
+      </div>
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">λ</span><span class="desc">Longitud de onda de De Broglie</span><span class="unit">m</span></li>
+          <li><span class="var">p</span><span class="desc">Momento lineal = m·v</span><span class="unit">kg·m/s</span></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 38 · Interacciones fundamentales -->
+<section class="slide concept-page" data-title="38 · 4 interacciones" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">38 / 40</span>
+        <span class="concept-bloque">Bloque IV · Partículas</span>
+      </div>
+      <h2 class="concept-title">Las cuatro interacciones fundamentales</h2>
+      <div style="background:var(--paper-soft);border-radius:12px;padding:18px;border:1px solid var(--line);">
+        <table style="width:100%;border-collapse:collapse;font-size:.86rem;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line-strong);">
+              <th style="text-align:left;padding:8px 6px;color:var(--ink-mute);font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;">INTERACCIÓN</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--ink-mute);font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;">INTENSIDAD</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--ink-mute);font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;">ALCANCE</th>
+              <th style="text-align:left;padding:8px 6px;color:var(--ink-mute);font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;">PARTÍCULA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:#A95448;font-weight:600;">Nuclear fuerte</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">1</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">10⁻¹⁵ m</td><td style="padding:8px 6px;">gluón</td></tr>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:#B8895A;font-weight:600;">Electromagnética</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">10⁻²</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">∞</td><td style="padding:8px 6px;">fotón</td></tr>
+            <tr style="border-bottom:1px dashed var(--line);"><td style="padding:8px 6px;color:#7B5F8C;font-weight:600;">Nuclear débil</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">10⁻⁶</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">10⁻¹⁸ m</td><td style="padding:8px 6px;">W⁺, W⁻, Z⁰</td></tr>
+            <tr><td style="padding:8px 6px;color:#4F6890;font-weight:600;">Gravitatoria</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">10⁻³⁹</td><td style="padding:8px 6px;text-align:center;font-family:var(--mono);">∞</td><td style="padding:8px 6px;">gravitón (?)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Comparación gravedad ↔ electricidad</h4>
+        <p>Para dos electrones, la fuerza eléctrica es <strong>≈ 10³⁶ veces</strong> la gravitatoria. Por eso a escala atómica la gravedad es despreciable.</p>
+        <p style="font-family:var(--math);font-style:italic;text-align:center;background:var(--paper-soft);padding:8px;border-radius:6px;">F<sub>e</sub>/F<sub>g</sub> = K·e²/(G·m<sub>e</sub>²) ≈ 4·10⁴²</p>
+      </div>
+      <div class="concept-section">
+        <h4>El modelo estándar</h4>
+        <p>Describe las tres interacciones no gravitatorias. La gravedad <strong>no</strong> está incluida.</p>
+        <div class="note">Las interacciones se transmiten por intercambio de partículas mediadoras (bosones). Los aceleradores de partículas (LHC) descubrieron el bosón de Higgs en 2012.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 39 · Núcleo · defecto de masa -->
+<section class="slide concept-page" data-title="39 · Núcleo y energía enlace" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">39 / 40</span>
+        <span class="concept-bloque">Bloque IV · Nuclear</span>
+      </div>
+      <h2 class="concept-title">Núcleo atómico · defecto de masa</h2>
+      <div class="formula-box">
+        <div class="formula-display">Δm = (Z · m<sub>p</sub> + N · m<sub>n</sub>) − m<sub>núcleo</sub></div>
+        <div class="formula-label">DEFECTO DE MASA · MASA QUE FALTA EN EL NÚCLEO</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display">E<sub>enlace</sub> = Δm · c²</div>
+        <div class="formula-secondary">E<sub>enlace</sub>/A = energía de enlace por nucleón</div>
+        <div class="formula-label">EQUIVALENCIA MASA-ENERGÍA APLICADA AL NÚCLEO</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Notación</h4>
+        <p>Un núcleo se escribe como <strong><sup>A</sup><sub>Z</sub>X</strong>:</p>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">Z</span><span class="desc">Número atómico (protones)</span></li>
+          <li><span class="var">N</span><span class="desc">Neutrones</span></li>
+          <li><span class="var">A</span><span class="desc">Número másico = Z + N</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Defecto de masa</h4>
+        <p>La masa de un núcleo es <strong>menor</strong> que la suma de las masas de sus nucleones libres. La diferencia se «convirtió» en energía de enlace al formarse el núcleo.</p>
+      </div>
+      <div class="concept-section">
+        <h4>Energía por nucleón</h4>
+        <p>Máxima en el <strong>hierro-56</strong> (≈ 8,8 MeV/nucleón) → el más estable.</p>
+        <div class="note"><strong>Fusión</strong> de núcleos ligeros y <strong>fisión</strong> de núcleos pesados liberan energía porque ambos tienden hacia el Fe (máxima estabilidad).</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 40 · Desintegración radiactiva -->
+<section class="slide concept-page" data-title="40 · Desintegración" data-bloque="4">
+  <article class="concept-card b4">
+    <div class="concept-left">
+      <div class="concept-header">
+        <span class="concept-num">40 / 40</span>
+        <span class="concept-bloque">Bloque IV · Nuclear</span>
+      </div>
+      <h2 class="concept-title">Desintegración radiactiva · ley exponencial</h2>
+      <div class="formula-box">
+        <div class="formula-display">N(t) = N₀ · e<sup>−λ · t</sup></div>
+        <div class="formula-secondary">A(t) = λ · N(t) &nbsp; · &nbsp; A₀ = λ · N₀</div>
+        <div class="formula-label">NÚCLEOS RESTANTES · ACTIVIDAD</div>
+      </div>
+      <div class="formula-box" style="margin-top:14px;">
+        <div class="formula-display" style="font-size:1.5rem;">T<sub>½</sub> = <span class="frac"><span class="num">ln 2</span><span class="den">λ</span></span> &nbsp; · &nbsp; τ = <span class="frac"><span class="num">1</span><span class="den">λ</span></span></div>
+        <div class="formula-label">SEMIVIDA Y VIDA MEDIA</div>
+      </div>
+      <div class="concept-diagram">
+        <svg viewBox="0 0 380 130" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="100" x2="360" y2="100" stroke="#8B8579" stroke-width="1"/>
+          <line x1="40" y1="20" x2="40" y2="120" stroke="#8B8579" stroke-width="1"/>
+          <path d="M 40 30 Q 100 50 180 75 T 360 95" fill="none" stroke="#7B5F8C" stroke-width="2.5"/>
+          <text x="20" y="30" fill="#5C574F" font-size="9" font-style="italic">N₀</text>
+          <text x="20" y="68" fill="#5C574F" font-size="9" font-style="italic">N₀/2</text>
+          <line x1="40" y1="65" x2="170" y2="65" stroke="#A95448" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="170" y1="65" x2="170" y2="100" stroke="#A95448" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="172" y="115" fill="#A95448" font-size="9" font-style="italic">T₁/₂</text>
+          <text x="350" y="115" fill="#5C574F" font-size="10" font-style="italic">t</text>
+        </svg>
+        <div class="concept-diagram-label">Decaimiento exponencial · cada T½ se reduce a la mitad</div>
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-section">
+        <h4>Magnitudes</h4>
+        <ul>
+          <li><span class="var">N</span><span class="desc">Núcleos sin desintegrar</span><span class="unit">—</span></li>
+          <li><span class="var">N₀</span><span class="desc">Núcleos iniciales</span><span class="unit">—</span></li>
+          <li><span class="var">λ</span><span class="desc">Constante de desintegración</span><span class="unit">s⁻¹</span></li>
+          <li><span class="var">A</span><span class="desc">Actividad (desintegraciones/s)</span><span class="unit">Bq</span></li>
+          <li><span class="var">T<sub>½</sub></span><span class="desc">Semivida (semidesintegración)</span><span class="unit">s</span></li>
+          <li><span class="var">τ</span><span class="desc">Vida media</span><span class="unit">s</span></li>
+        </ul>
+      </div>
+      <div class="concept-section">
+        <h4>Tres tipos de radiación</h4>
+        <ul style="font-size:.85rem;">
+          <li><span class="var">α</span><span class="desc">núcleos de He (2p+2n), baja penetración</span></li>
+          <li><span class="var">β⁻</span><span class="desc">electrón (n → p + e⁻), media penetración</span></li>
+          <li><span class="var">γ</span><span class="desc">fotón de alta energía, muy penetrante</span></li>
+        </ul>
+        <div class="note">Aplicaciones: <strong>datación por C-14</strong> (arqueología), <strong>medicina nuclear</strong> (radioterapia, PET), <strong>energía nuclear</strong>.</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- bottom bar -->
+<div class="bottombar">
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente">›</button>
+</div>
+
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let current = 0;
+const counterNum = document.getElementById('counterNum');
+const counterTotal = document.getElementById('counterTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsBox = document.getElementById('dots');
+
+counterTotal.textContent = slides.length;
+
+// Agrupar dots por bloque
+const groups = {intro:[], '1':[], '2':[], '3':[], '4':[]};
+slides.forEach((s,i)=>{
+  groups[s.dataset.bloque || 'intro'].push(i);
+});
+const groupLabels = {intro:'INTRO', '1':'I', '2':'II', '3':'III', '4':'IV'};
+Object.entries(groups).forEach(([key, indices])=>{
+  if(!indices.length) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'dots-group';
+  const lbl = document.createElement('span');
+  lbl.className = 'group-label';
+  lbl.textContent = groupLabels[key];
+  wrap.appendChild(lbl);
+  indices.forEach(i=>{
+    const d = document.createElement('button');
+    d.className = 'dot b-' + key;
+    d.dataset.idx = i;
+    d.setAttribute('aria-label', slides[i].dataset.title || ('Slide '+(i+1)));
+    d.title = slides[i].dataset.title || ('Slide '+(i+1));
+    d.addEventListener('click', ()=>go(i));
+    wrap.appendChild(d);
+  });
+  dotsBox.appendChild(wrap);
+});
+
+function go(i){
+  if(i<0||i>=slides.length||i===current) return;
+  slides[current].classList.remove('is-active');
+  current = i;
+  slides[current].classList.add('is-active');
+  slides[current].scrollTop = 0;
+  counterNum.textContent = i+1;
+  dotsBox.querySelectorAll('.dot').forEach(d => d.classList.toggle('is-active', parseInt(d.dataset.idx)===i));
+  prevBtn.disabled = i === 0;
+  nextBtn.disabled = i === slides.length-1;
+}
+
+prevBtn.addEventListener('click', ()=>go(current-1));
+nextBtn.addEventListener('click', ()=>go(current+1));
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key===' ') go(current+1);
+  if(e.key==='ArrowLeft') go(current-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(slides.length-1);
+});
+
+go(0);
+</script>
+
+</body>
+</html>

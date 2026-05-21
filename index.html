@@ -88,11 +88,12 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
 
 .cards{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:28px;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
   margin-bottom:48px;
 }
-@media (max-width:760px){.cards{grid-template-columns:1fr;}}
+@media (max-width:980px){.cards{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:680px){.cards{grid-template-columns:1fr;}}
 
 .card{
   background:var(--paper-card);
@@ -219,7 +220,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
   <div class="hero">
     <div class="hero-mark">PAU</div>
     <h1>Guías visuales<span class="ornament">·</span>PAU 2026</h1>
-    <p>Dos presentaciones interactivas para preparar las materias de Historia de la Filosofía e Historia de España. Diseñadas para aprender activamente y repasar rápido.</p>
+    <p>Tres presentaciones interactivas para preparar Historia de la Filosofía, Historia de España y Física. Diseñadas para aprender activamente y repasar rápido.</p>
   </div>
 
   <div class="cards">
@@ -228,7 +229,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
       <div class="icon">φ</div>
       <h2>Filosofía</h2>
       <div class="subtitle">Historia de la Filosofía</div>
-      <p class="desc">Dieciséis autores en orden cronológico, doce temas armonizados, cinco mapas conceptuales, matriz de comparativas y banco de citas.</p>
+      <p class="desc">Dieciséis autores en orden cronológico, doce temas armonizados, cinco mapas conceptuales y matriz comparativa.</p>
       <div class="stats">
         <div class="stat"><div class="n">16</div><div class="l">Autores</div></div>
         <div class="stat"><div class="n">12</div><div class="l">Temas</div></div>
@@ -242,11 +243,25 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
       <div class="icon">H</div>
       <h2>Historia</h2>
       <div class="subtitle">Historia de España</div>
-      <p class="desc">Seis bloques de 1808 a 1986, línea temporal completa, comparativa de constituciones, fichas de personajes y mapa de la Guerra Civil.</p>
+      <p class="desc">Seis bloques de 1808 a 1986, línea temporal completa, comparativa de constituciones y mapa de la Guerra Civil.</p>
       <div class="stats">
         <div class="stat"><div class="n">6</div><div class="l">Bloques</div></div>
         <div class="stat"><div class="n">20</div><div class="l">Temas</div></div>
         <div class="stat"><div class="n">178</div><div class="l">Años</div></div>
+      </div>
+      <span class="cta">Abrir presentación</span>
+    </a>
+
+    <a class="card" href="fisica.html" style="--card-color:#B8895A;">
+      <span class="ribbon">43 tarjetas</span>
+      <div class="icon">F</div>
+      <h2>Física</h2>
+      <div class="subtitle">PAU Física · Canarias</div>
+      <p class="desc">Una tarjeta por concepto: fórmula grande, variables, definición y mini-diagrama. Cuarenta conceptos repartidos en cuatro bloques.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">4</div><div class="l">Bloques</div></div>
+        <div class="stat"><div class="n">40</div><div class="l">Conceptos</div></div>
+        <div class="stat"><div class="n">10</div><div class="l">Puntos</div></div>
       </div>
       <span class="cta">Abrir presentación</span>
     </a>

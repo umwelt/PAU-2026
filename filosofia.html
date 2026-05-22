@@ -176,7 +176,7 @@ strong{color:var(--ink);font-weight:600;}
 .nav-btn:disabled:hover{background:var(--paper-soft);color:var(--ink);border-color:var(--line);}
 
 .dots{
-  pointer-events:auto;
+  pointer-events:none;  /* solo los dots interceptan · el espacio entre ellos no */
   display:flex;
   gap:8px;
   flex:1;
@@ -185,6 +185,7 @@ strong{color:var(--ink);font-weight:600;}
   max-width:680px;
 }
 .dot{
+  pointer-events:auto;
   width:10px;height:10px;
   border-radius:50%;
   background:var(--line);
@@ -444,7 +445,7 @@ strong{color:var(--ink);font-weight:600;}
   position:relative;
   width:100%;
   max-width:980px;
-  height:580px;
+  height:clamp(520px, calc(100vh - 280px), 720px);
 }
 .author-card{
   position:absolute;
@@ -454,6 +455,7 @@ strong{color:var(--ink);font-weight:600;}
   border-radius:18px;
   display:grid;
   grid-template-columns:1fr 1.05fr;
+  grid-template-rows:1fr;  /* CRITICAL: fila explícita, si no los lados crecen y rompen el overflow */
   overflow:hidden;
   opacity:0;
   transform:translateX(60px) scale(.97);
@@ -467,10 +469,20 @@ strong{color:var(--ink);font-weight:600;}
   pointer-events:auto;
 }
 .author-side{
-  padding:42px 46px;
+  padding:36px 40px;
   display:flex;
   flex-direction:column;
+  /* CRITICAL: sin esto el grid no permite scroll interno */
+  min-height:0;
+  min-width:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
 }
+.author-side::-webkit-scrollbar{width:8px;}
+.author-side::-webkit-scrollbar-track{background:rgba(0,0,0,.03);}
+.author-side::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
+.author-side::-webkit-scrollbar-thumb:hover{background:var(--accent);}
 .author-side.front{
   background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
   border-right:1px solid var(--line);
@@ -532,7 +544,6 @@ strong{color:var(--ink);font-weight:600;}
 }
 .author-side.back{
   background:var(--paper-card);
-  padding:42px 46px;
 }
 .author-side-title{
   font-family:var(--mono);
@@ -727,6 +738,7 @@ table.matrix{
   border-radius:14px;
   padding:30px 32px;
   overflow-y:auto;
+  overscroll-behavior:contain;
   min-height:0;
 }
 .matrix-detail .empty-state{
@@ -784,7 +796,9 @@ table.matrix{
   border-radius:14px;
   padding:34px 40px;
   flex:1;
+  min-height:0;  /* CRITICAL: en flex parent permite scroll interno */
   overflow-y:auto;
+  overscroll-behavior:contain;
   display:none;
   animation:fadeIn .4s ease;
   min-height:480px;
@@ -889,8 +903,10 @@ table.matrix{
   grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
   gap:18px;
   flex:1;
+  min-height:0;
   align-content:start;
   overflow-y:auto;
+  overscroll-behavior:contain;
   padding:4px 4px 20px;
 }
 .cita{
@@ -1007,11 +1023,16 @@ table.matrix{
 /* === SLIDE 10 · GLOSARIO === */
 .glosario-wrap{
   flex:1;
+  min-height:0;
   overflow-y:auto;
+  overscroll-behavior:contain;
   padding:4px 4px 20px;
   column-count:2;
   column-gap:24px;
 }
+.glosario-wrap::-webkit-scrollbar,.citas-grid::-webkit-scrollbar,.tema-card::-webkit-scrollbar,.matrix-detail::-webkit-scrollbar{width:8px;}
+.glosario-wrap::-webkit-scrollbar-track,.citas-grid::-webkit-scrollbar-track,.tema-card::-webkit-scrollbar-track,.matrix-detail::-webkit-scrollbar-track{background:rgba(0,0,0,.03);}
+.glosario-wrap::-webkit-scrollbar-thumb,.citas-grid::-webkit-scrollbar-thumb,.tema-card::-webkit-scrollbar-thumb,.matrix-detail::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
 .term{
   break-inside:avoid;
   background:var(--paper-card);

@@ -166,27 +166,42 @@ strong{color:var(--ink);font-weight:600;}
 .bottombar{
   position:fixed;
   bottom:0;left:0;right:0;
-  z-index:50;
+  z-index:80;
   padding:18px 36px 22px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:20px;
-  background:linear-gradient(to top,rgba(242,237,227,.95),rgba(242,237,227,0));
+  background:linear-gradient(to top,rgba(242,237,227,1) 60%,rgba(242,237,227,.9) 80%,rgba(242,237,227,0));
   pointer-events:none;
+  isolation:isolate;
 }
 .nav-btn{
   pointer-events:auto;
+  position:relative;
+  z-index:60;  /* siempre encima · evita que cualquier capa flotante lo bloquee */
   background:var(--paper-soft);
-  border:1px solid var(--line);
+  border:2px solid var(--line-strong);
   color:var(--ink);
-  width:46px;height:46px;
-  border-radius:50%;
+  height:54px;
+  min-width:118px;
+  padding:0 20px;
+  border-radius:100px;
   cursor:pointer;
-  font-size:1.4rem;
-  display:grid;place-items:center;
+  font-size:.95rem;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
   transition:all .2s;
+  font-family:var(--sans);
+  box-shadow:0 4px 14px rgba(45,42,38,.08);
+  letter-spacing:.04em;
+}
+.nav-btn .nav-arrow{
   font-family:var(--serif);
+  font-size:1.5rem;
+  line-height:1;
 }
 .nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
 .nav-btn:disabled{opacity:.35;cursor:not-allowed;}
@@ -2327,9 +2342,9 @@ strong{color:var(--ink);font-weight:600;}
 
 <!-- bottom bar -->
 <div class="bottombar">
-  <button class="nav-btn" id="prevBtn" aria-label="Anterior">‹</button>
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior"><span class="nav-arrow">‹</span> Anterior</button>
   <div class="dots" id="dots"></div>
-  <button class="nav-btn" id="nextBtn" aria-label="Siguiente">›</button>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente">Siguiente <span class="nav-arrow">›</span></button>
 </div>
 
 </div>
@@ -2369,11 +2384,17 @@ function go(i){
 prevBtn.addEventListener('click',()=>go(current-1));
 nextBtn.addEventListener('click',()=>go(current+1));
 document.addEventListener('keydown',e=>{
+  // No interceptar si el foco está en un input/textarea/contenteditable
+  const t=e.target;
+  if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
   if(e.key==='ArrowRight'||e.key===' ')go(current+1);
   if(e.key==='ArrowLeft')go(current-1);
   if(e.key==='Home')go(0);
   if(e.key==='End')go(slides.length-1);
 });
+// Quitar foco del botón después de hacer clic para que el teclado no se quede atrapado
+prevBtn.addEventListener('click',()=>prevBtn.blur());
+nextBtn.addEventListener('click',()=>nextBtn.blur());
 
 go(0);
 

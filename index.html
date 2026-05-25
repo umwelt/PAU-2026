@@ -88,18 +88,18 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
 
 .cards{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
   margin-bottom:48px;
 }
-@media (max-width:980px){.cards{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:1100px){.cards{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:680px){.cards{grid-template-columns:1fr;}}
 
 .card{
   background:var(--paper-card);
   border:1px solid var(--line);
-  border-radius:18px;
-  padding:38px 36px 32px;
+  border-radius:16px;
+  padding:30px 26px 26px;
   text-decoration:none;
   color:inherit;
   display:flex;
@@ -107,7 +107,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
   position:relative;
   overflow:hidden;
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  min-height:380px;
+  min-height:360px;
 }
 .card:hover{
   transform:translateY(-4px);
@@ -142,7 +142,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
   margin-bottom:24px;
 }
 .card h2{
-  font-size:1.9rem;
+  font-size:1.65rem;
   color:var(--card-color);
   margin-bottom:8px;
   font-weight:600;
@@ -220,7 +220,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
   <div class="hero">
     <div class="hero-mark">PAU</div>
     <h1>Guías visuales<span class="ornament">·</span>PAU 2026</h1>
-    <p>Tres presentaciones interactivas para preparar Historia de la Filosofía, Historia de España y Física. Diseñadas para aprender activamente y repasar rápido.</p>
+    <p>Tres presentaciones interactivas para preparar Historia de la Filosofía, Historia de España y Física, más diez exámenes simulacro construidos a partir de los patrones detectados en 17 convocatorias EBAU/PAU.</p>
   </div>
 
   <div class="cards">
@@ -264,6 +264,27 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
         <div class="stat"><div class="n">10</div><div class="l">Puntos</div></div>
       </div>
       <span class="cta">Abrir presentación</span>
+    </a>
+
+    <a class="card" href="examenes.html" style="--card-color:#5B8C8B;">
+      <span class="ribbon">10 simulacros</span>
+      <div class="icon">E</div>
+      <h2>Exámenes</h2>
+      <div class="subtitle">Simulacros Física PAU 2026</div>
+      <p class="desc">Diez exámenes construidos según patrones detectados en 17 convocatorias EBAU/PAU. Estructura oficial: 2,5 + 3 + 3 + 1,5 puntos. Solucionario separado.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">10</div><div class="l">Exámenes</div></div>
+        <div class="stat"><div class="n">17</div><div class="l">Años analizados</div></div>
+        <div class="stat"><div class="n">90</div><div class="l">Minutos c/u</div></div>
+      </div>
+      <span class="cta">Abrir simulacros</span>
+    </a>
+  </div>
+
+  <div class="extra-links" style="margin-bottom:32px;text-align:center;">
+    <a href="soluciones.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--line);border-radius:100px;background:var(--paper-soft);color:var(--ink-soft);font-size:.9rem;text-decoration:none;font-weight:500;">
+      <span style="font-family:'Lora',serif;font-weight:600;color:#5B8C8B;">→</span>
+      Solucionario de los 10 simulacros (archivo aparte)
     </a>
   </div>
 

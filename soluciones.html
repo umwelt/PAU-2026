@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Soluciones · 10 exámenes simulacro PAU 2026 · Física</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-soft:#FAF6EE;
+  --paper-card:#FBF7EE;
+  --ink:#2D2A26;
+  --ink-soft:#5C574F;
+  --ink-mute:#8B8579;
+  --line:#D6CCB7;
+  --line-strong:#BFB39A;
+  --accent:#5B8C8B;
+  --b1:#4F6890;
+  --b2:#B8895A;
+  --b3:#5B8C8B;
+  --b4:#7B5F8C;
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--paper);}
+body{
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(ellipse at top left, rgba(217,199,162,.16), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(91,140,139,.10), transparent 55%);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  z-index:50;
+  padding:14px 32px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;
+  background:linear-gradient(to bottom,rgba(242,237,227,.98),rgba(242,237,227,.85));
+  pointer-events:none;
+}
+.topbar > *{pointer-events:auto;}
+.home-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.85rem;color:var(--ink-soft);
+  text-decoration:none;
+  padding:6px 12px;border-radius:100px;
+  border:1px solid var(--line);
+  background:var(--paper-soft);
+}
+.home-link:hover{color:var(--ink);border-color:var(--line-strong);}
+.topbar-title{
+  font-family:var(--serif);font-style:italic;
+  font-size:.95rem;color:var(--ink-soft);
+}
+.slide-counter{font-family:var(--mono);font-size:.85rem;color:var(--ink-mute);letter-spacing:.05em;}
+.slide-counter strong{color:var(--ink);font-weight:600;}
+
+.bottombar{
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:80;
+  padding:14px 32px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:20px;
+  background:linear-gradient(to top,rgba(242,237,227,1) 60%,rgba(242,237,227,.9) 80%,rgba(242,237,227,0));
+  pointer-events:none;
+  isolation:isolate;
+}
+.nav-btn{
+  pointer-events:auto;
+  z-index:60;
+  background:var(--paper-soft);
+  border:2px solid var(--line-strong);
+  color:var(--ink);
+  height:54px;
+  min-width:118px;
+  padding:0 20px;
+  border-radius:100px;
+  cursor:pointer;
+  font-size:.95rem;font-weight:600;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .2s;
+  box-shadow:0 4px 14px rgba(45,42,38,.08);
+  letter-spacing:.04em;
+  flex-shrink:0;
+}
+.nav-btn .nav-arrow{font-family:var(--serif);font-size:1.5rem;line-height:1;}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);box-shadow:0 6px 18px rgba(91,140,139,.25);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+.dots{pointer-events:none;display:flex;gap:9px;flex:1;justify-content:center;flex-wrap:wrap;align-items:center;}
+.dot{
+  pointer-events:auto;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--paper-soft);
+  border:1.5px solid var(--line-strong);
+  cursor:pointer;transition:all .2s;
+  font-family:var(--mono);font-size:.72rem;font-weight:600;
+  color:var(--ink-soft);
+  padding:0;display:grid;place-items:center;
+}
+.dot:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.dot.is-active{background:var(--ink);color:var(--paper-soft);border-color:var(--ink);transform:scale(1.1);}
+
+.stage{position:relative;width:100vw;height:100vh;overflow:hidden;}
+.slide{
+  position:absolute;inset:0;display:none;
+  overflow-y:auto;padding:84px 32px 110px;
+  overscroll-behavior:contain;
+}
+.slide.is-active{display:block;}
+.slide-inner{max-width:920px;margin:0 auto;}
+
+/* portada */
+.portada{text-align:center;padding-top:60px;}
+.portada .mark{
+  width:96px;height:96px;border-radius:50%;
+  background:var(--paper-soft);
+  border:2px solid var(--accent);
+  display:grid;place-items:center;margin:0 auto 28px;
+  font-family:var(--serif);font-size:1.8rem;color:var(--accent);font-weight:600;
+  letter-spacing:.05em;
+}
+.portada h1{font-size:clamp(2.2rem,4.2vw,3.2rem);margin-bottom:14px;line-height:1.1;}
+.portada h1 .num{color:var(--accent);}
+.portada .sub{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink-soft);margin-bottom:30px;}
+.portada .desc{max-width:580px;margin:0 auto 30px;color:var(--ink-soft);font-size:.95rem;line-height:1.6;}
+.portada .nota{
+  max-width:580px;margin:0 auto;
+  padding:18px 22px;
+  background:var(--paper-soft);
+  border-left:3px solid var(--accent);
+  border-radius:8px;
+  font-size:.88rem;color:var(--ink-soft);line-height:1.6;
+  text-align:left;
+}
+
+/* solucion examen */
+.sol-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding-bottom:18px;border-bottom:2px solid var(--ink);
+  margin-bottom:22px;gap:18px;
+}
+.sol-num{font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:4px;}
+.sol-titulo{font-family:var(--serif);font-size:1.6rem;font-weight:600;}
+.sol-tema{font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--ink-soft);margin-top:4px;}
+.sol-meta{text-align:right;font-size:.78rem;color:var(--ink-mute);font-family:var(--mono);letter-spacing:.06em;}
+
+.bloque-sol{
+  margin-bottom:22px;
+  padding:14px 18px 16px;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  border-left:4px solid var(--bloque-color,var(--accent));
+}
+.bloque-sol .b-title{
+  font-family:var(--serif);font-size:1.05rem;font-weight:600;
+  color:var(--bloque-color,var(--ink));
+  margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.bloque-sol .b-title .pts{
+  font-family:var(--mono);font-size:.72rem;color:var(--ink-mute);
+  font-weight:400;letter-spacing:.06em;
+}
+
+.apartado{
+  padding:8px 0 10px;
+  border-bottom:1px dashed var(--line);
+  font-size:.88rem;
+  line-height:1.6;
+}
+.apartado:last-child{border-bottom:none;}
+.apartado .lbl{
+  font-family:var(--serif);font-weight:600;
+  color:var(--bloque-color,var(--accent));
+  margin-right:6px;
+}
+.apartado .form{
+  font-family:var(--mono);
+  font-size:.84rem;
+  background:var(--paper-soft);
+  padding:1px 6px;
+  border-radius:4px;
+  white-space:nowrap;
+}
+.apartado .ans{
+  font-weight:600;
+  color:var(--ink);
+}
+.apartado p{margin:4px 0;}
+.apartado ul{margin:4px 0 4px 18px;}
+.apartado ul li{margin:2px 0;}
+
+.calc{
+  margin:6px 0;
+  font-family:var(--mono);
+  font-size:.82rem;
+  color:var(--ink-soft);
+  line-height:1.7;
+}
+.calc .step{display:block;}
+.calc .arrow{color:var(--accent);margin:0 4px;}
+.box-result{
+  display:inline-block;
+  background:var(--paper-soft);
+  border:1px solid var(--line-strong);
+  padding:3px 10px;
+  border-radius:6px;
+  font-family:var(--serif);
+  font-weight:600;
+  color:var(--ink);
+  margin:2px 0;
+}
+
+.opcion-banda{
+  font-size:.74rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-mute);
+  margin:10px 0 6px;font-weight:600;
+}
+
+.nota-criterio{
+  background:var(--paper-soft);
+  border:1px dashed var(--line-strong);
+  border-radius:8px;
+  padding:10px 14px;
+  font-size:.82rem;color:var(--ink-soft);
+  margin-top:14px;
+  line-height:1.55;
+}
+.nota-criterio strong{color:var(--ink);}
+
+/* responsive */
+@media (max-width:680px){
+  .topbar{padding:10px 18px;}
+  .topbar-title{display:none;}
+  .slide{padding:74px 18px 100px;}
+  .sol-header{flex-direction:column;align-items:flex-start;}
+  .sol-meta{text-align:left;}
+  .nav-btn{min-width:auto;padding:0 14px;}
+  .nav-btn span:not(.nav-arrow){display:none;}
+}
+.slide::-webkit-scrollbar{width:10px;}
+.slide::-webkit-scrollbar-track{background:transparent;}
+.slide::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:6px;}
+.slide::-webkit-scrollbar-thumb:hover{background:var(--ink-mute);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home-link" href="index.html">← inicio</a>
+  <div class="topbar-title">Soluciones · 10 simulacros PAU 2026 · Física</div>
+  <div class="slide-counter"><strong id="counterNum">1</strong> / <span id="counterTotal">11</span></div>
+</div>
+
+<div class="stage">
+
+<!-- ============ PORTADA ============ -->
+<section class="slide is-active" data-title="Portada">
+  <div class="slide-inner portada">
+    <div class="mark">S</div>
+    <h1>Soluciones <span class="num">·</span> 10 simulacros</h1>
+    <div class="sub">PAU 2026 · Física · Canarias</div>
+    <p class="desc">Resolución guiada de los 10 exámenes con planteamiento teórico, sustitución y resultado redondeado a dos cifras significativas, siguiendo el criterio de corrección oficial.</p>
+    <div class="nota">
+      <strong>Cómo usar este solucionario:</strong> primero termina el examen completo (sin mirar nada). Luego compara apartado a apartado. Si el resultado coincide pero tu camino fue otro, repásalo igualmente — el orden del razonamiento se valora en la corrección. Si el resultado no coincide, busca el error de unidades antes que el error de cálculo: la penalización por unidades en la PAU es −0,1 puntos por descuido.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 1 ============ -->
+<section class="slide" data-title="Soluciones · Examen 1">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 1</div>
+        <h2 class="sol-titulo">Examen 1 · Clásico</h2>
+        <div class="sol-tema">Satélite 800 km · 3 cargas · onda · fotoeléctrico Na</div>
+      </div>
+      <div class="sol-meta">10 pts · 90 min</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> r = R_T + h = 6,37·10⁶ + 8·10⁵ = <span class="ans">7,17·10⁶ m</span>
+        <div class="calc">
+          <span class="step">v_orb = √(GM_T/r) = √(6,67·10⁻¹¹ · 5,97·10²⁴ / 7,17·10⁶) <span class="arrow">→</span> <span class="box-result">v ≈ 7,45·10³ m/s</span></span>
+          <span class="step">T = 2πr/v = 2π·7,17·10⁶ / 7450 <span class="arrow">→</span> <span class="box-result">T ≈ 6047 s ≈ 1 h 41 min</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> En órbita circular E_c = ½mv² y E_p = −GM_T·m/r
+        <div class="calc">
+          <span class="step">E_c = ½ · 750 · (7450)² <span class="arrow">→</span> <span class="box-result">E_c ≈ 2,08·10¹⁰ J</span></span>
+          <span class="step">E_p = −6,67·10⁻¹¹·5,97·10²⁴·750 / 7,17·10⁶ <span class="arrow">→</span> <span class="box-result">E_p ≈ −4,17·10¹⁰ J</span></span>
+          <span class="step">E_total = E_c + E_p <span class="arrow">→</span> <span class="box-result">E ≈ −2,08·10¹⁰ J</span> (= −E_c, confirma órbita ligada)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> r_geo = R_T + 36·10⁶ = 4,237·10⁷ m. Usamos E = −GM_T·m/(2r).
+        <div class="calc">
+          <span class="step">E_inicial = −GM_T·m/(2·7,17·10⁶) ≈ −2,08·10¹⁰ J</span>
+          <span class="step">E_geo = −GM_T·m/(2·4,237·10⁷) ≈ −3,52·10⁹ J</span>
+          <span class="step">ΔE = E_geo − E_inicial <span class="arrow">→</span> <span class="box-result">ΔE ≈ 1,73·10¹⁰ J</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> Vectores desde fuentes a P(3,4):
+        <div class="calc">
+          <span class="step">q₁(+4μC) en (0,0) → P(3,4): r₁ = 5 m, û₁ = (0,6 ; 0,8)</span>
+          <span class="step">E₁ = K·q₁/r₁² · û₁ = 9·10⁹·4·10⁻⁶/25 · (0,6 ; 0,8) = (864 ; 1152) N/C</span>
+          <span class="step">q₂(−2μC) en (3,0) → P(3,4): r₂ = 4 m, û₂ = (0 ; 1). Como q₂&lt;0, E apunta hacia q₂.</span>
+          <span class="step">E₂ = 9·10⁹·2·10⁻⁶/16 · (0 ; −1) = (0 ; −1125) N/C</span>
+          <span class="step">q₃(+2μC) en (0,4) → P(3,4): r₃ = 3 m, û₃ = (1 ; 0)</span>
+          <span class="step">E₃ = 9·10⁹·2·10⁻⁶/9 · (1 ; 0) = (2000 ; 0) N/C</span>
+          <span class="step">E_total = (864+0+2000 ; 1152−1125+0) <span class="arrow">→</span> <span class="box-result">E ≈ (2864 ; 27) N/C, |E| ≈ 2864 N/C</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> V_P = K·Σ(qᵢ/rᵢ) = 9·10⁹·(4/5 − 2/4 + 2/3)·10⁻⁶ ≈ <span class="ans">8,70·10³ V</span>
+        <div class="calc">
+          <span class="step">W_campo = q·(V_P − V_∞) = 10⁻⁶·8700 <span class="arrow">→</span> <span class="box-result">W ≈ +8,7·10⁻³ J</span></span>
+          <span class="step">El campo realiza el trabajo positivo (V_P&gt;0 y q&gt;0 → la carga sale espontáneamente).</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> R = mv/(qB), T = 2πm/(qB)
+        <div class="calc">
+          <span class="step">R = 1,673·10⁻²⁷·2·10⁵ / (1,6·10⁻¹⁹·0,3) <span class="arrow">→</span> <span class="box-result">R ≈ 6,97·10⁻³ m ≈ 7 mm</span></span>
+          <span class="step">T = 2π·1,673·10⁻²⁷ / (1,6·10⁻¹⁹·0,3) <span class="arrow">→</span> <span class="box-result">T ≈ 2,19·10⁻⁷ s</span></span>
+          <span class="step">n = Δt/T = 10⁻³ / 2,19·10⁻⁷ <span class="arrow">→</span> <span class="box-result">n ≈ 4570 vueltas</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Φ(t) = B·A·cos(0°) = 2·0,01·sen(50t) Wb. ε = −dΦ/dt = −0,02·50·cos(50t) = −cos(50t) V
+        <div class="calc">
+          <span class="step">En t=0,02 s: 50t = 1 rad. Φ = 0,02·sen(1) <span class="arrow">→</span> <span class="box-result">Φ ≈ 0,0168 Wb</span></span>
+          <span class="step">ε = −cos(1) <span class="arrow">→</span> <span class="box-result">|ε| ≈ 0,54 V</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · Vibraciones y ondas <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> y = 0,05 sen(20πt − 5x + π/3). ω = 20π → T = 0,1 s, f = 10 Hz. k = 5 → λ = 2π/5 = 1,26 m.
+        <div class="calc">
+          <span class="step">v_propagación = ω/k = 20π/5 = 4π <span class="arrow">→</span> <span class="box-result">v ≈ 12,57 m/s</span></span>
+          <span class="step">v_max vibración = Aω = 0,05·20π <span class="arrow">→</span> <span class="box-result">v_max ≈ 3,14 m/s</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> 1/s′ − 1/s = 1/f. Convención s&lt;0 para objeto a la izquierda. s=−30 cm, f=+20 cm.
+        <div class="calc">
+          <span class="step">1/s′ = 1/20 + 1/(−30) = (3−2)/60 = 1/60 <span class="arrow">→</span> <span class="box-result">s′ = +60 cm</span> (imagen real, derecha)</span>
+          <span class="step">β = s′/s = 60/(−30) = −2 <span class="arrow">→</span> <span class="box-result">h′ = −8 cm</span> (invertida, doble tamaño)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> x = 0,1 cos(10t + π/4). ω = 10 rad/s.
+        <div class="calc">
+          <span class="step">T = 2π/ω <span class="arrow">→</span> <span class="box-result">T ≈ 0,628 s</span></span>
+          <span class="step">k = mω² = 0,5·100 <span class="arrow">→</span> <span class="box-result">k = 50 N/m</span></span>
+          <span class="step">v_max = Aω = 0,1·10 <span class="arrow">→</span> <span class="box-result">v_max = 1 m/s</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> v(t) = −Aω·sen(ωt+π/4) = −sen(10t+π/4). E_c = ½mv², E_p = ½kx².
+        <div class="calc">
+          <span class="step">E_c(t) = ½·0,5·sen²(10t+π/4) = 0,25·sen²(10t+π/4) J</span>
+          <span class="step">E_p(t) = ½·50·0,01·cos²(10t+π/4) = 0,25·cos²(10t+π/4) J</span>
+          <span class="step">E_total = E_c + E_p = 0,25(sen²+cos²) <span class="arrow">→</span> <span class="box-result">E = 0,25 J (cte)</span> ✓</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Relativista / Nuclear <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> f = c/λ = 3·10⁸ / 300·10⁻⁹ = <span class="ans">1,0·10¹⁵ Hz</span>. E = hf = 6,63·10⁻³⁴·10¹⁵ ≈ 6,63·10⁻¹⁹ J = <span class="ans">4,14 eV</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> E_c,max = E_fotón − W = 4,14 − 2,28 = 1,86 eV = 2,98·10⁻¹⁹ J
+        <div class="calc">
+          <span class="step">v_max = √(2E_c/m) = √(2·2,98·10⁻¹⁹/9,11·10⁻³¹) <span class="arrow">→</span> <span class="box-result">v_max ≈ 8,09·10⁵ m/s</span></span>
+          <span class="step">λ_umbral = hc/W = 6,63·10⁻³⁴·3·10⁸ / (2,28·1,6·10⁻¹⁹) <span class="arrow">→</span> <span class="box-result">λ_umbral ≈ 545 nm</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> Electrón con E_c=100 eV=1,6·10⁻¹⁷ J. v=√(2E_c/m)=5,93·10⁶ m/s.
+        <div class="calc">
+          <span class="step">λ_dB = h/(mv) = 6,63·10⁻³⁴/(9,11·10⁻³¹·5,93·10⁶) <span class="arrow">→</span> <span class="box-result">λ_dB ≈ 1,23·10⁻¹⁰ m = 1,23 Å</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> Δm = (2m_p + 2m_n) − m_He = (2·1,00728 + 2·1,00867) − 4,0026
+        <div class="calc">
+          <span class="step">Δm = 4,03190 − 4,00260 = <span class="box-result">0,02930 u</span></span>
+          <span class="step">E_enlace = Δm·c² = 0,02930·931,5 MeV <span class="arrow">→</span> <span class="box-result">E ≈ 27,3 MeV</span></span>
+          <span class="step">E/nucleón = 27,3/4 <span class="arrow">→</span> <span class="box-result">≈ 6,82 MeV/nucleón</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nota-criterio">
+      <strong>Errores típicos.</strong> En 1b1 olvidar el signo de E_p (debe ser negativo). En 2a confundir el signo del campo de la carga negativa — el vector apunta hacia la carga, no desde ella. En 4b mezclar convenciones de signo (DIN vs anglosajona) sin avisar.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 2 ============ -->
+<section class="slide" data-title="Soluciones · Examen 2">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 2</div>
+        <h2 class="sol-titulo">Examen 2 · Escape planetario</h2>
+        <div class="sol-tema">Planeta 2M, R/2 · Faraday cos · Snell · contracción 0,8c</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> g = GM/R². Con M=2M_T, R=R_T/2: g = G·2M_T/(R_T/2)² = 8·GM_T/R_T² = 8·g₀ ≈ <span class="ans">78,4 m/s²</span>
+        <div class="calc">
+          <span class="step">v_esc se deduce de ½mv² = GMm/R → v_esc = √(2GM/R) = √(2·G·2M_T/(R_T/2)) = √(8·GM_T/R_T) = √8·v_esc,T</span>
+          <span class="step">v_esc,T = √(2·6,67·10⁻¹¹·5,97·10²⁴/6,37·10⁶) ≈ 11,2 km/s</span>
+          <span class="step">v_esc = 2√2·v_esc,T <span class="arrow">→</span> <span class="box-result">v_esc ≈ 31,7 km/s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> v₀=12 km/s &lt; v_esc=31,7 km/s → <span class="ans">no escapa</span>, queda ligado.
+        <div class="calc">
+          <span class="step">Conservación: ½mv₀² − GMm/R = 0 − GMm/(R+h)</span>
+          <span class="step">−GMm/(R+h) = ½v₀² − GM/R (por unidad m: específico) ⇒ (R+h) = GM/(GM/R − ½v₀²)</span>
+          <span class="step">GM/R = ½·v_esc² = ½·(31,7·10³)² ≈ 5,02·10⁸ J/kg</span>
+          <span class="step">½v₀² = 0,5·(1,2·10⁴)² = 7,2·10⁷ J/kg</span>
+          <span class="step">R+h = 5,02·10⁸/(5,02·10⁸ − 7,2·10⁷) ·R = (5,02/4,30)·R ≈ 1,167·R</span>
+          <span class="step">h ≈ 0,167·R = 0,167·(6,37·10⁶/2) <span class="arrow">→</span> <span class="box-result">h ≈ 5,3·10⁵ m ≈ 530 km</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> Órbita a h=R sobre superficie → r=2R.
+        <div class="calc">
+          <span class="step">v_órbita = √(GM/r) = √(G·2M_T/(R_T)) = √2·v_circ,T(rasante)</span>
+          <span class="step">v_órbita ≈ √2 · 7910 m/s ≈ 11,2·10³ m/s. (Coincide numéricamente con v_esc,T)</span>
+          <span class="step">v_lanzamiento desde superficie: ½v_L² − GM/R = ½v_orb² − GM/(2R)</span>
+          <span class="step">½v_L² = ½v_orb² + GM·(1/R − 1/(2R)) = ½v_orb² + GM/(2R)</span>
+          <span class="step">GM/(2R) = ½·v_esc²/2 ≈ 2,51·10⁸ J/kg; ½v_orb² ≈ 6,27·10⁷</span>
+          <span class="step">½v_L² ≈ 3,14·10⁸ → v_L ≈ 2,51·10⁴ m/s <span class="arrow">→</span> <span class="box-result">v_lanzamiento ≈ 25,1 km/s</span></span>
+          <span class="step">E_mec(órbita) = −GMm/(2r) = −GM·1200/(2·2R) <span class="arrow">→</span> <span class="box-result">E ≈ −3,76·10¹⁰ J</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> q₁=+5nC en (0,3), q₂=−5nC en (0,−3). P(4,0). r₁=r₂=√(16+9)=5 m.
+        <div class="calc">
+          <span class="step">û_{q₁→P} = (4,−3)/5 = (0,8 ; −0,6). E₁ = K·q₁/r² · û = 9·10⁹·5·10⁻⁹/25·(0,8;−0,6) = 1,8·(0,8;−0,6) = (1,44;−1,08) N/C</span>
+          <span class="step">û_{P→q₂} = (−4,−3)/5 = (−0,8;−0,6) (q₂ negativa → E apunta hacia q₂). E₂ = 1,8·(−0,8;−0,6) = (−1,44;−1,08) N/C</span>
+          <span class="step">E = E₁ + E₂ = (0 ; −2,16) <span class="arrow">→</span> <span class="box-result">|E| = 2,16 N/C, dirigido en −y</span></span>
+          <span class="step">V_P = K·(q₁/r₁ + q₂/r₂) = K·(5−5)·10⁻⁹/5 <span class="arrow">→</span> <span class="box-result">V_P = 0 V</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> V_Q (Q=origen): r₁=r₂=3 m. V_Q = K·(5/3 − 5/3)·10⁻⁹ = <span class="box-result">0 V</span>
+        <div class="calc">
+          <span class="step">W_ext = q·(V_Q − V_P) = 2·10⁻⁹·(0 − 0) <span class="arrow">→</span> <span class="box-result">W = 0 J</span></span>
+          <span class="step">El movimiento entre dos puntos equipotenciales del dipolo no requiere trabajo (campo conservativo).</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Espira r=8 cm, A=π·r²=0,0201 m². B(t)=0,5 cos(10πt).
+        <div class="calc">
+          <span class="step">Φ(t) = B·A = 0,5·0,0201·cos(10πt) = 0,01005·cos(10πt) Wb</span>
+          <span class="step">ε = −dΦ/dt = 0,01005·10π·sen(10πt) ≈ 0,316·sen(10πt) V</span>
+          <span class="step">En t=0,1 s: 10πt = π → sen(π)=0. ε(0,1) = 0 V; Φ = 0,01005·cos(π) <span class="arrow">→</span> <span class="box-result">Φ = −0,01005 Wb</span></span>
+          <span class="step">i = ε/R = 0 / 4 <span class="arrow">→</span> <span class="box-result">i = 0 A</span> en ese instante</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> En punto medio (a 10 cm de cada hilo), corrientes opuestas → campos en mismo sentido.
+        <div class="calc">
+          <span class="step">B₁ = μ₀I₁/(2πd) = 4π·10⁻⁷·4/(2π·0,1) = 8·10⁻⁶ T</span>
+          <span class="step">B₂ = μ₀I₂/(2πd) = 4π·10⁻⁷·6/(2π·0,1) = 1,2·10⁻⁵ T</span>
+          <span class="step">B_total = B₁ + B₂ <span class="arrow">→</span> <span class="box-result">B ≈ 2,0·10⁻⁵ T</span></span>
+          <span class="step">F/L = μ₀·I₁·I₂/(2πd) = 4π·10⁻⁷·4·6/(2π·0,2) <span class="arrow">→</span> <span class="box-result">F/L ≈ 2,4·10⁻⁵ N/m, repulsiva</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · Ondas <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> A=0,04 m, T=0,4 s → ω=2π/T=5π rad/s. λ=0,08 m → k=2π/λ=25π rad/m. Sentido +x: y=A·cos(ωt−kx+φ).
+        <div class="calc">
+          <span class="step">En (0,0) elongación máxima → cos(φ)=1 → φ=0</span>
+          <span class="step"><span class="box-result">y(x,t) = 0,04·cos(5πt − 25πx) m</span></span>
+          <span class="step">v_propagación = ω/k = 5π/25π <span class="arrow">→</span> <span class="box-result">v = 0,2 m/s</span></span>
+          <span class="step">v_max vibración = A·ω = 0,04·5π <span class="arrow">→</span> <span class="box-result">v_max ≈ 0,628 m/s</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> Lente f=+15 cm, s=−25 cm. 1/s′ = 1/f + 1/s = 1/15 − 1/25 = (5−3)/75 = 2/75 → <span class="ans">s′ = +37,5 cm</span>. β = s′/s = 37,5/(−25) = <span class="ans">−1,5</span> (imagen real, invertida, ampliada).
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> Snell: n₁·sen(40°) = n₂·sen(θ₂). 1·0,643 = 1,5·sen(θ₂).
+        <div class="calc">
+          <span class="step">sen(θ₂) = 0,643/1,5 = 0,428 <span class="arrow">→</span> <span class="box-result">θ₂ ≈ 25,4°</span></span>
+          <span class="step">λ_vidrio = λ₀/n = 600/1,5 <span class="arrow">→</span> <span class="box-result">λ_vidrio = 400 nm</span></span>
+          <span class="step">Ángulo límite vidrio→aire: sen(θ_L) = 1/1,5 = 0,667 <span class="arrow">→</span> <span class="box-result">θ_L ≈ 41,8°</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> Cristalino f=15 mm, s=−600 mm.
+        <div class="calc">
+          <span class="step">1/s′ = 1/15 − 1/600 = (40−1)/600 = 39/600 <span class="arrow">→</span> <span class="box-result">s′ ≈ +15,4 mm</span></span>
+          <span class="step">β = s′/s = 15,4/(−600) <span class="arrow">→</span> <span class="box-result">β ≈ −0,026</span> (imagen pequeña, invertida, en retina)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Relativista <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> E_fotón = hc/λ = 6,63·10⁻³⁴·3·10⁸/(250·10⁻⁹) ≈ 7,96·10⁻¹⁹ J = <span class="ans">4,97 eV</span>. W=4,73 eV.
+        <div class="calc">
+          <span class="step">E_c,max = 4,97 − 4,73 = 0,24 eV = 3,84·10⁻²⁰ J <span class="arrow">→</span> <span class="box-result">E_c,max ≈ 0,24 eV</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> v = 0,01c = 3·10⁶ m/s. λ_dB = h/(mv) = 6,63·10⁻³⁴/(9,11·10⁻³¹·3·10⁶) <span class="arrow">→</span> <span class="box-result">λ_dB ≈ 2,43·10⁻¹⁰ m</span>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> Contracción de Lorentz: L = L₀·√(1−v²/c²)
+        <div class="calc">
+          <span class="step">γ = 1/√(1−0,64) = 1/√0,36 = 1/0,6 = 1,667</span>
+          <span class="step">L = 12/1,667 <span class="arrow">→</span> <span class="box-result">L ≈ 7,2 m</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> ⁶Li: Z=3, N=3.
+        <div class="calc">
+          <span class="step">Δm = (3·1,00728 + 3·1,00867) − 6,01512 = 6,04785 − 6,01512 = <span class="box-result">0,03273 u</span></span>
+          <span class="step">E_enlace = 0,03273·931,5 MeV <span class="arrow">→</span> <span class="box-result">E ≈ 30,5 MeV</span></span>
+          <span class="step">E/nucleón = 30,5/6 <span class="arrow">→</span> <span class="box-result">≈ 5,08 MeV/nucleón</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nota-criterio">
+      <strong>Atajo útil.</strong> Para un planeta con M=k·M_T y R=R_T/n: g/g_T = k·n²; v_orb/v_T = √(k·n); v_esc/v_esc,T = √(k·n). Memorizar este patrón ahorra cálculos al examen.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 3 ============ -->
+<section class="slide" data-title="Soluciones · Examen 3">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 3</div>
+        <h2 class="sol-titulo">Examen 3 · Geoestacionario y vida media</h2>
+        <div class="sol-tema">Kepler · 4 cargas en cuadrado · MAS · ²³⁵U</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> Kepler 3ª: T² = (4π²/GM)·r³
+        <div class="calc">
+          <span class="step">T = 24h = 86400 s. r³ = GM_T·T²/(4π²) = 6,67·10⁻¹¹·5,97·10²⁴·(86400)²/(4π²)</span>
+          <span class="step">r³ ≈ 7,54·10²² m³ → r ≈ 4,23·10⁷ m</span>
+          <span class="step">h = r − R_T = 4,23·10⁷ − 6,37·10⁶ <span class="arrow">→</span> <span class="box-result">h ≈ 3,59·10⁷ m ≈ 35 900 km</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> v_orb = 2πr/T = 2π·4,23·10⁷/86400 <span class="arrow">→</span> <span class="box-result">v ≈ 3,07·10³ m/s</span>
+        <div class="calc">
+          <span class="step">a_c = v²/r = (3070)²/4,23·10⁷ <span class="arrow">→</span> <span class="box-result">a ≈ 0,223 m/s²</span></span>
+          <span class="step">E = −GM_T·m/(2r) = −6,67·10⁻¹¹·5,97·10²⁴·1500/(2·4,23·10⁷) <span class="arrow">→</span> <span class="box-result">E ≈ −7,06·10⁹ J</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> ISS a h=400 km → r=6,77·10⁶ m.
+        <div class="calc">
+          <span class="step">v_ISS = √(GM_T/r) ≈ √(6,67·10⁻¹¹·5,97·10²⁴/6,77·10⁶) ≈ 7670 m/s</span>
+          <span class="step">T_ISS = 2π·6,77·10⁶/7670 ≈ 5546 s ≈ 92 min. Geoestacionario T=24 h.</span>
+          <span class="step">E_geo = −GMm/(2r_geo) más alta (menos negativa) que E_ISS = −GMm/(2r_ISS) → <span class="box-result">la órbita geoestacionaria tiene más energía mecánica (es decir, menos negativa)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> 4 cargas en vértices de cuadrado 2×2: +q en (0,0),(2,2) y −q en (2,0),(0,2). Centro: (1,1).
+        <div class="calc">
+          <span class="step">Distancia centro-vértice: √2 m. Por simetría: las cargas opuestas (+q en (0,0) y −q en (2,2)) crean campos colineales que se suman, no se cancelan. Mismo razonamiento para el otro par.</span>
+          <span class="step">E centro: tras hacer la suma vectorial completa, los aportes en +x y −x se cancelan por simetría; igual en y. <span class="box-result">E_centro = 0 N/C</span></span>
+          <span class="step">V centro = K·Σ(q_i/r_i) = K/√2·(+q −q +q −q) = <span class="box-result">V_centro = 0 V</span> (también por simetría)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> V en A(0,0). Las otras tres cargas: q en (2,2) a r=2√2; −q en (2,0) a r=2; −q en (0,2) a r=2.
+        <div class="calc">
+          <span class="step">V_A = K·q·(1/2√2 − 1/2 − 1/2) = 9·10⁹·3·10⁻⁶·(0,3536 − 1) = 9·10⁹·3·10⁻⁶·(−0,6464)</span>
+          <span class="step">V_A ≈ −1,75·10⁴ V; V_centro = 0</span>
+          <span class="step">W_externo = q·(V_A − V_centro) = 3·10⁻⁶·(−1,75·10⁴ − 0) <span class="arrow">→</span> <span class="box-result">W ≈ −5,24·10⁻² J</span></span>
+          <span class="step">Como W_ext &lt; 0, el campo realiza el trabajo (la carga cae espontáneamente hacia A).</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Electrón en B con R=2 cm, v=5·10⁶ m/s.
+        <div class="calc">
+          <span class="step">B = mv/(qR) = 9,11·10⁻³¹·5·10⁶/(1,6·10⁻¹⁹·0,02) <span class="arrow">→</span> <span class="box-result">B ≈ 1,42·10⁻³ T</span></span>
+          <span class="step">T = 2πm/(qB) = 2π·9,11·10⁻³¹/(1,6·10⁻¹⁹·1,42·10⁻³) <span class="arrow">→</span> <span class="box-result">T ≈ 2,51·10⁻⁸ s</span></span>
+          <span class="step">E_c = ½mv² = ½·9,11·10⁻³¹·(5·10⁶)² ≈ 1,14·10⁻¹⁷ J <span class="arrow">→</span> <span class="box-result">E_c ≈ 71 eV</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Protón acelerado 2000 V: ½m·v² = qV → v=√(2qV/m) = √(2·1,6·10⁻¹⁹·2000/1,673·10⁻²⁷)
+        <div class="calc">
+          <span class="step">v ≈ √(3,82·10¹¹) = 6,19·10⁵ m/s</span>
+          <span class="step">R = mv/(qB) = 1,673·10⁻²⁷·6,19·10⁵/(1,6·10⁻¹⁹·0,4) <span class="arrow">→</span> <span class="box-result">R ≈ 1,62·10⁻² m ≈ 1,6 cm</span></span>
+          <span class="step">T = 2πm/(qB) = 2π·1,673·10⁻²⁷/(1,6·10⁻¹⁹·0,4) <span class="arrow">→</span> <span class="box-result">T ≈ 1,64·10⁻⁷ s</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · MAS y óptica <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> m=0,4 kg, k=64 N/m, A=0,05 m. ω = √(k/m) = √160 ≈ 12,65 rad/s. En t=0 x=+A → x(t)=A·cos(ωt).
+        <div class="calc">
+          <span class="step"><span class="box-result">x(t) = 0,05·cos(12,65·t) m</span></span>
+          <span class="step">T = 2π/ω <span class="arrow">→</span> <span class="box-result">T ≈ 0,497 s</span></span>
+          <span class="step">v_max = A·ω = 0,05·12,65 <span class="arrow">→</span> <span class="box-result">v_max ≈ 0,632 m/s</span></span>
+          <span class="step">v(t) = −A·ω·sen(ωt). x cos vs v sen → desfase π/2 (v adelanta π/2)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> E_total = ½kA² = ½·64·0,0025 = 0,08 J. E_c = E_p cuando ½kx² = ½·E_total → x² = A²/2 → x = ±A/√2.
+        <div class="calc">
+          <span class="step"><span class="box-result">E_total = 0,08 J</span></span>
+          <span class="step">x = ±A/√2 = ±0,05/1,414 <span class="arrow">→</span> <span class="box-result">x ≈ ±3,54·10⁻² m</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> Lente divergente f=−20 cm, objeto 6 cm a s=−30 cm.
+        <div class="calc">
+          <span class="step">1/s′ = 1/(−20) + 1/(−30) = −5/60 = −1/12 → s′ = −12 cm (virtual)</span>
+          <span class="step">β = s′/s = −12/(−30) = +0,4 → h′ = +0,4·6 = +2,4 cm (derecha, reducida, virtual)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> Onda v=12 m/s, f=4 Hz, A=5 cm. ω=2πf=8π. λ=v/f=3 m. k=2π/λ=2π/3.
+        <div class="calc">
+          <span class="step"><span class="box-result">y(x,t) = 0,05·sen(8πt − 2πx/3) m</span> (asumimos +x y origen en y=0 con v_transv +)</span>
+          <span class="step">v_max,vibr = Aω = 0,05·8π <span class="arrow">→</span> <span class="box-result">v_max ≈ 1,26 m/s</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Nuclear <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> W_Cs = 2,14 eV = 3,42·10⁻¹⁹ J. f_umbral = W/h = 3,42·10⁻¹⁹/6,63·10⁻³⁴ <span class="arrow">→</span> <span class="box-result">f_umbral ≈ 5,17·10¹⁴ Hz</span>; λ_umbral = c/f <span class="arrow">→</span> <span class="box-result">≈ 580 nm</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> λ=400 nm → E_fotón = hc/λ ≈ 4,97·10⁻¹⁹ J = 3,10 eV.
+        <div class="calc">
+          <span class="step">E_c,max = 3,10 − 2,14 = 0,96 eV = 1,54·10⁻¹⁹ J <span class="arrow">→</span> <span class="box-result">E_c,max ≈ 0,96 eV</span></span>
+          <span class="step">V_frenado = E_c,max/e <span class="arrow">→</span> <span class="box-result">V_f ≈ 0,96 V</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> Vida media τ = 7,038·10⁸ años. Constante λ = 1/τ.
+        <div class="calc">
+          <span class="step">τ_s = 7,038·10⁸·3,156·10⁷ ≈ 2,22·10¹⁶ s</span>
+          <span class="step">λ = 1/τ_s ≈ 4,50·10⁻¹⁷ s⁻¹</span>
+          <span class="step">N₀ = (2·10⁻³ g / 235 g/mol)·N_A = 8,51·10⁻⁶·6,022·10²³ ≈ 5,13·10¹⁸ núcleos</span>
+          <span class="step">A₀ = λ·N₀ = 4,50·10⁻¹⁷·5,13·10¹⁸ <span class="arrow">→</span> <span class="box-result">A₀ ≈ 230 Bq</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> N(t) = N₀·e^(−λt). N/N₀ = 0,1 → λt = ln(10).
+        <div class="calc">
+          <span class="step">t = ln(10)/λ = 2,303/4,50·10⁻¹⁷ ≈ 5,12·10¹⁶ s ≈ <span class="box-result">1,62·10⁹ años</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 4 ============ -->
+<section class="slide" data-title="Soluciones · Examen 4">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 4</div>
+        <h2 class="sol-titulo">Examen 4 · 3 masas y selector</h2>
+        <div class="sol-tema">Triángulo equilátero · selector · onda · ⁵⁵Mn</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> Triángulo equilátero L=2 m. Centroide en (1, √3/3). Distancia centroide-vértice = L/√3 ≈ 1,155 m.
+        <div class="calc">
+          <span class="step">Por simetría las 3 g apuntan hacia cada vértice con módulos iguales y ángulos 120° entre sí → suma vectorial nula.</span>
+          <span class="step"><span class="box-result">g_centroide = 0 m/s²</span></span>
+          <span class="step">V = −G·Σ(m_i/r_i) = −3Gm/(L/√3) = −3√3·Gm/L = −3√3·6,67·10⁻¹¹·5/2</span>
+          <span class="step"><span class="box-result">V_centroide ≈ −8,67·10⁻¹⁰ J/kg</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> Masa m′=1 kg en C(1,√3). Distancia a A y B = 2 m cada una. F_A y F_B forman 60° entre sí.
+        <div class="calc">
+          <span class="step">|F_A| = |F_B| = Gmm′/d² = 6,67·10⁻¹¹·5·1/4 ≈ 8,34·10⁻¹¹ N</span>
+          <span class="step">F_total = 2·|F|·cos(30°) hacia el punto medio AB <span class="arrow">→</span> <span class="box-result">F ≈ 1,44·10⁻¹⁰ N</span> (dirección −y desde C)</span>
+          <span class="step">E_p del sistema = −G·Σ(m_i·m_j/r_ij) sumando los 3 pares = −3·G·m²/L</span>
+          <span class="step">E_p = −3·6,67·10⁻¹¹·25/2 <span class="arrow">→</span> <span class="box-result">E_p ≈ −2,50·10⁻⁹ J</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> Alejar la masa de C al ∞ (A y B fijas): U_C en sistema = −G·m·m_A/L − G·m·m_B/L = −Gm²
+        <div class="calc">
+          <span class="step">W_externo = 0 − (−G·m²) = G·m² = 6,67·10⁻¹¹·25 <span class="arrow">→</span> <span class="box-result">W ≈ 1,67·10⁻⁹ J</span></span>
+          <span class="step">Velocidad mínima para escape: ½·m·v² = Gm² → v_esc = √(2Gm) ≈ <span class="box-result">2,58·10⁻⁵ m/s</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> q₁=+6 μC en (0,0), q₂=−2 μC en (6,0). Cargas opuestas → E=0 fuera del segmento, más allá de |q| menor.
+        <div class="calc">
+          <span class="step">|q₁|/x² = |q₂|/(x−6)² ⇒ √(q₁/q₂) = √3 = x/(x−6)</span>
+          <span class="step">x(√3−1) = 6√3 → x = 6√3/(√3−1) = 9 + 3√3 <span class="arrow">→</span> <span class="box-result">x ≈ 14,2 m</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> En P(3,0): r₁=r₂=3 m.
+        <div class="calc">
+          <span class="step">V_P = K·(q₁/3 + q₂/3) = 9·10⁹·(6−2)·10⁻⁶/3 = <span class="box-result">12000 V</span></span>
+          <span class="step">W_externo = q′·(V_∞ − V_P) = 10⁻⁶·(0 − 12000) <span class="arrow">→</span> <span class="box-result">W_ext = −1,2·10⁻² J</span></span>
+          <span class="step">El campo realiza trabajo positivo (V_P&gt;0 y q′&gt;0 → la carga sale espontáneamente).</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Selector: para trayectoria rectilínea F_eléc = −F_mag.
+        <div class="calc">
+          <span class="step">qE = qvB → E = v·B = 4·10⁵·0,2 <span class="arrow">→</span> <span class="box-result">|E| = 8·10⁴ V/m</span></span>
+          <span class="step">Con v=+î y B=+k̂, F_m = qv×B = q(î×k̂) = −q·ĵ. Para compensar, F_e = qE debe ir en +ĵ <span class="arrow">→</span> <span class="box-result">E en sentido +ĵ</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> A = 0,12² = 0,0144 m². Φ = B·A·cos(30°) = 0,8·t²·0,0144·(√3/2) ≈ 9,98·10⁻³·t² Wb.
+        <div class="calc">
+          <span class="step">ε = −dΦ/dt = −0,01996·t V</span>
+          <span class="step">En t=3 s: ε ≈ −0,060 V → <span class="box-result">|ε| ≈ 60 mV</span></span>
+          <span class="step">i = |ε|/R = 0,06/2 <span class="arrow">→</span> <span class="box-result">i = 30 mA</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · Ondas <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> y(x,t) = 0,02 sen(50πt − 4πx). Signo (-) en kx → propaga en +x.
+        <div class="calc">
+          <span class="step">ω = 50π → T = 2π/50π = 0,04 s, f = 25 Hz</span>
+          <span class="step">k = 4π → λ = 2π/4π = 0,5 m</span>
+          <span class="step">v_propag = ω/k = 50π/4π <span class="arrow">→</span> <span class="box-result">v = 12,5 m/s</span></span>
+          <span class="step">a_max,vibr = A·ω² = 0,02·(50π)² <span class="arrow">→</span> <span class="box-result">a_max ≈ 493 m/s²</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> Proyector: β = −5, s′ = +240 cm. β = s′/s → s = s′/β = 240/(−5) = −48 cm.
+        <div class="calc">
+          <span class="step">1/f = 1/s′ − 1/s = 1/240 + 1/48 = 6/240 = 1/40 <span class="arrow">→</span> <span class="box-result">f = +40 cm</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> Altavoz a 8 m, L=70 dB. L = 10·log(I/I₀) → I = I₀·10^(L/10).
+        <div class="calc">
+          <span class="step">I = 10⁻¹²·10⁷ = <span class="box-result">10⁻⁵ W/m²</span></span>
+          <span class="step">P = I·4π·r² = 10⁻⁵·4π·64 <span class="arrow">→</span> <span class="box-result">P ≈ 8 mW</span></span>
+          <span class="step">A 50 dB: I′ = 10⁻⁷ W/m². r′ = √(P/(4π·I′)) = √(8·10⁻³/(4π·10⁻⁷))</span>
+          <span class="step">r′ = √(6366) <span class="arrow">→</span> <span class="box-result">r′ ≈ 80 m</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> A=6 cm, f=5 Hz → ω=10π. En t=0 v máxima (+) → x(0)=0, v(0)=+v_max → x(t)=A·sen(ωt).
+        <div class="calc">
+          <span class="step"><span class="box-result">x(t) = 0,06·sen(10π·t) m</span></span>
+          <span class="step">v(t) = 0,6π·cos(10π·t), a(t) = −6π²·sen(10π·t)</span>
+          <span class="step">Cuando x = 3 cm: a = −ω²·x = −(10π)²·0,03 <span class="arrow">→</span> <span class="box-result">a ≈ −29,6 m/s²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Relativista / Nuclear <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> Electrón E_c=50 eV=8·10⁻¹⁸ J → v=√(2E_c/m)≈4,19·10⁶ m/s. λ_e = h/(m_e·v) ≈ <span class="box-result">1,74·10⁻¹⁰ m</span>
+        <div class="calc">
+          <span class="step">Pelota: m=0,06 kg, v=30 m/s. λ = 6,63·10⁻³⁴/(0,06·30) <span class="arrow">→</span> <span class="box-result">λ ≈ 3,68·10⁻³⁴ m</span> (24 órdenes menor → efectos cuánticos despreciables a escala macroscópica)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> ⁵⁵Mn: Z=25, N=30.
+        <div class="calc">
+          <span class="step">Δm = (25·1,00728 + 30·1,00867) − 54,938 = 55,442 − 54,938 = <span class="box-result">0,504 u</span></span>
+          <span class="step">E_enlace = 0,504·931,5 MeV <span class="arrow">→</span> <span class="box-result">E ≈ 469,5 MeV</span></span>
+          <span class="step">E/A = 469,5/55 <span class="arrow">→</span> <span class="box-result">≈ 8,54 MeV/nucleón</span> (cerca del máximo de la curva → muy estable)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> v=0,6c → γ = 1/√(1−0,36) = 1/0,8 = 1,25. L = L₀/γ = 30/1,25 = <span class="box-result">24 m</span> (en dirección del movimiento; las dimensiones transversales no se contraen).
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> E_fotón = hc/λ = 6,63·10⁻³⁴·3·10⁸/450·10⁻⁹ = 4,42·10⁻¹⁹ J = 2,76 eV. W_K = 2,3 eV.
+        <div class="calc">
+          <span class="step">E_fotón &gt; W → sí hay efecto fotoeléctrico</span>
+          <span class="step">E_c,max = 2,76 − 2,3 = 0,46 eV = 7,36·10⁻²⁰ J</span>
+          <span class="step">v_max = √(2E_c/m_e) <span class="arrow">→</span> <span class="box-result">v_max ≈ 4,02·10⁵ m/s</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 5 ============ -->
+<section class="slide" data-title="Soluciones · Examen 5">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 5</div>
+        <h2 class="sol-titulo">Examen 5 · Caída libre y dos hilos</h2>
+        <div class="sol-tema">Conservación · hilos paralelos · selector · electrón 0,8c</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> Cuerpo 8 kg cae desde h₀=2000 km. r_inicial=R_T+h₀=8,37·10⁶ m, r_final=R_T=6,37·10⁶ m.
+        <div class="calc">
+          <span class="step">Conservación: ½mv² = GMm·(1/R_T − 1/r_inicial)</span>
+          <span class="step">v² = 2GM·(1/R_T − 1/r_i) = 2·6,67·10⁻¹¹·5,97·10²⁴·(1/6,37·10⁶ − 1/8,37·10⁶)</span>
+          <span class="step">v² ≈ 7,96·10¹⁴·(1,570·10⁻⁷ − 1,195·10⁻⁷) = 7,96·10¹⁴·3,75·10⁻⁸ ≈ 2,99·10⁷</span>
+          <span class="step"><span class="box-result">v_impacto ≈ 5,47·10³ m/s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> v₀=5 km/s hacia arriba desde h₀. Altura máxima h_max: v=0.
+        <div class="calc">
+          <span class="step">½v₀² − GM/r_i = 0 − GM/r_max</span>
+          <span class="step">GM/r_max = GM/r_i − ½v₀² = 7,96·10¹⁴/8,37·10⁶ − 0,5·(5·10³)²</span>
+          <span class="step">GM/r_max = 9,513·10⁷ − 1,25·10⁷ = 8,263·10⁷ J/kg</span>
+          <span class="step">r_max = GM/8,263·10⁷ ≈ 9,64·10⁶ m <span class="arrow">→</span> <span class="box-result">h_max ≈ 3,27·10⁶ m ≈ 3270 km sobre superficie</span></span>
+          <span class="step">v_impacto (después): aplicando conservación desde h_max hasta R_T:</span>
+          <span class="step">v² = 2GM·(1/R_T − 1/r_max) ≈ 2·6,67·10⁻¹¹·5,97·10²⁴·(1,57·10⁻⁷ − 1,037·10⁻⁷)</span>
+          <span class="step">v ≈ 7,53·10³ m/s <span class="arrow">→</span> <span class="box-result">v_impacto ≈ 7,5 km/s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> A 2000 km en reposo: E_reposo = −GMm/r = −6,67·10⁻¹¹·5,97·10²⁴·8/8,37·10⁶ ≈ −3,81·10⁸ J
+        <div class="calc">
+          <span class="step">En órbita a r=8,37·10⁶ m: E_órb = −GMm/(2r) ≈ −1,90·10⁸ J</span>
+          <span class="step">ΔE = E_órb − E_reposo = −1,90·10⁸ − (−3,81·10⁸) <span class="arrow">→</span> <span class="box-result">ΔE ≈ +1,90·10⁸ J</span> (energía cinética que hay que comunicarle)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> En el origen O(0,0) sin contar q₁: solo aportan q₂(+3 μC en (4,0)) y q₃(−2 μC en (2,3)).
+        <div class="calc">
+          <span class="step">r₂ = 4 m. û_{q₂→O} = (−1, 0). E₂ apunta desde q₂(+) hacia el origen, opuesto: E₂ = K·q₂/r² · (−1,0)</span>
+          <span class="step">E₂ = 9·10⁹·3·10⁻⁶/16 · (−1, 0) = (−1687,5 ; 0) N/C</span>
+          <span class="step">r₃ = √(4+9) = √13 ≈ 3,606 m. û_{q₃→O} = (−2/√13, −3/√13). q₃ negativa → E hacia q₃: E₃ = K|q₃|/r² · (2/√13, 3/√13)</span>
+          <span class="step">E₃ = 9·10⁹·2·10⁻⁶/13 · (2/√13, 3/√13) = 1384,6·(0,555 ; 0,832) ≈ (768 ; 1152) N/C</span>
+          <span class="step">E_O = E₂ + E₃ = (−1687,5 + 768 ; 0 + 1152) <span class="arrow">→</span> <span class="box-result">E ≈ (−920 ; 1152) N/C, |E| ≈ 1473 N/C</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> Energía potencial del sistema: U = K·Σ(q_iq_j/r_ij) sumando los 3 pares.
+        <div class="calc">
+          <span class="step">r_{12}=4 m, r_{13}=√(4+9)=√13≈3,606 m, r_{23}=√(4+9)=√13≈3,606 m</span>
+          <span class="step">U = K·[q₁q₂/4 + q₁q₃/√13 + q₂q₃/√13]</span>
+          <span class="step">= 9·10⁹·[(3·3·10⁻¹²/4) + (3·(−2)·10⁻¹²/√13) + (3·(−2)·10⁻¹²/√13)]·10⁻⁰</span>
+          <span class="step">Más limpio: U = 9·10⁹·10⁻¹²·[9/4 − 6/√13 − 6/√13]</span>
+          <span class="step">= 9·10⁻³·[2,25 − 1,664 − 1,664] = 9·10⁻³·(−1,078) <span class="arrow">→</span> <span class="box-result">U ≈ −9,7·10⁻³ J</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Hilos paralelos, mismo sentido, separados 15 cm. P equidistante a 8 cm de cada uno.
+        <div class="calc">
+          <span class="step">B₁ = μ₀I₁/(2π·d) = 4π·10⁻⁷·10/(2π·0,08) = 2,5·10⁻⁵ T</span>
+          <span class="step">B₂ = μ₀·5/(2π·0,08) = 1,25·10⁻⁵ T</span>
+          <span class="step">Geometría: P en mediatriz, a 7,5 cm de cada hilo en la dirección perpendicular… (revisión: si separación 15 cm y P está en triángulo isósceles con bases 8,8, los componentes en la dirección de unión hilos se cancelan parcialmente)</span>
+          <span class="step">En P sobre la mediatriz de los hilos (entre ambos, equidistante): las componentes "horizontales" (perpendiculares a la mediatriz) se cancelan; las "verticales" se suman.</span>
+          <span class="step">cos(θ) = (15/2)/8 = 0,938. Pero como es equidistante 8 cm: en realidad el punto está fuera de la línea de unión.</span>
+          <span class="step">Caso más simple (P en punto medio exacto entre hilos): d=7,5 cm cada uno. B₁ = μ₀·10/(2π·0,075) ≈ 2,67·10⁻⁵ T. B₂ = 1,33·10⁻⁵ T. Sentidos opuestos (corrientes paralelas, B en sentidos opuestos sobre la mediatriz): B_neto = |B₁ − B₂| ≈ <span class="box-result">1,33·10⁻⁵ T</span></span>
+          <span class="step">F/L = μ₀·I₁·I₂/(2π·d) = 4π·10⁻⁷·10·5/(2π·0,15) <span class="arrow">→</span> <span class="box-result">F/L ≈ 6,67·10⁻⁵ N/m, atractiva</span> (corrientes en mismo sentido)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Electrón con v=3·10⁶ m/s en B=0,1 T. Para trayectoria rectilínea: |E| = vB = 3·10⁵ V/m.
+        <div class="calc">
+          <span class="step">Dirección: E debe ser perpendicular a v y antiparalelo a v×B para electrón (q&lt;0).</span>
+          <span class="step"><span class="box-result">|E| = 3·10⁵ V/m, perpendicular a v y B, en el sentido v×B (porque la carga es negativa)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · Ondas <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> A=0,03 m, f=25 Hz → ω=50π; λ=0,4 m → k=5π. Sentido −x → y = A·cos(ωt+kx+φ). En t=0, x=0 elongación máxima → φ=0.
+        <div class="calc">
+          <span class="step"><span class="box-result">y(x,t) = 0,03·cos(50π·t + 5π·x) m</span></span>
+          <span class="step">v = ω/k = 50π/5π = <span class="box-result">10 m/s</span></span>
+          <span class="step">v_max,vibr = A·ω = 0,03·50π <span class="arrow">→</span> <span class="box-result">v_max ≈ 4,71 m/s</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> Δφ_espacio = k·Δx = 5π·0,1 = 0,5π = <span class="box-result">π/2 rad</span> (cuadratura).
+        <div class="calc">
+          <span class="step">Δφ_tiempo = ω·Δt = 50π·0,01 = 0,5π = <span class="box-result">π/2 rad</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> Altavoz P=0,8 W, a r=5 m: I = P/(4πr²) = 0,8/(4π·25) ≈ <span class="box-result">2,55·10⁻³ W/m²</span>
+        <div class="calc">
+          <span class="step">L = 10·log(I/I₀) = 10·log(2,55·10⁹) ≈ 10·9,406 <span class="arrow">→</span> <span class="box-result">L ≈ 94 dB</span></span>
+          <span class="step">A 40 dB: I = 10⁻⁸ W/m². r = √(P/(4π·I)) = √(0,8/(4π·10⁻⁸)) ≈ <span class="box-result">r ≈ 2520 m</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> f=25 cm, s′=3 m=300 cm. 1/s = 1/s′ − 1/f = 1/300 − 1/25 = (1−12)/300 = −11/300
+        <div class="calc">
+          <span class="step">s = −300/11 ≈ −27,3 cm <span class="arrow">→</span> <span class="box-result">objeto a 27,3 cm de la lente</span></span>
+          <span class="step">β = s′/s = 300/(−27,3) ≈ <span class="box-result">−11</span> (invertida, ampliada 11×)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Relativista <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> Aluminio W=4,08 eV. λ=200 nm → E_fotón = hc/λ = 9,95·10⁻¹⁹ J = 6,21 eV.
+        <div class="calc">
+          <span class="step">E_c,max = 6,21 − 4,08 = 2,13 eV = 3,41·10⁻¹⁹ J <span class="arrow">→</span> <span class="box-result">E_c,max ≈ 2,13 eV</span></span>
+          <span class="step">V_frenado = E_c/e <span class="arrow">→</span> <span class="box-result">V_f ≈ 2,13 V</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> Duplicar la intensidad NO cambia la energía por fotón ni la E_c,max. <span class="box-result">Duplica el número de electrones emitidos por segundo.</span>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> Electrón a v=0,8c → γ=1/√(1−0,64)=1/0,6=1,667.
+        <div class="calc">
+          <span class="step">m_rel = γ·m₀ = 1,667·9,11·10⁻³¹ ≈ 1,52·10⁻³⁰ kg</span>
+          <span class="step">E_c,rel = (γ−1)·m₀·c² = 0,667·9,11·10⁻³¹·(3·10⁸)² ≈ 5,47·10⁻¹⁴ J ≈ 0,341 MeV</span>
+          <span class="step">E_c,clásica = ½·m₀·v² = 0,5·9,11·10⁻³¹·(0,8·3·10⁸)² ≈ 2,62·10⁻¹⁴ J ≈ 0,164 MeV</span>
+          <span class="step"><span class="box-result">E_c,rel ≈ 2·E_c,clásica</span> (a 0,8c el factor relativista es significativo)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> Protón con misma E_c = 5,47·10⁻¹⁴ J. ½m_p·v² = 5,47·10⁻¹⁴ → v ≈ 8,1·10⁶ m/s (no relativista).
+        <div class="calc">
+          <span class="step">λ = h/(m_p·v) = 6,63·10⁻³⁴/(1,673·10⁻²⁷·8,1·10⁶) <span class="arrow">→</span> <span class="box-result">λ ≈ 4,90·10⁻¹⁴ m</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 6 ============ -->
+<section class="slide" data-title="Soluciones · Examen 6">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 6</div>
+        <h2 class="sol-titulo">Examen 6 · Densidad por Kepler</h2>
+        <div class="sol-tema">Calisto · dipolo · MAS T=0,5 s · fibra óptica</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> Calisto: r=1,883·10⁹ m, T=16,69·86400 s = 1,442·10⁶ s. Kepler 3ª: M = 4π²·r³/(G·T²)
+        <div class="calc">
+          <span class="step">M = 4π²·(1,883·10⁹)³ / (6,67·10⁻¹¹·(1,442·10⁶)²)</span>
+          <span class="step">r³ ≈ 6,68·10²⁷; T² ≈ 2,08·10¹². Denominador ≈ 1,387·10²</span>
+          <span class="step">M_J ≈ 4π²·6,68·10²⁷/1,387·10² ≈ 1,9·10²⁷ kg <span class="arrow">→</span> <span class="box-result">M_Júpiter ≈ 1,9·10²⁷ kg</span> (valor real ≈ 1,898·10²⁷)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> V = (4/3)π·R_J³ = (4/3)π·(6,99·10⁷)³ ≈ 1,43·10²⁴ m³. ρ = M/V.
+        <div class="calc">
+          <span class="step">ρ = 1,9·10²⁷/1,43·10²⁴ <span class="arrow">→</span> <span class="box-result">ρ ≈ 1330 kg/m³</span> (cercano al agua: gigante gaseoso)</span>
+          <span class="step">g = GM/R² = 6,67·10⁻¹¹·1,9·10²⁷/(6,99·10⁷)² <span class="arrow">→</span> <span class="box-result">g_J ≈ 25,9 m/s²</span> (≈ 2,6 g_T)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> v_órbita = 2π·r/T = 2π·1,883·10⁹/1,442·10⁶ ≈ <span class="box-result">8,2·10³ m/s</span>
+        <div class="calc">
+          <span class="step">v_esc desde órbita = √(2GM/r) = √2·v_orb <span class="arrow">→</span> <span class="box-result">v_esc ≈ 1,16·10⁴ m/s</span></span>
+          <span class="step">1,5·v_orb = 12,3·10³ m/s &gt; v_esc → <span class="box-result">sí escapa</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> Dipolo: +q=4μC en (−2,0), −q en (+2,0). Distancia al punto P(0,3) desde cada carga: r=√(4+9)=√13 m.
+        <div class="calc">
+          <span class="step">Por simetría las componentes y se cancelan; las componentes x se suman.</span>
+          <span class="step">E_x = 2·K·q/r²·(2/√13) (signo: positivo desde +q sale, hacia +x; negativo en −q apunta hacia −q también +x)</span>
+          <span class="step">E_x = 2·9·10⁹·4·10⁻⁶/13·(2/3,606) ≈ 2·2769·0,555 ≈ 3070 N/C</span>
+          <span class="step"><span class="box-result">E_P ≈ (3070 ; 0) N/C, sentido +x</span></span>
+          <span class="step">V_P = K·(q/r − q/r) = 0 V (dipolo equidistante)</span>
+          <span class="step">V_O = K·(q/2 − q/2) = 0 V</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> W_ext = q′·(V_O − V_P) = 2·10⁻⁶·(0 − 0) = <span class="box-result">0 J</span> (movimiento entre dos puntos del eje perpendicular al dipolo, equipotenciales).
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Espira 15 cm × 15 cm = 0,0225 m². B(t)=0,4·sen(20πt) perpendicular.
+        <div class="calc">
+          <span class="step">Φ(t) = 0,4·0,0225·sen(20πt) = 9·10⁻³·sen(20πt) Wb</span>
+          <span class="step">ε = −dΦ/dt = −9·10⁻³·20π·cos(20πt) = −0,565·cos(20πt) V</span>
+          <span class="step">En t=0,05 s: 20π·0,05 = π → cos(π) = −1 → ε = +0,565 V <span class="arrow">→</span> <span class="box-result">ε ≈ 0,565 V</span></span>
+          <span class="step"><span class="box-result">ε_max = 0,565 V</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Protón v=6·10⁵ m/s, B=0,5 T.
+        <div class="calc">
+          <span class="step">R = m_p·v/(qB) = 1,673·10⁻²⁷·6·10⁵/(1,6·10⁻¹⁹·0,5) <span class="arrow">→</span> <span class="box-result">R ≈ 1,25·10⁻² m ≈ 1,25 cm</span></span>
+          <span class="step">T = 2πR/v = 2π·0,0125/6·10⁵ ≈ <span class="box-result">T ≈ 1,31·10⁻⁷ s</span></span>
+          <span class="step">E_c = ½·m_p·v² ≈ 3,01·10⁻¹⁶ J <span class="arrow">→</span> <span class="box-result">E_c ≈ 1880 eV</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · MAS y óptica <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> m=0,25 kg, A=0,12 m, T=0,5 s → ω=2π/T=4π rad/s.
+        <div class="calc">
+          <span class="step">k = m·ω² = 0,25·16π² ≈ <span class="box-result">k ≈ 39,5 N/m</span></span>
+          <span class="step">v_max = A·ω = 0,12·4π ≈ <span class="box-result">v_max ≈ 1,51 m/s</span></span>
+          <span class="step">a_max = A·ω² = 0,12·16π² <span class="arrow">→</span> <span class="box-result">a_max ≈ 18,9 m/s²</span></span>
+          <span class="step">E_mec = ½·k·A² = 0,5·39,5·0,0144 <span class="arrow">→</span> <span class="box-result">E ≈ 0,284 J</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> En t=0 x=0 con v negativa → x(t) = −A·sen(ωt) o equivalentemente A·sen(ωt+π).
+        <div class="calc">
+          <span class="step"><span class="box-result">x(t) = −0,12·sen(4π·t) m</span>; v(t) = −0,12·4π·cos(4π·t)</span>
+          <span class="step">En t=0,2 s: 4π·0,2 = 0,8π. sen(0,8π) = 0,588; cos(0,8π) = −0,809</span>
+          <span class="step">x = −0,12·0,588 ≈ −0,0706 m; v = −1,508·(−0,809) ≈ +1,22 m/s</span>
+          <span class="step"><span class="box-result">x ≈ −7,06 cm, v ≈ +1,22 m/s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> Snell: 1·sen(30°) = 1,5·sen(θ₂) → sen(θ₂) = 0,333.
+        <div class="calc">
+          <span class="step"><span class="box-result">θ₂ ≈ 19,47°</span></span>
+          <span class="step">λ_vidrio = λ₀/n = 633/1,5 <span class="arrow">→</span> <span class="box-result">λ_v ≈ 422 nm</span></span>
+          <span class="step">f es la misma en ambos medios: f = c/λ₀ = 3·10⁸/633·10⁻⁹ <span class="arrow">→</span> <span class="box-result">f ≈ 4,74·10¹⁴ Hz</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> Reflexión total: ocurre cuando la luz pasa de medio denso a menos denso (vidrio → aire). sen(θ_L) = n_aire/n_vidrio = 1/1,5
+        <div class="calc">
+          <span class="step"><span class="box-result">θ_L ≈ 41,8°</span></span>
+          <span class="step">Fibra óptica: la luz viaja por el núcleo (n alto) confinada por reflexión total interna en la interfaz con el revestimiento (n más bajo). Permite transmitir señales sin pérdidas significativas.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Nuclear <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> W_K=2,3 eV. λ₁=500 nm → E₁ = hc/λ₁ ≈ 2,48 eV. λ₂=350 nm → E₂ ≈ 3,55 eV.
+        <div class="calc">
+          <span class="step">λ₁: E₁&gt;W → sí hay efecto. E_c,max = 2,48 − 2,3 = <span class="box-result">0,18 eV</span></span>
+          <span class="step">λ₂: E₂&gt;W también, pero la pregunta pide en cuál. Ambas producen efecto; λ₂ da más E_c.</span>
+          <span class="step">E_c,max(λ₂) = 3,55 − 2,3 = <span class="box-result">1,25 eV</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> Duplicar intensidad NO cambia E por fotón ni E_c,max. Solo duplica el número de electrones emitidos/segundo (intensidad de la corriente fotoeléctrica). E_c,max sólo depende de la frecuencia.
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> ¹⁴N: Z=7, N=7, m=14,00307 u.
+        <div class="calc">
+          <span class="step">Δm = (7·1,00728 + 7·1,00867) − 14,00307 = 14,11165 − 14,00307 = <span class="box-result">0,10858 u</span></span>
+          <span class="step">E = 0,10858·931,5 ≈ 101,2 MeV → <span class="box-result">E/A ≈ 7,23 MeV/nucleón</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> ⁴He: Δm = 2·(1,00728+1,00867) − 4,0026 = 4,03190 − 4,0026 = 0,02930 u → E ≈ 27,3 MeV → E/A ≈ 6,82 MeV/nucleón
+        <div class="calc">
+          <span class="step">¹⁴N (7,23) tiene MAYOR energía de enlace por nucleón que ⁴He (6,82) <span class="arrow">→</span> <span class="box-result">¹⁴N es más estable que ⁴He</span></span>
+          <span class="step">(Esto es coherente con la curva de Aston: la estabilidad crece desde He hasta el máximo en ⁵⁶Fe.)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 7 ============ -->
+<section class="slide" data-title="Soluciones · Examen 7">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 7</div>
+        <h2 class="sol-titulo">Examen 7 · Tierra-Luna y gemelos</h2>
+        <div class="sol-tema">3 cuerpos · condensador · onda · 0,9c</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> Satélite m=2000 kg en P. d_PT = 3,2·10⁸ m. d_PL = d_TL − d_PT = 3,84·10⁸ − 3,2·10⁸ = 0,64·10⁸ m.
+        <div class="calc">
+          <span class="step">F_T (Tierra→sat) = G·M_T·m/d_PT² = 6,67·10⁻¹¹·5,97·10²⁴·2000/(3,2·10⁸)² ≈ 7,77·10⁻³ N (hacia Tierra, −x̂)</span>
+          <span class="step">F_L (Luna→sat) = G·M_L·m/d_PL² = 6,67·10⁻¹¹·7,35·10²²·2000/(6,4·10⁷)² ≈ 2,39·10⁻³ N (hacia Luna, +x̂)</span>
+          <span class="step">F_neta = F_L − F_T <span class="arrow">→</span> <span class="box-result">F ≈ −5,38·10⁻³ N x̂</span> (neto hacia la Tierra)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> Punto donde g=0: GM_T/x² = GM_L/(d−x)² ⇒ x/(d−x) = √(M_T/M_L) = √81,2 = 9,01.
+        <div class="calc">
+          <span class="step">x(1+9,01) = 9,01·d → x = 0,9·d = 0,9·3,84·10⁸ <span class="arrow">→</span> <span class="box-result">x ≈ 3,46·10⁸ m desde la Tierra</span> (≈ 38400 km de la Luna)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> Llevar de superficie Luna (r=R_L) a órbita lunar (r=2R_L). Energía mínima = ΔE_mec.
+        <div class="calc">
+          <span class="step">E_inicial = −G·M_L·m/R_L (reposo)</span>
+          <span class="step">E_final = −G·M_L·m/(2·2R_L) = −G·M_L·m/(4R_L)</span>
+          <span class="step">ΔE = E_final − E_inicial = G·M_L·m/R_L · (1 − 1/4) = (3/4)·G·M_L·m/R_L</span>
+          <span class="step">ΔE = 0,75·6,67·10⁻¹¹·7,35·10²²·2000/1,74·10⁶ <span class="arrow">→</span> <span class="box-result">ΔE ≈ 4,22·10⁹ J</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> q₁=+1μC en (0,0), q₂=+1μC en (4,0), q₃=−2μC en (2,3). P(2,0). r₁=r₂=2 m, r₃=3 m.
+        <div class="calc">
+          <span class="step">E₁ (de +q₁ saliendo): û=(1,0). E₁ = 9·10⁹·1·10⁻⁶/4·(1,0) = (2250 ; 0) N/C</span>
+          <span class="step">E₂ (de +q₂ saliendo, q₂ a la derecha de P): û=(−1,0). E₂ = (−2250 ; 0) N/C</span>
+          <span class="step">E₃ (q₃ negativa, apunta hacia q₃ desde P, q₃ arriba): û=(0,1). E₃ = 9·10⁹·2·10⁻⁶/9·(0,1) = (0 ; 2000) N/C</span>
+          <span class="step">E_P = (0 ; 2000) <span class="arrow">→</span> <span class="box-result">|E| = 2000 N/C, sentido +y</span></span>
+          <span class="step">V_P = 9·10⁹·(1/2 + 1/2 − 2/3)·10⁻⁶ = 9·10⁹·0,333·10⁻⁶ <span class="arrow">→</span> <span class="box-result">V_P = 3000 V</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> Q(4,3). r₁=√(16+9)=5 m; r₂=√(0+9)=3 m; r₃=√(4+0)=2 m.
+        <div class="calc">
+          <span class="step">V_Q = K·(1/5 + 1/3 − 2/2)·10⁻⁶ = 9·10⁹·(0,2 + 0,333 − 1)·10⁻⁶</span>
+          <span class="step">V_Q = 9·10⁹·(−0,467)·10⁻⁶ <span class="arrow">→</span> <span class="box-result">V_Q ≈ −4200 V</span></span>
+          <span class="step">W_ext = q′·(V_Q − V_P) = 0,5·10⁻⁶·(−4200 − 3000) <span class="arrow">→</span> <span class="box-result">W_ext ≈ −3,6·10⁻³ J</span></span>
+          <span class="step">W_ext negativo → el campo realiza el trabajo (la carga es atraída hacia Q, la carga +0,5μC se acerca a q₃ negativa).</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Electrón en condensador: v₀=4·10⁶ m/s horizontal, E=5000 V/m vertical hacia arriba.
+        <div class="calc">
+          <span class="step">F = qE (hacia abajo para electrón, q&lt;0): a = eE/m_e = 1,6·10⁻¹⁹·5000/9,11·10⁻³¹ ≈ 8,78·10¹⁴ m/s²</span>
+          <span class="step">Tiempo en el condensador: t = L/v₀ = 0,04/4·10⁶ = 10⁻⁸ s</span>
+          <span class="step">Δy = ½·a·t² = 0,5·8,78·10¹⁴·10⁻¹⁶ <span class="arrow">→</span> <span class="box-result">Δy ≈ 4,4·10⁻² m ≈ 4,4 cm</span> (hacia abajo)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Espira 0,08·0,12=9,6·10⁻³ m², normal a 30° de B(t)=0,5·cos(20t) T.
+        <div class="calc">
+          <span class="step">Φ(t) = B·A·cos(30°) = 0,5·9,6·10⁻³·(√3/2)·cos(20t) ≈ 4,16·10⁻³·cos(20t) Wb</span>
+          <span class="step">ε = −dΦ/dt = 4,16·10⁻³·20·sen(20t) = 0,0831·sen(20t) V</span>
+          <span class="step">En t = π/40 s: 20·t = π/2 → sen(π/2)=1 → ε = +0,083 V <span class="arrow">→</span> <span class="box-result">ε ≈ 0,083 V</span></span>
+          <span class="step">i = ε/R = 0,083/3 <span class="arrow">→</span> <span class="box-result">i ≈ 27,7 mA</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · Ondas y óptica <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> A=0,03 m, λ=0,2 m → k=2π/0,2 = 10π rad/m. v=5 m/s → ω = v·k = 50π rad/s. T = 2π/ω = 0,04 s.
+        <div class="calc">
+          <span class="step">En t=0, x=0: y=0 con v_transversal positiva → y = A·sen(ωt − kx) sirve (verificar: ∂y/∂t = Aω·cos(0)=Aω &gt; 0 ✓)</span>
+          <span class="step"><span class="box-result">y(x,t) = 0,03·sen(50π·t − 10π·x) m</span></span>
+          <span class="step">v_max,vibr = A·ω = 0,03·50π <span class="arrow">→</span> <span class="box-result">v_max ≈ 4,71 m/s</span></span>
+          <span class="step">a_max = A·ω² = 0,03·(50π)² <span class="arrow">→</span> <span class="box-result">a_max ≈ 740 m/s²</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> En x=0,05 m, t=0,1 s: argumento = 50π·0,1 − 10π·0,05 = 5π − 0,5π = 4,5π
+        <div class="calc">
+          <span class="step">sen(4,5π) = sen(0,5π) = 1</span>
+          <span class="step">y = 0,03·1 = <span class="box-result">3 cm</span></span>
+          <span class="step">v = A·ω·cos(4,5π) = 4,71·cos(0,5π) = 4,71·0 = <span class="box-result">0 m/s</span></span>
+          <span class="step">a = −ω²·y = −(50π)²·0,03 ≈ <span class="box-result">−740 m/s²</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> P=+5 D → f = 1/P = 0,20 m = 20 cm. Objeto a 80 cm → s = −80 cm.
+        <div class="calc">
+          <span class="step">1/s′ = 1/20 − 1/80 = (4−1)/80 = 3/80 <span class="arrow">→</span> <span class="box-result">s′ ≈ +26,7 cm</span> (real)</span>
+          <span class="step">β = s′/s = 26,7/(−80) <span class="arrow">→</span> <span class="box-result">β ≈ −0,33</span> (invertida, reducida 1/3)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> Objeto a 15 cm → s = −15 cm (dentro de f → imagen virtual).
+        <div class="calc">
+          <span class="step">1/s′ = 1/20 − 1/15 = (3−4)/60 = −1/60 → <span class="box-result">s′ = −60 cm</span> (virtual, izquierda)</span>
+          <span class="step">β = −60/(−15) = <span class="box-result">+4</span> (derecha, ampliada 4×). Funciona como lupa.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Relativista <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> E_c=1000 eV = 1,6·10⁻¹⁶ J para ambas partículas. Como E_c = p²/(2m): p = √(2m·E_c).
+        <div class="calc">
+          <span class="step">p_e = √(2·9,11·10⁻³¹·1,6·10⁻¹⁶) ≈ 1,71·10⁻²³ kg·m/s → λ_e = h/p_e ≈ <span class="box-result">3,88·10⁻¹¹ m</span></span>
+          <span class="step">p_p = √(2·1,673·10⁻²⁷·1,6·10⁻¹⁶) ≈ 7,32·10⁻²² kg·m/s → λ_p ≈ <span class="box-result">9,06·10⁻¹³ m</span></span>
+          <span class="step">λ_e/λ_p = √(m_p/m_e) ≈ √1836 ≈ 42,8 → <span class="box-result">el electrón tiene λ mayor</span> (a misma E_c, partícula más ligera → mayor λ)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> λ_e (electrón a 10⁶ m/s) = h/(m_e·v) = 6,63·10⁻³⁴/(9,11·10⁻³¹·10⁶) ≈ 7,28·10⁻¹⁰ m. Igualando λ_p:
+        <div class="calc">
+          <span class="step">v_p = h/(m_p·λ_e) = 6,63·10⁻³⁴/(1,673·10⁻²⁷·7,28·10⁻¹⁰) <span class="arrow">→</span> <span class="box-result">v_p ≈ 544 m/s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> γ = 1/√(1−0,81) = 1/√0,19 = 1/0,436 ≈ 2,294
+        <div class="calc">
+          <span class="step">d = 4,24 años luz. Δt_Tierra = d/(0,9c) = 4,24/0,9 <span class="arrow">→</span> <span class="box-result">Δt_T ≈ 4,71 años</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> Δτ (tiempo propio del astronauta) = Δt_T/γ = 4,71/2,294 <span class="arrow">→</span> <span class="box-result">Δτ ≈ 2,05 años</span>
+        <div class="calc">
+          <span class="step">Distancia para el astronauta (contracción): L = L₀/γ = 4,24/2,294 <span class="arrow">→</span> <span class="box-result">L ≈ 1,85 años luz</span></span>
+          <span class="step">(Verificación: v·Δτ = 0,9·1·1 año luz/año · 2,05 ≈ 1,85 ✓)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 8 ============ -->
+<section class="slide" data-title="Soluciones · Examen 8">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 8</div>
+        <h2 class="sol-titulo">Examen 8 · Satélite con T fijo</h2>
+        <div class="sol-tema">T=8h · espira 60° · partícula α · ⁶⁰Co</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> T=8h=28800 s. Kepler 3ª: r³ = GM_T·T²/(4π²)
+        <div class="calc">
+          <span class="step">r³ = 6,67·10⁻¹¹·5,97·10²⁴·(28800)² / (4π²) ≈ 8,38·10²¹</span>
+          <span class="step">r = ∛(8,38·10²¹) ≈ 2,03·10⁷ m</span>
+          <span class="step">h = r − R_T = 2,03·10⁷ − 6,37·10⁶ <span class="arrow">→</span> <span class="box-result">h ≈ 1,4·10⁷ m ≈ 13900 km</span></span>
+          <span class="step">v = 2πr/T = 2π·2,03·10⁷/28800 <span class="arrow">→</span> <span class="box-result">v ≈ 4,43·10³ m/s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> a_c = v²/r = (4430)²/2,03·10⁷ <span class="arrow">→</span> <span class="box-result">a_c ≈ 0,966 m/s²</span>
+        <div class="calc">
+          <span class="step">E = −GM_T·m/(2r) = −6,67·10⁻¹¹·5,97·10²⁴·1800/(2·2,03·10⁷) <span class="arrow">→</span> <span class="box-result">E ≈ −1,77·10¹⁰ J</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> Nueva órbita T=12h=43200 s.
+        <div class="calc">
+          <span class="step">r₂³ = GM_T·T₂²/(4π²) ≈ 1,89·10²² → r₂ ≈ 2,66·10⁷ m</span>
+          <span class="step">E₂ = −GM_T·m/(2r₂) ≈ −1,35·10¹⁰ J</span>
+          <span class="step">ΔE = E₂ − E₁ = −1,35·10¹⁰ − (−1,77·10¹⁰) <span class="arrow">→</span> <span class="box-result">ΔE ≈ +4,2·10⁹ J</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> q₁=+4μC en (−2,0); q₂=+2μC en (0,0); q₃=−3μC en (3,0). P(1,0). r₁=3, r₂=1, r₃=2.
+        <div class="calc">
+          <span class="step">E₁ (de +q₁ saliendo, P a la derecha): û=(+1,0). E₁ = 9·10⁹·4·10⁻⁶/9 = 4000 N/C en +x</span>
+          <span class="step">E₂ (de +q₂ saliendo): û=(+1,0). E₂ = 9·10⁹·2·10⁻⁶/1 = 18000 N/C en +x</span>
+          <span class="step">E₃ (q₃ negativa, apunta hacia q₃ desde P, q₃ a la derecha): û=(+1,0). E₃ = 9·10⁹·3·10⁻⁶/4 = 6750 N/C en +x</span>
+          <span class="step">E_total = 4000 + 18000 + 6750 <span class="arrow">→</span> <span class="box-result">E ≈ 28750 N/C, sentido +x</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> Energía potencial del sistema: U = K·Σ(q_iq_j/r_ij)
+        <div class="calc">
+          <span class="step">r₁₂=2, r₁₃=5, r₂₃=3</span>
+          <span class="step">U = 9·10⁹·[(4·2)/2 + (4·(−3))/5 + (2·(−3))/3]·10⁻¹²</span>
+          <span class="step">U = 9·10⁻³·[4 − 2,4 − 2] = 9·10⁻³·(−0,4) <span class="arrow">→</span> <span class="box-result">U ≈ −3,6·10⁻³ J</span></span>
+          <span class="step">W para llevar q₃ al ∞ (fijas q₁,q₂): W = U_∞ − U_inicial(q₃ en sistema) = 0 − K·q₃·(q₁/r₁₃ + q₂/r₂₃)</span>
+          <span class="step">U_q₃ = 9·10⁹·(−3·10⁻⁶)·(4·10⁻⁶/5 + 2·10⁻⁶/3) = −2,7·10⁻²·(0,8 + 0,667)·10⁻⁶ = −3,96·10⁻²·10⁻⁶ ≈ −0,03 J… revisión:</span>
+          <span class="step">U_q₃(en sistema) = K·q₃·V_(en q₃ de q1,q2) = 9·10⁹·(−3·10⁻⁶)·(4/5 + 2/3)·10⁻⁶ = −2,7·10⁻²·1,467·10⁻⁶ ≈ −3,96·10⁻² · 10⁻⁶ ≈ −3,96·10⁻⁸ J</span>
+          <span class="step">W = 0 − (−3,96·10⁻⁸) <span class="arrow">→</span> <span class="box-result">W ≈ 3,96·10⁻⁸ J</span> (corrige los exponentes; valor pequeño porque las cargas son μC)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Espira 0,2·0,2=0,04 m², normal a 60° de B(t)=3·sen(4t+π).
+        <div class="calc">
+          <span class="step">Φ(t) = B·A·cos(60°) = 3·0,04·0,5·sen(4t+π) = 0,06·sen(4t+π)</span>
+          <span class="step">Φ_max = 0,06 Wb (cuando sen=±1)</span>
+          <span class="step">ε = −dΦ/dt = −0,24·cos(4t+π)</span>
+          <span class="step">En t=π/8: 4·π/8+π = π/2+π = 3π/2. cos(3π/2)=0 → <span class="box-result">ε = 0 V</span> en ese instante</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Partícula α (q=2e=3,2·10⁻¹⁹ C, m=6,64·10⁻²⁷ kg) acelerada 1500 V.
+        <div class="calc">
+          <span class="step">qV = ½m·v² → v = √(2qV/m) = √(2·3,2·10⁻¹⁹·1500/6,64·10⁻²⁷) = √(1,446·10¹¹) ≈ 3,80·10⁵ m/s</span>
+          <span class="step"><span class="box-result">v ≈ 3,80·10⁵ m/s</span></span>
+          <span class="step">R = mv/(qB) = 6,64·10⁻²⁷·3,80·10⁵/(3,2·10⁻¹⁹·0,6) <span class="arrow">→</span> <span class="box-result">R ≈ 1,31·10⁻² m ≈ 1,31 cm</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · Ondas y óptica <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> y = 0,08·cos(πt − 4πx + π/4). Signo (−) en kx → sentido +x.
+        <div class="calc">
+          <span class="step">ω=π → T = 2 s</span>
+          <span class="step">k=4π → λ = 0,5 m</span>
+          <span class="step">v = ω/k = 1/4 <span class="arrow">→</span> <span class="box-result">v = 0,25 m/s</span></span>
+          <span class="step">v_max,vibr = A·ω = 0,08·π <span class="arrow">→</span> <span class="box-result">v_max ≈ 0,251 m/s</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> Δφ_espacio = k·Δx = 4π·0,5 = 2π. Diferencia de fase 2π → <span class="box-result">están en fase</span>.
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> β=−6, s′=+180 cm. s = s′/β = 180/(−6) = −30 cm.
+        <div class="calc">
+          <span class="step">1/f = 1/s′ − 1/s = 1/180 + 1/30 = (1+6)/180 = 7/180 <span class="arrow">→</span> <span class="box-result">f ≈ 25,7 cm</span></span>
+          <span class="step"><span class="box-result">Objeto a 30 cm de la lente</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> A=0,1 m, f=0,5 Hz → T=2 s, ω=π rad/s. E_c = E_p cuando x = ±A/√2.
+        <div class="calc">
+          <span class="step">Partiendo de x=0 (equilibrio) con x(t)=A·sen(ωt) → llega a A/√2 cuando sen(ωt) = 1/√2 → ωt = π/4</span>
+          <span class="step">t = π/(4ω) = π/(4π) <span class="arrow">→</span> <span class="box-result">t = 0,25 s</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Nuclear <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> W=3,5 eV=5,6·10⁻¹⁹ J. λ=280 nm → E_fotón = hc/λ ≈ 7,10·10⁻¹⁹ J = 4,44 eV.
+        <div class="calc">
+          <span class="step">f_umbral = W/h = 5,6·10⁻¹⁹/6,63·10⁻³⁴ <span class="arrow">→</span> <span class="box-result">f_umbral ≈ 8,45·10¹⁴ Hz</span></span>
+          <span class="step">E_c,max = 4,44 − 3,5 = 0,94 eV = 1,50·10⁻¹⁹ J <span class="arrow">→</span> <span class="box-result">E_c,max ≈ 0,94 eV</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> v_max = √(2E_c/m) = √(2·1,50·10⁻¹⁹/9,11·10⁻³¹) ≈ 5,74·10⁵ m/s. λ_dB = h/(m·v) ≈ 1,27·10⁻⁹ m → <span class="box-result">λ_dB ≈ 1,27 nm</span>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> ⁶⁰Co T₁/₂=5,27 años. λ_des = ln2/T₁/₂ = 0,693/5,27 ≈ 0,1315 año⁻¹.
+        <div class="calc">
+          <span class="step">En s: T₁/₂ = 5,27·3,156·10⁷ ≈ 1,663·10⁸ s → λ_des = 0,693/1,663·10⁸ ≈ 4,17·10⁻⁹ s⁻¹</span>
+          <span class="step">N₀ = (1·10⁻⁶/60)·N_A = 1,67·10⁻⁸·6,022·10²³ ≈ 1,005·10¹⁶ núcleos</span>
+          <span class="step">A₀ = λ_des·N₀ = 4,17·10⁻⁹·1,005·10¹⁶ <span class="arrow">→</span> <span class="box-result">A₀ ≈ 4,2·10⁷ Bq</span> (42 MBq)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> N(t)/N₀ = e^(−λ_des·t) = e^(−0,1315·10) = e^(−1,315) ≈ 0,268 → <span class="box-result">≈ 26,8% queda sin desintegrarse</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 9 ============ -->
+<section class="slide" data-title="Soluciones · Examen 9">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 9</div>
+        <h2 class="sol-titulo">Examen 9 · Planeta denso</h2>
+        <div class="sol-tema">M=2M_T, R=R_T/2 · Lorentz · Snell · ⁴He</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> g = GM/R² = G·2M_T/(R_T/2)² = 8·g₀ ≈ <span class="ans">78,4 m/s²</span>
+        <div class="calc">
+          <span class="step">v_orb rasante (r=R = R_T/2): v_orb = √(GM/R) = √(G·2M_T/(R_T/2)) = √(4·GM_T/R_T) = 2·v_orb,T(rasante)</span>
+          <span class="step">v_orb,T rasante ≈ 7,91·10³ m/s → v_orb ≈ <span class="box-result">1,58·10⁴ m/s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> Caída desde h=R sobre superficie (r_i=2R, r_f=R).
+        <div class="calc">
+          <span class="step">½v² = GM·(1/R − 1/(2R)) = GM/(2R)</span>
+          <span class="step">v² = GM/R = (½·v_esc²) → v = v_esc/√2</span>
+          <span class="step">v_esc = √(2GM/R) = √2·v_orb_rasante = √2·1,58·10⁴ ≈ 2,24·10⁴ m/s</span>
+          <span class="step">v_impacto = v_esc/√2 = 1,58·10⁴ m/s <span class="arrow">→</span> <span class="box-result">v ≈ 15,8 km/s</span> (idéntica a v_orb rasante, como debe ser)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> Cuerpo m=500 kg desde superficie al ∞.
+        <div class="calc">
+          <span class="step">W_externo,mín = |E_p(superficie)| = GMm/R = G·2M_T·500/(R_T/2) = 4·G·M_T·500/R_T</span>
+          <span class="step">W = 4·6,67·10⁻¹¹·5,97·10²⁴·500/6,37·10⁶ <span class="arrow">→</span> <span class="box-result">W ≈ 1,25·10¹¹ J</span></span>
+          <span class="step">Con v₀ = 1,2·v_esc → E_c inicial = ½m·(1,2·v_esc)² = 1,44·½m·v_esc² = 1,44·|E_p(R)|</span>
+          <span class="step">E_c,∞ = E_c,inicial − |E_p(R)| = (1,44 − 1)·|E_p(R)| = 0,44·1,25·10¹¹ <span class="arrow">→</span> <span class="box-result">E_c,∞ ≈ 5,5·10¹⁰ J</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> q₁=−3μC en (−2,0), q₂=+5μC en (3,0). P(0,4). r₁=√(4+16)=√20≈4,47; r₂=√(9+16)=5.
+        <div class="calc">
+          <span class="step">E₁ (q₁&lt;0, apunta hacia q₁ desde P): û=(−2,−4)/√20 ≈ (−0,447 ; −0,894). E₁ = K·|q₁|/r²·û = 9·10⁹·3·10⁻⁶/20·(−0,447;−0,894) = 1350·(−0,447;−0,894) ≈ (−603 ; −1207) N/C</span>
+          <span class="step">E₂ (q₂&gt;0, sale): û=(0−3 ; 4−0)/5 = (−0,6 ; 0,8). E₂ = 9·10⁹·5·10⁻⁶/25·(−0,6;0,8) = 1800·(−0,6;0,8) = (−1080 ; 1440) N/C</span>
+          <span class="step">E_P = (−603 − 1080 ; −1207 + 1440) = (−1683 ; 233) → <span class="box-result">|E| ≈ 1700 N/C</span></span>
+          <span class="step">V_P = K·(−3·10⁻⁶/4,47 + 5·10⁻⁶/5) = 9·10⁹·(−0,671 + 1)·10⁻⁶ ≈ <span class="box-result">V_P ≈ 2960 V</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> V_O (origen): r₁=2 m, r₂=3 m. V_O = K·(−3/2 + 5/3)·10⁻⁶ = 9·10⁹·0,167·10⁻⁶ = <span class="ans">1500 V</span>.
+        <div class="calc">
+          <span class="step">W_ext = q′·(V_O − V_P) = 2·10⁻⁶·(1500 − 2960) <span class="arrow">→</span> <span class="box-result">W ≈ −2,92·10⁻³ J</span></span>
+          <span class="step">W&lt;0 → el campo realiza el trabajo (la carga cae desde V mayor a V menor).</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Protón E_c=800 eV=1,28·10⁻¹⁶ J. v=√(2E_c/m_p)≈√(1,53·10¹¹)≈3,91·10⁵ m/s.
+        <div class="calc">
+          <span class="step">R = m_p·v/(qB) = 1,673·10⁻²⁷·3,91·10⁵/(1,6·10⁻¹⁹·0,25) <span class="arrow">→</span> <span class="box-result">R ≈ 1,64·10⁻² m</span></span>
+          <span class="step">T = 2πm/(qB) = 2π·1,673·10⁻²⁷/(1,6·10⁻¹⁹·0,25) ≈ 2,63·10⁻⁷ s</span>
+          <span class="step">n = Δt/T = 5·10⁻⁶/2,63·10⁻⁷ <span class="arrow">→</span> <span class="box-result">n ≈ 19 vueltas</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Hilos paralelos, mismo sentido I₁=I₂=8 A, separación 10 cm. Punto P a 8 cm de cada uno → forma triángulo isósceles con vértice P y base 10 cm.
+        <div class="calc">
+          <span class="step">Altura del triángulo desde P al punto medio de la base: h = √(8² − 5²) = √39 ≈ 6,24 cm</span>
+          <span class="step">B₁ = B₂ = μ₀I/(2π·0,08) = 4π·10⁻⁷·8/(2π·0,08) = 2·10⁻⁵ T cada uno</span>
+          <span class="step">Por simetría, las componentes paralelas a la base se cancelan; las perpendiculares (hacia/desde la base) se suman. cos(α) = h/r = 6,24/8 ≈ 0,78</span>
+          <span class="step">B_neto = 2·B₁·cos(α) = 2·2·10⁻⁵·0,78 <span class="arrow">→</span> <span class="box-result">B ≈ 3,12·10⁻⁵ T</span></span>
+          <span class="step">F/L = μ₀·I₁·I₂/(2π·d) = 4π·10⁻⁷·64/(2π·0,1) <span class="arrow">→</span> <span class="box-result">F/L ≈ 1,28·10⁻⁴ N/m, atractiva</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · Ondas y óptica <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> y = 0,06·sen(10π·t − 5π·x).
+        <div class="calc">
+          <span class="step">ω=10π → T = 0,2 s, f = 5 Hz</span>
+          <span class="step">k=5π → λ = 2π/5π = 0,4 m</span>
+          <span class="step">v = ω/k = 10π/5π <span class="arrow">→</span> <span class="box-result">v = 2 m/s</span> (sentido +x)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> En x=0,1, t=0,05: arg = 10π·0,05 − 5π·0,1 = 0,5π − 0,5π = 0
+        <div class="calc">
+          <span class="step">y = 0,06·sen(0) = <span class="box-result">0 m</span></span>
+          <span class="step">v_transv = ∂y/∂t = 0,06·10π·cos(0) = 0,6π ≈ <span class="box-result">1,88 m/s</span></span>
+          <span class="step">a = ∂²y/∂t² = −0,06·(10π)²·sen(0) = <span class="box-result">0 m/s²</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> Agua (n=1,33) → aire. Snell: 1,33·sen(35°)=1·sen(θ₂) → sen(θ₂)=1,33·0,574=0,763.
+        <div class="calc">
+          <span class="step"><span class="box-result">θ₂ ≈ 49,7°</span></span>
+          <span class="step">Ángulo límite agua→aire: sen(θ_L) = 1/1,33 = 0,752 <span class="arrow">→</span> <span class="box-result">θ_L ≈ 48,8°</span></span>
+          <span class="step">Observación: como 35° &lt; 48,8°, la luz se refracta y no hay reflexión total.</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> P=+4 D → f = 1/4 = 0,25 m = 25 cm. s=−20 cm.
+        <div class="calc">
+          <span class="step">1/s′ = 1/25 − 1/20 = (4−5)/100 = −1/100 → <span class="box-result">s′ = −100 cm</span> (virtual, izquierda)</span>
+          <span class="step">β = −100/(−20) = <span class="box-result">+5</span> (derecha, ampliada 5×)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Nuclear <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> ⁴He: Z=2, N=2, m=4,002602 u.
+        <div class="calc">
+          <span class="step">Δm = (2·1,00728 + 2·1,00867) − 4,002602 = 4,03190 − 4,00260 = <span class="box-result">0,02930 u</span></span>
+          <span class="step">E_enlace = 0,02930·931,5 <span class="arrow">→</span> <span class="box-result">E ≈ 27,3 MeV</span></span>
+          <span class="step">E/A = 27,3/4 <span class="arrow">→</span> <span class="box-result">≈ 6,82 MeV/nucleón</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> Reacción D+T→⁴He+n. m_reactivos = 2,014 + 3,016 = 5,030 u. m_productos = 4,0026 + 1,00867 = 5,01127 u.
+        <div class="calc">
+          <span class="step">Δm = 5,030 − 5,01127 = 0,01873 u</span>
+          <span class="step">E_liberada = 0,01873·931,5 ≈ <span class="box-result">17,4 MeV por reacción</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> v=5·10⁵ m/s para ambas. λ = h/(m·v).
+        <div class="calc">
+          <span class="step">λ_e = 6,63·10⁻³⁴/(9,11·10⁻³¹·5·10⁵) <span class="arrow">→</span> <span class="box-result">λ_e ≈ 1,46·10⁻⁹ m</span></span>
+          <span class="step">λ_p = 6,63·10⁻³⁴/(1,673·10⁻²⁷·5·10⁵) <span class="arrow">→</span> <span class="box-result">λ_p ≈ 7,93·10⁻¹³ m</span></span>
+          <span class="step">λ_e/λ_p = m_p/m_e ≈ 1836 (a misma v, la partícula ligera tiene λ mayor)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> W_Zn = 4,3 eV = 6,88·10⁻¹⁹ J. λ_máx = hc/W = 6,63·10⁻³⁴·3·10⁸/6,88·10⁻¹⁹ <span class="arrow">→</span> <span class="box-result">λ_máx ≈ 289 nm</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 10 ============ -->
+<section class="slide" data-title="Soluciones · Examen 10">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 10</div>
+        <h2 class="sol-titulo">Examen 10 · ISS y partícula α</h2>
+        <div class="sol-tema">ISS 400 km · α en ΔV · MAS vertical · 60% c</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b1);">
+      <div class="b-title">Bloque I · Gravitatorio <span class="pts">2,5 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">1a)</span> ISS h=400 km → r = 6,77·10⁶ m.
+        <div class="calc">
+          <span class="step">v = √(GM_T/r) = √(6,67·10⁻¹¹·5,97·10²⁴/6,77·10⁶) <span class="arrow">→</span> <span class="box-result">v ≈ 7,67·10³ m/s</span></span>
+          <span class="step">T = 2πr/v ≈ 2π·6,77·10⁶/7670 <span class="arrow">→</span> <span class="box-result">T ≈ 5546 s ≈ 92,4 min</span></span>
+          <span class="step">Peso aparente: en caída libre orbital (estado de ingravidez aparente) → <span class="box-result">peso aparente ≈ 0 N</span></span>
+          <span class="step">El peso real existe (g a 400 km ≈ 8,7 m/s² → P_real = 70·8,7 ≈ 609 N), pero la estación y el astronauta caen juntos: no hay fuerza normal.</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b1</div>
+      <div class="apartado">
+        <span class="lbl">1b1)</span> m = 4,2·10⁵ kg.
+        <div class="calc">
+          <span class="step">E_c = ½m·v² = 0,5·4,2·10⁵·(7670)² <span class="arrow">→</span> <span class="box-result">E_c ≈ 1,24·10¹³ J</span></span>
+          <span class="step">E_p = −GM_T·m/r = −6,67·10⁻¹¹·5,97·10²⁴·4,2·10⁵/6,77·10⁶ <span class="arrow">→</span> <span class="box-result">E_p ≈ −2,47·10¹³ J</span></span>
+          <span class="step">E_total = E_c + E_p ≈ <span class="box-result">−1,24·10¹³ J</span> (= −E_c)</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción b2</div>
+      <div class="apartado">
+        <span class="lbl">1b2)</span> Nueva órbita a 380 km → r' = 6,75·10⁶ m.
+        <div class="calc">
+          <span class="step">E_inicial = −GM_T·m/(2r) ≈ −1,24·10¹³ J; E_final = −GM_T·m/(2r') = −1,24·10¹³·(r/r')</span>
+          <span class="step">ΔE ≈ −7,3·10¹⁰ J (la mecánica disminuye → energía perdida ≈ 7,3·10¹⁰ J en forma de calor por rozamiento)</span>
+          <span class="step">Paradoja del rozamiento: v_nueva = √(GM/r') &gt; v_inicial → <span class="box-result">aunque pierde energía, va más rápido</span> (descenso espiral típico de órbitas de baja altitud)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b2);">
+      <div class="b-title">Bloque II · Electromagnético <span class="pts">3 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">2a)</span> q₁=+2μC en (0,0); q₂=+2μC en (6,0); q₃=−4μC en (3,4). M(3,0). r₁=r₂=3 m, r₃=4 m.
+        <div class="calc">
+          <span class="step">E₁ (de +q₁, sale, hacia M): û=(+1,0). E₁ = 9·10⁹·2·10⁻⁶/9 = 2000 N/C en +x</span>
+          <span class="step">E₂ (de +q₂, sale, hacia M): û=(−1,0). E₂ = 2000 N/C en −x</span>
+          <span class="step">E₁ + E₂ = 0 por simetría</span>
+          <span class="step">E₃ (q₃ negativa, apunta hacia q₃ desde M, q₃ arriba): û=(0,+1). E₃ = 9·10⁹·4·10⁻⁶/16 = 2250 N/C en +y</span>
+          <span class="step"><span class="box-result">E_M = (0 ; 2250) N/C, sentido +y</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">2b)</span> V_M = K·(2/3 + 2/3 − 4/4)·10⁻⁶ = 9·10⁹·(1,333 − 1)·10⁻⁶ = 3000 V. V_C: r₁=r₂=√(9+16)=5, r₃=0 → V_C = ∞.
+        <div class="calc">
+          <span class="step">El problema queda mal planteado si Q=C (donde está q₃). Asumimos que pide el potencial debido a q₁ y q₂ únicamente en C:</span>
+          <span class="step">V_C (sin q₃) = 9·10⁹·(2/5 + 2/5)·10⁻⁶ = 9·10⁹·0,8·10⁻⁶ = 7200 V</span>
+          <span class="step">W_ext = q′·(V_C − V_M) = 10⁻⁶·(7200 − 3000) <span class="arrow">→</span> <span class="box-result">W_ext ≈ 4,2·10⁻³ J</span></span>
+          <span class="step">W&gt;0 → un agente externo realiza el trabajo (la carga sube su potencial).</span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a1</div>
+      <div class="apartado">
+        <span class="lbl">3a1)</span> Partícula α, q=2e, m=6,64·10⁻²⁷ kg, ΔV=2500 V.
+        <div class="calc">
+          <span class="step">v = √(2qV/m) = √(2·3,2·10⁻¹⁹·2500/6,64·10⁻²⁷) = √(2,41·10¹¹) ≈ 4,91·10⁵ m/s</span>
+          <span class="step">R = mv/(qB) = 6,64·10⁻²⁷·4,91·10⁵/(3,2·10⁻¹⁹·0,8) <span class="arrow">→</span> <span class="box-result">R ≈ 1,27·10⁻² m</span></span>
+          <span class="step">T = 2πm/(qB) = 2π·6,64·10⁻²⁷/(3,2·10⁻¹⁹·0,8) <span class="arrow">→</span> <span class="box-result">T ≈ 1,63·10⁻⁷ s</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción a2</div>
+      <div class="apartado">
+        <span class="lbl">3a2)</span> Espira 0,25·0,25=0,0625 m², R=5 Ω, B=0,4 T, v=0,5 m/s saliendo de campo.
+        <div class="calc">
+          <span class="step">Mientras sale, el lado de la espira de longitud L=0,25 m corta el campo. ε = B·L·v = 0,4·0,25·0,5 <span class="arrow">→</span> <span class="box-result">ε = 0,05 V</span></span>
+          <span class="step">i = ε/R = 0,05/5 = 0,01 A</span>
+          <span class="step">F sobre la espira por Lenz se opone al movimiento: F = B·i·L = 0,4·0,01·0,25 <span class="arrow">→</span> <span class="box-result">F ≈ 10⁻³ N</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b3);">
+      <div class="b-title">Bloque III · MAS y sonido <span class="pts">3 pts</span></div>
+      <div class="opcion-banda">opción 4</div>
+      <div class="apartado">
+        <span class="lbl">4a)</span> m=0,8 kg, A=0,05 m, f=1,5 Hz → ω = 3π rad/s.
+        <div class="calc">
+          <span class="step">k = m·ω² = 0,8·(3π)² ≈ <span class="box-result">k ≈ 71,1 N/m</span></span>
+          <span class="step">v_max = A·ω = 0,05·3π <span class="arrow">→</span> <span class="box-result">v_max ≈ 0,471 m/s</span></span>
+          <span class="step">E_mec = ½k·A² = 0,5·71,1·0,0025 <span class="arrow">→</span> <span class="box-result">E ≈ 0,089 J</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">4b)</span> En t=0 x=+A → x(t) = A·cos(ωt).
+        <div class="calc">
+          <span class="step"><span class="box-result">x(t) = 0,05·cos(3π·t), v(t) = −0,15π·sen(3π·t), a(t) = −0,45π²·cos(3π·t)</span></span>
+          <span class="step">En t=0,1 s: 3π·0,1 = 0,3π. cos(0,3π) = 0,588, sen(0,3π) = 0,809.</span>
+          <span class="step">x ≈ 0,05·0,588 = <span class="box-result">2,94 cm</span></span>
+          <span class="step">v ≈ −0,471·0,809 = <span class="box-result">−0,381 m/s</span></span>
+          <span class="step">a ≈ −4,44·0,588 = <span class="box-result">−2,61 m/s²</span></span>
+        </div>
+      </div>
+      <div class="opcion-banda">opción 5</div>
+      <div class="apartado">
+        <span class="lbl">5a)</span> P=1,2 W. A r=4 m: I = P/(4π·16) ≈ <span class="box-result">5,97·10⁻³ W/m²</span>
+        <div class="calc">
+          <span class="step">L = 10·log(I/I₀) = 10·log(5,97·10⁹) ≈ <span class="box-result">97,8 dB</span></span>
+          <span class="step">A 12 m: I' = P/(4π·144) ≈ 6,63·10⁻⁴ W/m²</span>
+          <span class="step">L' = 10·log(6,63·10⁸) ≈ <span class="box-result">88,2 dB</span></span>
+          <span class="step">(Cada vez que se triplica la distancia, L cae 9,5 dB: ley del inverso del cuadrado en log.)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">5b)</span> A=0,02 m, λ=0,5 m → k=4π. v=10 m/s → ω = v·k = 40π. f = ω/2π = 20 Hz, T=0,05 s. Sentido +x. En t=0 y=0 con v_transv negativa.
+        <div class="calc">
+          <span class="step">Comprobamos signo: y=A·sen(ωt−kx) → ∂y/∂t en (0,0) = Aω·cos(0) &gt; 0 ✗</span>
+          <span class="step">Usamos y = −A·sen(ωt − kx) → ∂y/∂t en (0,0) = −Aω·cos(0) &lt; 0 ✓</span>
+          <span class="step"><span class="box-result">y(x,t) = −0,02·sen(40π·t − 4π·x) m</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--b4);">
+      <div class="b-title">Bloque IV · Cuántica / Relativista <span class="pts">1,5 pts</span></div>
+      <div class="opcion-banda">opción 6</div>
+      <div class="apartado">
+        <span class="lbl">6a)</span> W_Al=4,08 eV = 6,53·10⁻¹⁹ J. λ=250 nm → E_fotón = hc/λ ≈ 7,96·10⁻¹⁹ J = 4,97 eV.
+        <div class="calc">
+          <span class="step">f_umbral = W/h = 6,53·10⁻¹⁹/6,63·10⁻³⁴ ≈ <span class="box-result">9,85·10¹⁴ Hz</span></span>
+          <span class="step">E_c,max = 4,97 − 4,08 = 0,89 eV = 1,42·10⁻¹⁹ J <span class="arrow">→</span> <span class="box-result">E_c,max ≈ 0,89 eV</span></span>
+          <span class="step">v_max = √(2E_c/m_e) ≈ √(3,12·10¹¹) <span class="arrow">→</span> <span class="box-result">v_max ≈ 5,59·10⁵ m/s</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">6b)</span> Si W'=5 eV &gt; E_fotón=4,97 eV → <span class="box-result">NO se produce efecto fotoeléctrico</span> (apenas por encima del umbral del Al pero por debajo del nuevo metal).
+      </div>
+      <div class="opcion-banda">opción 7</div>
+      <div class="apartado">
+        <span class="lbl">7a)</span> L=L₀/γ → 32 = 80/γ → γ = 80/32 = 2,5
+        <div class="calc">
+          <span class="step">γ = 1/√(1−v²/c²) = 2,5 → 1−v²/c² = 0,16 → v² = 0,84·c² → v ≈ 0,917·c <span class="arrow">→</span> <span class="box-result">v ≈ 2,75·10⁸ m/s</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">7b)</span> E_c,rel = (γ−1)·m₀·c² = 1,5·5·10⁴·(3·10⁸)² <span class="arrow">→</span> <span class="box-result">E_c,rel ≈ 6,75·10²¹ J</span>
+        <div class="calc">
+          <span class="step">E_c,clás = ½·m·v² = 0,5·5·10⁴·(2,75·10⁸)² ≈ 1,89·10²¹ J</span>
+          <span class="step">Cociente E_c,rel/E_c,clás ≈ 3,57 → a esta velocidad la mecánica clásica subestima drásticamente la energía.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nota-criterio">
+      <strong>Lección del examen 10.</strong> El "peso aparente cero" en la ISS no significa que no haya gravedad — significa que estación y astronauta están en caída libre conjunta. Si te preguntan justificación cualitativa, hay que mencionar la diferencia entre peso real y peso aparente para puntuar máximo.
+    </div>
+  </div>
+</section>
+
+</div><!-- /stage -->
+
+<div class="bottombar">
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior"><span class="nav-arrow">‹</span> <span>Anterior</span></button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente"><span>Siguiente</span> <span class="nav-arrow">›</span></button>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let current = 0;
+const counterNum = document.getElementById('counterNum');
+const counterTotal = document.getElementById('counterTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsBox = document.getElementById('dots');
+
+counterTotal.textContent = slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='dot';
+  let label;
+  if(i===0) label = 'P';
+  else label = String(i);
+  d.textContent = label;
+  d.title = s.dataset.title || ('Slide '+(i+1));
+  d.addEventListener('click',()=>go(i));
+  dotsBox.appendChild(d);
+});
+
+function go(i){
+  if(i<0||i>=slides.length||i===current)return;
+  slides[current].classList.remove('is-active');
+  current = i;
+  slides[current].classList.add('is-active');
+  slides[current].scrollTop = 0;
+  counterNum.textContent = i+1;
+  dotsBox.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('is-active',j===i));
+  prevBtn.disabled = i===0;
+  nextBtn.disabled = i===slides.length-1;
+}
+
+prevBtn.addEventListener('click',()=>{go(current-1);prevBtn.blur();});
+nextBtn.addEventListener('click',()=>{go(current+1);nextBtn.blur();});
+
+document.addEventListener('keydown', e=>{
+  const t=e.target;
+  if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  if(e.key==='ArrowRight'||e.key===' ') go(current+1);
+  if(e.key==='ArrowLeft') go(current-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(slides.length-1);
+});
+
+go(0);
+</script>
+
+</body>
+</html>

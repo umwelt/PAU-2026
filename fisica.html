@@ -154,36 +154,53 @@ em{color:var(--accent-deep);font-style:italic;}
 .bottombar{
   position:fixed;
   bottom:0;left:0;right:0;
-  z-index:50;
+  z-index:80;
   padding:14px 32px 18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:20px;
-  background:linear-gradient(to top,rgba(242,237,227,.95),rgba(242,237,227,0));
+  background:linear-gradient(to top,rgba(242,237,227,1) 60%,rgba(242,237,227,.9) 80%,rgba(242,237,227,0));
   pointer-events:none;
+  isolation:isolate;
 }
 .nav-btn{
   pointer-events:auto;
+  position:relative;
+  z-index:60;
   background:var(--paper-soft);
-  border:1px solid var(--line);
+  border:2px solid var(--line-strong);
   color:var(--ink);
-  width:44px;height:44px;
-  border-radius:50%;
+  height:54px;
+  min-width:118px;
+  padding:0 20px;
+  border-radius:100px;
   cursor:pointer;
-  font-size:1.3rem;
-  display:grid;place-items:center;
+  font-size:.95rem;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
   transition:all .2s;
-  font-family:var(--serif);
+  font-family:var(--sans);
+  box-shadow:0 4px 14px rgba(45,42,38,.08);
+  letter-spacing:.04em;
   flex-shrink:0;
 }
-.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.nav-btn .nav-arrow{
+  font-family:var(--serif);
+  font-size:1.5rem;
+  line-height:1;
+}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);box-shadow:0 6px 18px rgba(166,130,78,.25);}
 .nav-btn:disabled{opacity:.35;cursor:not-allowed;}
-.nav-btn:disabled:hover{background:var(--paper-soft);color:var(--ink);border-color:var(--line);}
+.nav-btn:disabled:hover{background:var(--paper-soft);color:var(--ink);border-color:var(--line);box-shadow:0 4px 14px rgba(45,42,38,.08);}
 
 /* Dots: agrupados por bloque, colores diferentes */
 .dots{
-  pointer-events:auto;
+  /* CRITICAL: pointer-events:none aquí. El contenedor con auto bloquearía
+     el scroll del contenido de la slide cuando el ratón pasa por encima. */
+  pointer-events:none;
   display:flex;
   gap:14px;
   flex:1;
@@ -192,6 +209,7 @@ em{color:var(--accent-deep);font-style:italic;}
   flex-wrap:wrap;
 }
 .dots-group{
+  pointer-events:none;  /* el contenedor no intercepta; solo los dots dentro */
   display:flex;
   gap:3px;
   align-items:center;
@@ -216,6 +234,7 @@ em{color:var(--accent-deep);font-style:italic;}
   cursor:pointer;
   transition:all .2s;
   padding:0;
+  pointer-events:auto;  /* solo el dot intercepta clic */
 }
 .dot:hover{background:var(--line-strong);transform:scale(1.4);}
 .dot.is-active{transform:scale(1.6);}
@@ -399,12 +418,13 @@ em{color:var(--accent-deep);font-style:italic;}
   max-width:1100px;
   display:grid;
   grid-template-columns:1.15fr 0.85fr;
-  /* Altura fija basada en viewport — las columnas se hacen scroll si contenido excede */
-  height:clamp(540px, calc(100vh - 220px), 760px);
+  grid-template-rows:1fr;  /* CRITICAL: sin esto la fila auto crece y el overflow del card se rompe */
+  /* Altura fija basada en viewport */
+  height:clamp(520px, calc(100vh - 220px), 760px);
+  max-height:calc(100vh - 200px);
   box-shadow:0 12px 40px rgba(45,42,38,.08);
   position:relative;
   overflow:hidden;
-  /* margin-top auto para empujar el card hacia el centro vertical cuando hay espacio */
   margin:auto 0;
 }
 .concept-card::before{
@@ -421,9 +441,14 @@ em{color:var(--accent-deep);font-style:italic;}
   flex-direction:column;
   border-right:1px solid var(--line);
   background:linear-gradient(180deg, var(--paper-soft), var(--paper-card));
-  /* CRITICAL para grid items: min-height:0 permite que overflow funcione */
+  /* CRITICAL para grid items: min-height/width:0 permite que overflow funcione */
   min-height:0;
+  min-width:0;
+  height:100%;
   overflow-y:auto;
+  overflow-x:hidden;
+  /* impide que el wheel siga al slide cuando este lado está scrolleando */
+  overscroll-behavior:contain;
 }
 .concept-right{
   padding:34px 38px;
@@ -431,10 +456,17 @@ em{color:var(--accent-deep);font-style:italic;}
   flex-direction:column;
   background:var(--paper-card);
   min-height:0;
+  min-width:0;
+  height:100%;
   overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
 }
-.concept-left::-webkit-scrollbar,.concept-right::-webkit-scrollbar{width:6px;}
-.concept-left::-webkit-scrollbar-thumb,.concept-right::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px;}
+/* Scrollbar visible siempre que haya overflow (no oculta de macOS) */
+.concept-left::-webkit-scrollbar,.concept-right::-webkit-scrollbar{width:8px;}
+.concept-left::-webkit-scrollbar-track,.concept-right::-webkit-scrollbar-track{background:rgba(0,0,0,.03);}
+.concept-left::-webkit-scrollbar-thumb,.concept-right::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
+.concept-left::-webkit-scrollbar-thumb:hover,.concept-right::-webkit-scrollbar-thumb:hover{background:var(--accent);}
 
 .concept-header{
   display:flex;
@@ -2913,9 +2945,9 @@ em{color:var(--accent-deep);font-style:italic;}
 
 <!-- bottom bar -->
 <div class="bottombar">
-  <button class="nav-btn" id="prevBtn" aria-label="Anterior">‹</button>
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior"><span class="nav-arrow">‹</span> Anterior</button>
   <div class="dots" id="dots"></div>
-  <button class="nav-btn" id="nextBtn" aria-label="Siguiente">›</button>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente">Siguiente <span class="nav-arrow">›</span></button>
 </div>
 
 </div>
@@ -2972,11 +3004,15 @@ function go(i){
 prevBtn.addEventListener('click', ()=>go(current-1));
 nextBtn.addEventListener('click', ()=>go(current+1));
 document.addEventListener('keydown', e=>{
+  const t=e.target;
+  if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
   if(e.key==='ArrowRight'||e.key===' ') go(current+1);
   if(e.key==='ArrowLeft') go(current-1);
   if(e.key==='Home') go(0);
   if(e.key==='End') go(slides.length-1);
 });
+prevBtn.addEventListener('click',()=>prevBtn.blur());
+nextBtn.addEventListener('click',()=>nextBtn.blur());
 
 go(0);
 </script>

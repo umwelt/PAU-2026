@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>10 exámenes simulacro · PAU 2026 · Física</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-soft:#FAF6EE;
+  --paper-deep:#E8E0D0;
+  --paper-card:#FBF7EE;
+  --ink:#2D2A26;
+  --ink-soft:#5C574F;
+  --ink-mute:#8B8579;
+  --line:#D6CCB7;
+  --line-strong:#BFB39A;
+  --accent:#B8895A;
+  --accent-deep:#8B6A3A;
+  --b1:#4F6890;
+  --b2:#B8895A;
+  --b3:#5B8C8B;
+  --b4:#7B5F8C;
+  --obligatorio:#A95448;
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--paper);}
+body{
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  background-image:
+    radial-gradient(ellipse at top left, rgba(217,199,162,.16), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(184,137,90,.10), transparent 55%);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+
+/* --- topbar --- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  z-index:50;
+  padding:14px 32px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;
+  background:linear-gradient(to bottom,rgba(242,237,227,.98),rgba(242,237,227,.85));
+  pointer-events:none;
+}
+.topbar > *{pointer-events:auto;}
+.home-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.85rem;color:var(--ink-soft);
+  text-decoration:none;
+  padding:6px 12px;border-radius:100px;
+  border:1px solid var(--line);
+  background:var(--paper-soft);
+}
+.home-link:hover{color:var(--ink);border-color:var(--line-strong);}
+.topbar-title{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:.95rem;
+  color:var(--ink-soft);
+}
+.slide-counter{
+  font-family:var(--mono);
+  font-size:.85rem;
+  color:var(--ink-mute);
+  letter-spacing:.05em;
+}
+.slide-counter strong{color:var(--ink);font-weight:600;}
+
+/* --- bottombar --- */
+.bottombar{
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:80;
+  padding:14px 32px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:20px;
+  background:linear-gradient(to top,rgba(242,237,227,1) 60%,rgba(242,237,227,.9) 80%,rgba(242,237,227,0));
+  pointer-events:none;
+  isolation:isolate;
+}
+.nav-btn{
+  pointer-events:auto;
+  position:relative;
+  z-index:60;
+  background:var(--paper-soft);
+  border:2px solid var(--line-strong);
+  color:var(--ink);
+  height:54px;
+  min-width:118px;
+  padding:0 20px;
+  border-radius:100px;
+  cursor:pointer;
+  font-size:.95rem;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:all .2s;
+  font-family:var(--sans);
+  box-shadow:0 4px 14px rgba(45,42,38,.08);
+  letter-spacing:.04em;
+  flex-shrink:0;
+}
+.nav-btn .nav-arrow{font-family:var(--serif);font-size:1.5rem;line-height:1;}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);box-shadow:0 6px 18px rgba(184,137,90,.25);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-btn:disabled:hover{background:var(--paper-soft);color:var(--ink);border-color:var(--line);box-shadow:0 4px 14px rgba(45,42,38,.08);}
+
+.dots{
+  pointer-events:none;
+  display:flex;
+  gap:9px;
+  flex:1;
+  justify-content:center;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.dot{
+  pointer-events:auto;
+  width:30px;height:30px;
+  border-radius:50%;
+  background:var(--paper-soft);
+  border:1.5px solid var(--line-strong);
+  cursor:pointer;
+  transition:all .2s;
+  font-family:var(--mono);
+  font-size:.72rem;
+  font-weight:600;
+  color:var(--ink-soft);
+  padding:0;
+  display:grid;place-items:center;
+}
+.dot:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.dot.is-active{background:var(--ink);color:var(--paper-soft);border-color:var(--ink);transform:scale(1.1);}
+
+/* --- slides --- */
+.stage{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+.slide{
+  position:absolute;
+  inset:0;
+  display:none;
+  overflow-y:auto;
+  padding:84px 32px 110px;
+  overscroll-behavior:contain;
+}
+.slide.is-active{display:block;}
+.slide-inner{
+  max-width:900px;
+  margin:0 auto;
+}
+
+/* --- portada --- */
+.portada{text-align:center;padding-top:80px;}
+.portada .mark{
+  width:96px;height:96px;border-radius:50%;
+  background:var(--paper-soft);
+  border:2px solid var(--accent);
+  display:grid;place-items:center;margin:0 auto 28px;
+  font-family:var(--serif);font-size:2.1rem;color:var(--accent);font-weight:600;
+}
+.portada h1{
+  font-size:clamp(2.4rem,4.5vw,3.6rem);
+  margin-bottom:14px;
+  line-height:1.1;
+}
+.portada h1 .num{color:var(--accent);}
+.portada .sub{
+  font-family:var(--serif);font-style:italic;
+  font-size:1.2rem;color:var(--ink-soft);margin-bottom:32px;
+}
+.portada .desc{
+  max-width:600px;margin:0 auto 40px;
+  color:var(--ink-soft);font-size:1rem;line-height:1.6;
+}
+.portada-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  max-width:680px;margin:0 auto;
+}
+.portada-stat{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px 12px;
+  text-align:center;
+}
+.portada-stat .n{
+  font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--accent);
+  display:block;line-height:1;
+}
+.portada-stat .l{
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-mute);margin-top:6px;
+}
+
+/* --- patrones (slide 2) --- */
+.patrones-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:18px;
+  margin-top:32px;
+}
+.pat-card{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px 24px;
+  border-left:4px solid var(--card-color);
+}
+.pat-card h3{
+  font-size:1rem;
+  color:var(--card-color);
+  margin-bottom:14px;
+  font-weight:600;
+  font-family:var(--sans);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.pat-card ul{list-style:none;}
+.pat-card li{
+  font-size:.88rem;color:var(--ink-soft);
+  padding:5px 0;display:flex;justify-content:space-between;gap:12px;
+  border-bottom:1px dotted var(--line);
+}
+.pat-card li:last-child{border-bottom:none;}
+.pat-card li .name{flex:1;}
+.pat-card li .freq{
+  font-family:var(--mono);font-size:.78rem;
+  color:var(--ink-mute);font-weight:600;
+  white-space:nowrap;
+}
+.pat-card li .freq.high{color:var(--obligatorio);}
+
+.pat-note{
+  background:var(--paper-soft);
+  border:1px dashed var(--line-strong);
+  border-radius:12px;
+  padding:18px 22px;
+  margin-top:24px;
+  font-size:.9rem;color:var(--ink-soft);
+  line-height:1.6;
+}
+.pat-note strong{color:var(--ink);font-weight:600;}
+
+/* --- examen --- */
+.examen-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding-bottom:18px;
+  border-bottom:2px solid var(--ink);
+  margin-bottom:24px;
+  gap:18px;
+}
+.examen-titulo{
+  font-family:var(--serif);
+  font-size:1.8rem;
+  font-weight:600;
+}
+.examen-num{
+  font-family:var(--mono);
+  font-size:.78rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  margin-bottom:4px;
+}
+.examen-tema{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:.95rem;
+  color:var(--ink-soft);
+  margin-top:6px;
+}
+.examen-meta{
+  text-align:right;
+  font-size:.78rem;
+  color:var(--ink-mute);
+  font-family:var(--mono);
+  letter-spacing:.06em;
+}
+.examen-meta div{margin-bottom:4px;}
+.examen-meta .puntos{
+  font-family:var(--serif);
+  font-size:1.3rem;
+  font-weight:600;
+  color:var(--ink);
+  letter-spacing:0;
+}
+
+.constantes{
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:12px 16px;
+  margin-bottom:24px;
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-soft);
+  line-height:1.7;
+  column-count:2;
+  column-gap:32px;
+}
+.constantes .c-title{
+  font-family:var(--sans);
+  font-size:.7rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  margin-bottom:6px;
+  column-span:all;
+}
+
+.instrucciones{
+  font-size:.88rem;
+  color:var(--ink-soft);
+  font-style:italic;
+  margin-bottom:22px;
+  padding-left:14px;
+  border-left:3px solid var(--accent);
+}
+
+.bloque{
+  margin-bottom:30px;
+  padding-bottom:24px;
+  border-bottom:1px dashed var(--line);
+}
+.bloque:last-child{border-bottom:none;}
+.bloque-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:14px;
+  gap:14px;
+}
+.bloque-title{
+  font-family:var(--serif);
+  font-size:1.15rem;
+  font-weight:600;
+  color:var(--bloque-color,var(--ink));
+}
+.bloque-puntos{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-mute);
+  letter-spacing:.06em;
+  flex-shrink:0;
+}
+.bloque-puntos strong{color:var(--bloque-color,var(--ink));font-weight:600;}
+
+.pregunta{
+  margin-top:14px;
+  padding:14px 16px;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-size:.92rem;
+  line-height:1.65;
+}
+.pregunta-num{
+  font-family:var(--serif);
+  font-size:1.02rem;
+  font-weight:600;
+  margin-bottom:6px;
+  display:flex;align-items:baseline;gap:8px;
+}
+.pregunta-num .tag{
+  font-family:var(--sans);
+  font-size:.66rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  border-radius:100px;
+  font-weight:600;
+  background:var(--obligatorio);
+  color:var(--paper-soft);
+  flex-shrink:0;
+}
+.pregunta-num .tag.opcional{
+  background:var(--paper-soft);
+  color:var(--ink-soft);
+  border:1px solid var(--line);
+}
+.pregunta-num .pts{
+  font-family:var(--mono);font-size:.78rem;color:var(--ink-mute);
+  font-weight:400;letter-spacing:.04em;
+  margin-left:auto;
+}
+.pregunta-enunciado{
+  color:var(--ink-soft);
+  margin-bottom:10px;
+}
+.pregunta-apartados{
+  list-style:none;
+  padding-left:0;
+}
+.pregunta-apartados > li{
+  padding:6px 0 6px 26px;
+  position:relative;
+}
+.pregunta-apartados > li::before{
+  content:attr(data-label);
+  position:absolute;
+  left:0;top:7px;
+  font-family:var(--serif);
+  font-weight:600;
+  color:var(--bloque-color,var(--accent));
+  font-size:.92rem;
+}
+.pregunta-apartados > li .apt-pts{
+  font-family:var(--mono);
+  font-size:.74rem;
+  color:var(--ink-mute);
+  margin-left:6px;
+}
+
+.opcional-banda{
+  font-size:.78rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  text-align:center;
+  margin:14px 0 4px;
+  font-weight:600;
+}
+
+.formula{
+  font-family:var(--serif);
+  font-style:italic;
+  background:var(--paper-soft);
+  padding:1px 6px;
+  border-radius:4px;
+  font-size:.95em;
+}
+.vec{font-family:var(--serif);font-style:italic;font-weight:600;}
+.vec::before{content:'→';font-size:.7em;vertical-align:super;margin-right:1px;}
+sup,sub{font-size:.7em;}
+
+/* responsive */
+@media (max-width:680px){
+  .topbar{padding:10px 18px;}
+  .topbar-title{display:none;}
+  .slide{padding:74px 18px 100px;}
+  .constantes{column-count:1;}
+  .examen-header{flex-direction:column;align-items:flex-start;}
+  .examen-meta{text-align:left;}
+  .portada-stats{grid-template-columns:repeat(2,1fr);}
+  .patrones-grid{grid-template-columns:1fr;}
+  .nav-btn{min-width:auto;padding:0 14px;}
+  .nav-btn span:not(.nav-arrow){display:none;}
+}
+
+/* scrollbar */
+.slide::-webkit-scrollbar{width:10px;}
+.slide::-webkit-scrollbar-track{background:transparent;}
+.slide::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:6px;}
+.slide::-webkit-scrollbar-thumb:hover{background:var(--ink-mute);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home-link" href="index.html">← inicio</a>
+  <div class="topbar-title">10 exámenes simulacro · PAU 2026 · Física</div>
+  <div class="slide-counter"><strong id="counterNum">1</strong> / <span id="counterTotal">12</span></div>
+</div>
+
+<div class="stage">
+
+<!-- ============ PORTADA ============ -->
+<section class="slide is-active" data-title="Portada">
+  <div class="slide-inner portada">
+    <div class="mark">F</div>
+    <h1>10 exámenes simulacro <span class="num">·</span> PAU 2026</h1>
+    <div class="sub">Física · Canarias</div>
+    <p class="desc">Diez exámenes construidos según la estructura oficial PAU 2026 y los patrones detectados en las 17 convocatorias EBAU/PAU 2017-2025. Cada examen sigue el reparto 2,5 + 3 + 3 + 1,5 puntos con apartados obligatorios y optativos.</p>
+    <div class="portada-stats">
+      <div class="portada-stat"><span class="n">10</span><div class="l">Exámenes</div></div>
+      <div class="portada-stat"><span class="n">17</span><div class="l">PAUs analizadas</div></div>
+      <div class="portada-stat"><span class="n">24</span><div class="l">Moldes detectados</div></div>
+      <div class="portada-stat"><span class="n">10</span><div class="l">Puntos · 90 min</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PATRONES ============ -->
+<section class="slide" data-title="Patrones detectados">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Análisis previo</div>
+        <h2 class="examen-titulo">Patrones detectados 2017–2025</h2>
+        <div class="examen-tema">Lo que casi siempre cae · lo que rota · lo nuevo</div>
+      </div>
+      <div class="examen-meta">
+        <div>17 convocatorias</div>
+        <div>4 bloques · 24 moldes</div>
+      </div>
+    </div>
+
+    <div class="patrones-grid">
+      <div class="pat-card" style="--card-color:var(--b1);">
+        <h3>Bloque I · Gravitatorio</h3>
+        <ul>
+          <li><span class="name">Satélite en órbita (v, T, E)</span><span class="freq high">82%</span></li>
+          <li><span class="name">Cambio de órbita / ΔE</span><span class="freq high">53%</span></li>
+          <li><span class="name">Velocidad de escape</span><span class="freq">47%</span></li>
+          <li><span class="name">g de planeta hipotético</span><span class="freq">35%</span></li>
+          <li><span class="name">3 masas en distribución</span><span class="freq">18%</span></li>
+          <li><span class="name">Tierra-Luna / 3 cuerpos</span><span class="freq">18%</span></li>
+        </ul>
+      </div>
+      <div class="pat-card" style="--card-color:var(--b2);">
+        <h3>Bloque II · Electromagnético</h3>
+        <ul>
+          <li><span class="name">Lorentz / carga circular en B</span><span class="freq high">82%</span></li>
+          <li><span class="name">3 cargas puntuales · E, V, W</span><span class="freq high">71%</span></li>
+          <li><span class="name">2 cargas puntuales · E, V, W</span><span class="freq">53%</span></li>
+          <li><span class="name">2 hilos paralelos</span><span class="freq">47%</span></li>
+          <li><span class="name">Espira · Faraday cos(ωt)</span><span class="freq">41%</span></li>
+          <li><span class="name">Condensador / selector</span><span class="freq">24%</span></li>
+        </ul>
+      </div>
+      <div class="pat-card" style="--card-color:var(--b3);">
+        <h3>Bloque III · Ondas y óptica</h3>
+        <ul>
+          <li><span class="name">Ecuación onda transversal</span><span class="freq high">100%</span></li>
+          <li><span class="name">Lente delgada</span><span class="freq high">82%</span></li>
+          <li><span class="name">Snell / ángulo límite</span><span class="freq">35%</span></li>
+          <li><span class="name">Defectos del ojo</span><span class="freq">29%</span></li>
+          <li><span class="name">MAS muelle <em>(nuevo 2025)</em></span><span class="freq">6%</span></li>
+          <li><span class="name">Intensidad sonora dB <em>(nuevo 2025)</em></span><span class="freq">6%</span></li>
+        </ul>
+      </div>
+      <div class="pat-card" style="--card-color:var(--b4);">
+        <h3>Bloque IV · Cuántica / Relativista / Nuclear</h3>
+        <ul>
+          <li><span class="name">De Broglie</span><span class="freq high">76%</span></li>
+          <li><span class="name">Efecto fotoeléctrico</span><span class="freq high">71%</span></li>
+          <li><span class="name">Contracción / dilatación</span><span class="freq">53%</span></li>
+          <li><span class="name">Defecto masa / E enlace</span><span class="freq">35%</span></li>
+          <li><span class="name">Masa y E relativista</span><span class="freq">18%</span></li>
+          <li><span class="name">Desintegración radiactiva <em>(nuevo 2025)</em></span><span class="freq">6%</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pat-note">
+      <strong>Temas emergentes a vigilar.</strong> En la PAU 2025 (primer año del nuevo formato) aparecieron tres temas que llevaban años en la matriz LOMLOE pero no se habían pedido: <strong>MAS muelle</strong>, <strong>intensidad sonora en decibelios</strong> y <strong>desintegración radiactiva con vida media</strong>. Los 10 simulacros incluyen estos temas con alta frecuencia porque tienen muchas papeletas para repetir en 2026.<br><br>
+      <strong>Temas que aún no han caído (pero están en la matriz).</strong> Doppler explícito, MAS de péndulo simple, interferencia de Young, solenoide con Biot-Savart, fibra óptica calculada. Se incluyen variantes ocasionales por si la PAU 2026 los introduce.
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 1 ============ -->
+<section class="slide" data-title="Examen 1">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 1</div>
+        <h2 class="examen-titulo">Examen 1 · Clásico</h2>
+        <div class="examen-tema">Satélite · 3 cargas · onda transversal · fotoeléctrico</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg<br>
+      m_p = 1,673·10⁻²⁷ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      Nₐ = 6,022·10²³ mol⁻¹<br>
+      1 u = 1,6606·10⁻²⁷ kg<br>
+      1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <!-- Bloque I -->
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header">
+        <h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3>
+        <span class="bloque-puntos"><strong>2,5</strong> puntos</span>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Un satélite de 750 kg describe una órbita circular a 800 km sobre la superficie de la Tierra.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Calcule la velocidad orbital del satélite y su periodo. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Calcule la energía cinética, potencial y total del satélite en órbita. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Energía adicional necesaria para llevarlo desde su órbita actual a una órbita geoestacionaria (h = 36 000 km). <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bloque II -->
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header">
+        <h3 class="bloque-title">Bloque II · Interacción electromagnética</h3>
+        <span class="bloque-puntos"><strong>3</strong> puntos</span>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Tres cargas puntuales se sitúan en los vértices de un triángulo rectángulo: q₁ = +4 μC en A(0,0), q₂ = −2 μC en B(3,0), q₃ = +2 μC en C(0,4). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico resultante en el punto P(3,4). <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para llevar una carga +1 μC desde P hasta el infinito. Justifique quién realiza el trabajo. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Un protón entra perpendicularmente a un campo magnético <span class="formula">B = 0,3 T</span> con velocidad <span class="formula">v = 2·10⁵ m/s</span>. Calcule el radio de la trayectoria, el periodo y el número de vueltas que da en 1 ms. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Una espira cuadrada de 10 cm de lado se encuentra perpendicular a un campo magnético <span class="formula">B(t) = 2 sen(50t)</span> T (t en s). Calcule el flujo magnético y la fem inducida en t = 0,02 s. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bloque III -->
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header">
+        <h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3>
+        <span class="bloque-puntos"><strong>3</strong> puntos</span>
+      </div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Una onda armónica transversal se propaga según <span class="formula">y(x,t) = 0,05 sen(20πt − 5x + π/3)</span> en unidades SI.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule periodo, longitud de onda, velocidad de propagación y velocidad máxima de oscilación. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Una lente convergente de f = 20 cm forma la imagen de un objeto de 4 cm situado a 30 cm. Determine la posición, tamaño y naturaleza de la imagen. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span> Un cuerpo de m = 0,5 kg unido a un muelle realiza un MAS según <span class="formula">x(t) = 0,1 cos(10t + π/4)</span> SI.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Periodo, constante recuperadora del muelle y velocidad máxima. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Expresiones de la energía cinética y potencial en función del tiempo. Compruebe que la energía mecánica se conserva. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bloque IV -->
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header">
+        <h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3>
+        <span class="bloque-puntos"><strong>1,5</strong> puntos</span>
+      </div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span> Se ilumina una superficie de sodio (W = 2,28 eV) con luz UV de λ = 300 nm.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Frecuencia y energía del fotón incidente. <span class="apt-pts">(0,5 pts)</span></li>
+          <li data-label="b)">Energía cinética máxima y velocidad máxima de los electrones emitidos. Calcule la longitud de onda umbral. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule la longitud de onda de De Broglie de un electrón acelerado desde el reposo por una diferencia de potencial de 100 V. <span class="apt-pts">(0,5 pts)</span></li>
+          <li data-label="b)">Defecto de masa del núcleo de ⁴He (m = 4,0026 u, m_p = 1,00728 u, m_n = 1,00867 u). Calcule la energía de enlace por nucleón en MeV. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 2 ============ -->
+<section class="slide" data-title="Examen 2">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 2</div>
+        <h2 class="examen-titulo">Examen 2 · Escape planetario</h2>
+        <div class="examen-tema">Planeta hipotético · espira Faraday · Snell · contracción relativista</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      μ₀ = 4π·10⁻⁷ T·m/A<br>
+      1 u = 1,6606·10⁻²⁷ kg<br>
+      1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Se considera un planeta hipotético con masa M = 2·M_T y radio R = R_T/2.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Deduzca la expresión teórica de la velocidad de escape y calcule la gravedad en la superficie del planeta y su velocidad de escape. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Un cuerpo se lanza verticalmente desde la superficie con v₀ = 12 km/s. Determine si escapa del campo gravitatorio. Si queda ligado, calcule la altura máxima sobre la superficie. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Se desea situar un satélite de 1200 kg en órbita circular a una altura h = R sobre la superficie. Calcule la velocidad de lanzamiento desde la superficie y la energía mecánica total del satélite en órbita. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Dos cargas puntuales se sitúan sobre el eje Y: q₁ = +5 nC en A(0,3) y q₂ = −5 nC en B(0,−3). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico y potencial en el punto P(4,0). <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para llevar una carga q = +2 nC desde P(4,0) hasta el punto Q(0,0). Justifique quién realiza el trabajo. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Una espira circular de radio r = 8 cm y resistencia R = 4 Ω se sitúa perpendicular a un campo magnético <span class="formula">B(t) = 0,5 cos(10πt)</span> T (t en s). Calcule el flujo magnético, la fem inducida y la intensidad de corriente en la espira en t = 0,1 s. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Dos hilos rectilíneos paralelos separados 20 cm transportan corrientes en sentidos opuestos: I₁ = 4 A y I₂ = 6 A. Calcule el vector campo magnético en el punto medio entre ambos hilos y la fuerza por unidad de longitud entre ellos. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Una onda armónica transversal se propaga en el sentido positivo del eje X. Datos: A = 4 cm, T = 0,4 s, λ = 8 cm. En t = 0 y x = 0 la elongación es máxima.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Deduzca la expresión matemática completa y(x,t) en unidades SI. Calcule la velocidad de propagación y la velocidad máxima de vibración. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Una lente convergente de f = 15 cm forma la imagen de un objeto situado a 25 cm de la lente. Calcule la posición y la naturaleza de la imagen y el aumento lateral. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Un haz de luz monocromática (λ₀ = 600 nm en vacío) incide desde el aire sobre una lámina de vidrio (n = 1,5) con un ángulo de 40°. Calcule el ángulo de refracción, la longitud de onda en el vidrio y el ángulo límite del vidrio respecto al aire. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">El cristalino del ojo humano se modela como una lente convergente de f = 15 mm. Calcule la posición y el aumento de la imagen formada en la retina para un objeto situado a 60 cm. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Fotones de λ = 250 nm inciden sobre una superficie de plata cuyo trabajo de extracción es W = 4,73 eV. Calcule la energía del fotón y la energía cinética máxima de los electrones emitidos. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Calcule la longitud de onda de De Broglie asociada a un electrón que se mueve con v = 0,01c. <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una nave espacial pasa cerca de la Tierra a v = 0,8c. ¿Qué longitud mide un observador terrestre para una varilla que dentro de la nave tiene 12 m en reposo orientada en la dirección del movimiento? <span class="apt-pts">(0,5 pts)</span></li>
+          <li data-label="b)">Defecto de masa, energía de enlace y energía de enlace por nucleón del núcleo ⁶Li (m_atómica = 6,01512 u; m_p = 1,00728 u; m_n = 1,00867 u). Exprese el resultado en MeV. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 3 ============ -->
+<section class="slide" data-title="Examen 3">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 3</div>
+        <h2 class="examen-titulo">Examen 3 · Geoestacionario y vida media</h2>
+        <div class="examen-tema">Kepler · 3 cargas en cuadrado · MAS muelle · desintegración radiactiva</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      Nₐ = 6,022·10²³ mol⁻¹<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J<br>
+      ln 2 ≈ 0,693
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Un satélite geoestacionario tiene periodo T = 24 h y orbita alrededor de la Tierra.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Deduzca la expresión teórica del radio orbital aplicando la 3ª ley de Kepler y calcule la altura sobre la superficie terrestre. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Para un satélite geoestacionario de 1500 kg, calcule la velocidad orbital, la aceleración centrípeta y la energía mecánica. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Compare la velocidad orbital y el periodo de un satélite a 400 km de altura (ISS) con los del geoestacionario. Justifique a qué órbita corresponde mayor energía mecánica. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> En los vértices de un cuadrado de lado L = 2 m se sitúan cuatro cargas: +q en A(0,0) y C(2,2); −q en B(2,0) y D(0,2). Con q = 3 μC.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico y potencial en el centro del cuadrado. Justifique el resultado. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para llevar una carga +q desde el centro hasta el vértice A. Indique quién realiza el trabajo. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Un electrón entra perpendicular a un campo magnético uniforme con velocidad v = 5·10⁶ m/s y describe una trayectoria circular de radio R = 2 cm. Calcule el módulo del campo magnético, el periodo y la energía cinética del electrón. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Un protón se acelera desde el reposo por una ddp de 2000 V y entra perpendicularmente en una región con B = 0,4 T. Calcule el radio de la trayectoria y el periodo. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Un cuerpo de m = 0,4 kg unido a un muelle de constante k = 64 N/m realiza un MAS de amplitud A = 5 cm. En t = 0 el cuerpo está en x = +A.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Escriba la ecuación de la posición x(t), calcule el periodo y la velocidad máxima. Determine el desfase entre x(t) y v(t). <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Calcule la energía mecánica total. Determine x cuando la energía cinética iguale a la potencial. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una lente divergente de f = −20 cm forma la imagen de un objeto de 6 cm de altura situado a 30 cm de la lente. Calcule la posición, tamaño y naturaleza de la imagen y haga el trazado de rayos. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Una onda transversal viaja por una cuerda con v = 12 m/s y f = 4 Hz. La amplitud es 5 cm. Escriba su expresión matemática y calcule la velocidad transversal máxima de un punto de la cuerda. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">El cesio metálico tiene un trabajo de extracción W = 2,14 eV. Calcule la frecuencia umbral y la longitud de onda umbral. <span class="apt-pts">(0,5 pts)</span></li>
+          <li data-label="b)">Sobre la superficie de cesio incide luz de λ = 400 nm. Calcule la energía cinética máxima de los electrones emitidos y el potencial de frenado. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span> El uranio-235 tiene una vida media τ = 7,038·10⁸ años. Se dispone de una muestra de 2 mg de ²³⁵U.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule la constante de desintegración λ y la actividad inicial de la muestra en Bq. <span class="apt-pts">(0,75 pts)</span></li>
+          <li data-label="b)">Tiempo necesario para que se desintegre el 90% de la muestra inicial. <span class="apt-pts">(0,75 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 4 ============ -->
+<section class="slide" data-title="Examen 4">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 4</div>
+        <h2 class="examen-titulo">Examen 4 · 3 masas y selector</h2>
+        <div class="examen-tema">Distribución triangular · selector de velocidades · sonido en dB · defecto de masa</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      I₀ = 10⁻¹² W/m² (umbral audición)<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Tres masas iguales m = 5 kg se sitúan en los vértices de un triángulo equilátero de lado L = 2 m: A(0,0), B(2,0) y C(1, √3).</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Vector campo gravitatorio y potencial gravitatorio en el centro del triángulo. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Calcule la fuerza gravitatoria total que las tres masas ejercen sobre una masa adicional m' = 1 kg situada en C. Energía potencial gravitatoria del sistema. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Trabajo necesario para alejar la masa de C hasta el infinito, manteniendo fijas las otras dos. Indique qué energía adicional habría que dar a un cuerpo situado en C(1,√3) para que escapara del sistema. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Dos cargas puntuales q₁ = +6 μC y q₂ = −2 μC se sitúan sobre el eje X: q₁ en (0,0) y q₂ en (6,0). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Determine el punto del eje X donde el campo eléctrico es cero. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para llevar una carga +1 μC desde el punto P(3,0) hasta el infinito. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Selector de velocidades: una partícula con carga +q y velocidad v = 4·10⁵ <span class="vec">i</span> m/s atraviesa sin desviarse una región con campo magnético <span class="vec">B</span> = 0,2 <span class="vec">k</span> T. Calcule el campo eléctrico necesario para que la partícula mantenga trayectoria rectilínea. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Una espira cuadrada de lado 12 cm y resistencia 2 Ω se sitúa con su normal a 30° respecto a un campo magnético B(t) = 0,8·t² (t en s, B en T). Calcule la fem y la corriente inducida en t = 3 s. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Una onda armónica transversal se describe por <span class="formula">y(x,t) = 0,02 sen(50πt − 4πx)</span> SI.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Determine el sentido de propagación, periodo, longitud de onda, velocidad de propagación y aceleración máxima de oscilación. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Una lente convergente debe proyectar una imagen 5 veces mayor que el objeto sobre una pantalla situada a 2,4 m de la lente. Calcule la distancia objeto-lente y la focal de la lente. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">A 8 m de un altavoz puntual el nivel de intensidad sonora es de 70 dB. Calcule la intensidad sonora en ese punto, la potencia del altavoz y la distancia a la que el nivel desciende a 50 dB. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Un MAS tiene amplitud 6 cm y frecuencia 5 Hz. En t = 0 la velocidad es máxima y positiva. Escriba x(t), v(t) y a(t). Calcule la aceleración cuando x = 3 cm. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Compare la longitud de onda de De Broglie de un electrón con Ec = 50 eV y la de una pelota de tenis de 60 g moviéndose a 30 m/s. Justifique por qué solo en el primer caso son apreciables los efectos cuánticos. <span class="apt-pts">(0,75 pts)</span></li>
+          <li data-label="b)">Calcule el defecto de masa, la energía de enlace total y la energía de enlace por nucleón del ⁵⁵Mn (m = 54,938 u; Z = 25). <span class="apt-pts">(0,75 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una nave espacial con una varilla de 30 m en reposo en su interior se mueve a 0,6c respecto a la Tierra. ¿Qué longitud mide un observador terrestre? Justifique la dirección de medida. <span class="apt-pts">(0,5 pts)</span></li>
+          <li data-label="b)">Una superficie de potasio (W = 2,3 eV) es iluminada con luz de λ = 450 nm. ¿Se produce efecto fotoeléctrico? Justifique y, en caso afirmativo, calcule la velocidad máxima de los electrones emitidos. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 5 ============ -->
+<section class="slide" data-title="Examen 5">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 5</div>
+        <h2 class="examen-titulo">Examen 5 · Caída libre y dos hilos</h2>
+        <div class="examen-tema">Conservación de energía · hilos paralelos · onda · relatividad cinética</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      g₀ = 9,8 m/s² (superficie Tierra)<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      μ₀ = 4π·10⁻⁷ T·m/A<br>
+      mₑ = 9,11·10⁻³¹ kg · m_p = 1,673·10⁻²⁷ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Un cuerpo de 8 kg se deja caer desde el reposo a una altura h₀ = 2000 km sobre la superficie terrestre, despreciando rozamiento.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Aplicando conservación de la energía mecánica, calcule la velocidad con la que llega a la superficie terrestre. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Si en lugar de caer libremente se le proporciona una velocidad inicial vertical hacia arriba v₀ = 5 km/s desde la altura h₀, calcule la altura máxima sobre la superficie a la que llega y la velocidad final con la que impacta en el suelo. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Compare la energía mecánica del cuerpo en reposo a 2000 km con la que tendría en órbita circular a esa misma altura. Calcule la energía cinética que habría que comunicarle para que orbite. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Tres cargas puntuales en los vértices de un triángulo: q₁ = +3 μC en A(0,0), q₂ = +3 μC en B(4,0) y q₃ = −2 μC en C(2,3). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico resultante en el origen O(0,0) producido por q₂ y q₃ (sin contar q₁). <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Energía potencial eléctrica del sistema de tres cargas. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Dos hilos rectilíneos paralelos muy largos, separados 15 cm, transportan corrientes en el mismo sentido: I₁ = 10 A e I₂ = 5 A. Calcule el módulo y la dirección del campo magnético total en un punto P situado en la mediatriz a 8 cm de cada hilo. Indique si la fuerza entre los hilos es atractiva o repulsiva. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Un electrón con velocidad v = 3·10⁶ m/s entra perpendicularmente en una región donde existe un campo magnético B = 0,1 T y un campo eléctrico E perpendicular a B. ¿Qué módulo y dirección debe tener E para que el electrón siga trayectoria rectilínea? <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Una onda armónica transversal se propaga en sentido negativo del eje X con A = 3 cm, f = 25 Hz y λ = 0,4 m. En t = 0 el punto x = 0 está en su elongación máxima positiva.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Escriba la expresión y(x,t) en unidades SI y calcule la velocidad de propagación y la velocidad transversal máxima. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Calcule la diferencia de fase entre dos puntos del medio separados 10 cm y la diferencia de fase entre dos instantes separados 0,01 s en el mismo punto. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Un altavoz emite 0,8 W repartidos uniformemente en todas direcciones. Calcule el nivel de intensidad sonora en decibelios a 5 m del altavoz. ¿A qué distancia el nivel cae a 40 dB? <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Una lente convergente de f = 25 cm se utiliza como proyector. Calcule a qué distancia hay que situar una diapositiva para que la imagen sobre una pantalla a 3 m esté enfocada y enuncie su aumento. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Sobre una superficie de aluminio (W = 4,08 eV) se hace incidir luz UV de λ = 200 nm. Calcule la energía cinética máxima de los fotoelectrones y el potencial de frenado. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Si se duplica la intensidad de la luz incidente manteniendo λ constante, indique qué ocurre con la Ec máxima de los electrones y con el número de electrones emitidos por segundo. Justifique. <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Un electrón se mueve con velocidad 0,8c. Calcule su masa relativista, su energía cinética relativista y compárela con la energía cinética clásica que daría la misma velocidad. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Calcule la longitud de onda de De Broglie de un protón con la misma energía cinética que el electrón del apartado anterior. <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 6 ============ -->
+<section class="slide" data-title="Examen 6">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 6</div>
+        <h2 class="examen-titulo">Examen 6 · Densidad por Kepler</h2>
+        <div class="examen-tema">Júpiter y Calisto · dipolo · MAS muelle · energía de enlace</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg<br>
+      Radio Júpiter R_J = 6,99·10⁷ m<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J<br>
+      m_p = 1,00728 u · m_n = 1,00867 u
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Calisto, una de las cuatro lunas galileanas, orbita Júpiter con un radio medio r = 1,883·10⁹ m y un periodo T = 16,69 días.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Aplicando la 3ª ley de Kepler, calcule la masa de Júpiter. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Calcule la densidad media de Júpiter y la gravedad en su superficie. Compárelas con las de la Tierra. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Calcule la velocidad orbital de Calisto y la velocidad de escape desde su órbita. ¿Una sonda con velocidad 1,5 veces la velocidad orbital escaparía del sistema joviano? Justifique. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Un dipolo eléctrico está formado por dos cargas: +q en A(−a, 0) y −q en B(+a, 0), con q = 4 μC y a = 2 m. Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule el vector campo eléctrico y el potencial en el punto P(0, 3) y en el punto O(0, 0). <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para llevar una carga +2 μC desde P(0, 3) hasta el origen. Indique si el trabajo lo realizan las fuerzas del campo o un agente externo. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Una espira cuadrada de 15 cm de lado se sitúa con su normal paralela a un campo magnético <span class="formula">B(t) = 0,4 sen(20πt)</span> T. Calcule la fem inducida en t = 0,05 s y el valor máximo de la fem. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Un protón con v = 6·10⁵ m/s describe una trayectoria circular al entrar perpendicular a un campo B = 0,5 T. Calcule el radio de la trayectoria, el periodo y la energía cinética en eV. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Un cuerpo de 0,25 kg sujeto a un muelle realiza un MAS de amplitud A = 12 cm y periodo T = 0,5 s.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule la constante recuperadora del muelle, la velocidad máxima, la aceleración máxima y la energía mecánica total. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Si en t = 0 el cuerpo pasa por la posición de equilibrio con velocidad negativa, escriba x(t) y v(t). Calcule la posición y velocidad en t = 0,2 s. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Un haz láser de λ₀ = 633 nm en vacío incide desde el aire sobre vidrio (n = 1,5) con ángulo de incidencia 30°. Calcule el ángulo de refracción, la longitud de onda en el vidrio y la frecuencia (debe ser la misma en ambos medios). <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Calcule el ángulo límite del vidrio respecto al aire. Justifique en qué medio se produce la reflexión total interna. Aplicación: explique brevemente cómo funciona una fibra óptica. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Sobre una superficie de potasio (W = 2,3 eV) se hace incidir radiación con dos longitudes de onda diferentes: λ₁ = 500 nm y λ₂ = 350 nm. Determine en cuál se produce efecto fotoeléctrico y calcule la Ec_max en ese caso. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Justifique qué ocurriría si en lugar de duplicarse la frecuencia se duplicara la intensidad de la radiación. <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule la energía de enlace por nucleón del núcleo de ¹⁴N (m_atómica = 14,00307 u; Z = 7). <span class="apt-pts">(0,75 pts)</span></li>
+          <li data-label="b)">Compare la estabilidad del ¹⁴N con la del ⁴He (m = 4,0026 u). ¿Cuál es más estable? <span class="apt-pts">(0,75 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 7 ============ -->
+<section class="slide" data-title="Examen 7">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 7</div>
+        <h2 class="examen-titulo">Examen 7 · Tierra-Luna y gemelos</h2>
+        <div class="examen-tema">Sistema de 3 cuerpos · condensador · onda desde gráficas · dilatación temporal</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg · m_p = 1,673·10⁻²⁷ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      M_L = 7,35·10²² kg · R_L = 1,74·10⁶ m<br>
+      d_TL = 3,84·10⁸ m (Tierra-Luna)<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Un satélite de 2000 kg está en un punto P de la recta que une los centros de la Tierra y la Luna, a una distancia de 3,2·10⁸ m del centro de la Tierra.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Calcule el vector fuerza gravitatoria total que actúa sobre el satélite. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Calcule a qué distancia exacta entre la Tierra y la Luna el campo gravitatorio resultante es nulo (punto de Lagrange L1 simplificado). <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Energía mínima para llevar el satélite desde la superficie de la Luna hasta una órbita lunar circular de altura h = R_L. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Tres cargas puntuales: q₁ = +1 μC en (0,0), q₂ = +1 μC en (4,0), q₃ = −2 μC en (2,3). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico y potencial en el punto P(2, 0). <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para mover una carga +0,5 μC desde P(2,0) hasta el punto Q(4,3). Indique si el campo o un agente externo realiza el trabajo. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Un electrón se introduce horizontalmente con v₀ = 4·10⁶ m/s entre las placas de un condensador plano-paralelo (E = 5000 V/m vertical hacia arriba) de longitud L = 4 cm. Calcule la desviación vertical del electrón al salir del condensador. Considere despreciable la gravedad. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Una espira rectangular de 8 × 12 cm con resistencia 3 Ω se sitúa con su normal a 30° respecto a un campo <span class="formula">B(t) = 0,5 cos(20t)</span> T. Calcule la fem y la intensidad de corriente inducidas en t = π/40 s. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Una onda armónica transversal se propaga en sentido positivo del eje X. A partir de la gráfica y(x) en t = 0 se sabe que: la amplitud es A = 3 cm, el punto x = 0 está en y = 0 con velocidad transversal positiva, y la longitud de onda es λ = 20 cm. La velocidad de propagación es 5 m/s.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Deduzca la expresión y(x,t) en unidades SI. Calcule el periodo, la velocidad transversal máxima y la aceleración máxima. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Calcule la elongación, velocidad y aceleración del punto x = 5 cm en el instante t = 0,1 s. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una lente convergente de potencia +5 dioptrías forma la imagen de un objeto situado a 80 cm. Calcule la focal, la posición y el aumento de la imagen. Indique la naturaleza de la imagen. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">El mismo objeto se sitúa ahora a 15 cm de la lente. Repita el cálculo y compare ambos casos. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule la longitud de onda de De Broglie de un protón y de un electrón, ambos con la misma energía cinética Ec = 1000 eV. Justifique qué partícula tiene mayor λ. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">¿A qué velocidad debería moverse el protón para tener la misma longitud de onda de De Broglie que un electrón a v = 10⁶ m/s? <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span> Una nave espacial viaja a 0,9c desde la Tierra hasta Próxima Centauri (distancia 4,24 años luz medidos desde la Tierra).</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Tiempo del viaje medido por un observador terrestre. <span class="apt-pts">(0,5 pts)</span></li>
+          <li data-label="b)">Tiempo medido por un astronauta a bordo. ¿Qué distancia mide el astronauta entre la Tierra y Próxima Centauri? <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 8 ============ -->
+<section class="slide" data-title="Examen 8">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 8</div>
+        <h2 class="examen-titulo">Examen 8 · Satélite con T fijo</h2>
+        <div class="examen-tema">Periodo conocido · espira inclinada · onda y cobalto-60</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      ln 2 ≈ 0,693<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. Un satélite de comunicaciones de 1800 kg orbita la Tierra con periodo T = 8 h.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Calcule la altura del satélite sobre la superficie terrestre y su velocidad orbital. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Calcule la aceleración centrípeta a la que está sometido el satélite y la energía mecánica total en su órbita. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> El satélite enciende sus motores y modifica su órbita pasando a una circular con T = 12 h. Calcule la energía adicional necesaria para realizar el cambio. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Tres cargas puntuales se alinean sobre el eje X: q₁ = +4 μC en (−2, 0), q₂ = +2 μC en (0, 0), q₃ = −3 μC en (3, 0). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico resultante en el punto P(1, 0). Indique magnitud y sentido. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Energía potencial electrostática del sistema de tres cargas. Trabajo necesario para llevar q₃ desde su posición hasta el infinito (manteniendo fijas q₁ y q₂). <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Una espira cuadrada de 20 cm de lado se sitúa con su normal formando 60° con un campo magnético <span class="formula">B(t) = 3 sen(4t + π)</span> T. Calcule el flujo magnético máximo y la fem inducida en t = π/8 s. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Una partícula α (carga +2e, masa 6,64·10⁻²⁷ kg) se acelera desde el reposo por una diferencia de potencial de 1500 V y entra perpendicular a un campo B = 0,6 T. Calcule la velocidad al entrar en el campo y el radio de la trayectoria. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Una onda armónica transversal viene dada por <span class="formula">y(x,t) = 0,08 cos(πt − 4πx + π/4)</span> SI.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Determine el sentido de propagación, periodo, longitud de onda y velocidad de propagación. Velocidad transversal máxima de un punto del medio. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Calcule la diferencia de fase entre los puntos x₁ = 0 y x₂ = 0,5 m en un mismo instante. ¿Están en fase, en oposición o en cuadratura? <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una lente convergente proyecta sobre una pantalla la imagen de un objeto de 4 cm con un aumento de −6 (invertida). La pantalla está a 1,8 m de la lente. Calcule la focal y la posición del objeto. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Un cuerpo realiza un MAS con amplitud 10 cm y frecuencia 0,5 Hz. Calcule el tiempo que tarda en pasar desde la posición de equilibrio hasta el punto donde la energía cinética iguala a la potencial. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una superficie metálica con W = 3,5 eV es iluminada con luz UV de λ = 280 nm. Calcule la energía del fotón, la frecuencia umbral del metal y la energía cinética máxima de los electrones emitidos. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Calcule la longitud de onda de De Broglie de uno de esos electrones emitidos. <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span> El ⁶⁰Co tiene un periodo de semidesintegración T₁/₂ = 5,27 años y se usa en radioterapia.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule la constante de desintegración y la actividad inicial de una muestra de 1 μg. <span class="apt-pts">(0,75 pts)</span></li>
+          <li data-label="b)">Tras 10 años de uso, ¿qué fracción de los núcleos iniciales permanece sin desintegrarse? <span class="apt-pts">(0,75 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 9 ============ -->
+<section class="slide" data-title="Examen 9">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 9</div>
+        <h2 class="examen-titulo">Examen 9 · Planeta denso</h2>
+        <div class="examen-tema">M=2M_T, R=R_T/2 · Lorentz puro · Snell · helio-4</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg · m_p = 1,673·10⁻²⁷ kg<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      m_p = 1,00728 u · m_n = 1,00867 u<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. En un planeta hipotético la masa es M = 2 M_T y el radio R = R_T/2.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Calcule la gravedad en su superficie y la velocidad orbital de un satélite en órbita rasante (h ≈ 0). <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Un cuerpo cae libremente desde una altura h = R sobre la superficie del planeta. Calcule la velocidad con que impacta y compárela con la velocidad de escape. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Calcule la energía necesaria para llevar un cuerpo de 500 kg desde la superficie del planeta hasta el infinito y la energía cinética con la que llega al infinito si se le comunica una velocidad inicial v = 1,2 v_escape. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Dos cargas puntuales se sitúan sobre el eje X: q₁ = −3 μC en (−2, 0) y q₂ = +5 μC en (3, 0). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico resultante en P(0, 4) y potencial eléctrico en P. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para llevar una carga +q' = +2 μC desde P(0,4) hasta el origen O(0,0). <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Un protón entra perpendicular a un campo magnético uniforme B = 0,25 T con energía cinética 800 eV. Calcule la velocidad, el radio de la trayectoria circular y el número de vueltas que describe en 5 μs. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Dos hilos rectilíneos paralelos separados 10 cm transportan corrientes en el mismo sentido: I₁ = 8 A e I₂ = 8 A. Calcule el módulo del campo magnético en un punto equidistante a 8 cm de cada hilo (no en el plano de los hilos) y la fuerza por unidad de longitud entre ellos. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Una onda armónica transversal cumple <span class="formula">y(x,t) = 0,06 sen(10πt − 5πx)</span> SI.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule periodo, longitud de onda, frecuencia y velocidad de propagación. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Elongación, velocidad y aceleración del punto x = 0,1 m en t = 0,05 s. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Un haz de luz pasa de agua (n = 1,33) a aire con ángulo de incidencia 35°. Calcule el ángulo de refracción y el ángulo límite del agua respecto al aire. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Una lente delgada de potencia +4 dioptrías forma la imagen de un objeto situado a 20 cm. Calcule la posición y el aumento de la imagen. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Defecto de masa, energía de enlace y energía de enlace por nucleón del ⁴He (m_atómica = 4,002602 u; Z = 2). Exprese en MeV. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">En la reacción de fusión ²H + ³H → ⁴He + n, calcule la energía liberada por reacción si m(²H) = 2,014 u, m(³H) = 3,016 u, m(⁴He) = 4,0026 u, m(n) = 1,00867 u. <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Calcule la longitud de onda de De Broglie de un electrón y de un protón, ambos con la misma velocidad v = 5·10⁵ m/s. ¿Cuál es la relación entre ambas? <span class="apt-pts">(0,75 pts)</span></li>
+          <li data-label="b)">El metal cinc tiene W = 4,3 eV. ¿Cuál es la longitud de onda máxima de la radiación que puede producir efecto fotoeléctrico en el cinc? <span class="apt-pts">(0,75 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 10 ============ -->
+<section class="slide" data-title="Examen 10">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 10</div>
+        <h2 class="examen-titulo">Examen 10 · ISS y partícula α</h2>
+        <div class="examen-tema">Órbita baja · partícula acelerada en B · MAS y sonido · contracción</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU Física · Canarias</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <div class="constantes">
+      <div class="c-title">Constantes físicas</div>
+      G = 6,67·10⁻¹¹ N·m²/kg²<br>
+      K = 9·10⁹ N·m²/C²<br>
+      h = 6,63·10⁻³⁴ J·s<br>
+      c = 3·10⁸ m/s<br>
+      mₑ = 9,11·10⁻³¹ kg<br>
+      m_α = 6,64·10⁻²⁷ kg · q_α = 2e<br>
+      M_T = 5,97·10²⁴ kg · R_T = 6,37·10⁶ m<br>
+      I₀ = 10⁻¹² W/m² (umbral audición)<br>
+      1 u = 1,6606·10⁻²⁷ kg · 1 eV = 1,60·10⁻¹⁹ J
+    </div>
+
+    <p class="instrucciones">Realizar obligatoriamente las preguntas/apartados identificados como obligatorios y elegir la opción deseada en los identificados como opcionales.</p>
+
+    <div class="bloque" style="--bloque-color:var(--b1);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque I · Interacción gravitatoria</h3><span class="bloque-puntos"><strong>2,5</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">1. La Estación Espacial Internacional (ISS) describe una órbita aproximadamente circular a 400 km sobre la superficie terrestre. Considere una masa total m = 420 000 kg.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)"><span class="tag">obligatorio</span> Calcule la velocidad orbital, el periodo y el peso aparente que sentiría un astronauta de 70 kg dentro de la ISS. Justifique este último resultado. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Responda <strong>b1</strong> o <strong>b2</strong>:
+            <ul class="pregunta-apartados" style="margin-top:6px;">
+              <li data-label="b1)"><span class="tag opcional">opcional</span> Energía cinética, potencial y mecánica total de la ISS en órbita. <span class="apt-pts">(1,5 pts)</span></li>
+              <li data-label="b2)"><span class="tag opcional">opcional</span> Por rozamiento atmosférico la ISS pierde altura y queda a 380 km. Calcule la energía perdida en el proceso y razone si en la nueva órbita su velocidad es mayor o menor que la inicial. <span class="apt-pts">(1,5 pts)</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b2);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque II · Interacción electromagnética</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="pregunta">
+        <div class="pregunta-num">2. <span class="tag">obligatorio</span> Tres cargas puntuales se sitúan en los vértices de un triángulo: q₁ = +2 μC en A(0,0), q₂ = +2 μC en B(6,0), q₃ = −4 μC en C(3,4). Distancias en metros.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Vector campo eléctrico resultante en el centro del segmento AB (es decir, en M(3,0)). <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Trabajo necesario para llevar una carga +1 μC desde M(3,0) hasta C(3,4). Indique si lo realiza el campo o un agente externo. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+      <div class="opcional-banda">Responda a1 o a2</div>
+      <div class="pregunta">
+        <div class="pregunta-num">3. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a1)">Una partícula α (masa 6,64·10⁻²⁷ kg, carga +2e) se acelera desde el reposo por una diferencia de potencial de 2500 V y entra perpendicularmente en una región con B = 0,8 T. Calcule la velocidad al entrar, el radio de la trayectoria y el periodo de revolución. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="a2)">Una espira cuadrada de 25 cm de lado y resistencia 5 Ω se mueve con velocidad constante v = 0,5 m/s saliendo de una región con B = 0,4 T (perpendicular al plano de la espira). Calcule la fem inducida mientras está saliendo y la fuerza necesaria para mantener la velocidad. <span class="apt-pts">(1 pt)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b3);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque III · Vibraciones y ondas</h3><span class="bloque-puntos"><strong>3</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 4 o 5</div>
+      <div class="pregunta">
+        <div class="pregunta-num">4. <span class="tag opcional">opcional</span> Un péndulo simple no se usa: el oscilador es un muelle vertical con un cuerpo de 0,8 kg colgado. Al estirarlo 5 cm y soltarlo realiza un MAS con f = 1,5 Hz.</div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Constante del muelle, amplitud, velocidad máxima y energía mecánica total. <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Tomando t = 0 cuando el cuerpo se suelta (x = +A), escriba x(t), v(t) y a(t) y calcule estas tres magnitudes en t = 0,1 s. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">5. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una fuente sonora puntual emite con potencia 1,2 W. Calcule la intensidad sonora y el nivel en dB a 4 m de la fuente. ¿Cuál sería el nivel a 12 m si el medio fuera ideal (sin absorción)? <span class="apt-pts">(1,5 pts)</span></li>
+          <li data-label="b)">Una onda armónica tiene amplitud 2 cm, longitud de onda 0,5 m y se propaga con v = 10 m/s en sentido +X. En t = 0 el origen está en y = 0 con velocidad transversal negativa. Escriba y(x,t) en unidades SI. <span class="apt-pts">(1,5 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bloque" style="--bloque-color:var(--b4);">
+      <div class="bloque-header"><h3 class="bloque-title">Bloque IV · Física relativista, cuántica, nuclear</h3><span class="bloque-puntos"><strong>1,5</strong> puntos</span></div>
+      <div class="opcional-banda">Responda 6 o 7</div>
+      <div class="pregunta">
+        <div class="pregunta-num">6. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Sobre una superficie de aluminio (W = 4,08 eV) inciden fotones de λ = 250 nm. Calcule la frecuencia umbral del aluminio, la energía cinética máxima de los fotoelectrones y su velocidad. <span class="apt-pts">(1 pt)</span></li>
+          <li data-label="b)">Si se sustituye el aluminio por otro metal con W = 5 eV manteniendo la luz, ¿se produce efecto fotoeléctrico? Justifique. <span class="apt-pts">(0,5 pts)</span></li>
+        </ul>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-num">7. <span class="tag opcional">opcional</span></div>
+        <ul class="pregunta-apartados">
+          <li data-label="a)">Una nave espacial mide 80 m en reposo. Se mueve respecto a la Tierra con velocidad tal que un observador terrestre la mide 32 m. ¿A qué velocidad se mueve? <span class="apt-pts">(0,75 pts)</span></li>
+          <li data-label="b)">¿Cuál sería la energía cinética relativista de la nave si su masa en reposo es de 5·10⁴ kg? Compárela con la energía cinética clásica. <span class="apt-pts">(0,75 pts)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /stage -->
+
+<div class="bottombar">
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior"><span class="nav-arrow">‹</span> <span>Anterior</span></button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente"><span>Siguiente</span> <span class="nav-arrow">›</span></button>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let current = 0;
+const counterNum = document.getElementById('counterNum');
+const counterTotal = document.getElementById('counterTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsBox = document.getElementById('dots');
+
+counterTotal.textContent = slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='dot';
+  // etiqueta: P / A / 1-10
+  let label;
+  if(i===0) label = 'P';
+  else if(i===1) label = 'A';
+  else label = String(i-1);
+  d.textContent = label;
+  d.setAttribute('aria-label',s.dataset.title||('Slide '+(i+1)));
+  d.title = s.dataset.title || ('Slide '+(i+1));
+  d.addEventListener('click',()=>go(i));
+  dotsBox.appendChild(d);
+});
+
+function go(i){
+  if(i<0||i>=slides.length||i===current)return;
+  slides[current].classList.remove('is-active');
+  current = i;
+  slides[current].classList.add('is-active');
+  slides[current].scrollTop = 0;
+  counterNum.textContent = i+1;
+  dotsBox.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('is-active',j===i));
+  prevBtn.disabled = i===0;
+  nextBtn.disabled = i===slides.length-1;
+}
+
+prevBtn.addEventListener('click',()=>{go(current-1);prevBtn.blur();});
+nextBtn.addEventListener('click',()=>{go(current+1);nextBtn.blur();});
+
+document.addEventListener('keydown', e=>{
+  const t=e.target;
+  if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  if(e.key==='ArrowRight'||e.key===' ') go(current+1);
+  if(e.key==='ArrowLeft') go(current-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(slides.length-1);
+});
+
+go(0);
+</script>
+
+</body>
+</html>

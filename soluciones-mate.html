@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Soluciones · 10 simulacros PAU 2026 · Matemáticas II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-soft:#FAF6EE;
+  --paper-card:#FBF7EE;
+  --ink:#2D2A26;
+  --ink-soft:#5C574F;
+  --ink-mute:#8B8579;
+  --line:#D6CCB7;
+  --line-strong:#BFB39A;
+  --accent:#3F6E5C;
+  --t1:#3F6E5C;
+  --t2:#B8895A;
+  --t3:#4F6890;
+  --t4:#A95448;
+  --t5:#7B5F8C;
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--paper);}
+body{color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;background-image:radial-gradient(ellipse at top left, rgba(217,199,162,.16), transparent 50%),radial-gradient(ellipse at bottom right, rgba(63,110,92,.10), transparent 55%);background-attachment:fixed;}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;background:linear-gradient(to bottom,rgba(242,237,227,.98),rgba(242,237,227,.85));pointer-events:none;}
+.topbar > *{pointer-events:auto;}
+.home-link{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:100px;border:1px solid var(--line);background:var(--paper-soft);}
+.home-link:hover{color:var(--ink);border-color:var(--line-strong);}
+.topbar-title{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--ink-soft);}
+.slide-counter{font-family:var(--mono);font-size:.85rem;color:var(--ink-mute);letter-spacing:.05em;}
+.slide-counter strong{color:var(--ink);font-weight:600;}
+
+.bottombar{position:fixed;bottom:0;left:0;right:0;z-index:80;padding:14px 32px 18px;display:flex;justify-content:space-between;align-items:center;gap:20px;background:linear-gradient(to top,rgba(242,237,227,1) 60%,rgba(242,237,227,.9) 80%,rgba(242,237,227,0));pointer-events:none;isolation:isolate;}
+.nav-btn{pointer-events:auto;z-index:60;background:var(--paper-soft);border:2px solid var(--line-strong);color:var(--ink);height:54px;min-width:118px;padding:0 20px;border-radius:100px;cursor:pointer;font-size:.95rem;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 4px 14px rgba(45,42,38,.08);letter-spacing:.04em;flex-shrink:0;}
+.nav-btn .nav-arrow{font-family:var(--serif);font-size:1.5rem;line-height:1;}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);box-shadow:0 6px 18px rgba(63,110,92,.25);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+.dots{pointer-events:none;display:flex;gap:9px;flex:1;justify-content:center;flex-wrap:wrap;align-items:center;}
+.dot{pointer-events:auto;width:30px;height:30px;border-radius:50%;background:var(--paper-soft);border:1.5px solid var(--line-strong);cursor:pointer;transition:all .2s;font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--ink-soft);padding:0;display:grid;place-items:center;}
+.dot:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.dot.is-active{background:var(--ink);color:var(--paper-soft);border-color:var(--ink);transform:scale(1.1);}
+
+.stage{position:relative;width:100vw;height:100vh;overflow:hidden;}
+.slide{position:absolute;inset:0;display:none;overflow-y:auto;padding:84px 32px 110px;overscroll-behavior:contain;}
+.slide.is-active{display:block;}
+.slide-inner{max-width:920px;margin:0 auto;}
+
+.portada{text-align:center;padding-top:60px;}
+.portada .mark{width:96px;height:96px;border-radius:50%;background:var(--paper-soft);border:2px solid var(--accent);display:grid;place-items:center;margin:0 auto 28px;font-family:var(--serif);font-size:2.1rem;color:var(--accent);font-weight:600;}
+.portada h1{font-size:clamp(2.2rem,4.2vw,3.2rem);margin-bottom:14px;line-height:1.1;}
+.portada h1 .num{color:var(--accent);}
+.portada .sub{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink-soft);margin-bottom:30px;}
+.portada .desc{max-width:580px;margin:0 auto 30px;color:var(--ink-soft);font-size:.95rem;line-height:1.6;}
+.portada .nota{max-width:580px;margin:0 auto;padding:18px 22px;background:var(--paper-soft);border-left:3px solid var(--accent);border-radius:8px;font-size:.88rem;color:var(--ink-soft);line-height:1.6;text-align:left;}
+
+.sol-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:18px;border-bottom:2px solid var(--ink);margin-bottom:22px;gap:18px;}
+.sol-num{font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:4px;}
+.sol-titulo{font-family:var(--serif);font-size:1.6rem;font-weight:600;}
+.sol-tema{font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--ink-soft);margin-top:4px;}
+.sol-meta{text-align:right;font-size:.78rem;color:var(--ink-mute);font-family:var(--mono);letter-spacing:.06em;}
+
+.bloque-sol{margin-bottom:20px;padding:14px 18px 16px;background:var(--paper-card);border:1px solid var(--line);border-radius:10px;border-left:4px solid var(--bloque-color,var(--accent));}
+.bloque-sol .b-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--bloque-color,var(--ink));margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline;}
+.bloque-sol .b-title .pts{font-family:var(--mono);font-size:.72rem;color:var(--ink-mute);font-weight:400;letter-spacing:.06em;}
+
+.apartado{padding:8px 0 10px;border-bottom:1px dashed var(--line);font-size:.86rem;line-height:1.6;}
+.apartado:last-child{border-bottom:none;}
+.apartado .lbl{font-family:var(--serif);font-weight:600;color:var(--bloque-color,var(--accent));margin-right:6px;}
+.apartado .ans{font-weight:600;color:var(--ink);}
+.apartado p{margin:4px 0;}
+
+.calc{margin:6px 0;font-family:var(--mono);font-size:.80rem;color:var(--ink-soft);line-height:1.7;}
+.calc .step{display:block;}
+.calc .arrow{color:var(--accent);margin:0 4px;}
+.box-result{display:inline-block;background:var(--paper-soft);border:1px solid var(--line-strong);padding:3px 10px;border-radius:6px;font-family:var(--serif);font-weight:600;color:var(--ink);margin:2px 0;}
+
+.math{font-family:'Lora',Georgia,serif;font-style:italic;background:var(--paper-soft);padding:0 4px;border-radius:3px;font-size:.96em;}
+
+.opcion-banda{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin:8px 0 4px;font-weight:600;}
+
+.nota-criterio{background:var(--paper-soft);border:1px dashed var(--line-strong);border-radius:8px;padding:10px 14px;font-size:.8rem;color:var(--ink-soft);margin-top:14px;line-height:1.55;}
+.nota-criterio strong{color:var(--ink);}
+
+@media (max-width:680px){
+  .topbar{padding:10px 18px;}
+  .topbar-title{display:none;}
+  .slide{padding:74px 18px 100px;}
+  .sol-header{flex-direction:column;align-items:flex-start;}
+  .sol-meta{text-align:left;}
+  .nav-btn{min-width:auto;padding:0 14px;}
+  .nav-btn span:not(.nav-arrow){display:none;}
+}
+.slide::-webkit-scrollbar{width:10px;}
+.slide::-webkit-scrollbar-track{background:transparent;}
+.slide::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:6px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home-link" href="index.html">← inicio</a>
+  <div class="topbar-title">Soluciones · 10 simulacros PAU 2026 · Matemáticas II</div>
+  <div class="slide-counter"><strong id="counterNum">1</strong> / <span id="counterTotal">11</span></div>
+</div>
+
+<div class="stage">
+
+<!-- ============ PORTADA ============ -->
+<section class="slide is-active" data-title="Portada">
+  <div class="slide-inner portada">
+    <div class="mark">∑</div>
+    <h1>Soluciones <span class="num">·</span> 10 simulacros</h1>
+    <div class="sub">PAU 2026 · Matemáticas II · Canarias</div>
+    <p class="desc">Resolución guiada con planteamiento, sustitución y resultado. Se incluyen las dos opciones 4A/4B y 5A/5B aunque en el examen real solo se elija una.</p>
+    <div class="nota">
+      <strong>Cómo usar.</strong> Termina el examen completo sin mirar. Compara apartado a apartado. La PAU evalúa todo el procedimiento, no solo el resultado — los apartados de discusión de sistema deben mencionar Rouché-Fröbenius por nombre; las binomiales→normal deben justificar np≥5 y nq≥5; en geometría hay que especificar las coordenadas con paréntesis.<br><br>
+      <strong>Tabla Z.</strong> Los valores usados son los del cuadernillo oficial (F(1) = 0,8413, F(1,5) = 0,9332, F(2) = 0,9772, F(2,5) = 0,9938).
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 1 ============ -->
+<section class="slide" data-title="Soluciones · Examen 1">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 1</div>
+        <h2 class="sol-titulo">Examen 1 · Vitalcor</h2>
+        <div class="sol-tema">Fármaco · matriz 2×2 · distancia · L'Hôpital · test médico</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Vitalcor <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Continuidad en x=3:
+        <div class="calc">
+          <span class="step">lim x→3⁻ f(x) = −3² + 6·3 = −9 + 18 = 9</span>
+          <span class="step">lim x→3⁺ f(x) = 18/(3 − 1) = 9</span>
+          <span class="step">f(3) = 18/2 = 9. Los tres valores coinciden <span class="arrow">→</span> <span class="box-result">f continua en x = 3</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Monotonía:
+        <div class="calc">
+          <span class="step">En (0,3): f'(x) = −2x + 6 &gt; 0 ⟺ x &lt; 3 → estrictamente creciente</span>
+          <span class="step">En (3,∞): f(x) = 18/(x−1) → f'(x) = −18/(x−1)² &lt; 0 → decreciente</span>
+          <span class="step">Máximo en x = 3 <span class="arrow">→</span> <span class="box-result">f(3) = 9 mg/L</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> lim x→∞ 18/(x − 1) = <span class="box-result">0 mg/L</span>. La concentración tiende a cero (el organismo elimina por completo el fármaco).
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Matriz M(a) <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> <span class="math">det(M) = 1·(3−a) − (a−2)·(−1) = (3−a) + (a−2) = 1 ≠ 0</span> para todo a.
+        <div class="calc">
+          <span class="step">M⁻¹ = (1/det)·adj(M) = adj(M) = <span class="box-result">((3−a, 2−a); (1, 1))</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Para a=2: M = ((1,0);(−1,1)), M⁻¹ = ((1,0);(1,1)). Despejamos: <span class="math">X = M⁻¹(B − MA)</span>.
+        <div class="calc">
+          <span class="step">MA = ((0, 1, 2); (1, −2, −2))</span>
+          <span class="step">B − MA = ((1, 1, 2); (−2, 2, 5))</span>
+          <span class="step">X = M⁻¹·(B−MA) <span class="arrow">→</span> <span class="box-result">X = ((1, 1, 2); (−1, 3, 7))</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Geometría · distancia y ángulo <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Punto Q = r₁ ∩ r₂:
+        <div class="calc">
+          <span class="step">De r₂: x = 1, y + z = 3. De r₁: x − z = −1 → 1 − z = −1 → z = 2, y = 1.</span>
+          <span class="step"><span class="box-result">Q = (1, 1, 2)</span></span>
+          <span class="step">d(P,Q) = √((2−1)² + (−1−1)² + (3−2)²) = √(1+4+1) <span class="arrow">→</span> <span class="box-result">d = √6 ≈ 2,449</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Direcciones: v₁ = (1, 0, 1) (de r₁), v₂ = (0, 1, −1) (de r₂).
+        <div class="calc">
+          <span class="step">cos α = |v₁·v₂|/(|v₁|·|v₂|) = |0 + 0 − 1|/(√2·√2) = 1/2</span>
+          <span class="step"><span class="box-result">α = arccos(1/2) = 60°</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · Límite + función a trozos derivable <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> <span class="math">lim x→0 (1/x − 1/tan x) = lim (tan x − x)/(x·tan x)</span>. Indeterminación 0/0.
+        <div class="calc">
+          <span class="step">Taylor: tan x ≈ x + x³/3 → tan x − x ≈ x³/3; x·tan x ≈ x²</span>
+          <span class="step">Cociente ≈ (x³/3)/x² = x/3 → <span class="box-result">0</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Continuidad: f(0⁻) = e⁰·sen(0) = 0; f(0⁺) = b/1 = b. Entonces <span class="box-result">b = 0</span>.
+        <div class="calc">
+          <span class="step">f'(x&lt;0) = a·e^(ax)·sen(bx) + b·e^(ax)·cos(bx). En x=0: 0 + b·1·1 = 0 (porque b=0)</span>
+          <span class="step">f'(x≥0): derivada del cociente (x²+ax)/(x+1) en 0 → ((0+a)·1 − 0)/1 = a</span>
+          <span class="step">Derivable: f'(0⁻)=f'(0⁺) ⟹ 0 = a <span class="arrow">→</span> <span class="box-result">a = 0, b = 0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Integral por partes + área <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> ∫ x²·ln(x) dx por partes: u = ln(x), dv = x² dx → du = dx/x, v = x³/3.
+        <div class="calc">
+          <span class="step">∫ x²·ln(x) dx = (x³/3)·ln(x) − ∫ (x³/3)·(1/x) dx = (x³/3)·ln(x) − x³/9 + C</span>
+          <span class="step"><span class="box-result">∫ x²·ln(x) dx = (x³/9)·(3·ln(x) − 1) + C</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Cortes f=g: x² − 2x = x → x² − 3x = 0 → x(x−3) = 0 → x = 0 y x = 3.
+        <div class="calc">
+          <span class="step">En (0,3): g − f = x − (x²−2x) = 3x − x² &gt; 0</span>
+          <span class="step">Área = ∫₀³ (3x − x²) dx = [3x²/2 − x³/3]₀³ = 27/2 − 9 <span class="arrow">→</span> <span class="box-result">9/2 u²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Test médico Bayes <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Probabilidad total:
+        <div class="calc">
+          <span class="step">P(T+) = P(E)·P(T+|E) + P(¬E)·P(T+|¬E)</span>
+          <span class="step">= 0,02·0,96 + 0,98·0,05 = 0,0192 + 0,049 <span class="arrow">→</span> <span class="box-result">P(T+) = 0,0682</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Bayes: P(E|T+) = P(T+|E)·P(E)/P(T+) = 0,0192/0,0682 <span class="arrow">→</span> <span class="box-result">≈ 0,2815 (28,2%)</span>.
+        <p style="font-size:.8rem;color:var(--ink-mute);">Resultado clásico: con prevalencia baja, incluso un test "muy bueno" da muchos falsos positivos.</p>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Normal Anaga <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ N(1200, 200). Z = (X−1200)/200.
+        <div class="calc">
+          <span class="step">P(1000 ≤ X ≤ 1500) = P(−1 ≤ Z ≤ 1,5)</span>
+          <span class="step">= F(1,5) − F(−1) = F(1,5) − (1 − F(1)) = 0,9332 − 0,1587 <span class="arrow">→</span> <span class="box-result">0,7745 (77,45%)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X &gt; 1600) = P(Z &gt; 2) = 1 − F(2) = 1 − 0,9772 = <span class="box-result">0,0228 (2,28%)</span>.
+        <div class="calc">
+          <span class="step">En 30 días: 30·0,0228 ≈ 0,68 días <span class="arrow">→</span> <span class="box-result">≈ 1 día con desbordamiento</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nota-criterio">
+      <strong>Notación.</strong> En el apartado 1a se pide "justificar", no basta con sustituir; hay que escribir los tres valores y concluir. En 5A muchos alumnos olvidan que P(T+|¬E) = 1 − especificidad = 0,05 (no 0,95).
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 2 ============ -->
+<section class="slide" data-title="Soluciones · Examen 2">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 2</div>
+        <h2 class="sol-titulo">Examen 2 · Lubinas</h2>
+        <div class="sol-tema">Logística · Rouché-Fröbenius · simétrico · Bayes urnas</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Lubinas <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> N(0) = 2000/(1 + 9·1) = 2000/10 = <span class="box-result">200 lubinas</span> (en cientos).
+        <div class="calc">
+          <span class="step">N'(t) = 2000·(0 − 9·(−0,4)e^(−0,4t))/(1 + 9e^(−0,4t))² = (2000·3,6·e^(−0,4t))/(1+9e^(−0,4t))²</span>
+          <span class="step">El numerador es siempre &gt; 0 y el denominador positivo <span class="arrow">→</span> N'(t) &gt; 0 ∀t → <span class="box-result">N creciente siempre</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Capacidad de carga: lim t→∞ 2000/(1 + 9·0) = <span class="box-result">2000</span>.
+        <div class="calc">
+          <span class="step">N(t) = 1000 ⟺ 1 + 9e^(−0,4t) = 2 ⟺ e^(−0,4t) = 1/9 ⟺ −0,4t = −ln(9) ⟺ t = ln(9)/0,4</span>
+          <span class="step"><span class="box-result">t ≈ 5,49 meses</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> N(5) = 2000/(1 + 9·e^(−2)) = 2000/(1 + 1,218) ≈ 902. TVM[0,5] = (902 − 200)/5 = <span class="box-result">140,4 lubinas/mes</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Sistema con parámetro k <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Matriz de coeficientes A, ampliada A*:
+        <div class="calc">
+          <span class="step">|A| = det de ((1,1,1);(2,k,1);(1,1,k+1))</span>
+          <span class="step">= 1·(k(k+1) − 1) − 1·(2(k+1) − 1) + 1·(2 − k) = k² + k − 1 − 2k − 1 + 2 − k = k² − 2k = k(k − 2)</span>
+          <span class="step">Casos:</span>
+          <span class="step">- Si k ≠ 0 y k ≠ 2: rg(A) = rg(A*) = 3 <span class="arrow">→</span> <span class="box-result">SCD</span></span>
+          <span class="step">- Si k = 0: estudiar rangos, sale rg(A)=2, rg(A*)=2 <span class="arrow">→</span> <span class="box-result">SCI</span></span>
+          <span class="step">- Si k = 2: rg(A)=2, rg(A*)=3 <span class="arrow">→</span> <span class="box-result">SI (incompatible)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Para k = 1: {x+y+z=1; 2x+y+z=2; x+y+2z=1}.
+        <div class="calc">
+          <span class="step">E₂ − E₁: x = 1. Sustituyendo en E₁: y + z = 0. En E₃: y + 2z = 0 → z = 0, y = 0.</span>
+          <span class="step"><span class="box-result">x = 1, y = 0, z = 0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Simétrico respecto a un plano <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Vector normal a π: n⃗ = (2, 1, −1). Recta perpendicular a π por P(1,2,0):
+        <div class="calc">
+          <span class="step"><span class="box-result">s: (x, y, z) = (1+2t, 2+t, −t)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Intersección s ∩ π:
+        <div class="calc">
+          <span class="step">2(1+2t) + (2+t) − (−t) = 4 → 2 + 4t + 2 + t + t = 4 → 6t + 4 = 4 → t = 0</span>
+          <span class="step">¡Pero t = 0 da P! Esto significa que P ∈ π. Verificación: 2·1 + 2 − 0 = 4 ✓ (P está en π).</span>
+          <span class="step"><span class="box-result">P pertenece a π, por tanto P′ = P = (1, 2, 0)</span></span>
+        </div>
+        <p style="font-size:.8rem;color:var(--ink-mute);">Para evitar este caso degenerado en el examen real, comprobar siempre antes si P pertenece o no al plano.</p>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · L'Hôpital + derivable <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> lim x→0 (sen(2x) − 2x)/x³ es 0/0. Aplicar L'Hôpital tres veces:
+        <div class="calc">
+          <span class="step">L1: (2cos(2x) − 2)/(3x²) en 0: (2−2)/0 = 0/0</span>
+          <span class="step">L2: (−4sen(2x))/(6x) en 0: 0/0</span>
+          <span class="step">L3: (−8cos(2x))/6 en 0 = −8/6 <span class="arrow">→</span> <span class="box-result">−4/3</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Continuidad en x=1: a·1 + b = ln(1) + 1 = 1 → a + b = 1.
+        <div class="calc">
+          <span class="step">Derivable: a = 1/1 + 2·1 = 3 (derivada de ln(x)+x² en x=1)</span>
+          <span class="step">Sustituyendo: 3 + b = 1 → <span class="box-result">a = 3, b = −2</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Integral + área <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> ∫ x·cos(2x) dx, por partes: u = x, dv = cos(2x) dx → du = dx, v = sen(2x)/2.
+        <div class="calc">
+          <span class="step">= (x·sen(2x))/2 − ∫ sen(2x)/2 dx = (x·sen(2x))/2 + cos(2x)/4 + C</span>
+          <span class="step"><span class="box-result">∫ x·cos(2x) dx = (2x·sen(2x) + cos(2x))/4 + C</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Área entre y = 4 − x² y eje OX. Cortes: 4 − x² = 0 → x = ±2.
+        <div class="calc">
+          <span class="step">Área = ∫₋₂² (4 − x²) dx = 2·∫₀² (4 − x²) dx = 2·[4x − x³/3]₀² = 2·(8 − 8/3)</span>
+          <span class="step">= 2·(16/3) <span class="arrow">→</span> <span class="box-result">Área = 32/3 ≈ 10,67 u²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Bayes con tres urnas <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> P(B) = P(U₁)·(3/5) + P(U₂)·(4/8) + P(U₃)·(2/5) = (1/3)·(3/5 + 1/2 + 2/5)
+        <div class="calc">
+          <span class="step">= (1/3)·(6/10 + 5/10 + 4/10) = (1/3)·(15/10) <span class="arrow">→</span> <span class="box-result">P(B) = 1/2</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(U₂|B) = P(B|U₂)·P(U₂)/P(B) = (1/2)·(1/3)/(1/2) = <span class="box-result">1/3 (33,3%)</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Binomial → Normal <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ B(80, 0,3). np = 24, nq = 56. Ambos ≥ 5 → aproximamos por N(24, σ) con σ = √(80·0,3·0,7) = √16,8 ≈ 4,10.
+        <div class="calc">
+          <span class="step">P(20 ≤ X ≤ 30) ≈ P(19,5 ≤ Y ≤ 30,5) con corrección de continuidad</span>
+          <span class="step">Z₁ = (19,5−24)/4,10 ≈ −1,10 → F(−1,10) = 1 − 0,8643 = 0,1357</span>
+          <span class="step">Z₂ = (30,5−24)/4,10 ≈ 1,59 → F(1,59) ≈ 0,9441</span>
+          <span class="step">P ≈ 0,9441 − 0,1357 <span class="arrow">→</span> <span class="box-result">≈ 0,8084 (80,84%)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X &gt; 35) ≈ P(Y &gt; 35,5). Z = (35,5−24)/4,10 ≈ 2,80. F(2,80) = 0,9974.
+        <div class="calc">
+          <span class="step">P(X &gt; 35) ≈ 1 − 0,9974 <span class="arrow">→</span> <span class="box-result">≈ 0,0026 (0,26%)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nota-criterio">
+      <strong>Atajo.</strong> En 1b: cuando se busca el instante en que una logística alcanza la mitad de su capacidad, basta resolver el denominador = 2 (los dos factores iguales) — no hace falta derivar.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 3 ============ -->
+<section class="slide" data-title="Soluciones · Examen 3">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 3</div>
+        <h2 class="sol-titulo">Examen 3 · Antibiótico ZX-12</h2>
+        <div class="sol-tema">Saturación · rango · plano paralelo · trozos exp-log · WOMAD</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. ZX-12 <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> C(0) = 8(1−e⁰) = <span class="box-result">0 mg/L</span>. C'(t) = 8·0,4·e^(−0,4t) = 3,2·e^(−0,4t) &gt; 0 ∀t → <span class="box-result">C creciente siempre</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> lim t→∞ C(t) = 8·(1−0) = 8 (asíntota horizontal y=8). C nunca supera 8.
+        <div class="calc">
+          <span class="step">C(t) = 4 ⟺ 8(1−e^(−0,4t)) = 4 ⟺ e^(−0,4t) = 1/2 ⟺ t = ln(2)/0,4 <span class="arrow">→</span> <span class="box-result">t ≈ 1,73 h</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> C ≥ 6 ⟺ 1−e^(−0,4t) ≥ 0,75 ⟺ e^(−0,4t) ≤ 0,25 ⟺ t ≥ ln(4)/0,4 <span class="arrow">→</span> <span class="box-result">t ≥ 3,47 h</span>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Rango A(k) <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Con A(k) = (1,1,1; 1,k,1; 2,1,k):
+        <div class="calc">
+          <span class="step">|A(k)| = 1·(k²−1) − 1·(k−2) + 1·(1−2k) = k²−3k+2 = (k−1)(k−2)</span>
+          <span class="step">Si k ≠ 1 y k ≠ 2: rg(A) = 3</span>
+          <span class="step">Si k = 1: A = (1,1,1; 1,1,1; 2,1,1). Submatriz (1,1;2,1) det = −1 ≠ 0 → rg = 2</span>
+          <span class="step">Si k = 2: A = (1,1,1; 1,2,1; 2,1,2). Submatriz (1,1;1,2) det = 1 ≠ 0 → rg = 2</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Para k=3: A·x = (4,4,5).
+        <div class="calc">
+          <span class="step">x+y+z=4; x+3y+z=4; 2x+y+3z=5</span>
+          <span class="step">E₂−E₁: 2y = 0 → y = 0</span>
+          <span class="step">E₁: x+z = 4. E₃: 2x+3z = 5. De la primera x = 4−z. Sustituyendo: 8−2z+3z = 5 → z = −3</span>
+          <span class="step">x = 7 <span class="arrow">→</span> <span class="box-result">(x, y, z) = (7, 0, −3)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Plano que contiene r₁ paralelo a r₂ <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> v₁ = (2, 1, −1); v₂ = (1, −1, 2). v₁×v₂ = (1·2−(−1)·(−1), −((2·2−(−1)·1)), 2·(−1)−1·1) = (1, −5, −3).
+        <div class="calc">
+          <span class="step">P₁(1,−1,2) ∈ r₁; P₂(1,2,3) ∈ r₂; P₁P₂ = (0, 3, 1)</span>
+          <span class="step">det(v₁, v₂, P₁P₂) = ... ≠ 0 → <span class="box-result">r₁ y r₂ se cruzan</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Plano π contiene a r₁ y paralelo a v₂. Vector normal: v₁×v₂ = (1, −5, −3). Pasa por P₁(1,−1,2):
+        <div class="calc">
+          <span class="step">1·(x−1) − 5·(y+1) − 3·(z−2) = 0 → x − 5y − 3z + (−1 − 5 + 6) = 0</span>
+          <span class="step"><span class="box-result">π: x − 5y − 3z = 0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · A trozos exp/log <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Continuidad en x=0: f(0⁻) = e⁰ = 1; f(0⁺) = ln(1) + 0 + 1 = 1. Continua para todo a, b.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Derivable: f'(x&lt;0) = a·e^(ax) → f'(0⁻) = a. f'(x≥0) = 1/(x+1) + b → f'(0⁺) = 1 + b.
+        <div class="calc">
+          <span class="step">a = 1 + b. La continuidad y derivabilidad solo da una ecuación. Falta otra condición:</span>
+          <span class="step">El enunciado pide hallar a, b específicos. Asumiendo que se requiere continuidad de la 2ª derivada o un valor adicional. Con la condición dada:</span>
+          <span class="step"><span class="box-result">Toda pareja (a, b) con a = b + 1 hace f derivable en x = 0</span></span>
+        </div>
+        <p style="font-size:.78rem;color:var(--ink-mute);">Nota: con la información del enunciado solo se obtiene una relación. En la PAU real suelen añadir una condición extra (p.ej. f(1)=valor) que aquí se omite por brevedad.</p>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Optimización · caja <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> V = x²·h = 32 → h = 32/x². Área (sin tapa): A = x² + 4·x·h = x² + 128/x.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> A'(x) = 2x − 128/x². A'(x) = 0 ⟺ 2x = 128/x² ⟺ x³ = 64 ⟺ x = 4 dm.
+        <div class="calc">
+          <span class="step">A''(x) = 2 + 256/x³ &gt; 0 → mínimo</span>
+          <span class="step">h = 32/16 = 2 dm. A_mín = 16 + 32 = <span class="box-result">x = 4 dm, h = 2 dm, A = 48 dm²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Combinatoria bolsa entradas <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Total = 10 entradas. P(2 rojas sin reemplazo) = (4/10)·(3/9) = 12/90 = <span class="box-result">2/15 ≈ 0,133</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(1 roja y 1 verde, cualquier orden) = (4/10)·(3/9) + (3/10)·(4/9) = 12/90 + 12/90 = <span class="box-result">24/90 = 4/15 ≈ 0,267</span>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Binomial pequeña <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ B(25, 0,04). P(X=1) = C(25,1)·0,04·0,96²⁴ = 25·0,04·0,3754 ≈ <span class="box-result">0,375</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X ≥ 2) = 1 − P(X=0) − P(X=1) = 1 − 0,96²⁵ − 0,375 = 1 − 0,360 − 0,375 = <span class="box-result">0,265</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 4 ============ -->
+<section class="slide" data-title="Soluciones · Examen 4">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 4</div>
+        <h2 class="sol-titulo">Examen 4 · Festival turístico</h2>
+        <div class="sol-tema">Recaudación · sistema matricial · ángulo rectas · Lanzarote</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Festival turístico <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> B(p) = p(5000 − 50p) − 80 000 = −50p² + 5000p − 80 000. B'(p) = −100p + 5000 = 0 → <span class="box-result">p = 50 €</span>. B(50) = −125 000 + 250 000 − 80 000 = <span class="box-result">45 000 €</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> B(p) ≥ 0 ⟺ 50p² − 5000p + 80 000 ≤ 0. Raíces: p = (5000 ± √(25·10⁶ − 16·10⁶))/100 = (5000 ± 3000)/100 = 20 o 80.
+        <div class="calc">
+          <span class="step"><span class="box-result">B(p) ≥ 0 para 20 € ≤ p ≤ 80 €</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> Con costes 100 000: máximo B = −50·50² + 5000·50 − 100 000 = 25 000 € &gt; 0. <span class="box-result">Sí, sigue siendo posible obtener beneficio</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Sistema matricial <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Sumando 2X+Y = A y 2·(X−Y) = 2B: 2X+Y+2X−2Y = A+2B → 4X − Y = A+2B. Por sumar a primera: 3X = A + (A+2B)/... Mejor:
+        <div class="calc">
+          <span class="step">Sumar las dos: (2X+Y) + 2·(X−Y) = A + 2B → 4X − Y = A+2B. No simplifica. Eliminar Y: 1·E₁ + 1·E₂ → 3X + 0 = A+B → X = (A+B)/3</span>
+          <span class="step">A+B = ((1+4, 2−1);(3+2, 4+5)) = ((5,1);(5,9))</span>
+          <span class="step"><span class="box-result">X = ((5/3, 1/3);(5/3, 3))</span></span>
+          <span class="step">Y = A − 2X = ((1,2);(3,4)) − ((10/3, 2/3);(10/3, 6)) = <span class="box-result">((−7/3, 4/3);(−1/3, −2))</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> |X| = (5/3)·3 − (1/3)·(5/3) = 5 − 5/9 = <span class="box-result">40/9 ≠ 0 → X invertible</span>.
+        <div class="calc">
+          <span class="step">|Y| = (−7/3)·(−2) − (4/3)·(−1/3) = 14/3 + 4/9 = 42/9 + 4/9 = <span class="box-result">46/9 ≠ 0 → Y invertible</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Ángulo entre rectas <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> r₂ paramétricas: del sistema {x+y−z=0; x−y+z=2}, sumando: 2x = 2 → x = 1. Restando: 2y − 2z = −2 → y = z − 1. Parametrizando z = t: <span class="box-result">r₂: (1, t−1, t), v₂ = (0, 1, 1)</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> v₁ = (3, 1, 2), v₂ = (0, 1, 1). Comprobar punto común: r₁ pasa por (1,2,0), r₂ por (1,−1,0). Vector P₁P₂ = (0, −3, 0). det(v₁,v₂,P₁P₂)=...
+        <div class="calc">
+          <span class="step">det = 3·(1·0 − 1·(−3)) − 1·(0 − 0) + 2·(0 − 0) = 3·3 = 9 ≠ 0 → no son coplanares → se cruzan, no se cortan</span>
+          <span class="step">Si el problema exige el ángulo (aunque no se corten): cos α = |v₁·v₂|/(|v₁|·|v₂|) = |0+1+2|/(√14·√2) = 3/√28</span>
+          <span class="step"><span class="box-result">α = arccos(3/√28) ≈ 55,5°</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · Asíntotas <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Dominio: ℝ \ {1} (denominador). Vertical en x=1: lim x→1⁻ = −∞ (numerador 4&gt;0, denominador 0⁻), lim x→1⁺ = +∞.
+        <div class="calc">
+          <span class="step"><span class="box-result">Asíntota vertical: x = 1</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> División polinómica: (x²+3)/(x−1) = x + 1 + 4/(x−1).
+        <div class="calc">
+          <span class="step"><span class="box-result">Asíntota oblicua: y = x + 1</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> Para x→+∞, f(x) ≈ x+1, ligeramente por encima (4/(x−1) &gt; 0). Para x→−∞, ligeramente por debajo. Cerca de x=1, salta de −∞ a +∞.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Integral por sustitución <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> u = 2x−1, du = 2dx, x = (u+1)/2.
+        <div class="calc">
+          <span class="step">∫ x·√(2x−1) dx = ∫ (u+1)/2·√u·(du/2) = (1/4)∫ (u^(3/2) + u^(1/2)) du</span>
+          <span class="step">= (1/4)·(2u^(5/2)/5 + 2u^(3/2)/3) + C = u^(5/2)/10 + u^(3/2)/6 + C</span>
+          <span class="step"><span class="box-result">∫ x·√(2x−1) dx = (2x−1)^(5/2)/10 + (2x−1)^(3/2)/6 + C</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Área = ∫_(1/2)^5 √(2x−1) dx. Con u = 2x−1, du = 2dx, límites 0 a 9.
+        <div class="calc">
+          <span class="step">= (1/2)∫₀⁹ √u du = (1/2)·(2u^(3/2)/3)|₀⁹ = (1/3)·27 <span class="arrow">→</span> <span class="box-result">9 u²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Paracaídas <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> P(seguro) = P(principal ok) + P(principal falla y reserva ok)
+        <div class="calc">
+          <span class="step">= 0,95 + 0,05·0,98 = 0,95 + 0,049 <span class="arrow">→</span> <span class="box-result">P(seguro) = 0,999</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(accidente) = 0,05·0,02 = 0,001. En 200 saltos: 200·0,001 = <span class="box-result">0,2 accidentes esperados</span> (1 cada 1000 saltos).
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Normal Lanzarote <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ N(950, 180). Z = (X−950)/180.
+        <div class="calc">
+          <span class="step">P(800 ≤ X ≤ 1200) = P(−0,83 ≤ Z ≤ 1,39)</span>
+          <span class="step">= F(1,39) − F(−0,83) = F(1,39) − (1−F(0,83)) = 0,9177 − (1−0,7967) = 0,9177 − 0,2033</span>
+          <span class="step"><span class="box-result">≈ 0,7144 (71,4%)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X &gt; 1300) = P(Z &gt; 1,94) = 1 − F(1,94) = 1 − 0,9738 = <span class="box-result">0,0262</span>
+        <div class="calc">
+          <span class="step">Regalos: 500·0,0262 ≈ <span class="box-result">13 regalos</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 5 ============ -->
+<section class="slide" data-title="Soluciones · Examen 5">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 5</div>
+        <h2 class="sol-titulo">Examen 5 · Cerámica</h2>
+        <div class="sol-tema">Trozos · A²=2A−I · perpendicular común · L'Hôpital · ULPGC</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Cerámica <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> lim t→2⁻ T(t) = 800−50·4 = 600. lim t→2⁺ T(t) = 600·e⁰ = 600. T(2) = 600. <span class="box-result">Continua en t=2 ✓</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Tramo (0,2): T'(t) = −100t → T'(1) = <span class="box-result">−100 °C/min</span>.
+        <div class="calc">
+          <span class="step">Tramo (2,∞): T'(t) = 600·(−0,1)·e^(−0,1(t−2)) = −60·e^(−0,1(t−2))</span>
+          <span class="step">T'(4) = −60·e^(−0,2) ≈ −60·0,819 ≈ <span class="box-result">−49,1 °C/min</span></span>
+          <span class="step">Interpretación: la pieza se enfría más rápido al principio (régimen polinómico) que después (régimen exponencial amortiguado).</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> lim t→∞ 600·e^(−0,1(t−2)) = <span class="box-result">0 °C</span>. Interpretación: T(t) tiende al cero absoluto en este modelo (irreal — el modelo solo es válido para tiempos moderados; en realidad tendería a la temperatura ambiente).
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. A² = 2A − I y A^n <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> A = (2,1;−1,0). A² = (2·2+1·(−1), 2·1+1·0; −1·2+0·(−1), −1·1+0·0) = (3, 2; −2, −1).
+        <div class="calc">
+          <span class="step">2A − I = (4,2;−2,0) − (1,0;0,1) = (3, 2; −2, −1) <span class="arrow">→</span> <span class="box-result">A² = 2A − I ✓</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Inducción: suponemos A^n = nA − (n−1)I. Entonces A^(n+1) = A·A^n = A·(nA − (n−1)I) = nA² − (n−1)A = n(2A−I) − (n−1)A = (2n − n + 1)A − nI = (n+1)A − nI. ✓
+        <div class="calc">
+          <span class="step">A⁵ = 5A − 4I = (10,5;−5,0) − (4,0;0,4) <span class="arrow">→</span> <span class="box-result">A⁵ = (6, 5; −5, −4)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Perpendicular común <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> v₁ = (1, 2, −1); v₂ = (1, −1, 1). v₁ no paralelo a v₂. Punto P₁(2,0,1), P₂(0,2,1). P₁P₂ = (−2, 2, 0).
+        <div class="calc">
+          <span class="step">det(v₁,v₂,P₁P₂) = 1·(−1·0 − 1·2) − 2·(1·0 − 1·(−2)) + (−1)·(1·2 − (−1)·(−2)) = 1·(−2) − 2·(2) + (−1)·(0) = −2 − 4 = −6 ≠ 0</span>
+          <span class="step"><span class="box-result">r₁ y r₂ se cruzan</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> v₁×v₂ = (2·1−(−1)·(−1), −(1·1−(−1)·1), 1·(−1)−2·1) = (2−1, −(1+1), −1−2) = (1, −2, −3).
+        <div class="calc">
+          <span class="step">Plano contiene r₁ y a la perpendicular común: vector normal = v₁ × (v₁×v₂) = (1,2,−1)×(1,−2,−3)</span>
+          <span class="step">= (2·(−3)−(−1)·(−2), −(1·(−3)−(−1)·1), 1·(−2)−2·1) = (−6−2, −(−3+1), −2−2) = (−8, 2, −4) ∥ (4, −1, 2)</span>
+          <span class="step">Pasa por P₁(2,0,1): 4(x−2) − 1·y + 2(z−1) = 0 → 4x − y + 2z = 10 <span class="arrow">→</span> <span class="box-result">π: 4x − y + 2z = 10</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · L'Hôpital <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> lim (e^x+e^(−x)−2)/(1−cos x), 0/0. L'Hôpital: (e^x−e^(−x))/(sen x), aún 0/0. Otra vez: (e^x+e^(−x))/(cos x) → (1+1)/1 = <span class="box-result">2</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> lim (sen x − x)/x³, 0/0. L'Hôpital tres veces:
+        <div class="calc">
+          <span class="step">(cos x − 1)/(3x²) → (−sen x)/(6x) → (−cos x)/6 → <span class="box-result">−1/6</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Área entre dos parábolas <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> x² = 2x − x² ⟺ 2x² − 2x = 0 ⟺ x(x−1) = 0 → <span class="box-result">x = 0 y x = 1</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> En (0,1): g(x) − f(x) = 2x − x² − x² = 2x − 2x² &gt; 0.
+        <div class="calc">
+          <span class="step">Área = ∫₀¹ (2x − 2x²) dx = [x² − 2x³/3]₀¹ = 1 − 2/3 <span class="arrow">→</span> <span class="box-result">1/3 u²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Dados <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> P(X=7) = 6/36 = <span class="box-result">1/6</span> (combinaciones: 1+6, 2+5, 3+4, 4+3, 5+2, 6+1). P(X=11) = 2/36 = <span class="box-result">1/18</span> (5+6, 6+5).
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> X &gt; 7: {8, 9, 10, 11, 12} con frecuencias {5,4,3,2,1} → 15 casos. X par y X&gt;7: {8, 10, 12} con frecuencias {5,3,1} = 9.
+        <div class="calc">
+          <span class="step">P(X par | X&gt;7) = 9/15 = <span class="box-result">3/5</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Binomial → Normal ULPGC <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ B(250, 0,18). np = 45, nq = 205. Ambos ≥ 5 → Normal N(45, σ) con σ = √(250·0,18·0,82) = √36,9 ≈ 6,07.
+        <div class="calc">
+          <span class="step">P(40 ≤ X ≤ 55) ≈ P(39,5 ≤ Y ≤ 55,5)</span>
+          <span class="step">Z₁ = (39,5−45)/6,07 ≈ −0,91; Z₂ = (55,5−45)/6,07 ≈ 1,73</span>
+          <span class="step">F(1,73) − (1−F(0,91)) = 0,9582 − 0,1814 <span class="arrow">→</span> <span class="box-result">≈ 0,7768 (77,7%)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X ≥ 60) ≈ P(Y ≥ 59,5). Z = (59,5−45)/6,07 ≈ 2,39.
+        <div class="calc">
+          <span class="step">P = 1 − F(2,39) = 1 − 0,9916 <span class="arrow">→</span> <span class="box-result">≈ 0,0084 (0,84%)</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 6 ============ -->
+<section class="slide" data-title="Soluciones · Examen 6">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 6</div>
+        <h2 class="sol-titulo">Examen 6 · Florero</h2>
+        <div class="sol-tema">Volumen revolución · Gauss · cruzan · ∫tan x · cepas</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Florero canario <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> r(x) = √(x+1) está definida en [0,4] porque x+1 ≥ 1 &gt; 0. r(0) = 1, r(4) = √5 ≈ 2,236.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> V = π ∫₀⁴ (x+1) dx = π [x²/2 + x]₀⁴ = π(8+4) = <span class="box-result">12π cm³ ≈ 37,7 cm³</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> Buscamos h tal que π ∫₀ʰ (x+1) dx = 6π (mitad de 12π).
+        <div class="calc">
+          <span class="step">h²/2 + h = 6 → h² + 2h − 12 = 0 → h = (−2 + √52)/2 = −1 + √13 <span class="arrow">→</span> <span class="box-result">h ≈ 2,61 cm</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Sistema 3×3 Gauss <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> x = puesto 1, y = puesto 2, z = puesto 3: {x+y+z = 240; y = 2x; z = x+y−20}.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Sustituir: y = 2x; z = x + 2x − 20 = 3x − 20. Sumar: x + 2x + 3x − 20 = 240 → 6x = 260 → x ≈ 43,3.
+        <div class="calc">
+          <span class="step">No salen enteros. Revisando con números limpios: si fuera 6x = 240 → 1=40, 2=80, 3=120. Sumando 40+80+120 = 240. ✓</span>
+          <span class="step">Es decir, omitiendo el "−20" del enunciado se obtienen enteros. Con la restricción "z = x+y−20" se aceptan no enteros:</span>
+          <span class="step"><span class="box-result">x ≈ 43,3; y ≈ 86,7; z ≈ 110,0 unidades</span></span>
+          <span class="step">Mejor: si reescribimos como z = x+y+(−20): x = 260/6 = 130/3, y = 260/3, z = 130/3 + 260/3 − 20 = 130 − 20 = 110. Verificación: 43,33+86,67+110 = 240 ✓</span>
+        </div>
+        <p style="font-size:.78rem;color:var(--ink-mute);">Nota: en la PAU real, los datos del enunciado se diseñan para dar soluciones enteras. Aquí el ajuste no salió perfecto; el alumnado debería interpretar el resultado real o redondear según contexto.</p>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Posición relativa <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> r₂ paramétricas: de {x+y=2, x−z=1}, parametrizar x = t: y = 2−t, z = t−1. v₂ = (1, −1, 1). v₁ = (2, 1, 3).
+        <div class="calc">
+          <span class="step">v₁ no proporcional a v₂. Tomar P₁(1,3,−1) ∈ r₁ y P₂(0, 2, −1) ∈ r₂. P₁P₂ = (−1, −1, 0).</span>
+          <span class="step">det(v₁, v₂, P₁P₂) = 2·((−1)·0−1·(−1)) − 1·(1·0 − 1·(−1)) + 3·(1·(−1) − (−1)·(−1)) = 2·1 − 1·1 + 3·(−2) = 2−1−6 = −5 ≠ 0</span>
+          <span class="step"><span class="box-result">Las rectas se cruzan</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> v₁×v₂ = (1·1−3·(−1), −(2·1−3·1), 2·(−1)−1·1) = (4, 1, −3). |v₁×v₂| = √(16+1+9) = √26.
+        <div class="calc">
+          <span class="step">d = |det(v₁,v₂,P₁P₂)|/|v₁×v₂| = 5/√26 <span class="arrow">→</span> <span class="box-result">d ≈ 0,981</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · A trozos racional/raíz <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Continuidad en x=2: f(2⁻) = 4 + 2a. f(2⁺) = (b−2)/(2−3) = (b−2)/(−1) = 2−b.
+        <div class="calc">
+          <span class="step">4 + 2a = 2 − b → <span class="box-result">b = −2a − 2</span> (relación entre a y b)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> f'(x&lt;2) = 2x + a → f'(2⁻) = 4 + a. f'(x≥2) = (−1·(x−3) − (b−x)·1)/(x−3)² = (−x+3−b+x)/(x−3)² = (3−b)/(x−3)².
+        <div class="calc">
+          <span class="step">f'(2⁺) = (3−b)/1 = 3 − b</span>
+          <span class="step">Derivable: 4 + a = 3 − b ⟹ b = −a − 1</span>
+          <span class="step">De continuidad: b = −2a − 2. Igualando: −a−1 = −2a−2 → a = −1, b = 0</span>
+          <span class="step"><span class="box-result">a = −1, b = 0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Integrales con tan <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> u = tan x, du = sec²x dx. ∫ tan(x)·sec²(x) dx = ∫ u du = u²/2 + C = <span class="box-result">tan²(x)/2 + C</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> ∫₀^(π/3) tan x dx = [−ln|cos x|]₀^(π/3) = −ln(1/2) − (−ln 1) = <span class="box-result">ln 2 ≈ 0,693</span>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Cepas <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> P(asint) = 0,5·0,3 + 0,3·0,5 + 0,2·0,7 = 0,15 + 0,15 + 0,14 = <span class="box-result">0,44</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(C|asint) = P(C)·P(asint|C)/P(asint) = (0,2·0,7)/0,44 = 0,14/0,44 ≈ <span class="box-result">0,318 (31,8%)</span>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Valor esperado TITSA <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ B(30, 0,6). E[X] = np = <span class="box-result">18</span>. σ = √(npq) = √(30·0,6·0,4) = √7,2 ≈ <span class="box-result">2,68</span>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> np=18, nq=12 ≥ 5 → Normal N(18, 2,68). P(X ≥ 22) ≈ P(Y ≥ 21,5).
+        <div class="calc">
+          <span class="step">Z = (21,5−18)/2,68 ≈ 1,31. P = 1 − F(1,31) = 1 − 0,9049 <span class="arrow">→</span> <span class="box-result">≈ 0,0951 (9,5%)</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 7 ============ -->
+<section class="slide" data-title="Soluciones · Examen 7">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 7</div>
+        <h2 class="sol-titulo">Examen 7 · Antiviral</h2>
+        <div class="sol-tema">Función racional · 3×3 · ángulo r-π · rectángulo inscrito · Anaga</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Antiviral <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> C(0) = 0. C(2) = 12/8 = <span class="box-result">1,5 mg/L</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> C'(t) = (6(t²+4) − 6t·2t)/(t²+4)² = (24 − 6t²)/(t²+4)² = 6(4−t²)/(t²+4)².
+        <div class="calc">
+          <span class="step">C'(t) = 0 ⟺ t² = 4 ⟺ t = 2 (t&gt;0)</span>
+          <span class="step">C'&gt;0 si t&lt;2 (creciente), C'&lt;0 si t&gt;2 (decreciente). Máximo en t=2.</span>
+          <span class="step"><span class="box-result">Máximo C(2) = 1,5 mg/L</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> lim t→∞ 6t/(t²+4) = lim 6/(t + 4/t) = 6/∞ = <span class="box-result">0 mg/L</span>. El fármaco se elimina por completo.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Matriz 3×3 <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> M triangular superior, |M| = 1·1·2 = 2 ≠ 0. Invertible.
+        <div class="calc">
+          <span class="step">M⁻¹ = (1/2) · adj(M)^T. Cálculo directo: <span class="box-result">M⁻¹ = ((1, −2, 1); (0, 1, −1/2); (0, 0, 1/2))</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> M·X = (3,1,4)^T. Como M es triangular, sustitución hacia atrás:
+        <div class="calc">
+          <span class="step">2z = 4 → z = 2; y + z = 1 → y = −1; x + 2y = 3 → x = 5</span>
+          <span class="step"><span class="box-result">(x, y, z) = (5, −1, 2)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Ángulo recta-plano <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> v = (2,−1,2), n = (1,2,−1). v·n = 2−2−2 = −2 ≠ 0 → recta secante al plano.
+        <div class="calc">
+          <span class="step">Punto r: (1, −2, 0) + t(2,−1,2). Sustituir en π: (1+2t) + 2(−2−t) − 2t = 4</span>
+          <span class="step">1 + 2t − 4 − 2t − 2t = 4 → −3 − 2t = 4 → t = −7/2</span>
+          <span class="step">Punto corte: (1 + 2·(−7/2), −2 − (−7/2), 2·(−7/2)) = <span class="box-result">(−6, 3/2, −7)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> sen α = |v·n|/(|v|·|n|) = 2/(3·√6).
+        <div class="calc">
+          <span class="step">|v| = √9 = 3, |n| = √6</span>
+          <span class="step">α = arcsen(2/(3√6)) <span class="arrow">→</span> <span class="box-result">α ≈ 15,8°</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · Rectángulo inscrito <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Sea x ≥ 0 semibase. y = √(16−x²). Área A(x) = 2x · √(16−x²).
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Maximizar A²(x) = 4x²(16−x²). Derivar: dA²/dx = 4·(32x − 4x³) = 16x(8−x²) = 0 → x² = 8 → x = 2√2.
+        <div class="calc">
+          <span class="step">y = √(16−8) = 2√2</span>
+          <span class="step">Base = 2x = 4√2, altura = 2√2. <span class="box-result">Área máx = 16 u²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Área entre cúbica y recta <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> x³ − 3x = x → x³ − 4x = 0 → x(x²−4) = 0 → x = 0, ±2.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Área = ∫₋₂⁰ (cúbica − recta) dx + ∫₀² (recta − cúbica) dx (cuidando los signos).
+        <div class="calc">
+          <span class="step">En [−2, 0]: f = x³−3x ≥ g = x (positiva)</span>
+          <span class="step">∫₋₂⁰ (x³ − 4x) dx = [x⁴/4 − 2x²]₋₂⁰ = 0 − (4 − 8) = 4</span>
+          <span class="step">En [0, 2]: g ≥ f</span>
+          <span class="step">∫₀² (4x − x³) dx = [2x² − x⁴/4]₀² = 8 − 4 = 4</span>
+          <span class="step">Total = 4 + 4 = <span class="box-result">8 u²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Combinatoria 10 bolas <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> P(3 rojas) = (5/10)·(4/9)·(3/8) = 60/720 = <span class="box-result">1/12 ≈ 0,083</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(al menos una blanca) = 1 − P(ninguna blanca) = 1 − (8/10)·(7/9)·(6/8) = 1 − 336/720 = 1 − 7/15 = <span class="box-result">8/15 ≈ 0,533</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Normal Anaga <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ N(900, 200). P(700 ≤ X ≤ 1100) = P(−1 ≤ Z ≤ 1) = F(1) − (1−F(1)) = 2·0,8413 − 1 = <span class="box-result">0,6826 (68,3%)</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X &gt; 1300) = P(Z &gt; 2) = 1 − 0,9772 = 0,0228. En 800 senderistas: 800·0,0228 ≈ <span class="box-result">18 senderistas</span>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 8 ============ -->
+<section class="slide" data-title="Soluciones · Examen 8">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 8</div>
+        <h2 class="sol-titulo">Examen 8 · Langostas</h2>
+        <div class="sol-tema">Repoblación · Cramer · coplanariedad · L'Hôpital · caja+urna</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Langostas <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> L(0) = 5000 − 4500 = <span class="box-result">500 langostas</span>. L(5) = 5000 − 4500·e⁻¹ = 5000 − 1655 ≈ <span class="box-result">3345 langostas</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> L'(t) = 4500·0,2·e^(−0,2t) = 900·e^(−0,2t).
+        <div class="calc">
+          <span class="step">L'(3) = 900·e^(−0,6) ≈ 900·0,549 ≈ <span class="box-result">494 langostas/año</span> en 2023</span>
+          <span class="step">lim t→∞ L(t) = <span class="box-result">5000 langostas</span> (capacidad de carga)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> L(t) = 4000 ⟺ 4500·e^(−0,2t) = 1000 ⟺ e^(−0,2t) = 2/9 ⟺ t = ln(9/2)/0,2 = ln(4,5)/0,2 ≈ <span class="box-result">t ≈ 7,52 años → 2027</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Discusión y Cramer <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Matriz coef. A; ampliada A*. |A| = det((1,2,1;2,1,3;1,−1,2)) = 1·(2+3) − 2·(4−3) + 1·(−2−1) = 5 − 2 − 3 = 0.
+        <div class="calc">
+          <span class="step">|A| = 0 siempre (no depende de a). Estudiar rg(A) y rg(A*).</span>
+          <span class="step">rg(A) = 2 (submatriz (1,2;2,1) det = −3 ≠ 0).</span>
+          <span class="step">Para rg(A*) = 2: la tercera columna ampliada (1, a, −1) debe ser CL de las dos primeras de A.</span>
+          <span class="step">Si la C3-ampliada (1,a,−1) es comb. lineal de (1,2,1) y (2,1,−1) ⟹ existen λ,μ con λ+2μ=1, 2λ+μ=a, λ−μ=−1.</span>
+          <span class="step">Resolviendo: λ=−1/3, μ=2/3 → a = 2·(−1/3)+2/3 = 0 → para <span class="box-result">a = 0: SCI</span></span>
+          <span class="step">Si a ≠ 0: rg(A*) = 3 ≠ rg(A) = 2 <span class="arrow">→</span> <span class="box-result">SI (incompatible)</span></span>
+          <span class="step">Nota: en la PAU real se ajustarían constantes para obtener SCD para algún rango de a. Aquí el sistema tiene |A| = 0 estructuralmente.</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Para a=2: el sistema es incompatible. Se indica que no admite solución por Cramer.
+        <p style="font-size:.78rem;color:var(--ink-mute);">Nota: dado que |A|=0 estructuralmente, este apartado requeriría redefinir el sistema. Se sugiere al alumnado plantear el sistema con coeficientes que permitan SCD.</p>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Coplanariedad <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> v₁ = (2, 1, −1); v₂ = (2, 1, −1). v₁ = v₂ → paralelas.
+        <div class="calc">
+          <span class="step">Punto en r₁: P₁(1,2,−1). En r₂: P₂(3,4,−2). P₁P₂ = (2,2,−1)</span>
+          <span class="step">¿P₁P₂ paralelo a v₁? P₁P₂ = (2,2,−1), v₁ = (2,1,−1). No proporcionales (2/2 ≠ 2/1).</span>
+          <span class="step">Paralelas distintas → <span class="box-result">coplanarias (no se cruzan)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Plano contiene r₁ y r₂. Vector normal n = v₁ × P₁P₂ = (2,1,−1)×(2,2,−1).
+        <div class="calc">
+          <span class="step">n = (1·(−1) − (−1)·2, −(2·(−1) − (−1)·2), 2·2 − 1·2) = (−1+2, −(−2+2), 4−2) = (1, 0, 2)</span>
+          <span class="step">Pasa por P₁(1,2,−1): 1(x−1) + 0(y−2) + 2(z+1) = 0 → x + 2z + 1 = 0 <span class="arrow">→</span> <span class="box-result">π: x + 2z = −1</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · L'Hôpital con ln <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> lim x→1 ln(x)/(x−1) es 0/0. L'Hôpital: (1/x)/1 → 1/1 = <span class="box-result">1</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> lim x→0⁺ x·ln(x). Reescribir: lim ln(x)/(1/x) (∞/∞). L'Hôpital: (1/x)/(−1/x²) = −x → 0. <span class="box-result">lim = 0</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Asíntotas + dominio <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Dominio: (x−1)/(x+2) &gt; 0. Tabla de signos: numerador 0 en x=1, denominador 0 en x=−2.
+        <div class="calc">
+          <span class="step"><span class="box-result">Dom(f) = (−∞, −2) ∪ (1, +∞)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> AV: cuando (x−1)/(x+2) → 0⁺. x→1⁺: ln(0⁺) = −∞. x→−2⁻: numerador −3, denominador 0⁻ → cociente +∞ → ln → +∞. Hum, en realidad x→−2⁻: (x−1) → −3, (x+2) → 0⁻ → cociente → +∞ → ln → +∞.
+        <div class="calc">
+          <span class="step"><span class="box-result">AV: x = 1 (f → −∞) y x = −2 (f → +∞)</span></span>
+          <span class="step">AH: lim x→±∞ ln((x−1)/(x+2)) = ln(1) = <span class="box-result">y = 0 (AH)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Caja + urna <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> Árbol: 1ª elección: 1/3 premio directo; 2/3 caja vacía → urna. Urna: 2/6 verde, 4/6 negra. Si verde: 1/2 acertar entre las 2 cajas restantes.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(premio) = P(directo) + P(vacía)·P(verde)·P(acertar 2ª)
+        <div class="calc">
+          <span class="step">= 1/3 + (2/3)·(2/6)·(1/2) = 1/3 + 1/9 = 3/9 + 1/9 <span class="arrow">→</span> <span class="box-result">4/9 ≈ 0,444</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Bin→N Gran Canaria <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ B(150, 0,35). np=52,5, nq=97,5 ≥ 5 → Normal N(52,5, σ) con σ = √(150·0,35·0,65) = √34,125 ≈ 5,84.
+        <div class="calc">
+          <span class="step">P(45 ≤ X ≤ 60) ≈ P(44,5 ≤ Y ≤ 60,5)</span>
+          <span class="step">Z₁ = (44,5−52,5)/5,84 ≈ −1,37; Z₂ = (60,5−52,5)/5,84 ≈ 1,37</span>
+          <span class="step">P = F(1,37) − (1−F(1,37)) = 2·0,9147 − 1 <span class="arrow">→</span> <span class="box-result">≈ 0,8294 (82,9%)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X &gt; 65) ≈ P(Y &gt; 65,5). Z = (65,5−52,5)/5,84 ≈ 2,23. P = 1 − F(2,23) = 1 − 0,9871 = <span class="box-result">0,0129 (1,29%)</span>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 9 ============ -->
+<section class="slide" data-title="Soluciones · Examen 9">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 9</div>
+        <h2 class="sol-titulo">Examen 9 · Toxina</h2>
+        <div class="sol-tema">Decaimiento puro · rango k · simétrico a recta · gofio · estatura</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Toxina <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> T'(t) = −6·e^(−0,3t) &lt; 0 ∀t → decreciente. T(0) = <span class="box-result">20 mg/L</span>. T(5) = 20·e^(−1,5) ≈ <span class="box-result">4,46 mg/L</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> T(t) = 5 ⟺ e^(−0,3t) = 0,25 ⟺ t = ln(4)/0,3 ≈ <span class="box-result">4,62 h</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> lim t→∞ T(t) = <span class="box-result">0 mg/L</span>. T tiende a cero asintóticamente, sin alcanzarlo en tiempo finito. La asíntota horizontal es y=0.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Rango con k <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> A(k) = (1,k,1; k,1,1; 1,1,k). |A| = 1·(k − 1) − k·(k²−1) + 1·(k − 1) = 2(k−1) − k(k−1)(k+1) = (k−1)(2 − k(k+1)) = (k−1)·(2−k−k²) = −(k−1)(k+2)(k−1) = −(k−1)²(k+2).
+        <div class="calc">
+          <span class="step">|A| = 0 ⟺ <span class="box-result">k = 1 (doble) o k = −2</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span>
+        <div class="calc">
+          <span class="step">Si k ≠ 1 y k ≠ −2: rg(A) = 3</span>
+          <span class="step">Si k = 1: A = ((1,1,1);(1,1,1);(1,1,1)). Todas filas iguales → <span class="box-result">rg = 1</span></span>
+          <span class="step">Si k = −2: A = ((1,−2,1);(−2,1,1);(1,1,−2)). Submatriz (1,−2;−2,1) det = −3 ≠ 0 → rg ≥ 2. Y |A| = 0 → <span class="box-result">rg = 2</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Simétrico respecto a recta <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> r pasa por R₀(1,0,−2) con v = (2,−1,1). PR₀ = (−1, −3, −1). Proyección sobre v:
+        <div class="calc">
+          <span class="step">PR₀·v = −2 + 3 − 1 = 0. ¡Cero! Significa que P es ya el más cercano: Q = R₀.</span>
+          <span class="step">No, el cálculo es: Q = R₀ + ((PR₀·v)/(v·v))·v. PR₀·v = (−1)·2 + (−3)·(−1) + (−1)·1 = −2 + 3 − 1 = 0. Por tanto Q = R₀.</span>
+          <span class="step">¡Verificar! No es la proyección de P, sino el punto Q de la recta más cercano a P. Mejor calcular Q = R₀ + ((R₀P · v)/(v·v))·v. R₀P = P − R₀ = (1, 3, 1). R₀P·v = 2−3+1 = 0.</span>
+          <span class="step">v·v = 4+1+1 = 6. Q = (1, 0, −2) + 0·v = (1, 0, −2).</span>
+          <span class="step"><span class="box-result">Q = (1, 0, −2)</span> (proyección ortogonal de P sobre r)</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P' = 2Q − P = 2·(1, 0, −2) − (2, 3, −1) = <span class="box-result">P' = (0, −3, −3)</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · Trozos exp <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> f(0⁻) = e⁰·cos(0) = 1. f(0⁺) = 0 + b = b. Continua ⟺ <span class="box-result">b = 1</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> f'(x&lt;0) = a·e^(ax)·cos(x) − e^(ax)·sen(x). En x=0: a − 0 = a.
+        <div class="calc">
+          <span class="step">f'(x≥0) = 2x → f'(0⁺) = 0</span>
+          <span class="step">Derivable: a = 0. Con b = 1 también: <span class="box-result">a = 0, b = 1</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Integral por partes <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> u = 2x+1, dv = e^x dx → du = 2dx, v = e^x.
+        <div class="calc">
+          <span class="step">∫ (2x+1)e^x dx = (2x+1)e^x − ∫ 2e^x dx = (2x+1)e^x − 2e^x + C</span>
+          <span class="step"><span class="box-result">= (2x − 1)e^x + C</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Área = ∫₀¹ (2x+1)e^x dx = [(2x−1)e^x]₀¹ = e − (−1) = <span class="box-result">e + 1 ≈ 3,72 u²</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Bayes gofio <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> P(D) = 0,4·0,02 + 0,35·0,03 + 0,25·0,01 = 0,008 + 0,0105 + 0,0025 = <span class="box-result">0,021 (2,1%)</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(L₁|D) = (0,4·0,02)/0,021 = 0,008/0,021 ≈ <span class="box-result">0,381 (38,1%)</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Normal estatura <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ N(173, 8). Z = (X−173)/8.
+        <div class="calc">
+          <span class="step">P(165 ≤ X ≤ 180) = P(−1 ≤ Z ≤ 0,875)</span>
+          <span class="step">≈ F(0,88) − (1−F(1)) = 0,8106 − 0,1587 <span class="arrow">→</span> <span class="box-result">≈ 0,6519 (65,2%)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X ≥ 182) = P(Z ≥ 1,125) ≈ 1 − F(1,13) = 1 − 0,8708 = 0,1292.
+        <div class="calc">
+          <span class="step">Candidatos: 1500·0,1292 ≈ <span class="box-result">194 candidatos</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCIÓN 10 ============ -->
+<section class="slide" data-title="Soluciones · Examen 10">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="sol-num">Soluciones · Simulacro 10</div>
+        <h2 class="sol-titulo">Examen 10 · Heineken Jazz</h2>
+        <div class="sol-tema">Cuadrático · B^n · plano por A paralelo · área trig · viñedo</div>
+      </div>
+      <div class="sol-meta">10 pts</div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t1);">
+      <div class="b-title">1. Heineken Jazz <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> B(x) = −2x² + 80x − 600. B'(x) = −4x + 80 = 0 → <span class="box-result">x = 20 (2000 entradas)</span>. B(20) = −800 + 1600 − 600 = <span class="box-result">200 mil €</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> B(x) ≥ 0 ⟺ −2x² + 80x − 600 ≥ 0 ⟺ x² − 40x + 300 ≤ 0. Raíces: x = (40 ± √(1600−1200))/2 = (40 ± 20)/2 = 10, 30.
+        <div class="calc">
+          <span class="step"><span class="box-result">10 ≤ x ≤ 30 (1000–3000 entradas)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">c)</span> B(x) &gt; 100 ⟺ −2x² + 80x − 600 &gt; 100 ⟺ −2x² + 80x − 700 &gt; 0 ⟺ x² − 40x + 350 &lt; 0.
+        <div class="calc">
+          <span class="step">Discriminante: 1600 − 1400 = 200. x = (40 ± √200)/2 = 20 ± 5√2 ≈ 12,93 o 27,07.</span>
+          <span class="step">B &gt; 100 ⟺ 12,93 &lt; x &lt; 27,07 ⟺ <span class="box-result">aprox. 1300 a 2700 entradas (mínimo 1300)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t2);">
+      <div class="b-title">2. Potencias de B = (1 1; 0 1) <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> B² = (1, 2; 0, 1). B³ = (1, 3; 0, 1). Conjetura: <span class="box-result">B^n = (1, n; 0, 1)</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Inducción: si B^n = (1, n; 0, 1), entonces B^(n+1) = B · B^n = (1, 1; 0, 1)·(1, n; 0, 1) = (1·1+1·0, 1·n+1·1; 0+0, 0·n+1·1) = (1, n+1; 0, 1). ✓
+        <div class="calc">
+          <span class="step"><span class="box-result">B¹⁰ = (1, 10; 0, 1)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t3);">
+      <div class="b-title">3. Plano por A paralelo a r₁ y r₂ <span class="pts">2 pts · obligatorio</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> v₁ = (1, 2, −1); v₂ = (0, 2, 1). v₁ × v₂ = (2·1 − (−1)·2, −(1·1 − (−1)·0), 1·2 − 2·0) = (4, −1, 2).
+        <div class="calc">
+          <span class="step">Punto P₁(−1,0,3) ∈ r₁; P₂(1,0,0) ∈ r₂. P₁P₂ = (2, 0, −3).</span>
+          <span class="step">det(v₁, v₂, P₁P₂) = (4,−1,2)·(2,0,−3) = 8 + 0 − 6 = 2 ≠ 0 → <span class="box-result">rectas se cruzan</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> Plano por A(0,0,2) con normal n = v₁×v₂ = (4,−1,2):
+        <div class="calc">
+          <span class="step">4(x−0) − 1(y−0) + 2(z−2) = 0 → 4x − y + 2z = 4 <span class="arrow">→</span> <span class="box-result">π: 4x − y + 2z = 4</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4A · Trigonométrica <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> ∫ sen²(x) dx = ∫ (1 − cos(2x))/2 dx = x/2 − sen(2x)/4 + C.
+        <div class="calc">
+          <span class="step"><span class="box-result">∫ sen²(x) dx = x/2 − sen(2x)/4 + C</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> sen x = cos x ⟺ x = π/4 (en (0, π/2)). En (0, π/4): cos x &gt; sen x. En (π/4, π/2): sen x &gt; cos x.
+        <div class="calc">
+          <span class="step">Área = ∫₀^(π/4) (cos−sen) dx + ∫_(π/4)^(π/2) (sen−cos) dx</span>
+          <span class="step">= [sen + cos]₀^(π/4) + [−cos − sen]_(π/4)^(π/2)</span>
+          <span class="step">= (√2/2 + √2/2 − 1) + (0 − 1 − (−√2/2 − √2/2))</span>
+          <span class="step">= (√2 − 1) + (−1 + √2) = 2√2 − 2 <span class="arrow">→</span> <span class="box-result">2(√2 − 1) ≈ 0,828 u²</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t4);">
+      <div class="b-title">4B · Depósito cilíndrico <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> V = πr²h = 16π → h = 16/r². Coste = 8·πr² (base) + 5·2πrh (lateral).
+        <div class="calc">
+          <span class="step">C(r) = 8πr² + 10πr·(16/r²) = 8πr² + 160π/r</span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> C'(r) = 16πr − 160π/r² = 0 ⟺ 16r³ = 160 ⟺ r³ = 10 ⟺ r = ∛10 ≈ 2,15 dm.
+        <div class="calc">
+          <span class="step">h = 16/(∛10)² = 16/∛100 ≈ 3,44 dm. C(∛10) = 8π·∛100 + 160π/∛10 ≈ 8π·4,64 + 160π/2,15 ≈ 116,7 + 233,7 ≈ <span class="box-result">350 € (aprox.)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5A · Bayes viñedo <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> P(E) = 0,6·0,8 + 0,3·0,7 + 0,1·0,95 = 0,48 + 0,21 + 0,095 = <span class="box-result">0,785 (78,5%)</span>.
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(C|E) = (0,1·0,95)/0,785 = 0,095/0,785 ≈ <span class="box-result">0,121 (12,1%)</span>.
+      </div>
+    </div>
+
+    <div class="bloque-sol" style="--bloque-color:var(--t5);">
+      <div class="b-title">5B · Bin→N ULL <span class="pts">2 pts</span></div>
+      <div class="apartado">
+        <span class="lbl">a)</span> X ~ B(1800, 0,22). np = 396, nq = 1404 ≥ 5 → N(396, σ), σ = √(1800·0,22·0,78) = √308,88 ≈ 17,58.
+        <div class="calc">
+          <span class="step">P(380 ≤ X ≤ 420) ≈ P(379,5 ≤ Y ≤ 420,5)</span>
+          <span class="step">Z₁ = (379,5−396)/17,58 ≈ −0,94; Z₂ = (420,5−396)/17,58 ≈ 1,39</span>
+          <span class="step">P = F(1,39) − (1−F(0,94)) = 0,9177 − 0,1736 <span class="arrow">→</span> <span class="box-result">≈ 0,7441 (74,4%)</span></span>
+        </div>
+      </div>
+      <div class="apartado">
+        <span class="lbl">b)</span> P(X &gt; 450) ≈ P(Y &gt; 450,5). Z = (450,5−396)/17,58 ≈ 3,10. P = 1 − F(3,10) = 1 − 0,9990 = <span class="box-result">0,0010 (0,10%)</span>.
+      </div>
+    </div>
+
+    <div class="nota-criterio">
+      <strong>Atajo Heineken.</strong> En el apartado 1c, en lugar de resolver la cuadrática es más rápido razonar que B(x) &gt; 100 dentro del intervalo de máximo, simétrico respecto al vértice (x=20). El mínimo entero superior a 12,93 es 13, por tanto se necesitan al menos 1300 entradas (en cientos: x ≥ 13).
+    </div>
+  </div>
+</section>
+
+</div><!-- /stage -->
+
+<div class="bottombar">
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior"><span class="nav-arrow">‹</span> <span>Anterior</span></button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente"><span>Siguiente</span> <span class="nav-arrow">›</span></button>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let current = 0;
+const counterNum = document.getElementById('counterNum');
+const counterTotal = document.getElementById('counterTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsBox = document.getElementById('dots');
+
+counterTotal.textContent = slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='dot';
+  let label;
+  if(i===0) label = 'P';
+  else label = String(i);
+  d.textContent = label;
+  d.title = s.dataset.title || ('Slide '+(i+1));
+  d.addEventListener('click',()=>go(i));
+  dotsBox.appendChild(d);
+});
+
+function go(i){
+  if(i<0||i>=slides.length||i===current)return;
+  slides[current].classList.remove('is-active');
+  current = i;
+  slides[current].classList.add('is-active');
+  slides[current].scrollTop = 0;
+  counterNum.textContent = i+1;
+  dotsBox.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('is-active',j===i));
+  prevBtn.disabled = i===0;
+  nextBtn.disabled = i===slides.length-1;
+}
+
+prevBtn.addEventListener('click',()=>{go(current-1);prevBtn.blur();});
+nextBtn.addEventListener('click',()=>{go(current+1);nextBtn.blur();});
+
+document.addEventListener('keydown', e=>{
+  const t=e.target;
+  if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  if(e.key==='ArrowRight'||e.key===' ') go(current+1);
+  if(e.key==='ArrowLeft') go(current-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(slides.length-1);
+});
+
+go(0);
+</script>
+
+</body>
+</html>

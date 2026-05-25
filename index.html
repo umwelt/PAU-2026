@@ -88,11 +88,17 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
 
 .cards{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:18px;
-  margin-bottom:48px;
+  margin-bottom:36px;
 }
-@media (max-width:1100px){.cards{grid-template-columns:repeat(2,1fr);}}
+.cards.exam-cards{
+  grid-template-columns:repeat(2,1fr);
+  max-width:760px;
+  margin-left:auto;
+  margin-right:auto;
+}
+@media (max-width:900px){.cards{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:680px){.cards{grid-template-columns:1fr;}}
 
 .card{
@@ -220,7 +226,11 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
   <div class="hero">
     <div class="hero-mark">PAU</div>
     <h1>Guías visuales<span class="ornament">·</span>PAU 2026</h1>
-    <p>Tres presentaciones interactivas para preparar Historia de la Filosofía, Historia de España y Física, más diez exámenes simulacro construidos a partir de los patrones detectados en 17 convocatorias EBAU/PAU.</p>
+    <p>Tres presentaciones interactivas para preparar Filosofía, Historia y Física, más veinte exámenes simulacro de Física y Matemáticas II construidos a partir de los patrones detectados en 31 convocatorias EBAU/PAU.</p>
+  </div>
+
+  <div class="section-title" style="text-align:center;margin-bottom:18px;">
+    <h3 style="font-family:'Lora',serif;font-style:italic;font-weight:500;font-size:1rem;color:var(--ink-mute);letter-spacing:.06em;">Material de estudio</h3>
   </div>
 
   <div class="cards">
@@ -265,26 +275,50 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacin
       </div>
       <span class="cta">Abrir presentación</span>
     </a>
+  </div>
 
+  <div class="section-title" style="text-align:center;margin-bottom:18px;margin-top:12px;">
+    <h3 style="font-family:'Lora',serif;font-style:italic;font-weight:500;font-size:1rem;color:var(--ink-mute);letter-spacing:.06em;">Simulacros de examen</h3>
+  </div>
+
+  <div class="cards exam-cards">
     <a class="card" href="examenes.html" style="--card-color:#5B8C8B;">
       <span class="ribbon">10 simulacros</span>
       <div class="icon">E</div>
-      <h2>Exámenes</h2>
-      <div class="subtitle">Simulacros Física PAU 2026</div>
-      <p class="desc">Diez exámenes construidos según patrones detectados en 17 convocatorias EBAU/PAU. Estructura oficial: 2,5 + 3 + 3 + 1,5 puntos. Solucionario separado.</p>
+      <h2>Física</h2>
+      <div class="subtitle">10 simulacros PAU 2026</div>
+      <p class="desc">Diez exámenes construidos según patrones detectados en 17 convocatorias EBAU/PAU. Estructura oficial: 2,5 + 3 + 3 + 1,5 puntos.</p>
       <div class="stats">
         <div class="stat"><div class="n">10</div><div class="l">Exámenes</div></div>
-        <div class="stat"><div class="n">17</div><div class="l">Años analizados</div></div>
-        <div class="stat"><div class="n">90</div><div class="l">Minutos c/u</div></div>
+        <div class="stat"><div class="n">17</div><div class="l">Años</div></div>
+        <div class="stat"><div class="n">90'</div><div class="l">c/u</div></div>
+      </div>
+      <span class="cta">Abrir simulacros</span>
+    </a>
+
+    <a class="card" href="examenes-mate.html" style="--card-color:#3F6E5C;">
+      <span class="ribbon">10 simulacros</span>
+      <div class="icon">∫</div>
+      <h2>Matemáticas II</h2>
+      <div class="subtitle">10 simulacros PAU 2026</div>
+      <p class="desc">Estructura nueva PAU 2026: Análisis competencial obligatorio + Álgebra + Geometría, más Análisis y Probabilidad con opcionalidad. Análisis de 14 PAUs.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">10</div><div class="l">Exámenes</div></div>
+        <div class="stat"><div class="n">14</div><div class="l">PAUs</div></div>
+        <div class="stat"><div class="n">5</div><div class="l">Problemas</div></div>
       </div>
       <span class="cta">Abrir simulacros</span>
     </a>
   </div>
 
-  <div class="extra-links" style="margin-bottom:32px;text-align:center;">
-    <a href="soluciones.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--line);border-radius:100px;background:var(--paper-soft);color:var(--ink-soft);font-size:.9rem;text-decoration:none;font-weight:500;">
+  <div class="extra-links" style="margin-bottom:32px;text-align:center;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+    <a href="soluciones.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--line);border-radius:100px;background:var(--paper-soft);color:var(--ink-soft);font-size:.88rem;text-decoration:none;font-weight:500;">
       <span style="font-family:'Lora',serif;font-weight:600;color:#5B8C8B;">→</span>
-      Solucionario de los 10 simulacros (archivo aparte)
+      Solucionario de Física
+    </a>
+    <a href="soluciones-mate.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--line);border-radius:100px;background:var(--paper-soft);color:var(--ink-soft);font-size:.88rem;text-decoration:none;font-weight:500;">
+      <span style="font-family:'Lora',serif;font-weight:600;color:#3F6E5C;">→</span>
+      Solucionario de Matemáticas II
     </a>
   </div>
 

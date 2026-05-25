@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>10 exámenes simulacro · PAU 2026 · Matemáticas II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-soft:#FAF6EE;
+  --paper-card:#FBF7EE;
+  --ink:#2D2A26;
+  --ink-soft:#5C574F;
+  --ink-mute:#8B8579;
+  --line:#D6CCB7;
+  --line-strong:#BFB39A;
+  --accent:#3F6E5C;
+  --t1:#3F6E5C;  /* Análisis competencial - obligatorio */
+  --t2:#B8895A;  /* Álgebra */
+  --t3:#4F6890;  /* Geometría */
+  --t4:#A95448;  /* Análisis II */
+  --t5:#7B5F8C;  /* Probabilidad */
+  --obligatorio:#A95448;
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--paper);}
+body{
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(ellipse at top left, rgba(217,199,162,.16), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(63,110,92,.12), transparent 55%);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  z-index:50;
+  padding:14px 32px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;
+  background:linear-gradient(to bottom,rgba(242,237,227,.98),rgba(242,237,227,.85));
+  pointer-events:none;
+}
+.topbar > *{pointer-events:auto;}
+.home-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.85rem;color:var(--ink-soft);
+  text-decoration:none;
+  padding:6px 12px;border-radius:100px;
+  border:1px solid var(--line);
+  background:var(--paper-soft);
+}
+.home-link:hover{color:var(--ink);border-color:var(--line-strong);}
+.topbar-title{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--ink-soft);}
+.slide-counter{font-family:var(--mono);font-size:.85rem;color:var(--ink-mute);letter-spacing:.05em;}
+.slide-counter strong{color:var(--ink);font-weight:600;}
+
+.bottombar{
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:80;
+  padding:14px 32px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:20px;
+  background:linear-gradient(to top,rgba(242,237,227,1) 60%,rgba(242,237,227,.9) 80%,rgba(242,237,227,0));
+  pointer-events:none;
+  isolation:isolate;
+}
+.nav-btn{
+  pointer-events:auto;z-index:60;
+  background:var(--paper-soft);
+  border:2px solid var(--line-strong);
+  color:var(--ink);
+  height:54px;min-width:118px;padding:0 20px;
+  border-radius:100px;cursor:pointer;
+  font-size:.95rem;font-weight:600;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .2s;
+  box-shadow:0 4px 14px rgba(45,42,38,.08);
+  letter-spacing:.04em;flex-shrink:0;
+}
+.nav-btn .nav-arrow{font-family:var(--serif);font-size:1.5rem;line-height:1;}
+.nav-btn:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);box-shadow:0 6px 18px rgba(63,110,92,.25);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+.dots{pointer-events:none;display:flex;gap:9px;flex:1;justify-content:center;flex-wrap:wrap;align-items:center;}
+.dot{
+  pointer-events:auto;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--paper-soft);
+  border:1.5px solid var(--line-strong);
+  cursor:pointer;transition:all .2s;
+  font-family:var(--mono);font-size:.72rem;font-weight:600;
+  color:var(--ink-soft);padding:0;
+  display:grid;place-items:center;
+}
+.dot:hover{background:var(--accent);color:var(--paper-soft);border-color:var(--accent);}
+.dot.is-active{background:var(--ink);color:var(--paper-soft);border-color:var(--ink);transform:scale(1.1);}
+
+.stage{position:relative;width:100vw;height:100vh;overflow:hidden;}
+.slide{
+  position:absolute;inset:0;display:none;
+  overflow-y:auto;padding:84px 32px 110px;
+  overscroll-behavior:contain;
+}
+.slide.is-active{display:block;}
+.slide-inner{max-width:920px;margin:0 auto;}
+
+/* portada */
+.portada{text-align:center;padding-top:60px;}
+.portada .mark{
+  width:96px;height:96px;border-radius:50%;
+  background:var(--paper-soft);
+  border:2px solid var(--accent);
+  display:grid;place-items:center;margin:0 auto 28px;
+  font-family:var(--serif);font-size:2.1rem;color:var(--accent);font-weight:600;
+}
+.portada h1{font-size:clamp(2.3rem,4.5vw,3.5rem);margin-bottom:14px;line-height:1.1;}
+.portada h1 .num{color:var(--accent);}
+.portada .sub{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--ink-soft);margin-bottom:28px;}
+.portada .desc{max-width:620px;margin:0 auto 36px;color:var(--ink-soft);font-size:1rem;line-height:1.6;}
+.portada-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  max-width:680px;margin:0 auto;
+}
+.portada-stat{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;padding:18px 12px;text-align:center;
+}
+.portada-stat .n{
+  font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--accent);
+  display:block;line-height:1;
+}
+.portada-stat .l{
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-mute);margin-top:6px;
+}
+
+/* patrones */
+.patrones-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px;
+}
+.pat-card{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:14px;padding:22px 24px;
+  border-left:4px solid var(--card-color);
+}
+.pat-card h3{
+  font-size:1rem;color:var(--card-color);margin-bottom:14px;
+  font-weight:600;font-family:var(--sans);
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.pat-card ul{list-style:none;}
+.pat-card li{
+  font-size:.88rem;color:var(--ink-soft);
+  padding:5px 0;display:flex;justify-content:space-between;gap:12px;
+  border-bottom:1px dotted var(--line);
+}
+.pat-card li:last-child{border-bottom:none;}
+.pat-card li .name{flex:1;}
+.pat-card li .freq{font-family:var(--mono);font-size:.78rem;color:var(--ink-mute);font-weight:600;white-space:nowrap;}
+.pat-card li .freq.high{color:var(--obligatorio);}
+.pat-note{
+  background:var(--paper-soft);
+  border:1px dashed var(--line-strong);
+  border-radius:12px;padding:18px 22px;
+  margin-top:24px;
+  font-size:.9rem;color:var(--ink-soft);line-height:1.6;
+}
+.pat-note strong{color:var(--ink);font-weight:600;}
+
+/* examen */
+.examen-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding-bottom:18px;border-bottom:2px solid var(--ink);
+  margin-bottom:22px;gap:18px;
+}
+.examen-titulo{font-family:var(--serif);font-size:1.8rem;font-weight:600;}
+.examen-num{font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:4px;}
+.examen-tema{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--ink-soft);margin-top:6px;}
+.examen-meta{text-align:right;font-size:.78rem;color:var(--ink-mute);font-family:var(--mono);letter-spacing:.06em;}
+.examen-meta div{margin-bottom:4px;}
+.examen-meta .puntos{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);letter-spacing:0;}
+
+.instrucciones{
+  font-size:.85rem;color:var(--ink-soft);
+  font-style:italic;
+  margin-bottom:22px;
+  padding:10px 14px;
+  border-left:3px solid var(--accent);
+  background:var(--paper-soft);
+  border-radius:0 6px 6px 0;
+}
+
+.parte-titulo{
+  font-family:var(--serif);
+  font-size:1.05rem;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:24px 0 12px;
+  padding-bottom:4px;
+  border-bottom:1px solid var(--line-strong);
+  text-align:center;
+}
+
+.pregunta{
+  margin-top:12px;
+  padding:16px 18px;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  border-left:4px solid var(--bloque-color,var(--accent));
+  font-size:.93rem;
+  line-height:1.65;
+}
+.pregunta-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:10px;gap:14px;
+}
+.pregunta-num{
+  font-family:var(--serif);
+  font-size:1.05rem;font-weight:600;
+  color:var(--bloque-color,var(--ink));
+}
+.pregunta-num .tag{
+  font-family:var(--sans);
+  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:2px 8px;border-radius:100px;font-weight:600;
+  background:var(--obligatorio);color:var(--paper-soft);
+  margin-left:8px;
+}
+.pregunta-num .tag.elige{
+  background:var(--paper-soft);color:var(--ink-soft);
+  border:1px solid var(--line);
+}
+.pregunta-tema{
+  font-family:var(--sans);
+  font-size:.72rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  font-weight:500;
+}
+.pts{
+  font-family:var(--mono);font-size:.74rem;
+  color:var(--ink-mute);font-weight:500;letter-spacing:.04em;
+}
+.pregunta-enunciado{color:var(--ink-soft);margin-bottom:8px;}
+.pregunta-apartados{list-style:none;padding-left:0;margin-top:6px;}
+.pregunta-apartados > li{padding:5px 0 5px 26px;position:relative;}
+.pregunta-apartados > li::before{
+  content:attr(data-label);
+  position:absolute;left:0;top:5px;
+  font-family:var(--serif);font-weight:600;
+  color:var(--bloque-color,var(--accent));
+  font-size:.92rem;
+}
+.pregunta-apartados > li .apt-pts{
+  font-family:var(--mono);font-size:.74rem;
+  color:var(--ink-mute);margin-left:6px;
+}
+
+.opcion-banda{
+  font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:600;
+  text-align:center;margin:14px 0 4px;
+}
+
+.math{
+  font-family:'Lora',Georgia,serif;
+  font-style:italic;
+  background:var(--paper-soft);
+  padding:1px 6px;border-radius:4px;
+  font-size:.95em;
+}
+.matrix{
+  display:inline-block;
+  vertical-align:middle;
+  font-family:'Lora',Georgia,serif;
+  margin:0 4px;
+}
+.matrix table{
+  border-collapse:collapse;
+  border-left:1.5px solid var(--ink);
+  border-right:1.5px solid var(--ink);
+}
+.matrix td{
+  padding:1px 8px;
+  text-align:center;
+  font-style:italic;
+}
+
+sup,sub{font-size:.7em;}
+
+@media (max-width:680px){
+  .topbar{padding:10px 18px;}
+  .topbar-title{display:none;}
+  .slide{padding:74px 18px 100px;}
+  .examen-header{flex-direction:column;align-items:flex-start;}
+  .examen-meta{text-align:left;}
+  .portada-stats{grid-template-columns:repeat(2,1fr);}
+  .patrones-grid{grid-template-columns:1fr;}
+  .nav-btn{min-width:auto;padding:0 14px;}
+  .nav-btn span:not(.nav-arrow){display:none;}
+}
+.slide::-webkit-scrollbar{width:10px;}
+.slide::-webkit-scrollbar-track{background:transparent;}
+.slide::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:6px;}
+.slide::-webkit-scrollbar-thumb:hover{background:var(--ink-mute);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home-link" href="index.html">← inicio</a>
+  <div class="topbar-title">10 simulacros PAU 2026 · Matemáticas II</div>
+  <div class="slide-counter"><strong id="counterNum">1</strong> / <span id="counterTotal">12</span></div>
+</div>
+
+<div class="stage">
+
+<!-- ============ PORTADA ============ -->
+<section class="slide is-active" data-title="Portada">
+  <div class="slide-inner portada">
+    <div class="mark">∫</div>
+    <h1>10 exámenes simulacro <span class="num">·</span> PAU 2026</h1>
+    <div class="sub">Matemáticas II · Canarias</div>
+    <p class="desc">Diez exámenes construidos según la estructura oficial PAU 2026 (Parte I obligatoria + Parte II con opciones) a partir de los patrones detectados en 14 convocatorias EBAU/PAU 2020-2025 y el modelo oficial de septiembre 2025.</p>
+    <div class="portada-stats">
+      <div class="portada-stat"><span class="n">10</span><div class="l">Exámenes</div></div>
+      <div class="portada-stat"><span class="n">14</span><div class="l">PAUs analizadas</div></div>
+      <div class="portada-stat"><span class="n">30</span><div class="l">Moldes detectados</div></div>
+      <div class="portada-stat"><span class="n">10</span><div class="l">Puntos · 90 min</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PATRONES ============ -->
+<section class="slide" data-title="Patrones detectados">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Análisis previo</div>
+        <h2 class="examen-titulo">Patrones detectados 2020–2025</h2>
+        <div class="examen-tema">Lo que cae siempre · lo que rota · el cambio competencial</div>
+      </div>
+      <div class="examen-meta">
+        <div>14 convocatorias</div>
+        <div>5 bloques · 30 moldes</div>
+      </div>
+    </div>
+
+    <div class="patrones-grid">
+      <div class="pat-card" style="--card-color:var(--t1);">
+        <h3>1 · Análisis competencial</h3>
+        <ul>
+          <li><span class="name">Función a trozos (continuidad/derivabilidad)</span><span class="freq high">60%</span></li>
+          <li><span class="name">Asíntota horizontal interpretada</span><span class="freq high">55%</span></li>
+          <li><span class="name">Monotonía y máximo/mínimo</span><span class="freq high">70%</span></li>
+          <li><span class="name">TVM / velocidad media</span><span class="freq">30%</span></li>
+          <li><span class="name">Contexto fármaco / biológico</span><span class="freq">50%</span></li>
+          <li><span class="name">Contexto económico canario</span><span class="freq">40%</span></li>
+        </ul>
+      </div>
+      <div class="pat-card" style="--card-color:var(--t2);">
+        <h3>2 · Álgebra</h3>
+        <ul>
+          <li><span class="name">Ecuación matricial · despeje + inversa</span><span class="freq high">80%</span></li>
+          <li><span class="name">Discusión sistema con parámetro k</span><span class="freq high">60%</span></li>
+          <li><span class="name">Sistema 3 incógnitas contextualizado</span><span class="freq high">70%</span></li>
+          <li><span class="name">Rango de matriz con parámetro</span><span class="freq">50%</span></li>
+          <li><span class="name">Sistema de dos ecuaciones matriciales</span><span class="freq">40%</span></li>
+          <li><span class="name">Potencias de matriz (Aⁿ)</span><span class="freq">10%</span></li>
+        </ul>
+      </div>
+      <div class="pat-card" style="--card-color:var(--t3);">
+        <h3>3 · Geometría en R³</h3>
+        <ul>
+          <li><span class="name">Posición relativa de dos rectas</span><span class="freq high">80%</span></li>
+          <li><span class="name">Recta como intersección de dos planos</span><span class="freq high">100%</span></li>
+          <li><span class="name">Plano por punto · paralelo o perp.</span><span class="freq high">70%</span></li>
+          <li><span class="name">Ángulo (rectas o recta-plano)</span><span class="freq high">100%</span></li>
+          <li><span class="name">Simétrico de un punto respecto a π</span><span class="freq">20%</span></li>
+          <li><span class="name">Perpendicular común (v₁×v₂)</span><span class="freq">30%</span></li>
+        </ul>
+      </div>
+      <div class="pat-card" style="--card-color:var(--t4);">
+        <h3>4 · Análisis Parte II</h3>
+        <ul>
+          <li><span class="name">Función a trozos derivable (a,b)</span><span class="freq high">60%</span></li>
+          <li><span class="name">Área entre dos curvas</span><span class="freq high">50%</span></li>
+          <li><span class="name">Límite con L'Hôpital (0/0, ∞−∞)</span><span class="freq high">60%</span></li>
+          <li><span class="name">Integral por partes / sustitución</span><span class="freq">50%</span></li>
+          <li><span class="name">Optimización geométrica</span><span class="freq">40%</span></li>
+          <li><span class="name">Asíntotas + dominio</span><span class="freq">40%</span></li>
+        </ul>
+      </div>
+      <div class="pat-card" style="--card-color:var(--t5);grid-column:1/-1;max-width:50%;justify-self:center;">
+        <h3>5 · Probabilidad</h3>
+        <ul>
+          <li><span class="name">Árbol 3 ramas · probabilidad total + Bayes</span><span class="freq high">70%</span></li>
+          <li><span class="name">Binomial → Normal (con np≥5, nq≥5)</span><span class="freq high">90%</span></li>
+          <li><span class="name">Normal pura N(μ,σ) con tabla Z</span><span class="freq high">60%</span></li>
+          <li><span class="name">Binomial pequeña pura</span><span class="freq">40%</span></li>
+          <li><span class="name">Valor esperado / nº de individuos</span><span class="freq">50%</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pat-note">
+      <strong>Cambio competencial 2025.</strong> Desde junio 2025 el problema de Análisis es <em>obligatorio y contextualizado</em> (Metabolix, hormigas, plátanos…) y suele tener 3 apartados: continuidad/comprobación → estudio + extremo → límite a infinito. El modelo oficial PAU 2026 reutiliza Metabolix tal cual, confirmando el formato. Estos diez simulacros incluyen contextos distintos en cada uno para evitar la repetición.<br><br>
+      <strong>Aún no han caído</strong> (pero figuran en la matriz LOMLOE): programación lineal, combinatoria pura, vectores en R², probabilidad continua avanzada distinta de la Normal. No se incluyen.
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 1 ============ -->
+<section class="slide" data-title="Examen 1">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 1</div>
+        <h2 class="examen-titulo">Examen 1 · Vitalcor</h2>
+        <div class="examen-tema">Fármaco · matriz 2×2 · distancia · L'Hôpital · test médico</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo un problema de las dos opciones de cada bloque. Si responde a los dos del mismo bloque, solo se evaluará el primero. Se califica todo el proceso.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Análisis matemático · obligatorio</div>
+          <div class="pregunta-num">1. Vitalcor <span class="tag">obligatorio</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">El medicamento <em>Vitalcor</em>, usado en el Hospital Universitario de Canarias para tratar arritmias, presenta la siguiente concentración plasmática (mg/L) en función del tiempo <span class="math">x</span> (horas) desde su administración:</p>
+      <p style="text-align:center;font-family:'Lora',serif;font-style:italic;margin:8px 0;">f(x) = {−x² + 6x &nbsp;si&nbsp; 0 ≤ x &lt; 3 ;&nbsp;&nbsp; 18/(x − 1) &nbsp;si&nbsp; x ≥ 3 }</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Justificar si la concentración es una función continua en todo su dominio. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Estudiar la monotonía y averiguar en qué instante la concentración es máxima y cuál es su valor. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">¿Cuál será la concentración a largo plazo (cuando <span class="math">x → ∞</span>)? Interpretar el resultado. <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Álgebra · obligatorio</div>
+          <div class="pregunta-num">2. <span class="tag">obligatorio</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dada la matriz <span class="math">M</span> = <span class="matrix"><table><tr><td>1</td><td>a−2</td></tr><tr><td>−1</td><td>3−a</td></tr></table></span> con <span class="math">a ∈ ℝ</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">M</span> es invertible para todo <span class="math">a</span> y obtener una expresión general de <span class="math">M<sup>−1</sup></span>. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Para <span class="math">a = 2</span>, hallar la matriz <span class="math">X</span> que satisface <span class="math">MA = B − MX</span>, siendo <span class="math">A</span> = <span class="matrix"><table><tr><td>0</td><td>1</td><td>2</td></tr><tr><td>1</td><td>−1</td><td>0</td></tr></table></span> y <span class="math">B</span> = <span class="matrix"><table><tr><td>1</td><td>2</td><td>4</td></tr><tr><td>−1</td><td>0</td><td>3</td></tr></table></span>. <span class="apt-pts">(1,25 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Geometría · obligatorio</div>
+          <div class="pregunta-num">3. <span class="tag">obligatorio</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En el espacio tridimensional, dados el punto <span class="math">P(2, −1, 3)</span> y las rectas:</p>
+      <p style="text-align:center;font-family:'Lora',serif;font-style:italic;margin:8px 0;">r₁: { x − z = −1 ;&nbsp; y = 1 } &nbsp;&nbsp;·&nbsp;&nbsp; r₂: x = 1, &nbsp; y − 1 = −(z − 2)</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar el punto de intersección <span class="math">Q = r₁ ∩ r₂</span> y la distancia <span class="math">d(P, Q)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el ángulo con el que se cortan <span class="math">r₁</span> y <span class="math">r₂</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · responder 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Análisis Parte II</div>
+          <div class="pregunta-num">4A. <span class="tag elige">elegir</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">lim<sub>x→0</sub> (1/x − 1/tan x)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Determinar los valores de <span class="math">a, b ∈ ℝ</span> para que <span class="math">f(x) = { e<sup>ax</sup>·sen(bx) si x &lt; 0 ; (x² + ax + b)/(x + 1) si x ≥ 0 }</span> sea derivable en <span class="math">x = 0</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Análisis Parte II</div>
+          <div class="pregunta-num">4B. <span class="tag elige">elegir</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular la integral indefinida <span class="math">∫ x² · ln(x) dx</span> (por partes). <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el área de la región delimitada por las curvas <span class="math">f(x) = x² − 2x</span> y <span class="math">g(x) = x</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · responder 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Probabilidad</div>
+          <div class="pregunta-num">5A. <span class="tag elige">elegir</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En el Hospital de Tenerife, una enfermedad afecta al 2% de la población. La prueba diagnóstica tiene una sensibilidad del 96% (detecta enfermos correctamente) y una especificidad del 95% (rechaza sanos correctamente).</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Dibujar el diagrama de árbol y calcular la probabilidad de que el test de un resultado positivo. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si una persona da positivo, ¿cuál es la probabilidad de que realmente esté enferma? Interpretar el resultado. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Probabilidad</div>
+          <div class="pregunta-num">5B. <span class="tag elige">elegir</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">El número de visitantes diarios al Parque Rural de Anaga sigue una distribución normal <span class="math">N(1200, 200)</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que un día el parque reciba entre 1000 y 1500 visitantes. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">El parque tiene capacidad para 1600 personas. ¿Qué porcentaje de días se superará la capacidad? En 30 días, ¿cuántos se espera que se sobrepase? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 2 ============ -->
+<section class="slide" data-title="Examen 2">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 2</div>
+        <h2 class="examen-titulo">Examen 2 · Lubinas en estanque</h2>
+        <div class="examen-tema">Crecimiento logístico · discusión sistema · simétrico · Bayes urnas</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque. Detallar el procedimiento.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Análisis matemático · obligatorio</div>
+          <div class="pregunta-num">1. Lubinas <span class="tag">obligatorio</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En una granja acuícola de Tenerife se modeliza la población de lubinas (en cientos de individuos) mediante <span class="math">N(t) = 2000 / (1 + 9 · e<sup>−0,4t</sup>)</span>, con <span class="math">t</span> en meses.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular la población inicial <span class="math">N(0)</span> y demostrar que <span class="math">N(t)</span> es siempre creciente. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Calcular el límite cuando <span class="math">t → ∞</span> (capacidad de carga del estanque) y el instante en el que la población alcanza la mitad de dicha capacidad. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">Calcular la tasa de variación media (TVM) entre los meses 0 y 5 e interpretar las unidades. <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Álgebra · obligatorio</div>
+          <div class="pregunta-num">2. <span class="tag">obligatorio</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dado el sistema <span class="math">{ x + y + z = 1 ; 2x + ky + z = 2 ; x + y + (k+1)z = k }</span>, con <span class="math">k ∈ ℝ</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Discutir el sistema según los valores de <span class="math">k</span> aplicando el teorema de Rouché-Fröbenius. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Resolver el sistema para <span class="math">k = 1</span>. <span class="apt-pts">(1,25 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div>
+          <div class="pregunta-tema">Geometría · obligatorio</div>
+          <div class="pregunta-num">3. <span class="tag">obligatorio</span></div>
+        </div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dados el punto <span class="math">P(1, 2, 0)</span> y el plano <span class="math">π: 2x + y − z = 4</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Ecuación de la recta que pasa por <span class="math">P</span> y es perpendicular al plano <span class="math">π</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Coordenadas del punto simétrico <span class="math">P′</span> respecto al plano <span class="math">π</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · responder 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">lim<sub>x→0</sub> (sen(2x) − 2x)/x³</span> aplicando L'Hôpital. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Determinar <span class="math">a, b ∈ ℝ</span> para que <span class="math">f(x) = { ax + b si x &lt; 1 ; ln(x) + x² si x ≥ 1 }</span> sea derivable en <span class="math">x = 1</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">∫ x · cos(2x) dx</span> por partes. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el área de la región acotada por la curva <span class="math">y = 4 − x²</span> y el eje OX. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · responder 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Hay tres urnas: U₁ contiene 3 bolas blancas y 2 negras; U₂ contiene 4 blancas y 4 negras; U₃ contiene 2 blancas y 3 negras. Se elige una urna al azar y de ella se extrae una bola.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Diagrama de árbol completo y probabilidad de que la bola sea blanca. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si la bola extraída es blanca, ¿cuál es la probabilidad de que proceda de U₂? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En el IES Las Veredillas de Las Palmas, el 30% de los alumnos practica deporte federado. Se selecciona aleatoriamente una muestra de 80 alumnos.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Justificar que se puede aproximar la binomial por una normal y calcular <span class="math">P(20 ≤ X ≤ 30)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular <span class="math">P(X &gt; 35)</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 3 ============ -->
+<section class="slide" data-title="Examen 3">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 3</div>
+        <h2 class="examen-titulo">Examen 3 · Antibiótico ZX-12</h2>
+        <div class="examen-tema">Decaimiento exponencial · rango con parámetro · plano paralelo · optimización</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Antibiótico ZX-12 <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">La concentración (mg/L) del antibiótico ZX-12 en sangre se modeliza por <span class="math">C(t) = 8 (1 − e<sup>−0,4t</sup>)</span>, con <span class="math">t</span> en horas tras la administración.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">C(0)</span> y demostrar que <span class="math">C(t)</span> es estrictamente creciente. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Demostrar que la concentración nunca supera 8 mg/L y hallar el tiempo en que se alcanza la mitad de ese máximo. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">Si el umbral terapéutico es <span class="math">C ≥ 6 mg/L</span>, ¿a partir de qué instante se garantiza? <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">A(k)</span> = <span class="matrix"><table><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>k</td><td>1</td></tr><tr><td>2</td><td>1</td><td>k</td></tr></table></span> con <span class="math">k ∈ ℝ</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Estudiar el rango de <span class="math">A(k)</span> según los valores de <span class="math">k</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Para <span class="math">k = 3</span>, resolver el sistema <span class="math">A · x = (4, 4, 5)<sup>T</sup></span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dadas las rectas <span class="math">r₁: (x−1)/2 = (y+1)/1 = (z−2)/−1</span> y <span class="math">r₂: x = 1+s, y = 2−s, z = 3+2s</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">r₁</span> y <span class="math">r₂</span> se cruzan. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Ecuación general del plano que contiene a <span class="math">r₁</span> y es paralelo a <span class="math">r₂</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">f(x) = { e<sup>ax</sup> si x &lt; 0 ; ln(x + 1) + bx + 1 si x ≥ 0 }</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Estudiar la continuidad en <span class="math">x = 0</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Hallar <span class="math">a, b ∈ ℝ</span> para que sea derivable en <span class="math">x = 0</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Se quiere construir una caja sin tapa con base cuadrada de lado <span class="math">x</span> dm y altura <span class="math">h</span> dm, con un volumen exacto de 32 dm³.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Plantear la función área de cartón <span class="math">A(x)</span> utilizando que el volumen sea 32 dm³. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Hallar las dimensiones que minimizan el área y comprobar con la 2.ª derivada. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En una bolsa de regalo del festival "WOMAD Las Palmas" hay 4 entradas rojas, 3 azules y 3 verdes. Se extraen 2 entradas sin reemplazo.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de obtener dos entradas rojas. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Probabilidad de obtener una roja y una verde (en cualquier orden). <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Una fábrica produce mascarillas en Telde. El 4% son defectuosas. Se inspeccionan 25 unidades al azar.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que exactamente una sea defectuosa. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Probabilidad de que haya al menos dos defectuosas. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 4 ============ -->
+<section class="slide" data-title="Examen 4">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 4</div>
+        <h2 class="examen-titulo">Examen 4 · Festival turístico</h2>
+        <div class="examen-tema">Recaudación · 2 ecs matriciales · ángulo rectas · asíntotas · paracaídas</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Festival turístico <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En el festival "Mueca" de Puerto de la Cruz, si el precio de la entrada es <span class="math">p</span> euros, la asistencia esperada es <span class="math">A(p) = 5000 − 50p</span> personas. Los costes fijos del festival son 80 000 €. El beneficio neto se modeliza por <span class="math">B(p) = p · A(p) − 80 000</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Expresar <span class="math">B(p)</span> en forma desarrollada y determinar el precio que maximiza el beneficio. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Hallar el intervalo de precios para los que el beneficio es positivo. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="c)">Si los costes fijos suben a 100 000 €, ¿se puede seguir obteniendo beneficio? Justifica con cálculo. <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Considere el sistema matricial <span class="math">{ 2X + Y = A ;&nbsp; X − Y = B }</span>, con <span class="math">A</span> = <span class="matrix"><table><tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr></table></span> y <span class="math">B</span> = <span class="matrix"><table><tr><td>4</td><td>−1</td></tr><tr><td>2</td><td>5</td></tr></table></span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Despejar y calcular las matrices <span class="math">X</span> e <span class="math">Y</span>. <span class="apt-pts">(1,25 pts)</span></li>
+        <li data-label="b)">Calcular los determinantes <span class="math">|X|</span> y <span class="math">|Y|</span> y razonar si <span class="math">X</span> e <span class="math">Y</span> son invertibles. <span class="apt-pts">(0,75 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dadas <span class="math">r₁: (x−1)/3 = (y−2)/1 = z/2</span> y <span class="math">r₂: { x + y − z = 0 ;&nbsp; x − y + z = 2 }</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar las ecuaciones paramétricas de <span class="math">r₂</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Estudiar si <span class="math">r₁</span> y <span class="math">r₂</span> se cortan y, en caso afirmativo, calcular el ángulo entre ellas. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Considere la función <span class="math">f(x) = (x² + 3)/(x − 1)</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar el dominio y las asíntotas verticales. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Calcular la asíntota oblicua <span class="math">y = mx + n</span>. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="c)">Esbozar de forma cualitativa el comportamiento global de <span class="math">f(x)</span>. <span class="apt-pts">(0,75 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">∫ x · √(2x − 1) dx</span> mediante la sustitución <span class="math">u = 2x − 1</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el área entre la curva <span class="math">y = √(2x − 1)</span> y el eje OX entre <span class="math">x = 1/2</span> y <span class="math">x = 5</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Un paracaidista de la base de Gando lleva paracaídas principal y de reserva. El principal falla con probabilidad <span class="math">0,05</span>. Si el principal falla, el de reserva falla con probabilidad <span class="math">0,02</span>; si funciona, no se necesita usar el de reserva.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Diagrama y probabilidad de un aterrizaje seguro. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si en una jornada saltan 200 paracaidistas, ¿cuántos accidentes (ambos paracaídas fallan) se esperan? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">El gasto medio por turista en Lanzarote sigue una distribución normal <span class="math">N(950, 180)</span> €.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que un turista gaste entre 800 y 1200 €. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Un hotel regala estancia gratuita a los turistas que gastan más de 1300 €. Si al hotel llegan 500 turistas, ¿cuántos regalos se esperan repartir? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 5 ============ -->
+<section class="slide" data-title="Examen 5">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 5</div>
+        <h2 class="examen-titulo">Examen 5 · Cerámica enfriándose</h2>
+        <div class="examen-tema">Temperatura a trozos · A² = 2A−I · perpendicular común · L'Hôpital · Bin→N</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Cerámica canaria <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Una pieza recién sacada del horno de cerámica de La Atalaya (Gran Canaria) se enfría según:</p>
+      <p style="text-align:center;font-family:'Lora',serif;font-style:italic;margin:8px 0;">T(t) = { 800 − 50 t² &nbsp;si&nbsp; 0 ≤ t &lt; 2 ;&nbsp;&nbsp; 600 · e<sup>−0,1(t−2)</sup> &nbsp;si&nbsp; t ≥ 2 }</p>
+      <p style="font-size:.85rem;color:var(--ink-mute);margin-bottom:4px;">(t en minutos, T en °C)</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar la continuidad en <span class="math">t = 2</span>. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Tasa instantánea de enfriamiento en <span class="math">t = 1</span> y <span class="math">t = 4</span>. Interpretar resultados. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">Temperatura a largo plazo <span class="math">(t → ∞)</span> e interpretación física. <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">A</span> = <span class="matrix"><table><tr><td>2</td><td>1</td></tr><tr><td>−1</td><td>0</td></tr></table></span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">A² = 2A − I</span>. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Demostrar por inducción que <span class="math">A<sup>n</sup> = nA − (n−1)I</span> para todo <span class="math">n ≥ 1</span>. Calcular <span class="math">A<sup>5</sup></span>. <span class="apt-pts">(1,25 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dadas las rectas <span class="math">r₁: (x − 2)/1 = y/2 = (z − 1)/(−1)</span> y <span class="math">r₂: x = t, y = 2 − t, z = t + 1</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">r₁</span> y <span class="math">r₂</span> se cruzan. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Vector director de la perpendicular común <span class="math">(v⃗₁ × v⃗₂)</span> y ecuación del plano que contiene a <span class="math">r₁</span> y a dicha perpendicular. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">lim<sub>x→0</sub> (e<sup>x</sup> + e<sup>−x</sup> − 2)/(1 − cos x)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular <span class="math">lim<sub>x→0</sub> (sen x − x)/x³</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Considere las curvas <span class="math">f(x) = x²</span> y <span class="math">g(x) = 2x − x²</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar los puntos de corte de las dos curvas. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Calcular el área de la región encerrada entre ambas. <span class="apt-pts">(1,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Se lanzan dos dados estándar de 6 caras. Sea <span class="math">X</span> la variable "suma de las dos caras".</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">P(X = 7)</span> y <span class="math">P(X = 11)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular la probabilidad condicionada <span class="math">P(X par | X &gt; 7)</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En una residencia universitaria de la ULPGC, el 18% de los estudiantes son internacionales. Se entrevista a 250 estudiantes elegidos al azar.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Justificar la aproximación a Normal y calcular <span class="math">P(40 ≤ X ≤ 55)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular <span class="math">P(X ≥ 60)</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 6 ============ -->
+<section class="slide" data-title="Examen 6">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 6</div>
+        <h2 class="examen-titulo">Examen 6 · Florero de revolución</h2>
+        <div class="examen-tema">Sólido revolución · Gauss canario · rectas que se cruzan · ∫tan³x · cepas</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Florero canario <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Un alfarero diseña un florero por revolución alrededor del eje OX cuyo perfil radial es <span class="math">r(x) = √(x + 1)</span>, con <span class="math">x ∈ [0, 4]</span> cm.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">r(x)</span> está bien definida en <span class="math">[0, 4]</span>. Calcular <span class="math">r(0)</span> y <span class="math">r(4)</span>. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Calcular el volumen <span class="math">V = π ∫₀⁴ r(x)² dx</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">Hallar la altura <span class="math">h</span> tal que el volumen comprendido entre <span class="math">x = 0</span> y <span class="math">x = h</span> sea exactamente la mitad del volumen total. <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. Mercado de la Laguna <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Tres puestos del mercado de La Laguna venden el mismo producto. En un día sumaron 240 unidades en total. El segundo puesto vendió el doble que el primero, y el tercero vendió 20 unidades menos que la suma de los otros dos.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Plantear el sistema de ecuaciones que modeliza el problema. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Resolver el sistema por el método de Gauss e indicar cuántas unidades vendió cada puesto. <span class="apt-pts">(1,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dadas <span class="math">r₁: (x − 1)/2 = (y − 3)/1 = (z + 1)/3</span> y <span class="math">r₂: { x + y = 2 ;&nbsp; x − z = 1 }</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar las ecuaciones paramétricas de <span class="math">r₂</span> y estudiar la posición relativa con <span class="math">r₁</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si las rectas se cruzan, calcular la distancia entre ellas. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">f(x) = { x² + ax si x &lt; 2 ;&nbsp; (b − x)/(x − 3) si x ≥ 2, x ≠ 3 }</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar la relación entre <span class="math">a</span> y <span class="math">b</span> para que <span class="math">f</span> sea continua en <span class="math">x = 2</span>. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Hallar <span class="math">a</span> y <span class="math">b</span> para que <span class="math">f</span> sea también derivable en <span class="math">x = 2</span>. <span class="apt-pts">(1,25 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">∫ tan(x) · sec²(x) dx</span> mediante la sustitución <span class="math">u = tan(x)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular <span class="math">∫₀<sup>π/3</sup> tan(x) dx</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Un virus respiratorio tiene tres cepas en Canarias: A (50% de los casos), B (30%) y C (20%). La cepa A es asintomática en el 30% de los infectados, la B en el 50% y la C en el 70%.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Diagrama de árbol y probabilidad de que un infectado sea asintomático. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si un paciente está asintomático, probabilidad de que tenga la cepa C. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En un autobús de TITSA caben 30 viajeros sentados. La probabilidad de que cada viajero pague con tarjeta contactless es <span class="math">0,6</span>. Sea <span class="math">X</span> el número de viajeros que pagan con tarjeta.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular el valor esperado <span class="math">E[X]</span> y la desviación típica de <span class="math">X</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Justificar la aproximación a Normal y calcular <span class="math">P(X ≥ 22)</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 7 ============ -->
+<section class="slide" data-title="Examen 7">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 7</div>
+        <h2 class="examen-titulo">Examen 7 · Antiviral</h2>
+        <div class="examen-tema">Función racional · matriz 3×3 · ángulo recta-plano · optimización · Anaga</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Antiviral <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">La concentración de un antiviral en sangre se modeliza por <span class="math">C(t) = 6t/(t² + 4)</span>, con <span class="math">t</span> en horas y <span class="math">C</span> en mg/L.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">C(0)</span> y <span class="math">C(2)</span>. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Estudiar la monotonía y hallar el instante en que la concentración alcanza su máximo, así como el valor de dicho máximo. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">Calcular <span class="math">lim<sub>t→∞</sub> C(t)</span> e interpretar el resultado. <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">M</span> = <span class="matrix"><table><tr><td>1</td><td>2</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>2</td></tr></table></span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">M</span> es invertible y calcular <span class="math">M<sup>−1</sup></span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Resolver el sistema <span class="math">M · X = (3, 1, 4)<sup>T</sup></span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dados la recta <span class="math">r: (x − 1)/2 = (y + 2)/(−1) = z/2</span> y el plano <span class="math">π: x + 2y − z = 4</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Estudiar la posición relativa entre <span class="math">r</span> y <span class="math">π</span> (paralela, contenida o secante) y, si se cortan, calcular el punto de corte. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el ángulo entre la recta <span class="math">r</span> y el plano <span class="math">π</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Hallar las dimensiones del rectángulo de área máxima inscrito en la semicircunferencia <span class="math">x² + y² = 16</span> (<span class="math">y ≥ 0</span>), con la base apoyada sobre el eje OX.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Plantear la función área <span class="math">A(x)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Hallar el máximo y dar las dimensiones del rectángulo. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Considere <span class="math">f(x) = x³ − 3x</span> y <span class="math">g(x) = x</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar los puntos de corte de las curvas. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Calcular el área total encerrada entre ambas curvas. <span class="apt-pts">(1,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En una bolsa hay 5 bolas rojas, 3 verdes y 2 blancas. Se extraen 3 bolas sin reemplazo.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que las tres sean rojas. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Probabilidad de obtener al menos una blanca. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">La altitud media a la que los senderistas hacen rutas en Anaga sigue <span class="math">N(900, 200)</span> m sobre el nivel del mar.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que una ruta se realice entre 700 y 1100 m. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si en un día visitan 800 senderistas, ¿cuántos se espera que superen los 1300 m? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 8 ============ -->
+<section class="slide" data-title="Examen 8">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 8</div>
+        <h2 class="examen-titulo">Examen 8 · Langostas Lanzarote</h2>
+        <div class="examen-tema">Repoblación · discusión + Cramer · coplanariedad · L'Hôpital ln · caja+urna</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Langostas <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En la Reserva Marina de La Graciosa (Lanzarote), la población de langostas tras un plan de repoblación se modeliza por <span class="math">L(t) = 5000 − 4500 · e<sup>−0,2t</sup></span>, con <span class="math">t</span> años desde 2020.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular la población en 2020 y en 2025. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Calcular la velocidad de crecimiento <span class="math">L′(3)</span> y la población a largo plazo <span class="math">(t → ∞)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">¿En qué año la población alcanzará las 4000 langostas? <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dado el sistema <span class="math">{ x + 2y + z = 1 ;&nbsp; 2x + y + 3z = a ;&nbsp; x − y + 2z = −1 }</span> con <span class="math">a ∈ ℝ</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Discutir el sistema según los valores de <span class="math">a</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Para <span class="math">a = 2</span>, resolver por la regla de Cramer. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dadas <span class="math">r₁: (x − 1)/2 = (y − 2)/1 = (z + 1)/(−1)</span> y <span class="math">r₂: x = 3 + 2t, y = 4 + t, z = −2 − t</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">r₁</span> y <span class="math">r₂</span> son coplanarias (no se cruzan). <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Ecuación del plano que las contiene. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">lim<sub>x→1</sub> ln(x)/(x − 1)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular <span class="math">lim<sub>x→0<sup>+</sup></sub> x · ln(x)</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Considere <span class="math">f(x) = ln((x − 1)/(x + 2))</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar el dominio de <span class="math">f</span>. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Estudiar las asíntotas verticales y horizontales. <span class="apt-pts">(1,25 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En una atracción de la feria del Carnaval de Las Palmas hay 3 cajas sorpresa: una contiene premio y dos están vacías. Si el participante elige una caja vacía, se extrae una bola al azar de una urna con 2 bolas verdes y 4 negras. Si sale verde, el participante puede elegir una segunda caja entre las dos no elegidas. Si sale negra, la jugada termina sin premio.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Dibujar el diagrama de árbol completo. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular la probabilidad de obtener premio. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">El 35% de los estudiantes de Bachillerato en Gran Canaria practican deporte federado. Se entrevista a 150 estudiantes elegidos al azar.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Justificar la aproximación a Normal y calcular <span class="math">P(45 ≤ X ≤ 60)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular <span class="math">P(X &gt; 65)</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 9 ============ -->
+<section class="slide" data-title="Examen 9">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 9</div>
+        <h2 class="examen-titulo">Examen 9 · Sustancia tóxica</h2>
+        <div class="examen-tema">Decaimiento puro · rango con k · simétrico respecto a recta · trozos exp · calidad</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Toxina <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Tras ingerir un alimento contaminado, la concentración de toxina en sangre se modeliza por <span class="math">T(t) = 20 · e<sup>−0,3t</sup></span>, donde <span class="math">t</span> son horas y <span class="math">T</span> está en mg/L.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Comprobar que <span class="math">T</span> es estrictamente decreciente y calcular <span class="math">T(0)</span> y <span class="math">T(5)</span>. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Calcular el tiempo necesario para que la concentración descienda a un cuarto de su valor inicial. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="c)">¿Existe algún instante en el que <span class="math">T(t) = 0</span>? Justificar mediante el cálculo del límite cuando <span class="math">t → ∞</span>. <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">A(k)</span> = <span class="matrix"><table><tr><td>1</td><td>k</td><td>1</td></tr><tr><td>k</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>k</td></tr></table></span> con <span class="math">k ∈ ℝ</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">|A(k)|</span> en función de <span class="math">k</span> y hallar los valores que lo anulan. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Discutir el rango de <span class="math">A(k)</span> según los valores de <span class="math">k</span>. <span class="apt-pts">(1,25 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dados el punto <span class="math">P(2, 3, −1)</span> y la recta <span class="math">r: (x − 1)/2 = y/(−1) = (z + 2)/1</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Hallar el punto <span class="math">Q</span>, proyección ortogonal de <span class="math">P</span> sobre <span class="math">r</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el simétrico <span class="math">P′</span> de <span class="math">P</span> respecto de <span class="math">r</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">f(x) = { e<sup>ax</sup> · cos(x) si x &lt; 0 ;&nbsp; x² + b si x ≥ 0 }</span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Determinar el valor de <span class="math">b</span> para que <span class="math">f</span> sea continua en <span class="math">x = 0</span>. <span class="apt-pts">(0,5 pts)</span></li>
+        <li data-label="b)">Hallar <span class="math">a</span> y <span class="math">b</span> para que <span class="math">f</span> sea derivable en <span class="math">x = 0</span>. <span class="apt-pts">(1,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">∫ (2x + 1) · e<sup>x</sup> dx</span> por partes. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el área de la región entre <span class="math">y = (2x + 1) e<sup>x</sup></span> y el eje OX en el intervalo <span class="math">[0, 1]</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Una fábrica de gofio canario tiene tres líneas de producción: L₁ produce el 40% del total con un 2% de defectuosos; L₂ produce el 35% con un 3% de defectuosos; L₃ produce el 25% con un 1% de defectuosos.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que un paquete tomado al azar sea defectuoso. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si encontramos un paquete defectuoso, ¿cuál es la probabilidad de que provenga de L₁? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">La estatura de los hombres adultos en Canarias sigue <span class="math">N(173, 8)</span> cm.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que un hombre canario mida entre 165 y 180 cm. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Para entrar en una selección deportiva hace falta medir al menos 182 cm. Si hay 1500 candidatos, ¿cuántos se espera que cumplan el requisito? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXAMEN 10 ============ -->
+<section class="slide" data-title="Examen 10">
+  <div class="slide-inner">
+    <div class="examen-header">
+      <div>
+        <div class="examen-num">Simulacro 10</div>
+        <h2 class="examen-titulo">Examen 10 · Heineken Jazz</h2>
+        <div class="examen-tema">Beneficio cuadrático · potencias matriz · plano paralelo · área trig · viñedo</div>
+      </div>
+      <div class="examen-meta">
+        <div>PAU · Matemáticas II</div>
+        <div>Curso 2025-26</div>
+        <div class="puntos">10 pts · 90 min</div>
+      </div>
+    </div>
+
+    <p class="instrucciones">Parte I: responder los tres problemas. Parte II: responder solo uno por bloque.</p>
+
+    <div class="parte-titulo">Parte I · Opción única</div>
+
+    <div class="pregunta" style="--bloque-color:var(--t1);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis matemático · obligatorio</div><div class="pregunta-num">1. Heineken Jazz <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En el festival Heineken Jazz Canarias, el beneficio se modeliza por <span class="math">B(x) = −2x² + 80x − 600</span>, donde <span class="math">x</span> son las entradas vendidas (en cientos) y <span class="math">B</span> en miles de €.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">¿Para qué número de entradas el beneficio es máximo? Calcular ese beneficio. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="b)">Hallar el intervalo de entradas para el que el beneficio es positivo. <span class="apt-pts">(0,75 pts)</span></li>
+        <li data-label="c)">Si el objetivo es obtener un beneficio mayor que 100 000 €, ¿cuántas entradas hay que vender como mínimo? <span class="apt-pts">(0,5 pts)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t2);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Álgebra · obligatorio</div><div class="pregunta-num">2. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Sea <span class="math">B</span> = <span class="matrix"><table><tr><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td></tr></table></span>.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">B²</span>, <span class="math">B³</span> y conjeturar una expresión general para <span class="math">B<sup>n</sup></span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Demostrar la fórmula <span class="math">B<sup>n</sup></span> por inducción y calcular <span class="math">B<sup>10</sup></span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t3);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Geometría · obligatorio</div><div class="pregunta-num">3. <span class="tag">obligatorio</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Dadas <span class="math">r₁: (x + 1)/1 = y/2 = (z − 3)/(−1)</span> y <span class="math">r₂: x = 1, y = 2t, z = t</span>:</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Estudiar la posición relativa entre <span class="math">r₁</span> y <span class="math">r₂</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Hallar la ecuación general del plano que pasa por el punto <span class="math">A(0, 0, 2)</span> y es paralelo a <span class="math">r₁</span> y a <span class="math">r₂</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="parte-titulo">Parte II · Elegir un problema por bloque</div>
+
+    <div class="opcion-banda">Análisis · 4A o 4B</div>
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Calcular <span class="math">∫ sen²(x) dx</span> utilizando la identidad <span class="math">sen²(x) = (1 − cos(2x))/2</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular el área entre <span class="math">f(x) = sen(x)</span> y <span class="math">g(x) = cos(x)</span> en <span class="math">[0, π/2]</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t4);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Análisis Parte II</div><div class="pregunta-num">4B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">Se quiere construir un depósito cilíndrico abierto por arriba con volumen <span class="math">16π</span> dm³. La chapa lateral cuesta 5 €/dm² y la base 8 €/dm².</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Plantear la función coste <span class="math">C(r)</span> usando <span class="math">V = π r² h = 16π</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Hallar el radio <span class="math">r</span> que minimiza el coste y calcular el coste mínimo. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="opcion-banda">Probabilidad · 5A o 5B</div>
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5A. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">En una bodega de Lanzarote, el 60% de la cosecha proviene del viñedo Sur (cepa A), el 30% del Norte (cepa B) y el 10% de Cima (cepa C). La calidad excelente se da en el 80% del Sur, en el 70% del Norte y en el 95% de Cima.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Probabilidad de que una botella tomada al azar sea de calidad excelente. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Si la botella es de calidad excelente, ¿cuál es la probabilidad de que provenga de Cima? <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+
+    <div class="pregunta" style="--bloque-color:var(--t5);">
+      <div class="pregunta-header">
+        <div><div class="pregunta-tema">Probabilidad</div><div class="pregunta-num">5B. <span class="tag elige">elegir</span></div></div>
+        <span class="pts">2 pts</span>
+      </div>
+      <p class="pregunta-enunciado">El 22% de los estudiantes de la ULL viven en residencia. Se encuesta a 1800 estudiantes.</p>
+      <ul class="pregunta-apartados">
+        <li data-label="a)">Justificar la aproximación a Normal y calcular <span class="math">P(380 ≤ X ≤ 420)</span>. <span class="apt-pts">(1 pt)</span></li>
+        <li data-label="b)">Calcular <span class="math">P(X &gt; 450)</span>. <span class="apt-pts">(1 pt)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div><!-- /stage -->
+
+<div class="bottombar">
+  <button class="nav-btn" id="prevBtn" aria-label="Anterior"><span class="nav-arrow">‹</span> <span>Anterior</span></button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Siguiente"><span>Siguiente</span> <span class="nav-arrow">›</span></button>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let current = 0;
+const counterNum = document.getElementById('counterNum');
+const counterTotal = document.getElementById('counterTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsBox = document.getElementById('dots');
+
+counterTotal.textContent = slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='dot';
+  let label;
+  if(i===0) label = 'P';
+  else if(i===1) label = 'A';
+  else label = String(i-1);
+  d.textContent = label;
+  d.title = s.dataset.title || ('Slide '+(i+1));
+  d.addEventListener('click',()=>go(i));
+  dotsBox.appendChild(d);
+});
+
+function go(i){
+  if(i<0||i>=slides.length||i===current)return;
+  slides[current].classList.remove('is-active');
+  current = i;
+  slides[current].classList.add('is-active');
+  slides[current].scrollTop = 0;
+  counterNum.textContent = i+1;
+  dotsBox.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('is-active',j===i));
+  prevBtn.disabled = i===0;
+  nextBtn.disabled = i===slides.length-1;
+}
+
+prevBtn.addEventListener('click',()=>{go(current-1);prevBtn.blur();});
+nextBtn.addEventListener('click',()=>{go(current+1);nextBtn.blur();});
+
+document.addEventListener('keydown', e=>{
+  const t=e.target;
+  if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  if(e.key==='ArrowRight'||e.key===' ') go(current+1);
+  if(e.key==='ArrowLeft') go(current-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(slides.length-1);
+});
+
+go(0);
+</script>
+
+</body>
+</html>
